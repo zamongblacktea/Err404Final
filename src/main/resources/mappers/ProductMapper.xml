@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.demo.dao.ProductMapper">
+
+
+  <!-- 전체조회(카테고리 별) -->
+  <select id="selectList" resultType="ProductVo" parameterType="int">
+     select * from product where cate_idx = #{cate_idx}
+  </select>
+
+  <!-- 한건 조회(상품 idx) -->
+  <select id="selectOne" resultType="ProductVo" parameterType="int">
+     SELECT * FROM product WHERE prod_idx = #{prod_idx}
+  </select>
+  
+  <!-- 수정 -->
+  <insert id="insert" parameterType="ProductVo" >
+    INSERT INTO product VALUES( null,
+                                #{prod_name},
+                                #{prod_price},
+                                #{prod_saleprice},
+                                #{prod_description},
+                                #{prod_company},
+                                #{prod_image_s},
+                                #{prod_image_l},
+                                now(),
+                                #{cate_idx}
+    
+                              )
+  </insert>
+
+  <!-- 상품 수정 -->
+  <update id="update" parameterType="ProductVo">
+    UPDATE product SET   prod_name        = #{prod_name},
+                         prod_price       = #{prod_price},
+                         prod_saleprice   = #{prod_saleprice},
+                         prod_description = #{prod_description},
+                         prod_company     = #{prod_company},
+                         prod_regdate     = now(),
+                         cate_idx         = #{cate_idx}
+    WHERE prod_idx = #{prod_idx}
+  </update>
+  
+  <!-- 삭제 -->
+  <delete id="delete" parameterType="int">
+
+    DELETE FROM product WHERE prod_idx = #{prod_idx}
+  
+  </delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+package com.githrd.demo.vo;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
+
+@Data //= @getter @setter @toString
+//@NoArgsConstructor // 기본생성자는 생성자가 없으면 자동으로 생성해서 쓰기 때문에 굳이 만들 필요 없음.
+@Alias("MemberVo")
+public class MemberVo {
+
+	int    mem_idx;
+	String mem_name;
+	String mem_id;
+	String mem_pwd;
+	String mem_email;
+	String mem_zipcode;
+	String mem_addr;
+	String mem_ip;
+	String mem_regdate;
+	String mem_grade;
+	
+
+
+	
+	
+}

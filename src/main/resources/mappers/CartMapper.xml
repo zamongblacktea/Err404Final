@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.demo.dao.CartMapper">
+
+
+  <!-- 장바구니 조회 -->
+  <select id="selectList" resultType="CartVo" parameterType="int">
+      SELECT * FROM cart_view WHERE mem_idx = #{ mem_idx }
+  </select>
+
+  <!-- 1건 조회 -->
+  
+  <select id="selectOne" resultType="CartVo" parameterType="int">
+      SELECT * FROM cart_view WHERE cart_idx = #{ cart_idx }
+  </select>
+
+
+  <!-- 장바구니 중복 조회 -->
+  <select id="selectExist" resultType="CartVo" parameterType="CartVo">
+      SELECT * FROM cart_view 
+      WHERE prod_idx = #{ prod_idx } and mem_idx = #{ mem_idx }
+  </select>
+
+
+  <!-- 장바구니 총액 계산 -->
+  <!-- oracle : nvl(필드 대체 값) -->
+  <!-- Mysql  : ifnull -->
+  <select id="selectTotalAmount" resultType="int" parameterType="int">
+     SELECT ifnull(SUM(amount),0) FROM cart_view WHERE mem_idx = #{ mem_idx }
+     
+  </select>
+
+  <insert id="insert" parameterType="CartVo" >
+      INSERT INTO cart VALUES(
+                               null,
+                               1,
+                               now(),
+                               #{mem_idx},
+                               #{prod_idx}
+      )
+  </insert>
+
+  <update id="update" parameterType="CartVo">
+    UPDATE cart SET cart_cnt = #{cart_cnt},
+                    cart_regdate = now()
+                    WHERE cart_idx = #{cart_idx}
+  </update>
+
+  <delete id="delete" parameterType="int">
+    DELETE FROM cart WHERE cart_idx = #{cart_idx}
+  </delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
