@@ -173,7 +173,7 @@
 			                      onclick="send(this.form);">
 			                      
 			               <input class="btn  btn-info"    type="button"  value="목록보기"
-			                      onclick="location.href='../board/list.do'">
+			                      onclick="location.href='../member/list.do'">
 			          </td>
 			      </tr>
 			   

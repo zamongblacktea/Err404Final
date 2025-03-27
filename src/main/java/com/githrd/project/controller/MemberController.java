@@ -1,4 +1,4 @@
-package com.githrd.demo.controller;
+package com.githrd.project.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.githrd.demo.dao.MemberMapper;
-import com.githrd.demo.vo.MemberVo;
+import com.githrd.project.dao.MemberMapper;
+import com.githrd.project.vo.MemberVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -94,7 +94,7 @@ public class MemberController {
 		//DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
 		
 		if(url.isEmpty())
-		 	return "redirect:../product/list.do"; //메인화면 이동시켜라
+		 	return "redirect:../member/list.do"; //메인화면 이동시켜라
 		else
 			return "redirect:" + url; //원래있던 페이지로 이동시켜라
 	}
@@ -108,7 +108,7 @@ public class MemberController {
 		//해당세션에 있는 user정보 삭제
 		session.removeAttribute("user");
 		
-		return "redirect:../product/list.do";
+		return "redirect:../member/list.do";
 	}
 	
 	

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.githrd.demo.dao.MemberMapper">
+<mapper namespace="com.githrd.project.dao.MemberMapper">
 
   <!-- 회원전체조회 -->
-  <select id="selectList" resultType="com.githrd.demo.vo.MemberVo">
+  <select id="selectList" resultType="MemberVo">
      select * from member order by mem_idx
   </select>
   
@@ -21,29 +21,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <!-- 회원추가 -->
   <insert id="insert"  parameterType="MemberVo">
-     insert into member values(null,
-                          #{ mem_name },
+     insert into member values(
+                          null,
                           #{ mem_id },
                           #{ mem_pwd },
+                          #{ mem_name },
+                          #{ mem_niclname },
                           #{ mem_email },
-                          #{ mem_zipcode },
-                          #{ mem_addr },
+                          #{ mem_curaddr },
                           #{ mem_ip }, 
-                           sysdate,
+                           DATETIME,
                           '일반')
   </insert>
   
   <!-- 회원수정 -->
   <update id="update"  parameterType="MemberVo">
      update member set mem_name=#{ mem_name },
-                       mem_id=#{ mem_id },
+                       mem_nickname=#{ mem_nickname },
                        mem_pwd=#{ mem_pwd },
                        mem_email=#{ mem_email },
-                       mem_zipcode=#{ mem_zipcode },
-                       mem_addr=#{ mem_addr },
+                       mem_curaddr=#{ mem_curaddr },
                        mem_grade=#{ mem_grade },
                        mem_ip=#{ mem_ip },
-                       mem_regdate=sysdate  
+                       mem_update = DATETIME  
      where mem_idx=#{ mem_idx }
   </update>
   
