@@ -21,14 +21,6 @@ prefix="c" %>
       padding-left: 10px;
     }
 
-    .category {
-      border: 1px solid red;
-      width: 270px;
-      height: 220px;
-      display: inline-block;
-      margin: 5px auto;
-    }
-
     .navbar {
       width: 100%;
       height: 80px;
@@ -49,16 +41,9 @@ prefix="c" %>
     <header class="header">헤더</header>
     <div class="content">
       <div id="mybox">
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
+        <div>가게정보</div>
+        <div>메뉴리스트</div>
+        <div>장바구니</div>
       </div>
     </div>
 

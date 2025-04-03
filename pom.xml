@@ -10,10 +10,10 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.githrd</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>project</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>demo_shop</name>
+	<name>project</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

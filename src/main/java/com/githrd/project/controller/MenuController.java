@@ -6,18 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/shop")
-public class ShopController {
-    
-    @GetMapping("/insert_form.do")
-    public String insert_form(){
-        return "shop/shop_insert_form";
-    }
-    
-    @GetMapping("/order_list.do")
-    public String order_list(){
-        return "shop/shop_order_list";
-    }
+public class MenuController {
 
-    
+    @GetMapping("/menu_insert_form.do")
+    public String insert_form(){
+        return "shop/menu_insert_form";
+    }
     
 }
