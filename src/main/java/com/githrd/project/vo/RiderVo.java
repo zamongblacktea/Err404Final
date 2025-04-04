@@ -1,7 +1,9 @@
+package com.githrd.project.vo;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
-
+ 
 @Data
 @Alias("RiderVo")
 public class RiderVo {

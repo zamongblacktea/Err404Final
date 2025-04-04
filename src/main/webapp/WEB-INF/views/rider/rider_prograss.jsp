@@ -23,6 +23,8 @@
     픽업 완료 버튼이 배달완료 버튼으로 바뀌게 하기
     <input type="button" value="배달완료">
 
+    
+
 
 </body>
 </html>
