@@ -17,6 +17,16 @@ public class ShopController {
     public String order_list(){
         return "shop/shop_order_list";
     }
+    
+    @GetMapping("/order_list_complete.do")
+    public String order_list_complete(){
+        return "shop/shop_order_list";
+    }
+
+    @GetMapping("/menu_list.do")
+    public String menu_list(){
+        return "shop/menu_list";
+    }
 
     
     
