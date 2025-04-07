@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
 
-  function del(mem_idx){
+  function del(rider_idx){
 	  
 	  //삭제 확인?                           (취소)
 	  //if(confirm("정말 삭제 하시겠습니까?")==false) return;
@@ -66,8 +66,8 @@
 		}).then((result) => {
 		  if (result.isConfirmed) { //삭제버튼 클릭
 		    
-			  //삭제처리       delete.do?mem_idx=1
-			  location.href = "delete.do?mem_idx=" + mem_idx;	// MemberDeleteAction  
+			  //삭제처리       delete.do?rider_idx=1
+			  location.href = "delete.do?rider_idx=" + rider_idx;	// MemberDeleteAction  
 		  }
 		});
 	  
@@ -91,14 +91,26 @@
 <div id="box">
 
   
-  <h1 id="title">::::회원 목록::::</h1>
+  <h1 id="title">::::승인 페이지::::</h1>
   
   <!-- 로그인/회원가입  -->
   
   <div class="row"  style="margin-top: 30px; margin-bottom: 5px;">
     <div class="col-sm-3 col-md-3" >
-      <input class="btn btn-primary"  type="button" value="회원가입" 
-	            onclick="location.href='insert_form.do'">
+			<!-- 검색메뉴 -->
+
+                <form class="form-inline"> 
+                    <select id="search" class="form-control">
+                       <option value="all">전체</option>
+                       <option value="owner">사장님</option>
+                       <option value="rider">라이더</option>
+                    </select>
+                    
+                    <input class="form-control" id="search_text"  value="${ param.search_text }">
+                    <input class="btn btn-primary" type="button"  value="검색"
+                           onclick="find();">
+                </form>
+        
     </div>
     <div class="col-sm-9 col-md-9" style="text-align: right">
      
@@ -128,17 +140,15 @@
         <th>번호</th>
         <th>이름</th>
         <th>아이디</th>
-        <th>비밀번호</th>
-        <th>닉네임</th>
         <th>이메일</th>
-        <th>주소</th>
-        <th>아이피</th>
-        <th>가입일자</th>
-        <th>등급</th>
+        <th>면허증 사진</th>
+        <th>계좌번호</th>
+        <th>승인 여부</th>
+        <th></th>
         
         <!-- 로그인 유저가 관리자면 -->
         <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
-           <th>편집</th>
+
         </c:if>
         
      </tr>
@@ -146,7 +156,7 @@
      <!-- 데이터 출력 -->
      
      <!-- 데이터가 없을경우 -->
-     <c:if test="${ empty list }">
+     <c:if test="${ (empty rider_list) and (empty rider_list) }">
         <tr>
            <td colspan="10" align="center">
               <font color="red">가입된 회원정보가 없습니다</font>
@@ -156,27 +166,24 @@
      
      <!-- 데이터가 있는경우 -->
      <!-- for(MemberVo vo : list) 동일  -->
-     <c:forEach var="vo" items="${ list }">
+     <c:forEach var="vo" items="${ rider_list }">
         <tr>
-           <td>${ vo.mem_idx }</td>
-           <td>${ vo.mem_name }</td>
-           <td>${ vo.mem_id }</td>
-           <td>${ vo.mem_pwd }</td>
-           <td>${ vo.mem_nickname }</td>
-           <td>${ vo.mem_email }</td>
-           <td>${ vo.mem_zipcode } ${ vo.mem_curaddr }</td>
-           <td>${ vo.mem_ip }</td>
-           <td>${ vo.mem_regdate }</td>
-           <td>${ vo.mem_grade }</td>
+           <td>${ vo.rider_idx }</td>
+           <td>${ vo.rider_name }</td>
+           <td>${ vo.rider_id }</td>
+           <td>${ vo.rider_email }</td>
+           <td>${ vo.rider_img }</td>
+           <td>${ vo.rider_account }</td>
+           <td>${ vo.rider_status }</td>
            
            <!-- 로그인 유저가 관리자면 -->
            <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
 	           <td>
-	               <input class="btn btn-success" type="button"  value="수정"
-	                      onclick="location.href='modify_form.do?mem_idx=${ vo.mem_idx }'" >
+	               <input class="btn btn-success" type="button"  value="승인"
+	                      onclick="location.href='modify_form.do?rider_idx=${ vo.rider_idx }'" >
 	                      
-	               <input class="btn btn-danger"  type="button"  value="삭제"
-	                      onclick="del('${ vo.mem_idx }');">
+	               <input class="btn btn-danger"  type="button"  value="거부"
+	                      onclick="del('${ vo.rider_idx }');">
 	           </td>
            </c:if>
            
