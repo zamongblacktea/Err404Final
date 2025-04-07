@@ -37,8 +37,8 @@ public class RiderController {
             // 예시 주소들 (DB나 폼 입력 등에서 받아오기)
             String shopAddress = "관악로 165 롯데리아 서울대입구역점";
             String memberAddress = "서울 관악구 관악로14나길 10 1층";
-            //String riderAddress = "서울 관악구 낙성대역길 8";
-            String riderAddress = "동작대로 129 1층";
+            String riderAddress = "서울 관악구 낙성대역길 8";
+            //String riderAddress = "동작대로 129 1층";
 
             //위도경도 얻기 
             double[] storeCoords = kakaoMapService.getCoordinates(shopAddress);

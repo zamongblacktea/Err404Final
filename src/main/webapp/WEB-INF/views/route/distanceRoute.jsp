@@ -30,12 +30,12 @@ pageEncoding="UTF-8"%>
       $(document).ready(function(){
         setTimeout(init,100);
       });
+      //가게의 위도경도를 전역변수로 설정 
+      const shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
 
       function init(){
-            //shop_latitude   shop_longitude
-          //mem_mapx mem_mapy
-          //r_latitude r_longitude
-          var shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
+        
+          //var shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
           var member1 = {lat: '${mem_latitude}', lng: '${mem_longitude}'};
           var rider1 = {lat: '${rider_latitude}', lng: '${rider_longitude}'};
             
@@ -50,13 +50,17 @@ pageEncoding="UTF-8"%>
               level: 4
           };
       
+ 
           var map = new kakao.maps.Map(mapContainer, mapOption);
     
       
           // 마커 찍기 함수
-          function addMarker(position, title) {
+          function addMarker(position, title,text) {
               new kakao.maps.Marker({
                   position: new kakao.maps.LatLng(position.lat, position.lng),
+                  //position: new kakao.maps.LatLng(33.450701, 126.570667), 
+                  text: '텍스트를 표시할 수 있어요!' ,
+                  text:text,
                   map: map,
                   title: title
               });
@@ -65,6 +69,7 @@ pageEncoding="UTF-8"%>
           addMarker(shop1, '가게');
           addMarker(member1, '고객');
           addMarker(rider1, '라이더');
+
       
           // 선 그리기
           var linePath = [
@@ -86,6 +91,16 @@ pageEncoding="UTF-8"%>
       }
       //카카오 경로 상세보기   
       var kakaoMapUrl = `https://map.kakao.com/?sName=${shop_addr}&eName=${mem_curaddr}`;
+
+    // 이미지 지도에 표시할 마커
+     
+    var marker = {
+    position: new kakao.maps.LatLng(33.450701, 126.570667), 
+    text: '텍스트를 표시할 수 있어요!' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다
+    };
+
+
+
   </script>
 
   </head>
