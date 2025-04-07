@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -42,7 +43,15 @@ pageEncoding="UTF-8"%>
     <div class="category">가게 카테고리</div>
     <div id="main">
       <div class="list">
-          <div class="shop-list">가게</div>
+
+        <c:forEach var="vo" items="${shop_list}">
+          <div class="shop-list">
+            가게명 : ${vo.shop_name}
+            가게 주소 : ${vo.shop_addr1}
+
+          </div>
+
+        </c:forEach>
           <div class="shop-list">가게</div>
           <div class="shop-list">가게</div>
           <div class="shop-list">가게</div>

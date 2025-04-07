@@ -1,15 +1,20 @@
 package com.githrd.project.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/shop")
 public class ShopController {
     
     @GetMapping("/insert_form.do")
-    public String insert_form(){
+    public String insert_form(@RequestParam(name="owner_idx", defaultValue = "1") int owner_idx, Model model){
+        
         return "shop/shop_insert_form";
     }
     
@@ -27,6 +32,13 @@ public class ShopController {
     public String menu_list(){
         return "shop/menu_list";
     }
+
+    @PostMapping("/insert.do")
+    public String shop_insert() {
+        
+        return "redirect:/shop/menu_list.do";
+    }
+    
 
     
     
