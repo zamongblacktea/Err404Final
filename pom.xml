@@ -11,11 +11,17 @@
 	</parent>
 	<groupId>com.githrd</groupId>
 	<artifactId>project</artifactId>
+<<<<<<< HEAD
 
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>project</name>
 
+=======
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>project</name>
+>>>>>>> login
 	<description>Demo project for Spring Boot</description>
 	<url />
 	<licenses>
@@ -34,6 +40,11 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -107,26 +118,24 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 
-		<!-- JSP 설정 -->
 		<dependency>
-			<groupId>jakarta.servlet</groupId>
-			<artifactId>jakarta.servlet-api</artifactId>
-			<version>6.0.0</version>
-			<scope>provided</scope>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20230227</version>
 		</dependency>
 
 		<dependency>
-			<groupId>jakarta.servlet.jsp.jstl</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-			<version>3.0.0</version>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
 		</dependency>
+
 
 		<dependency>
-			<groupId>org.glassfish.web</groupId>
-			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
-			<version>3.0.1</version>
+			<groupId>cn.fox-tech</groupId>
+			<artifactId>fox-edge-server-protocol-tcl-air-adapter</artifactId>
+			<version>1.2.3</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>

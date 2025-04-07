@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.RiderMapper">
+
+  <!-- 회원전체조회 -->
+  <select id="selectList" resultType="RiderVo">
+     select * from rider order by rider_idx
+  </select>
+  
+  <!-- rider_idx에 해당되는 회원정보 1건  -->
+  <select id="selectOneFromIdx"  parameterType="int"  resultType="RiderVo">
+     select * from rider where rider_idx=#{ rider_idx }
+  </select>
+  
+  <!-- rider_id에 해당되는 회원정보 1건  -->
+  <select id="selectOneFromId"  parameterType="String"  resultType="RiderVo">
+     select * from rider where rider_id=#{ rider_id }
+  </select>
+  
+  <!-- 회원추가 -->
+  <insert id="insert"  parameterType="RiderVo">
+     insert into rider values(
+                          null,
+                          #{ rider_id },
+                          #{ rider_pwd },
+                          #{ rider_name },
+                          #{ rider_nickname },
+                          #{ rider_email },
+                          #{ rider_zipcode },
+                          #{ rider_curaddr },
+                          #{ rider_ip }, 
+                           now(),
+                           null,
+                          '일반')
+  </insert>
+  
+  <!-- 회원수정 -->
+  <update id="update"  parameterType="RiderVo">
+     update rider set rider_name=#{ rider_name },
+                       rider_nickname=#{ rider_nickname },
+                       rider_pwd=#{ rider_pwd },
+                       rider_email=#{ rider_email },
+                       rider_zipcode=#{ rider_zipcode },
+                       rider_curaddr=#{ rider_curaddr },
+                       rider_grade=#{ rider_grade },
+                       rider_ip=#{ rider_ip },
+                       rider_update = now()  
+     where rider_idx=#{ rider_idx }
+  </update>
+  
+  <!-- 회원삭제 -->
+  <delete id="delete"  parameterType="int">
+     delete from rider where rider_idx=#{ rider_idx }
+  </delete>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
