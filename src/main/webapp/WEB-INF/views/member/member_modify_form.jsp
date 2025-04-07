@@ -45,7 +45,7 @@
 	   let mem_pwd  	= f.mem_pwd.value.trim();
 	   let mem_email	= f.mem_email.value;
 	   let mem_zipcode 	= f.mem_zipcode.value.trim();
-	   let mem_addr 	= f.mem_addr.value.trim();
+	   let mem_curaddr 	= f.mem_curaddr.value.trim();
 	   
 	   if(mem_name == ""){
 		   
@@ -79,11 +79,11 @@
 		   return;
 	   }
 	   
-	   if(mem_addr == ""){
+	   if(mem_curaddr == ""){
 		   
 		   alert("주소를 입력하세요!");
-		   f.mem_addr.value="";
-		   f.mem_addr.focus();
+		   f.mem_curaddr.value="";
+		   f.mem_curaddr.focus();
 		   return;
 	   }
 	   	   
@@ -97,7 +97,7 @@
      
    
    //주소검색
-   function find_addr(){
+   function find_curaddr(){
 	   
 	   /* new daum.Postcode({
 	        oncomplete: function(data) {
@@ -107,7 +107,7 @@
 	            //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
 	            //console.log(data);
 	            $("#mem_zipcode").val(data.zonecode);
-	            $("#mem_addr").val(data.address);
+	            $("#mem_curaddr").val(data.address);
 	   
 	        }
 	    }).open(); */
@@ -123,7 +123,7 @@
 	            //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
 	            //console.log(data);
 	            $("#mem_zipcode").val(data.zonecode);
-	            $("#mem_addr").val(data.address);
+	            $("#mem_curaddr").val(data.address);
 	   
 	        }
 	   }).open({
@@ -207,15 +207,15 @@
 			         <td>
 			            <input  class="form-control"  required="required" id="mem_zipcode" name="mem_zipcode" 
 			                    value="${ vo.mem_zipcode }" style="width: 30%;">
-			            <input  class="btn btn-info"  type="button" value="주소검색" onclick="find_addr();">   
+			            <input  class="btn btn-info"  type="button" value="주소검색" onclick="find_curaddr();">   
  		             </td>
 			      </tr>
 			      
 			      <!-- 주소 -->
 			      <tr>
 			         <th>주소</th>
-			         <td><input  class="form-control"  required="required"   name="mem_addr" id="mem_addr" 
-			                     value="${ vo.mem_addr }" style="width: 100%;"></td>
+			         <td><input  class="form-control"  required="required"   name="mem_curaddr" id="mem_curaddr" 
+			                     value="${ vo.mem_curaddr }" style="width: 100%;"></td>
 			      </tr>
 			      
 			      <!-- 등급  -->

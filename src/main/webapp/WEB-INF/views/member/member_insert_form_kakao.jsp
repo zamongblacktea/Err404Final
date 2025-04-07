@@ -105,10 +105,7 @@
         //입력값 체크
         let mem_name = f.mem_name.value.trim();
         let mem_nickname = f.mem_nickname.value.trim();
-        // let mem_id = f.mem_id.value;
-        // let mem_email = f.mem_eamil.value;
-        // let mem_type = f.mem_type.value;
-        // console.log(mem_id);
+
 
 
 
@@ -199,8 +196,7 @@
     <div class="signup-container">
       <h2>간편 회원 가입</h2>
       <form>
-        <input type="hidden" name="mem_id" value="${param.naver_id}">
-        <input type="hidden" name="mem_email" value="${param.mem_email}">
+        <input type="hidden" name="mem_id" value="${param.mem_id}">
         <input type="hidden" name="mem_type" value="${param.mem_type}">
         <table class="table">
             
@@ -208,14 +204,14 @@
           <!-- 이름 -->
           <tr>
             <th>이름</th>
-            <td><input class="form-control" required="required" name="mem_name" value="${param.mem_name}">
+            <td><input class="form-control" required="required" name="mem_name" >
             </td>
           </tr>
 
           <!-- 닉네임 -->
           <tr>
             <th>닉네임</th>
-            <td><input class="form-control" required="required" name="mem_nickname">
+            <td><input class="form-control" required="required" name="mem_nickname" value="${param.mem_nickname}">
             </td>
           </tr>
 

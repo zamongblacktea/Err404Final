@@ -16,6 +16,9 @@ public interface MemberMapper {
 		
 	// mem_idx이용해서 1건 데이터 읽어오기
 	public MemberVo selectOneFromIdx(int mem_idx);
+
+	//sns 연동로그인 조회
+	public MemberVo selectSns(String mem_id);
 		
 	// mem_id를 이용해서 1건 데이터 얻어오기
 	public MemberVo selectOneFromId(String mem_id);

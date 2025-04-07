@@ -32,11 +32,11 @@ public class MainController {
     
     
     @GetMapping("/list.do")
-    public String shop_list(Model model,RedirectAttributes ra) {
+    public String shop_list(Model model) {
 
         List<ShopInfoVo> list = shopService.selectListAll();
-
-        model.addAttribute("shop_list",list);
+        
+        model.addAttribute("list",list);
 
         return "user/shop_list";
     }
