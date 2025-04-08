@@ -6,7 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <!-- 가게전체조회 -->
   <select id="selectListAll" resultType="ShopInfoVo">
-     select * from shop_info order by shop_idx
+     select * from shop_info
+  </select>
+
+    <!-- 가게 하나만 조회 -->
+  <select id="selectShopOne" parameterType="int" resultType="ShopInfoVo">
+   select * from shop_info where shop_idx=#{shop_idx}
   </select>
 
   <!-- 카테고리별 가게조회 -->
@@ -15,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <!-- 가게추가 -->
-  <insert id="insert"  parameterType="ShopInfoVo">
+  <insert id="shopInsert"  parameterType="ShopInfoVo">
      insert into shop_info values(
                           null,
                           #{ owner_idx },
@@ -43,9 +48,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ shop_cltime}, 
                           #{ shop_closeday}, 
                           #{ shop_loc }, 
-                          #{ shop_closeday },
                           NOW(), 
-                          NOW(),
+                          null,
                           '영업중')
   </insert>
 

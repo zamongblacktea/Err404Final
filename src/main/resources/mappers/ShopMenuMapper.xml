@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.ShopMenuMapper">
+
+  <!-- 가게 메뉴 조회 -->
+  <select id="selectListAll" parameterType="int" resultType="ShopMenuVo">
+     select * from menu where shop_idx=#{shop_idx}
+  </select>
+
+
+  <!-- 카테고리별 가게조회 -->
+  <select id="selectListFromCate" parameterType="int" resultType="ShopInfoVo">
+     select * from shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx
+  </select>
+  
+  <!-- 메뉴추가 -->
+  <insert id="menuInsert"  parameterType="ShopMenuVo">
+     insert into menu values(
+                          null,
+                          #{ shop_idx },
+                          #{ menu_cate },
+                          #{ menu_name },
+                          #{ menu_explain},
+                          #{ menu_img },
+                          #{ menu_price },
+                          now(),
+                          null,
+                          '판매'
+                          ) 
+  </insert>
+
+</mapper>

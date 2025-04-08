@@ -24,7 +24,8 @@ public class ShopInfoVo {
     String shop_notice;
     String shop_intro;
     int shop_minprice;
-    int shop_maxprice;
+    int shop_mintime;
+    int shop_maxtime;
     double shop_rating;
     int shop_favor;
     int shop_reviewcnt;

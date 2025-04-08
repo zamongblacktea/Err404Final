@@ -8,9 +8,11 @@ import lombok.Data;
 @Alias("ShopMenuVo")
 public class ShopMenuVo {
     int menu_idx;
-    int shop_idx;
+    // int shop_idx;
+    Integer shop_idx;
     String menu_cate;
     String menu_name;
+    String menu_explain;
     String menu_img;
     int menu_price;
     String menu_regdate;
