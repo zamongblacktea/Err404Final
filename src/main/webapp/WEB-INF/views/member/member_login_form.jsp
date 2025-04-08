@@ -69,30 +69,18 @@ $(document).ready(function(){
     $(".input__block").hide();
     let owner = $(".links").find("li").find("#owner") ; 
     let member = $(".links").find("li").find("#member") ; 
-    let first_input = $("form").find(".first-input");
-    let hidden_input = $("form").find(".input__block").find(".first-input__block");
+    let rider = $(".links").find("li").find("#rider") ; 
+    //let first_input = $("form").find(".first-input");
+    //let hidden_input = $("form").find(".input__block").find(".first-input__block");
     let form_inputs = $("form .input__block"); // 전체 input div들
     let sns = $(".sns");
     let mem = $(".mem");
+    let owner_btn = $("form").find("#owner_btn");
+    let owner_info = $("form").find(".owner_info");
+    let rider_btn = $("form").find("#rider_btn");
+    let rider_info = $("form").find(".rider_info");
     let signin_btn  = $("form").find(".signin__btn");
     sns.hide();
-  
-    //----------- owner ---------------------
-    owner.on("click",function(e){
-      e.preventDefault();
-      $(this).parent().parent().siblings("h1").text("로그인");
-      $(this).parent().css("opacity","1");
-      $(this).parent().siblings().css("opacity",".6");
-      form_inputs.show();
-      sns.show();
-      mem.hide();
-      hidden_input.css({
-        "opacity" : "1",
-        "display" : "none"
-      });
-      signin_btn.text("Login");
-    });
-    
   
    //----------- member ---------------------
    member.on("click",function(e){
@@ -109,6 +97,44 @@ $(document).ready(function(){
       });
       signin_btn.text("Login");
     });
+
+    //----------- owner ---------------------
+    owner.on("click",function(e){
+      e.preventDefault();
+      $(this).parent().parent().siblings("h1").text("로그인");
+      $(this).parent().css("opacity","1");
+      $(this).parent().siblings().css("opacity",".6");
+      form_inputs.show();
+      sns.show();
+      mem.hide();
+      rider_btn.hide();
+      rider_info.hide();
+      hidden_input.css({
+        "opacity" : "1",
+        "display" : "none"
+      });
+      signin_btn.text("Login");
+    });
+
+  //----------- rider ---------------------
+      rider.on("click",function(e){
+      e.preventDefault();
+      $(this).parent().parent().siblings("h1").text("로그인");
+      $(this).parent().css("opacity","1");
+      $(this).parent().siblings().css("opacity",".6");
+      form_inputs.show();
+      sns.show();
+      mem.hide();
+      owner_btn.hide();
+      owner_info.hide();
+      hidden_input.css({
+        "opacity" : "1",
+        "display" : "none"
+      });
+      signin_btn.text("Login");
+    });
+    
+
    
 
 });
@@ -118,12 +144,15 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 
-  function send(f) {
 
-    let mem_id = f.mem_id.value.trim();
-    let mem_pwd = f.mem_pwd.value.trim();
 
-    if (mem_id == "") {
+
+  function owner_send(f) {
+
+    let owner_id = f.owner_id.value.trim();
+    let owner_pwd = f.owner_pwd.value.trim();
+
+    if (owner_id == "") {
       //alert("아이디를 입력하세요!!");
       //Swal.fire("아이디를 입력하세요!!");
 
@@ -134,18 +163,18 @@ $(document).ready(function(){
         returnFocus: false
       }).then(() => {
 
-        f.mem_id.value = "";
-        f.mem_id.focus();
+        f.owner_id.value = "";
+        f.owner_id.focus();
       });
 
       return;
     }
 
-    if (mem_pwd == "") {
+    if (owner_pwd == "") {
       //alert("비밀번호를 입력하세요!!");
       /* Swal.fire("비밀번호를 입력하세요!!");
-      f.mem_pwd.value="";
-      f.mem_pwd.focus(); */
+      f.owner_pwd.value="";
+      f.owner_pwd.focus(); */
 
       Swal.fire({
         title: "입력오류",
@@ -153,17 +182,64 @@ $(document).ready(function(){
         icon: "warning",
         returnFocus: false
       }).then(() => {
-        f.mem_pwd.value = "";
-        f.mem_pwd.focus();
+        f.owner_pwd.value = "";
+        f.owner_pwd.focus();
       });
 
       return;
     }
 
     //f.method = "POST";
-    f.action = "login.do"; //MemberLoginAction
+    f.action = "owner_login.do"; //MemberLoginAction
     f.submit();            //지정 action호출(데이터전송)   
   }
+
+  function rider_send(f) {
+
+let rider_id = f.rider_id.value.trim();
+let rider_pwd = f.rider_pwd.value.trim();
+
+if (rider_id == "") {
+  //alert("아이디를 입력하세요!!");
+  //Swal.fire("아이디를 입력하세요!!");
+
+  Swal.fire({
+    title: "입력오류",
+    html: "<h5>아이디를 입력하세요!!</h5>",
+    icon: "warning",
+    returnFocus: false
+  }).then(() => {
+
+    f.rider_id.value = "";
+    f.rider_id.focus();
+  });
+
+  return;
+}
+
+if (rider_pwd == "") {
+  //alert("비밀번호를 입력하세요!!");
+  /* Swal.fire("비밀번호를 입력하세요!!");
+  f.rider_pwd.value="";
+  f.rider_pwd.focus(); */
+
+  Swal.fire({
+    title: "입력오류",
+    html: "<h5>비밀번호를 입력하세요!!</h5>",
+    icon: "warning",
+    returnFocus: false
+  }).then(() => {
+    f.rider_pwd.value = "";
+    f.rider_pwd.focus();
+  });
+
+  return;
+}
+
+//f.method = "POST";
+f.action = "rider_login.do"; //MemberLoginAction
+f.submit();            //지정 action호출(데이터전송)   
+}
 </script>
 
 
@@ -179,7 +255,7 @@ $(document).ready(function(){
 
 
   // /member/login_form.do?reason=fail_id
-  // /member/login_form.do?reason=fail_pwd&mem_id=hong
+  // /member/login_form.do?reason=fail_pwd&rider_id=hong
   // /member/login_form.do?reason=session_timeout
   function show_message() {
 
@@ -228,11 +304,6 @@ $(document).ready(function(){
   }
 
 </script>
-
-
-
-
-
 
 
 
@@ -527,7 +598,10 @@ footer p a {
         <a href="#" id="member" id="hideBtn">일반 회원</a>
       </li>
       <li>
-        <a href="#" id="owner">사업자/라이더</a>
+        <a href="#" id="owner">사업자</a>
+      </li>
+      <li>
+        <a href="#" id="rider">라이더</a>
       </li>
     </ul>
     
@@ -551,18 +625,30 @@ footer p a {
         </div>
 
 
-
+      <!-- owner -->
       <!-- id input -->
-      <div class="first-input input__block first-input__block">
-         <input placeholder="아이디" class="input" id="email" name="mem_id"  />
+      <div class="first-input input__block first-input__block owner_info">
+         <input placeholder="사장님 아이디" class="input" id="email" name="owner_id"/>
       </div>
       <!-- password input -->
-      <div class="input__block">
-         <input type="password" placeholder="비밀번호" class="input" id="password" name="mem_pwd"   />
+      <div class="input__block owner_info">
+         <input type="password" placeholder="비밀번호" class="input" id="password" name="owner_pwd"   />
+      </div>
+
+      <!-- rider -->
+      <!-- id input -->
+      <div class="first-input input__block first-input__block rider_info">
+         <input placeholder="라이더 아이디" class="input" id="email" name="rider_id"/>
+      </div>
+      <!-- password input -->
+      <div class="input__block rider_info">
+         <input type="password" placeholder="비밀번호" class="input" id="password" name="rider_pwd"   />
       </div>
       
-      <!-- sign in button -->
-      <input class="signin__btn input__block" value="Login" style="text-align: center;" onclick="send(this.form);">
+      <!-- sign in owner button -->
+      <input class="signin__btn input__block" id="owner_btn" value="Login" style="text-align: center;" onclick="owner_send(this.form);">
+      <!-- sign in rider button -->
+      <input class="signin__btn input__block" id="rider_btn" value="Login" style="text-align: center;" onclick="rider_send(this.form);">
     </form>
     <!-- separator -->
     <div class="sns">
@@ -570,12 +656,12 @@ footer p a {
       <p>OR</p>
     </div>
     <!-- google button -->
-    <button class="google__btn" >
+    <button class="google__btn" onclick="location.href='owner_form.do'">
       <i class="fa fa-google"></i>
       사장님 회원 가입
     </button>
     <!-- google button -->
-    <button class="rider__btn">
+    <button class="rider__btn" onclick="location.href='rider_form.do'">
       <i class="fa fa-github"></i>
       라이더 회원 가입
     </button>

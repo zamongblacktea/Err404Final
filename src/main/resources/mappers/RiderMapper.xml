@@ -26,14 +26,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ rider_id },
                           #{ rider_pwd },
                           #{ rider_name },
-                          #{ rider_nickname },
                           #{ rider_email },
-                          #{ rider_zipcode },
-                          #{ rider_curaddr },
                           #{ rider_ip }, 
                            now(),
                            null,
-                          '일반')
+                          #{ rider_account }, 
+                          #{ rider_loc }, 
+                          #{ rider_type }, 
+                          '대기',
+                          #{ reder_img })
   </insert>
   
   <!-- 회원수정 -->

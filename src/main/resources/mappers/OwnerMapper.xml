@@ -27,12 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ owner_pwd },
                           #{ owner_name },
                           #{ owner_email },
-                          #{ owner_zipcode },
-                          #{ owner_curaddr },
                           #{ owner_ip }, 
                            now(),
                            null,
-                          '일반')
+                           #{ owner_num },
+                          '대기')
   </insert>
   
   <!-- 회원수정 -->

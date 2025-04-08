@@ -16,7 +16,7 @@ import com.githrd.project.vo.ShopInfoVo;
 
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping("/main/")
 public class MainController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class MainController {
     @Autowired
     ShopInfoMapper shopInfoMapper;
 
-    @GetMapping("/main/main.do")
+    @GetMapping("main.do")
     public String main() {
         return "main/main";
     }
