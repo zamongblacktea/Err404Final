@@ -25,18 +25,18 @@ public class MainController {
     @Autowired
     ShopInfoMapper shopInfoMapper;
 
-    @GetMapping("/main/main.do")
+    @GetMapping("/main.do")
     public String main() {
         return "main/main";
     }
     
-    
+    // 가게 전체 조회
     @GetMapping("/list.do")
     public String shop_list(Model model) {
 
         List<ShopInfoVo> list = shopService.selectListAll();
         
-        model.addAttribute("list",list);
+        model.addAttribute("shop_list",list);
 
         return "user/shop_list";
     }
