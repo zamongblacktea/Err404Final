@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,10 +6,7 @@ pageEncoding="UTF-8"%>
     <title>Insert title here</title>
 
     <!-- bootstrap 사용설정 -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
@@ -37,10 +33,11 @@ pageEncoding="UTF-8"%>
 
       function send(f) {
         //입력값 체크
+        let shop_idx = f.shop_idx.value.trim();
         let menu_name = f.menu_name.value.trim();
         let menu_price = f.menu_price.value;
         let menu_explain = f.menu_explain.value.trim();
-        let menu_img = f.menu_img.value.trim();
+        let photo = f.photo.value.trim();
         let menu_status = f.menu_status.value.trim();
 
         if (menu_name == "") {
@@ -57,10 +54,10 @@ pageEncoding="UTF-8"%>
           return;
         }
 
-        if (regular_email.test(mem_email) == false) {
-          alert("형식이 맞는 이메일을 입력하세요!");
-          f.mem_email.value = "";
-          f.mem_email.focus();
+        if (regular_number.test(menu_price) == false) {
+          alert("숫자로 가격을 입력하세요");
+          f.menu_price.value = "";
+          f.menu_price.focus();
           return;
         }
 
@@ -71,20 +68,22 @@ pageEncoding="UTF-8"%>
           return;
         }
 
-        if (menu_img == "") {
+        if (photo == "") {
           alert("메뉴사진을 입력하세요!");
           f.menu_img.value = "";
           f.menu_img.focus();
           return;
         }
 
-        f.action = "insert.do"; // MenuInsertAction
+        f.action = "menu_insert.do"; // MenuInsertAction
         f.submit();
       } //end:send()
     </script>
   </head>
   <body>
-    <form class="form-inline">
+    <form class="form-inline" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="shop_idx" value="${shop_idx}" />
+      가게 번호 : ${shop_idx}
       <div id="box">
         <div class="panel panel-primary">
           <div class="panel-heading"><h4>메뉴정보입력</h4></div>
@@ -94,11 +93,7 @@ pageEncoding="UTF-8"%>
               <tr>
                 <th>메뉴명</th>
                 <td>
-                  <input
-                    class="form-control"
-                    name="menu_name"
-                    style="width: 30%"
-                  />
+                  <input class="form-control" name="menu_name" style="width: 30%" />
                 </td>
               </tr>
 
@@ -106,11 +101,7 @@ pageEncoding="UTF-8"%>
               <tr>
                 <th>가격</th>
                 <td>
-                  <input
-                    class="form-control"
-                    name="menu_price"
-                    style="width: 30%"
-                  />
+                  <input class="form-control" name="menu_price" style="width: 30%" />
                 </td>
               </tr>
 
@@ -118,11 +109,7 @@ pageEncoding="UTF-8"%>
               <tr>
                 <th>메뉴설명</th>
                 <td>
-                  <textarea
-                    class="form-control"
-                    id="menu_explain"
-                    name="menu-explain"
-                  ></textarea>
+                  <textarea class="form-control" id="menu_explain" name="menu_explain"></textarea>
                 </td>
               </tr>
 
@@ -130,12 +117,7 @@ pageEncoding="UTF-8"%>
               <tr>
                 <th>메뉴사진</th>
                 <td>
-                  <input
-                    type="file"
-                    name="menu_img"
-                    id="menu_img"
-                    style="width: 50%"
-                  />
+                  <input type="file" name="photo" id="photo" style="width: 50%" />
                 </td>
               </tr>
 
@@ -143,10 +125,10 @@ pageEncoding="UTF-8"%>
               <tr>
                 <th>메뉴상태</th>
                 <td>
-                  <input id="menu_pop" type="checkbox" name="menu_status" />
+                  <!-- <input id="menu_pop" type="checkbox" name="menu_status" />
                   <label for="menu_pop">인기</label><br />
                   <input id="menu_hide" type="checkbox" name="menu_status" />
-                  <label for="menu_hide">숨기기</label><br />
+                  <label for="menu_hide">숨기기</label><br /> -->
                   <input id="menu_soldout" type="checkbox" name="menu_status" />
                   <label for="menu_soldout">품절</label>
                 </td>
@@ -155,20 +137,8 @@ pageEncoding="UTF-8"%>
               <!-- 버튼 -->
               <tr>
                 <td colspan="2" align="center">
-                  <input
-                    class="btn btn-success"
-                    type="button"
-                    value="목록보기"
-                    onclick="location.href='../product/list.do'"
-                  />
-                  <input
-                    class="btn btn-primary"
-                    type="button"
-                    value="정보입력"
-                    onclick="send(this.form);"
-                    id="btn_register"
-                    disabled="disabled"
-                  />
+                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='./shop/menu_list.do'" />
+                  <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
                 </td>
               </tr>
             </table>

@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from member where mem_idx=#{ mem_idx }
    </select>
 
-   <!-- sns 연동 회원 로그인 조회 -->
+   <!-- 아이디로 조회 -->
    <select id="selectOneFromId" parameterType="String" resultType="MemberVo">
       SELECT * from member where mem_id = #{mem_id}
    </select>
