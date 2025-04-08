@@ -19,7 +19,7 @@ public class OwnerVo {
 	String owner_addr;
 	String owner_regdate;
 	String owner_update;
-	int	   owner_num;
+	String owner_num;
 	String owner_status;
 	
 
