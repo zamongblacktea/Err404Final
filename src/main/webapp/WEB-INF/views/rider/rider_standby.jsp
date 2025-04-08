@@ -5,9 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>주문대기</title>
+    <title>주문대기 페이지</title>
 </head>
 <body>
+    
+     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
     <!-- forEach문으로 출력할듯?  여기서 주문대기 할때 거리가 짧은순으로 orderby해서 출력되도록 하기  -->
    <div>주문번호 : </div>  <!--변수명 넣기 -->
    <div>가게이름 : </div> 
@@ -16,8 +18,10 @@
    <div>메뉴가격 : </div> 
    <div>배달장소 :</div> 
    <div>배달요청사항 : </div> 
- 
-    
+
+   <input type="button" value="경로보기">
+
+   <!-- 배차받기를 누르면 배달현황으로 넘어가기 -->
    <input type="button" value="배차받기">
    
     

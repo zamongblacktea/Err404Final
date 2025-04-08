@@ -43,24 +43,24 @@ pageEncoding="UTF-8"%>
           // var member  = parseFloat(member1.value);
           // var rider   = parseFloat(rider1.value);
           
+   
 
           var mapContainer = document.getElementById('map');
           var mapOption = {
               center: new kakao.maps.LatLng(parseFloat(shop1.lat), parseFloat(shop1.lng)),
               level: 4
-          };
+             };
       
  
+          // var map = new kakao.maps.Map(mapContainer, mapOption);
           var map = new kakao.maps.Map(mapContainer, mapOption);
     
       
           // 마커 찍기 함수
-          function addMarker(position, title,text) {
+          function addMarker(position, title) {
               new kakao.maps.Marker({
                   position: new kakao.maps.LatLng(position.lat, position.lng),
                   //position: new kakao.maps.LatLng(33.450701, 126.570667), 
-                  text: '텍스트를 표시할 수 있어요!' ,
-                  text:text,
                   map: map,
                   title: title
               });
@@ -91,15 +91,6 @@ pageEncoding="UTF-8"%>
       }
       //카카오 경로 상세보기   
       var kakaoMapUrl = `https://map.kakao.com/?sName=${shop_addr}&eName=${mem_curaddr}`;
-
-    // 이미지 지도에 표시할 마커
-     
-    var marker = {
-    position: new kakao.maps.LatLng(33.450701, 126.570667), 
-    text: '텍스트를 표시할 수 있어요!' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다
-    };
-
-
 
   </script>
 

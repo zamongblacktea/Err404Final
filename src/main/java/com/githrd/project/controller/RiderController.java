@@ -3,7 +3,6 @@ package com.githrd.project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.githrd.project.dao.MemberMapper;
@@ -55,12 +54,6 @@ public class RiderController {
             //1km보다 이하는 3,000원(일단 테스트용)
             //초과분부터 1001m부터 1m당 1원 
             double fee = 0;
-            //Math.round(fee*1000)/1000.0;
-            // if{
-            //     ${rescal}> 1000 = 3000+ (${rescal} -1000);
-            // }else  ${rescal}m <= 1000 
-            // return ${fee}=3000;
-
             if(rescal>1000){
                 //fee = 3000 +  (rescal-1000);
                  // 소수점 셋째 자리에서 절사 (버림)
