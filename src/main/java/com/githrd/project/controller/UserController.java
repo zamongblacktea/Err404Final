@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @GetMapping("/list.do")
-    public String shopList() {
-        return "user/shop_list";
-    }
+    // @GetMapping("/list.do")
+    // public String shopList() {
+    //     return "user/shop_list";
+    // }
     
-    @GetMapping("/detail.do")
-    public String shopDetail() {
-        return "user/shop_detail";
-    }
+    // @GetMapping("/detail.do")
+    // public String shopDetail() {
+    //     return "user/shop_detail";
+    // }
     
     @GetMapping("/order_form.do")
     public String order_form() {

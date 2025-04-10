@@ -15,11 +15,9 @@ public class OwnerVo {
 	String owner_name;
 	String owner_email;
 	String owner_ip;
-	String owner_zipcode;
-	String owner_addr;
 	String owner_regdate;
 	String owner_update;
-	int	   owner_num;
+	String owner_num;
 	String owner_status;
 	
 

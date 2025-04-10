@@ -148,8 +148,25 @@
           return;
         }
 
-        f.action = "insert.do"; // ShopInsertAction
-        f.submit();
+        // f.action = "modify.do"; // ShopModifyAction
+        // f.submit();
+
+        const formData = new FormData(f);
+
+        $.ajax({
+          url: "modify.do",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (result) {
+            alert("가게 정보가 수정되었습니다");
+            location.href = "order_list.do";
+          },
+          error: function (err) {
+            alert(err.responseText);
+          },
+        });
       } //end:send()
 
       //주소검색
@@ -170,49 +187,63 @@
           top: window.screen.height / 2 - height / 2,
         });
       }
+
+      // db를 select box에 띄우는 작업 - 카테고리
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const selectedCate = "${shop.shop_cate_idx}";
+        const selectedClo = "${shop.shop_closeday}";
+
+        if (selectedCate) {
+          document.getElementById("cate-select").value = selectedCate;
+        }
+        if (selectedClo) {
+          document.getElementById("close-select").value = selectedClo;
+        }
+      });
     </script>
   </head>
   <body>
-    <form method="post" class="form-inline" enctype="multipart/form-data">
+    <form class="form-inline" enctype="multipart/form-data">
       <div id="box">
         <div class="panel panel-primary">
-          <div class="panel-heading"><h4>가게정보입력</h4></div>
+          <div class="panel-heading"><h4>가게정보수정</h4></div>
           <div class="panel-body">
             <table class="table">
               <!-- 이름 -->
               <tr>
                 <th>가게명</th>
-                <td><input class="form-control" required="required" name="shop_name" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" name="shop_name" style="width: 30%" value="${shop.shop_name}" /></td>
               </tr>
 
               <!-- 아이디 -->
               <tr>
                 <th>상호명</th>
                 <td>
-                  <input class="form-control" id="shop_company" name="shop_company" style="width: 30%" />
+                  <input class="form-control" id="shop_company" name="shop_company" style="width: 30%" value="${shop.shop_company}" />
                 </td>
               </tr>
 
               <!-- 사업자번호 -->
               <tr>
                 <th>사업자번호</th>
-                <td><input class="form-control" required="required" type="text" name="shop_bnumber" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" type="text" name="shop_bnumber" style="width: 30%" value="${shop.shop_bnumber}" /></td>
               </tr>
 
               <!-- 주소 -->
               <tr>
                 <th>가게주소</th>
                 <td>
-                  <input class="form-control" required="required" name="shop_addr1" id="shop_addr1" style="width: 50%" />
+                  <input class="form-control" required="required" name="shop_addr1" id="shop_addr1" style="width: 50%" value="${shop.shop_addr1}" />
                   <input class="btn btn-info" type="button" value="주소검색" onclick="find_addr();" />
-                  <input class="form-control" name="shop_addr2" id="shop_addr2" style="width: 50%" placeholder="상세주소입력" />
+                  <input class="form-control" name="shop_addr2" id="shop_addr2" style="width: 50%" placeholder="상세주소입력" value="${shop.shop_addr2}" />
                 </td>
               </tr>
 
               <!-- 가게전화번호 -->
               <tr>
                 <th>가게전화번호</th>
-                <td><input class="form-control" required="required" type="tel" name="shop_phone" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" type="tel" name="shop_phone" style="width: 30%" value="${shop.shop_phone}" /></td>
               </tr>
 
               <!-- 가게 카테고리 -->
@@ -236,61 +267,65 @@
               <!-- 배달료 -->
               <tr>
                 <th>배달료</th>
-                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" value="${shop.shop_dfee}" /></td>
               </tr>
 
               <!-- 가게로고 -->
               <tr>
+                <!-- 기존 로고가 있다면 미리보기
+                <c:if test="${not empty shop.shop_logo}">
+                  <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="height: 50px" />
+                </c:if> -->
                 <th>가게로고</th>
-                <td><input type="file" name="photo" style="width: 30%" /></td>
+                <td><input type="file" name="photo" style="width: 30%" value="${shop.shop_logo}" /></td>
               </tr>
 
               <!-- 가게내부사진 -->
               <tr>
                 <th>가게내부사진</th>
-                <td><input type="file" name="photo" style="width: 30%" /></td>
+                <td><input type="file" name="photo" style="width: 30%" value="${shop.shop_img}" /></td>
               </tr>
 
               <!-- 가게 공지 -->
               <tr>
                 <th>가게공지</th>
-                <td><textarea class="form-control" required="required" name="shop_notice"></textarea></td>
+                <td><textarea class="form-control" required="required" name="shop_notice">${shop.shop_notice}</textarea></td>
               </tr>
 
               <!-- 소개글 -->
               <tr>
                 <th>소개글</th>
-                <td><textarea class="form-control" required="required" name="shop_intro"></textarea></td>
+                <td><textarea class="form-control" required="required" name="shop_intro">${shop.shop_intro}</textarea></td>
               </tr>
 
               <!-- 최소주문금액 -->
               <tr>
                 <th>최소주문금액</th>
-                <td><input class="form-control" required="required" name="shop_minprice" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" name="shop_minprice" style="width: 30%" value="${shop.shop_minprice}" /></td>
               </tr>
 
               <!-- 최소배달예상시간 -->
               <tr>
                 <th>최소배달예상시간</th>
-                <td><input class="form-control" required="required" name="shop_mintime" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" name="shop_mintime" style="width: 30%" value="${shop.shop_mintime}" /></td>
               </tr>
 
               <!-- 최대배달예상시간 -->
               <tr>
                 <th>최대배달예상시간</th>
-                <td><input class="form-control" required="required" name="shop_maxtime" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" name="shop_maxtime" style="width: 30%" value="${shop.shop_maxtime}" /></td>
               </tr>
 
               <!-- 오픈타임 -->
               <tr>
                 <th>오픈타임</th>
-                <td><input class="form-control" required="required" type="time" name="shop_optime" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" type="time" name="shop_optime" style="width: 30%" value="${shop.shop_optime}" /></td>
               </tr>
 
               <!-- 클로즈타임 -->
               <tr>
                 <th>클로즈타임</th>
-                <td><input class="form-control" required="required" type="time" name="shop_cltime" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" type="time" name="shop_cltime" style="width: 30%" value="${shop.shop_cltime}" /></td>
               </tr>
 
               <!-- 휴무일 -->
@@ -305,6 +340,7 @@
                   <input type="checkbox" name="shop_closeday" id="friday" value="friday" /><label for="friday"> 금</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="saturday" value="saturday" /><label for="saturday"> 토</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="sunday" value="sunday" /><label for="sunday"> 일</label> -->
+
                   <select name="shop_closeday" class="form-control" id="close-select">
                     <option value="">연중무휴</option>
                     <option value="Monday">월요일</option>
@@ -321,14 +357,14 @@
               <!-- 배달지역 -->
               <tr>
                 <th>배달지역</th>
-                <td><input class="form-control" required="required" type="text" name="shop_loc" style="width: 30%" /></td>
+                <td><input class="form-control" required="required" type="text" name="shop_loc" style="width: 30%" value="${shop.shop_loc}" /></td>
               </tr>
 
               <!-- 버튼 -->
               <tr>
                 <td colspan="2" align="center">
                   <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='../main/list.do'" />
-                  <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
+                  <input class="btn btn-primary" type="button" value="정보수정" onclick="send(this.form);" id="btn_register" />
                 </td>
               </tr>
             </table>
