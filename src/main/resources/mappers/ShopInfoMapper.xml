@@ -1,56 +1,36 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.githrd.project.dao.ShopInfoMapper">
 
-  <!-- 가게전체조회 -->
-  <select id="selectListAll" resultType="ShopInfoVo">
-     select * from shop_info
-  </select>
+   <!-- 가게전체조회 -->
+   <select id="selectListAll" resultType="ShopInfoVo"> select * from shop_info </select>
 
-    <!-- 가게 하나만 조회 -->
-  <select id="selectShopOne" parameterType="int" resultType="ShopInfoVo">
-   select * from shop_info where shop_idx=#{shop_idx}
-  </select>
+   <!-- 가게 하나만 조회 -->
+   <select id="selectShopOne" parameterType="int" resultType="ShopInfoVo"> select * from shop_info
+      where shop_idx=#{shop_idx} </select>
 
-  <!-- 카테고리별 가게조회 -->
-  <select id="selectListFromCate" parameterType="int" resultType="ShopInfoVo">
-     select * from shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx
-  </select>
-  
-  <!-- 가게추가 -->
-  <insert id="shopInsert"  parameterType="ShopInfoVo">
-     insert into shop_info values(
-                          null,
-                          #{ owner_idx },
-                          #{ shop_cate_idx },
-                          #{ shop_name },
-                          #{ shop_company },
-                          #{ shop_bnumber },
-                          #{ shop_addr1 },
-                          #{ shop_addr2 },
-                          #{ shop_longitude },
-                          #{ shop_latitude },
-                          #{ shop_phone },
-                          #{ shop_dfee },
-                          #{ shop_logo },
-                          #{ shop_img },
-                          #{ shop_notice }, 
-                          #{ shop_intro }, 
-                          #{ shop_minprice }, 
-                          #{ shop_mintime }, 
-                          #{ shop_maxtime }, 
-                          #{ shop_rating}, 
-                          #{ shop_favor}, 
-                          #{ shop_reviewcnt }, 
-                          #{ shop_optime }, 
-                          #{ shop_cltime}, 
-                          #{ shop_closeday}, 
-                          #{ shop_loc }, 
-                          NOW(), 
-                          null,
-                          '영업중')
-  </insert>
+   <!-- 카테고리별 가게조회 -->
+   <select id="selectListFromCate" parameterType="int" resultType="ShopInfoVo"> select * from
+      shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx </select>
+
+   <!-- 가게추가 -->
+   <insert id="shopInsert" parameterType="ShopInfoVo"> insert into shop_info values( null, #{
+      owner_idx }, #{ shop_cate_idx }, #{ shop_name }, #{ shop_company }, #{ shop_bnumber }, #{
+      shop_addr1 }, #{ shop_addr2 }, #{ shop_longitude }, #{ shop_latitude }, #{ shop_phone }, #{
+      shop_dfee }, #{ shop_logo }, #{ shop_img }, #{ shop_notice }, #{ shop_intro }, #{
+      shop_minprice }, #{ shop_mintime }, #{ shop_maxtime }, #{ shop_rating}, #{ shop_favor}, #{
+      shop_reviewcnt }, #{ shop_optime }, #{ shop_cltime}, #{ shop_closeday}, #{ shop_loc }, NOW(),
+      null, '영업중') </insert>
+
+   <!-- 가게 수정하기 -->
+   <update id="shopModify" parameterType="ShopInfoVo"> update shop_info set shop_name = #{shop_name}, shop_company =
+      #{shop_company}, shop_bnumber = #{shop_bnumber}, shop_addr1 = #{shop_addr1}, shop_addr2 =
+      #{shop_addr2}, shop_phone = #{shop_phone}, shop_cate_idx = #{shop_cate_idx}, shop_dfee =
+      #{shop_dfee}, shop_logo = #{shop_logo}, shop_notice = #{shop_notice}, shop_intro =
+      #{shop_intro}, shop_minprice = #{shop_minprice}, shop_mintime = #{shop_mintime}, shop_maxtime
+      = #{shop_maxtime}, shop_optime = #{shop_optime}, shop_cltime = #{shop_cltime}, shop_closeday =
+      #{shop_closeday}, shop_loc = #{shop_loc}, shop_update = now() <if test="shop_img != null"> , shop_img = #{shop_img} </if>,
+      <if test="shop_logo != null">,shop_logo = #{shop_logo}</if>
+      where shop_idx = #{shop_idx} </update>
 
 </mapper>

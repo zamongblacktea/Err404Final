@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -33,7 +33,7 @@
 
       function send(f) {
         //입력값 체크
-        let shop_idx = f.shop_idx.value.trim();
+        let menu_idx = f.menu_idx.value.trim();
         let menu_name = f.menu_name.value.trim();
         let menu_price = f.menu_price.value;
         let menu_explain = f.menu_explain.value.trim();
@@ -68,31 +68,45 @@
           return;
         }
 
-        if (photo == "") {
-          alert("메뉴사진을 입력하세요!");
-          f.photo.value = "";
-          f.photo.focus();
-          return;
-        }
+        // 체크박스 상태를 숨겨진 input에 반영
+        const isSoldOut = document.getElementById("menu_soldout").checked;
+        document.getElementById("menu_status").value = isSoldOut ? "품절" : "판매";
 
-        f.action = "menu_modify.do"; // MenuModifyAction
-        f.submit();
+        // f.action = "menu_modify.do"; // MenuModifyAction
+        // f.submit();
+
+        const formData = new FormData(f);
+
+        $.ajax({
+          url: "menu_modify.do",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (result) {
+            alert("메뉴 정보가 수정되었습니다");
+            location.href = "menu_list.do";
+          },
+          error: function (err) {
+            alert(err.responseText);
+          },
+        });
       } //end:send()
     </script>
   </head>
   <body>
     <form class="form-inline" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="shop_idx" value="${shop_idx}" />
+      <input type="hidden" name="menu_idx" value="${vo.menu_idx}" />
       <div id="box">
         <div class="panel panel-primary">
-          <div class="panel-heading"><h4>메뉴정보입력</h4></div>
+          <div class="panel-heading"><h4>메뉴정보수정</h4></div>
           <div class="panel-body">
             <table class="table">
               <!-- 메뉴명 -->
               <tr>
                 <th>메뉴명</th>
                 <td>
-                  <input class="form-control" name="menu_name" style="width: 30%" />
+                  <input class="form-control" name="menu_name" style="width: 30%" value="${vo.menu_name}" />
                 </td>
               </tr>
 
@@ -100,7 +114,7 @@
               <tr>
                 <th>가격</th>
                 <td>
-                  <input class="form-control" name="menu_price" style="width: 30%" />
+                  <input class="form-control" name="menu_price" style="width: 30%" value="${vo.menu_price}" />
                 </td>
               </tr>
 
@@ -108,7 +122,7 @@
               <tr>
                 <th>메뉴설명</th>
                 <td>
-                  <textarea class="form-control" id="menu_explain" name="menu_explain"></textarea>
+                  <textarea class="form-control" id="menu_explain" name="menu_explain">${vo.menu_explain}</textarea>
                 </td>
               </tr>
 
@@ -116,7 +130,8 @@
               <tr>
                 <th>메뉴사진</th>
                 <td>
-                  <input type="file" name="photo" id="photo" style="width: 50%" />
+                  <input type="file" name="photo" id="photo" style="width: 50%" value="${vo.menu_img}" />
+                  <!-- <img src="${pageContext.request.contextPath}/images/${vo.menu_img}" alt="메뉴사진" /> -->
                 </td>
               </tr>
 
@@ -128,16 +143,25 @@
                   <label for="menu_pop">인기</label><br />
                   <input id="menu_hide" type="checkbox" name="menu_status" />
                   <label for="menu_hide">숨기기</label><br /> -->
-                  <input id="menu_soldout" type="checkbox" name="menu_status" />
-                  <label for="menu_soldout">품절</label>
+                  <c:choose>
+                    <c:when test="${vo.menu_status=='품절'}">
+                      <input type="checkbox" id="menu_soldout" value="품절" checked />
+                      <label for="menu_soldout">품절</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" id="menu_soldout" value="품절" />
+                      <label for="menu_soldout">품절</label>
+                    </c:otherwise>
+                  </c:choose>
+                  <input type="hidden" name="menu_status" id="menu_status" value="판매" />
                 </td>
               </tr>
 
               <!-- 버튼 -->
               <tr>
                 <td colspan="2" align="center">
-                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='./shop/menu_list.do'" />
-                  <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
+                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='menu_list.do'" />
+                  <input class="btn btn-primary" type="button" value="메뉴수정" onclick="send(this.form);" id="btn_register" />
                 </td>
               </tr>
             </table>

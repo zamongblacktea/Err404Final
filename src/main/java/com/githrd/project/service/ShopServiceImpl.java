@@ -45,6 +45,7 @@ public class ShopServiceImpl implements ShopService {
         return shopInfoMapper.selectShopOne(shop_idx);
     }
 
+    // 가게 등록
     @Override
     public int shopInsert(ShopInfoVo vo, @RequestParam(name = "photo") MultipartFile[] photo_array)
             throws IllegalStateException, IOException {
@@ -98,6 +99,7 @@ public class ShopServiceImpl implements ShopService {
         return res;
     }
 
+    // 메뉴 등록
     @Override
     public int menuInsert(ShopMenuVo vo, @RequestParam MultipartFile photo) throws IllegalStateException, IOException {
 
@@ -137,6 +139,118 @@ public class ShopServiceImpl implements ShopService {
         vo.setMenu_img(filename);
 
         int res = shopMenuMapper.menuInsert(vo);
+
+        return res;
+    }
+
+    // 가게 정보 수정
+    @Override
+    public int shopModify(ShopInfoVo vo, MultipartFile[] photo_array) throws IllegalStateException, IOException {
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+        // \n -> <br> 변환
+        String shop_notice = vo.getShop_notice().replaceAll("\n", "<br>");
+        String shop_intro = vo.getShop_intro().replaceAll("\n", "<br>");
+        vo.setShop_notice(shop_notice);
+        vo.setShop_intro(shop_intro);
+
+        // 저장 경로
+        String saveDir = application.getRealPath("/images/");
+
+        // 기존 이미지 가져오기 (DB에서 미리 채워둔다고 가정)
+        String shop_logo = vo.getShop_logo() != null ? vo.getShop_logo() : "no_file";
+        String shop_img = vo.getShop_img() != null ? vo.getShop_img() : "no_file";
+
+        for (int i = 0; i < photo_array.length; i++) {
+            MultipartFile photo = photo_array[i];
+            if (!photo.isEmpty()) {
+                String filename = photo.getOriginalFilename();
+                File f = new File(saveDir, filename);
+
+                // 중복 파일명 처리
+                if (f.exists()) {
+                    long tm = System.currentTimeMillis();
+                    filename = tm + "_" + filename;
+                    f = new File(saveDir, filename);
+                }
+
+                // 파일 복사
+                photo.transferTo(f);
+
+                if (i == 0) {
+                    shop_logo = filename;
+                } else if (i == 1) {
+                    shop_img = filename;
+                }
+            }
+        }
+
+        // 변경된 이미지명 세팅
+        vo.setShop_logo(shop_logo);
+        vo.setShop_img(shop_img);
+
+        // DB update
+        int res = shopInfoMapper.shopModify(vo);
+
+        return res;
+
+    }
+
+    // 메뉴 전체 조회
+    @Override
+    public List<ShopMenuVo> selectMenuAll(int shop_idx) {
+        return shopMenuMapper.selectMenuAll(shop_idx);
+    }
+
+    // 메뉴 하나 조회
+    @Override
+    public ShopMenuVo selectMenuOne(int menu_idx) {
+        return shopMenuMapper.selectMenuOne(menu_idx);
+    }
+
+    // 메뉴 수정
+    @Override
+    public int menuModify(ShopMenuVo vo, MultipartFile photo) throws IllegalStateException, IOException {
+        ShopInfoVo shop = (ShopInfoVo) session.getAttribute("shop");
+
+        // \n -> <br>
+        String menu_explain = vo.getMenu_explain().replaceAll("\n", "<br>");
+        vo.setMenu_explain(menu_explain);
+
+        // 저장위치 얻어오기
+        String saveDir = application.getRealPath("/images/");
+
+        System.out.println(saveDir);
+
+        // String filename = "no_file";
+
+        // 기존 이미지 가져오기 (DB에서 미리 채워둔다고 가정)
+        String filename = vo.getMenu_img() != null ? vo.getMenu_img() : "no_file";
+
+        // 업로드된 화일이 있으면
+        if (photo.isEmpty() == false) { // if(!photo.isEmpty())
+
+            // 업로드된 화일이름 얻어오기
+            filename = photo.getOriginalFilename();
+
+            File f = new File(saveDir, filename);
+            // 화일존재유무체크
+            if (f.exists()) {
+
+                long tm = System.currentTimeMillis();
+                // 화일이름변경 : 시간_화일명
+                filename = String.format("%d_%s", tm, filename);
+
+                f = new File(saveDir, filename);
+            }
+
+            // 임시화일(photo)을 f로 지정된 화일로 복사
+            photo.transferTo(f);
+
+        }
+        vo.setMenu_img(filename);
+
+        int res = shopMenuMapper.menuModify(vo);
 
         return res;
     }

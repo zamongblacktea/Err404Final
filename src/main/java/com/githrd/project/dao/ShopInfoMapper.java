@@ -18,4 +18,6 @@ public interface ShopInfoMapper {
     // 가게 입력
     int shopInsert(ShopInfoVo vo);
 
+    int shopModify(ShopInfoVo vo);
+
 }

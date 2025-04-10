@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.githrd.project.dao.ShopInfoMapper;
@@ -36,17 +37,18 @@ public class MainController {
 
         model.addAttribute("shop_list", list);
 
-        return "user/shop_list";
+        return "main/shop_list";
     }
 
     @GetMapping("/detail.do")
     public String shop_detail() {
-        return "user/shop_detail";
+
+        return "main/shop_detail";
     }
 
-    @GetMapping("/order_form.do")
-    public String order_form() {
-        return "user/order_form";
-    }
+    // @GetMapping("/order_form.do")
+    // public String order_form() {
+    // return "user/order_form";
+    // }
 
 }
