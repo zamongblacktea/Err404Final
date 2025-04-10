@@ -31,11 +31,11 @@ pageEncoding="UTF-8"%>
         setTimeout(init,100);
       });
       //가게의 위도경도를 전역변수로 설정 
-      const shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
+      // const shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
 
       function init(){
         
-          //var shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
+          var shop1 = {lat: '${shop_latitude}', lng: '${shop_longitude}'};
           var member1 = {lat: '${mem_latitude}', lng: '${mem_longitude}'};
           var rider1 = {lat: '${rider_latitude}', lng: '${rider_longitude}'};
             

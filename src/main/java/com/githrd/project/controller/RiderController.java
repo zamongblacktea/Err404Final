@@ -30,6 +30,27 @@ public class RiderController {
         return "rider/rider_main";
     }
 
+    @RequestMapping("/rider/standby.do")
+    public String riderStandby(){
+
+        return "rider/rider_standby";
+    }
+
+    @RequestMapping("/rider/prograss.do")
+    public String riderPrograss(){
+
+        return "rider/rider_prograss";
+    }
+
+    @RequestMapping("/rider/complete.do")
+    public String riderComolete(){
+
+        return "rider/rider_complete";
+    }
+
+    
+
+
     @RequestMapping("/route/route.do")
     public String showDeliveryMap(Model model) {
         try {
