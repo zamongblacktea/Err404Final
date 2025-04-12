@@ -18,6 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectOneFromId"  parameterType="String"  resultType="RiderVo">
      select * from rider where rider_id=#{ rider_id }
   </select>
+
+
+  <!-- 이메일 api 검증 -->
+   <!-- rider_id에 해당되는 회원정보 1건  -->
+   <select id="selectOneFromEmail"  parameterType="String"  resultType="int">
+   SELECT COUNT(*)
+   FROM rider
+   WHERE rider_email = #{ rider_email }
+   </select>
   
   <!-- 회원추가 -->
   <insert id="insert"  parameterType="RiderVo">
@@ -34,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ rider_loc }, 
                           #{ rider_type }, 
                           '대기',
-                          #{ reder_img })
+                          #{ rider_img })
   </insert>
   
   <!-- 회원수정 -->
@@ -58,15 +67,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

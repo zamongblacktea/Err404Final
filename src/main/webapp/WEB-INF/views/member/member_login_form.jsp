@@ -436,7 +436,7 @@ form .input__block input.repeat__password {
 }
 
 form .signin__btn {
-  background: #ff6b3f;
+  background: #ff694a;
   color: white;
   display: block;
   width: 92.5%;

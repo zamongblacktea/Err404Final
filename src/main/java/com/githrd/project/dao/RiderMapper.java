@@ -20,6 +20,8 @@ public interface RiderMapper {
 	// rider_id를 이용해서 1건 데이터 얻어오기
 	public RiderVo selectOneFromId(String rider_id);
 
+	public int selectOneFromEmail(String rider_email);
+
 	//추가
 	public int insert(RiderVo vo);
 
