@@ -28,6 +28,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 @RequestMapping("/member/")
@@ -421,5 +423,14 @@ public class MemberController {
 
 		return "redirect:list.do";
 	}// end: delete_rider
+
+	//아이디 비밀번호 찾기 페이지 폼
+	@RequestMapping("find_info.do")
+	public String find_info(String rider_email,String owner_email) {
+		
+		
+		return "member/member_find_form";
+	}
+	
 
 }// end: class memberController
