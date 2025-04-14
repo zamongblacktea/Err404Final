@@ -22,14 +22,16 @@
         padding: 0;
       }
 
-    .navbar {
-      width: 100%;
-      height: 80px;
-    }
-    .header {
-      width: 100%;
-      height: 300px;
-    }
+      .header {
+        width: 100%;
+        height: 300px;
+      }
+      
+      #mybox {
+      margin: 0 auto;
+      width: 1150px;
+      padding-left: 10px;
+      }
 
       .category {
         border: 1px solid red;
@@ -39,23 +41,6 @@
         margin: 5px auto;
       }
 
-      .navbar {
-        width: 100%;
-        height: 80px;
-      }
-
-      .header {
-        width: 100%;
-        height: 160px;
-      }
-    .navbar {
-      width: 100%;
-      height: 80px;
-    }
-    .header {
-      width: 100%;
-      height: 300px;
-    }
 
       .footer {
         width: 100%;
@@ -67,22 +52,23 @@
       <nav class="navbar">
         <%@ include file="navbar.jsp" %>
       </nav>
-    <header class="header">
-      <%@ include file="header.jsp" %> 헤더</header>
-    <div class="content">
-      <div id="mybox">
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
-        <div class="category">카테고리(이미지)</div>
+      <header class="header">
+        <%@ include file="header.jsp" %> 헤더
+      </header>
+      <div class="content">
+        <div id="mybox">
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+          <div class="category">카테고리(이미지)</div>
+        </div>
       </div>
-    </div>
 
       <footer class="footer">푸터</footer>
     </body>
