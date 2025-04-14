@@ -8,12 +8,10 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
-      <!-- 다음 주소검색 API -->
-      <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <title>라이더 회원가입</title>
   <style>
     :root {
-      --green: #ff6b3f;
+      --green: #ff694a;
       --text-light: rgba(0, 0, 0, 0.5);
     }
 
@@ -62,7 +60,7 @@
     }
 
     .signup-container input:focus:invalid {
-      border-bottom: 1px solid #EF6161;
+      border-bottom: 1px solid #ff694a;
     }
 
     .signup-container ::placeholder {
@@ -153,6 +151,7 @@ function send(f) {
 }//end:send()
 
 
+
 //중복아이디 체크함수
 function check_id() {
   //           document.getElementById("rider_id").value;  
@@ -199,7 +198,69 @@ function check_id() {
 
 }//end:check_id()
 
+
+//이메일 인증하기 버튼을 눌렀을 때 동작
+//DOM 로딩위해서 미리 초기화 해주고 불러오기
+$(document).ready(function() {
+$("#emailAuth").click(function() {
+    	const email = $("#rider_email").val(); //사용자가 입력한 이메일 값 얻어오기
+    		
+    	//Ajax로 전송
+        $.ajax({
+        	url : "/EmailAuth",
+        	data : {
+        		email : email
+        	},
+        	type : "POST",
+        	dataType : "json",
+        	success : function(res_data) {
+
+            //이메일 중복가입 방지
+            if(res_data == -1){//이미 가입된 이메일이 있을 때
+
+
+
+            alert("이미 가입된 이메일입니다.");
+
+          }else{//DB에 같은 이메일이 없을 때 (사용 가능)
+            //결과 확인용 콘솔
+            console.log("result : " + res_data);
+        		$("#authCode").attr("disabled", false);
+        		code = res_data;
+        		alert("인증 코드가 입력하신 이메일로 전송 되었습니다.");
+
+          }
+       		}
+        }); //End Ajax
+    });
+  });
   </script>
+<script type="text/javascript">
+	//인증 코드 비교
+  $(document).ready(function() {
+    $("#authCode").on("focusout", function() {
+    	const inputCode = $("#authCode").val(); //인증번호 입력 칸에 작성한 내용 가져오기
+    	
+    	console.log("입력코드 : " + inputCode);
+    	console.log("인증코드 : " + code);
+    		
+    	if(Number(inputCode) === code){
+        	$("#emailAuthWarn").html('인증번호가 일치합니다.');
+        	$("#emailAuthWarn").css('color', 'green');
+    		$('#emailAuth').attr('disabled', true);
+    		$('#email').attr('readonly', true);
+    		$("#registerBtn").attr("disabled", false);
+    	}else{
+        	$("#emailAuthWarn").html('인증번호가 불일치 합니다. 다시 확인해주세요!');
+        	$("#emailAuthWarn").css('color', 'red');
+        	$("#registerBtn").attr("disabled", true);
+    	}
+    });
+  });
+</script>
+
+
+
 </head>
 <body>
   <div class="signup-container">
@@ -239,8 +300,15 @@ function check_id() {
         <!-- 이메일 -->
         <tr>
           <th>이메일</th>
-          <td><input class="form-control" required="required" type="email" name="rider_email"></td>
+          <td><input class="form-control" placeholder="이메일" required="required" id="rider_email" name="rider_email"></td>
+          <td><input type="button" value="인증" class="btn btn-primary" id="emailAuth"></td>
         </tr>
+        <tr>
+          <th>이메일 인증</th>          
+          <td><input class="form-control" placeholder="인증 코드 6자리를 입력해주세요." maxlength="6" disabled="disabled" name="authCode" id="authCode" type="text" autofocus></td>
+          <td><span id="emailAuthWarn"></span></td>
+        </tr>
+
         <!-- 계좌번호 -->
         <tr>
           <th>지급 계좌</th>
@@ -259,17 +327,17 @@ function check_id() {
         <!-- 이미지 -->
         <tr>
           <th>운전면허증 등록</th>
-          <td><input class="form-control" required="required" type="email" name="rider_img"></td>
+          <td><input class="form-control" required="required" type="email"  name="rider_img"></td>
         </tr>
 
 
         <!-- 버튼 -->
         <tr>
           <td colspan="2" align="center">
-              <button type="button" onclick="send(this.form)">회원가입</button>
+              <button type="button" id="registerBtn" disabled="disabled" onclick="send(this.form)">회원가입</button>
           </td>
         </tr>
-
+      </div>
       </table>
 
     </form>
