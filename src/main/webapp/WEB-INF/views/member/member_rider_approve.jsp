@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
 <!-- bootstrap 3.x 사용설정 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
