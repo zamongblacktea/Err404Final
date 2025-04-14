@@ -35,7 +35,7 @@ prefix="c" %>
     }
     .header {
       width: 100%;
-      height: 160px;
+      height: 300px;
     }
 
     .footer {
@@ -59,7 +59,8 @@ prefix="c" %>
 	      <input class="btn btn-primary"  type="button" value="로그아웃" 
 		         onclick="location.href='logout.do'">
 	  </c:if>   </nav>
-    <header class="header">헤더</header>
+    <header class="header">
+      <%@ include file="header.jsp" %> 헤더</header>
     <div class="content">
       <div id="mybox">
         <div class="category">카테고리(이미지)</div>
