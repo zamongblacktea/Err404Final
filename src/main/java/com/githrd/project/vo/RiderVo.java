@@ -19,8 +19,8 @@ public class RiderVo {
 	String rider_update;
 	String rider_account;
 	String rider_loc;
-	String rider_type;
-	String rider_status;
+	String rider_ty
+	String rider_approve;
 	String rider_img;
 	
 
