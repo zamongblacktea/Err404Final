@@ -20,7 +20,11 @@ public interface RiderMapper {
 	// rider_id를 이용해서 1건 데이터 얻어오기
 	public RiderVo selectOneFromId(String rider_id);
 
+	//rider_email api 인증 가입
 	public int selectOneFromEmail(String rider_email);
+
+	//rider_email 인증 아이디 찾기/비밀번호 변경
+	public String selectOneFindInfo(String email);
 
 	//추가
 	public int insert(RiderVo vo);

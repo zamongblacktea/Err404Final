@@ -27,4 +27,6 @@ public interface OwnerMapper {
 
 	public int delete(int owner_idx);
 
+	public String selectOneFindInfo(String email);
+
 }

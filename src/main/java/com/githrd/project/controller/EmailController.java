@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -50,7 +49,7 @@ public class EmailController {
 		if(count > 0){//count가 0보다 클 때 (중복 이메일)
 
 
-			return -1;
+			return -1; //-1 리턴으로 중복 여부 판단 후 보내기
 		}
 		
 		log.info("전달 받은 이메일 주소 : " + email);
