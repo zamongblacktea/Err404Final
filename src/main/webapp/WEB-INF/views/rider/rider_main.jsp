@@ -51,11 +51,11 @@ pageEncoding="UTF-8"%>
 
   }//end : function standby()
 
-  function prograss(){
+  function progress(){
   		$.ajax({ //key value jason형식
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
-			url  : "prograss.do",
+			url  : "progress.do",
 			success: function(result_data){
 				
 				//result_data <=서버로부터 응답받은 데이터
@@ -111,8 +111,8 @@ pageEncoding="UTF-8"%>
             <div class="panel-body">
               <div class="body">
                 <!-- onclick=location.href="넣어야함" -->
-                <input class="buttons" type="button" value="주문대기" onclick="standby();" />
-                <input class="buttons" type="button" value="배달현황" onclick="prograss()" />
+                <input class="buttons" type="button" value="배차대기" onclick="standby();" />
+                <input class="buttons" type="button" value="배달현황" onclick="progress()" />
                 <input class="buttons" type="button" value="배달완료" onclick="complete()"/>
               </div>
               </div>

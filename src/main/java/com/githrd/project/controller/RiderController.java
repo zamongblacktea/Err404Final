@@ -1,12 +1,20 @@
 package com.githrd.project.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.MemberMapper;
+import com.githrd.project.dao.TestRider1Mapper;
 import com.githrd.project.service.KakaoMapService;
+import com.githrd.project.vo.TestRider1Vo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +22,9 @@ import jakarta.servlet.http.HttpSession;
 public class RiderController {
 	@Autowired
 	MemberMapper memberMapper;
+
+    @Autowired
+    TestRider1Mapper testRider1Mapper;
 	
 	@Autowired
 	HttpServletRequest request;
@@ -31,21 +42,62 @@ public class RiderController {
     }
 
     @RequestMapping("/rider/standby.do")
-    public String riderStandby(){
+    public String riderStandby(Model model){
+
+        List<TestRider1Vo> standby_list = testRider1Mapper.selectList();
+
+
+        System.out.println(standby_list.size());
+
+		// 결과적으로 request binding
+		model.addAttribute("standby_list", standby_list);
+
 
         return "rider/rider_standby";
     }
 
-    @RequestMapping("/rider/prograss.do")
-    public String riderPrograss(){
 
-        return "rider/rider_prograss";
+    //parameter map으로 받기 : rider_accept.do?order_idx=1&rider_idx=5
+    @RequestMapping("/rider/rider_accept.do")
+    @ResponseBody
+    public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
+        
+        int res = testRider1Mapper.riderStatusUpdate(paramMap);
+
+        Map<String,Object>map = new HashMap<>();
+
+        map.put("result", res==1);
+
+        return map;
+    }
+
+    @RequestMapping("/rider/progress.do")
+    public String riderProgress(Model model){
+
+        //로그인이 되면 로그인된 라이더의 idx를 세션에서 가져와야한다.
+
+        List<TestRider1Vo> rider_list = testRider1Mapper.selectRiderList(1);
+
+		// 결과적으로 request binding
+		model.addAttribute("rider_list", rider_list);
+
+        return "rider/rider_progress";
     }
 
     @RequestMapping("/rider/complete.do")
-    public String riderComolete(){
+    public String riderComplete(Model model){
+        List<TestRider1Vo> standby_list = testRider1Mapper.selectList();
+
+		// 결과적으로 request binding
+		model.addAttribute("standby_list", standby_list);
 
         return "rider/rider_complete";
+    }
+
+    @RequestMapping("/rider/todayfee.do")
+    public String riderTodayDeliveryFee(){
+
+        return "rider/rider_todayfee";
     }
 
     
