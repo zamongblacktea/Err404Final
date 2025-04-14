@@ -41,7 +41,6 @@
         let shop_addr2 = f.shop_addr2.value.trim();
         let shop_phone = f.shop_phone.value.trim();
         let shop_dfee = f.shop_dfee.value.trim();
-        let photo = f.photo.value.trim();
         let shop_notice = f.shop_notice.value.trim();
         let shop_intro = f.shop_intro.value.trim();
         let shop_minprice = f.shop_minprice.value.trim();
@@ -125,8 +124,8 @@
         }
         if (shop_maxtime == "") {
           alert("최대배달예상시간을 입력하세요");
-          f.shop_phone.value = "";
-          f.shop_phone.focus();
+          f.shop_maxtime.value = "";
+          f.shop_maxtime.focus();
           return;
         }
         if (shop_optime == "") {
@@ -202,9 +201,102 @@
         }
       });
     </script>
+
+    <!-- 이미지 수정 코드 -->
+    <script>
+      function img_update() {
+        $("#ajaxFileImg").click();
+      }
+
+      function logo_update() {
+        $("#ajaxFileLogo").click();
+      }
+
+      function ajaxFileImgChange(type) {
+        //파일 선택이 취소되면
+        if ($("#ajaxFileImg")[0].files[0] == undefined) return;
+        // Ajax를 이용해서 파일 업로드
+        const form = $("#ajaxFormImg")[0];
+        const formData = new FormData(form);
+        // 전송 해야할 parameter 세팅
+        formData.append("shop_idx", "${vo.shop_idx}");
+        formData.append("photo", $("#ajaxFileImg")[0].files[0]);
+
+        // Ajax 전송
+        $.ajax({
+          url: "photo_upload.do",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          dataType: "json",
+          success: function (res_data) {
+            $("#my_img").attr("src", "${pageContext.request.contextPath}/images/" + res_data.shop_img);
+            $("#shop_img").val(res_data.shop_img);
+          },
+          error: function (err) {
+            alert(err.responseText);
+            console.log(err);
+          },
+        });
+      }
+
+      function ajaxFileLogoChange() {
+        //파일 선택이 취소되면
+        if ($("#ajaxFileLogo")[0].files[0] == undefined) return;
+
+        // Ajax를 이용해서 파일 업로드
+        const form = $("#ajaxFormLogo")[0];
+        const formData = new FormData(form);
+        // 전송 해야할 parameter 세팅
+        formData.append("shop_idx", "${vo.shop_idx}");
+        formData.append("photo", $("#ajaxFileLogo")[0].files[0]);
+
+        // Ajax 전송
+        $.ajax({
+          url: "logo_upload.do",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          dataType: "json",
+          success: function (res_data) {
+            $("#my_logo").attr("src", "${pageContext.request.contextPath}/images/" + res_data.shop_logo);
+            $("#shop_logo").val(res_data.shop_logo);
+          },
+          error: function (err) {
+            alert(err.responseText);
+            console.log(err);
+          },
+        });
+      }
+    </script>
   </head>
   <body>
+    <!-- 가게 로고 선택/폼 -->
+    <form method="POST" enctype="multipart/form-data" id="ajaxFormLogo" style="display: none">
+      <input type="file" id="ajaxFileLogo" onchange="ajaxFileLogoChange();" />
+    </form>
+
+    <!-- 가게 이미지 선택/폼 -->
+    <form method="POST" enctype="multipart/form-data" id="ajaxFormImg" style="display: none">
+      <input type="file" id="ajaxFileImg" onchange="ajaxFileImgChange();" />
+    </form>
+
+    <!-- shop_logo 이미지 수정 -->
+    <div style="text-align: center; padding: 10px">
+      <img id="my_logo" src="${pageContext.request.contextPath}/images/${vo.shop_logo}" style="width: 100px; height: 100px" /><br /><br />
+      <input class="btn btn-info" type="button" value="로고 수정" onclick="logo_update();" />
+    </div>
+
+    <!-- shop_img 이미지 수정 -->
+    <div style="text-align: center; padding: 10px">
+      <img id="my_img" src="${pageContext.request.contextPath}/images/${vo.shop_img}" style="width: 100px; height: 100px" /><br /><br />
+      <input class="btn btn-info" type="button" value="이미지 수정" onclick="img_update();" />
+    </div>
+
     <form class="form-inline" enctype="multipart/form-data">
+      <input type="hidden" name="shop_idx" value="${vo.shop_idx}" />
       <div id="box">
         <div class="panel panel-primary">
           <div class="panel-heading"><h4>가게정보수정</h4></div>
@@ -270,22 +362,6 @@
                 <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" value="${shop.shop_dfee}" /></td>
               </tr>
 
-              <!-- 가게로고 -->
-              <tr>
-                <!-- 기존 로고가 있다면 미리보기
-                <c:if test="${not empty shop.shop_logo}">
-                  <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="height: 50px" />
-                </c:if> -->
-                <th>가게로고</th>
-                <td><input type="file" name="photo" style="width: 30%" value="${shop.shop_logo}" /></td>
-              </tr>
-
-              <!-- 가게내부사진 -->
-              <tr>
-                <th>가게내부사진</th>
-                <td><input type="file" name="photo" style="width: 30%" value="${shop.shop_img}" /></td>
-              </tr>
-
               <!-- 가게 공지 -->
               <tr>
                 <th>가게공지</th>
@@ -347,7 +423,7 @@
                     <option value="Tuesday">화요일</option>
                     <option value="Wednesday">수요일</option>
                     <option value="Thursday">목요일</option>
-                    <option value="friday">금요일</option>
+                    <option value="Friday">금요일</option>
                     <option value="Saturday">토요일</option>
                     <option value="Sunday">일요일</option>
                   </select>

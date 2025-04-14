@@ -32,9 +32,12 @@
       update menu set menu_name=#{menu_name}, menu_price=#{menu_price}, menu_explain=#{menu_explain},
                       menu_status = #{menu_status},
                       menu_update = now()
-      <if test="menu_img='no_file'">, menu_img=#{menu_img}
-      </if>
       where menu_idx = #{menu_idx}
    </update>
+
+   <!-- 메뉴 사진 수정 -->
+    <update id="menuPhotoUpload" parameterType="ShopMenuVo">
+      update menu set menu_img = #{menu_img} where menu_idx = #{menu_idx}
+    </update>
 
 </mapper>

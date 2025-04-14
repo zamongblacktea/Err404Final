@@ -21,4 +21,7 @@ public interface ShopMenuMapper {
     // 메뉴 수정
     int menuModify(ShopMenuVo vo);
 
+    // 메뉴 사진 수정
+    int menuPhotoUpload(ShopMenuVo vo);
+
 }

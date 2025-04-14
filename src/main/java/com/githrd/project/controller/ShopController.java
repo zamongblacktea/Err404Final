@@ -1,7 +1,9 @@
 package com.githrd.project.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.githrd.project.dao.ShopInfoMapper;
@@ -22,6 +25,7 @@ import com.githrd.project.vo.ShopMenuVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/shop")
@@ -112,15 +116,15 @@ public class ShopController {
 
     // 메뉴 수정
     @PostMapping("/menu_modify.do")
-    public String menu_modify(ShopMenuVo vo, @RequestParam MultipartFile photo, Model model) {
+    public String menu_modify(ShopMenuVo vo, Model model) {
 
         int menu_modify_no = 0;
 
         // 임시로 메뉴idx 1로 고정
-        vo.setMenu_idx(1);
+        // vo.setMenu_idx(1);
 
         try {
-            menu_modify_no = shopService.menuModify(vo, photo);
+            menu_modify_no = shopService.menuModify(vo);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -129,6 +133,32 @@ public class ShopController {
         model.addAttribute("menu_modify_no", menu_modify_no);
 
         return "redirect:menu_list.do";
+    }
+
+    // 메뉴 사진 수정
+    @PostMapping("/menu_photo_upload.do")
+    @ResponseBody
+    public Map<String, String> menu_photo_upload(ShopMenuVo vo, @RequestParam(required = false) MultipartFile photo,
+            Model model)
+            throws IllegalStateException, IOException {
+        int res = 0;
+
+        // 임시로 고정
+        // vo.setMenu_idx(1);
+
+        res = shopService.menuPhotoUpload(vo, photo);
+
+        // model.addAttribute("res", res);
+
+        Map<String, String> map = new HashMap<>();
+
+        if (res > 0) {
+            map.put("menu_img", vo.getMenu_img()); // 성공 시, 이미지 파일명 리턴
+        } else {
+            map.put("error", "업로드 실패");
+        }
+
+        return map;
     }
 
     // 가게 등록 폼
@@ -173,7 +203,7 @@ public class ShopController {
 
     // 가게 정보 수정
     @PostMapping("/modify.do")
-    public String shop_modify(ShopInfoVo vo, @RequestParam(name = "photo") MultipartFile[] photo_array, Model model) {
+    public String shop_modify(ShopInfoVo vo, Model model) {
 
         int shop_modify_no = 0;
 
@@ -181,7 +211,7 @@ public class ShopController {
         vo.setShop_idx(2);
 
         try {
-            shop_modify_no = shopService.shopModify(vo, photo_array);
+            shop_modify_no = shopService.shopModify(vo);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -190,6 +220,61 @@ public class ShopController {
         model.addAttribute("shop_modify_no", shop_modify_no);
 
         return "redirect:order_list.do";
+    }
+
+    // 가게 사진 수정
+    @PostMapping("/photo_upload.do")
+    @ResponseBody
+    public Map<String, String> photo_upload(ShopInfoVo vo, @RequestParam(required = false) MultipartFile photo,
+            Model model)
+            throws IllegalStateException, IOException {
+        int res = 0;
+
+        // 임시로 고정
+        vo.setShop_idx(1);
+
+        res = shopService.PhotoUpload(vo, photo); // shop_img 수정
+
+        // model.addAttribute("res", res);
+
+        Map<String, String> map = new HashMap<>();
+
+        if (res > 0) {
+            map.put("shop_img", vo.getShop_img()); // 성공 시, 이미지 파일명 리턴
+
+        } else {
+            map.put("error", "업로드 실패");
+        }
+
+        return map;
+    }
+
+    // 가게 로고 수정
+    @PostMapping("/logo_upload.do")
+    @ResponseBody
+    public Map<String, String> logo_upload(ShopInfoVo vo, @RequestParam(required = false) MultipartFile photo,
+            Model model)
+            throws IllegalStateException, IOException {
+        int res = 0;
+
+        // 임시로 고정
+        vo.setShop_idx(1);
+
+        System.out.println("shop_idx : " + vo.getShop_idx());
+        res = shopService.LogoUpload(vo, photo); // shop_img 수정
+
+        // model.addAttribute("res", res);
+
+        Map<String, String> map = new HashMap<>();
+
+        if (res > 0) {
+            map.put("shop_logo", vo.getShop_logo()); // 성공 시, 이미지 파일명 리턴
+
+        } else {
+            map.put("error", "업로드 실패");
+        }
+
+        return map;
     }
 
 }

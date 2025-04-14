@@ -37,7 +37,7 @@
         let menu_name = f.menu_name.value.trim();
         let menu_price = f.menu_price.value;
         let menu_explain = f.menu_explain.value.trim();
-        let photo = f.photo.value.trim();
+        // let photo = f.photo.value.trim();
         let menu_status = f.menu_status.value.trim();
 
         if (menu_name == "") {
@@ -72,30 +72,60 @@
         const isSoldOut = document.getElementById("menu_soldout").checked;
         document.getElementById("menu_status").value = isSoldOut ? "품절" : "판매";
 
-        // f.action = "menu_modify.do"; // MenuModifyAction
-        // f.submit();
+        f.action = "menu_modify.do"; // MenuModifyAction
+        f.submit();
+      } //end:send()
+    </script>
 
-        const formData = new FormData(f);
+    <!-- 이미지 업로드용 -->
+    <script>
+      function photo_update() {
+        $("#ajaxFile").click();
+      }
 
+      function ajaxFileChange() {
+        //파일 선택이 취소되면
+        if ($("#ajaxFile")[0].files[0] == undefined) return;
+
+        // Ajax를 이용해서 파일 업로드
+        const form = $("#ajaxForm")[0];
+        const formData = new FormData(form);
+        // 전송 해야할 parameter 세팅
+        formData.append("menu_idx", "${vo.menu_idx}");
+        formData.append("photo", $("#ajaxFile")[0].files[0]);
+
+        // Ajax 전송
         $.ajax({
-          url: "menu_modify.do",
+          url: "menu_photo_upload.do",
           type: "POST",
           data: formData,
           processData: false,
           contentType: false,
-          success: function (result) {
-            alert("메뉴 정보가 수정되었습니다");
-            location.href = "menu_list.do";
+          dataType: "json",
+          success: function (res_data) {
+            $("#my_img").attr("src", "${pageContext.request.contextPath}/images/" + res_data.menu_img);
+            $("#menu_img").val(res_data.menu_img);
           },
           error: function (err) {
             alert(err.responseText);
+            console.log(err);
           },
         });
-      } //end:send()
+      }
     </script>
   </head>
   <body>
-    <form class="form-inline" method="post" enctype="multipart/form-data">
+    <!-- 이미지 선택/폼 -->
+    <form method="POST" enctype="multipart/form-data" id="ajaxForm" style="display: none">
+      <input type="file" id="ajaxFile" onchange="ajaxFileChange();" />
+    </form>
+
+    <div style="text-align: center; padding: 10px">
+      <img id="my_img" src="${pageContext.request.contextPath}/images/${vo.menu_img}" style="width: 100px; height: 100px" /><br /><br />
+      <input class="btn btn-info" type="button" value="이미지 수정" onclick="photo_update();" />
+    </div>
+
+    <form class="form-inline" method="post">
       <input type="hidden" name="menu_idx" value="${vo.menu_idx}" />
       <div id="box">
         <div class="panel panel-primary">
@@ -127,13 +157,12 @@
               </tr>
 
               <!-- 메뉴사진 -->
-              <tr>
+              <!-- <tr>
                 <th>메뉴사진</th>
                 <td>
                   <input type="file" name="photo" id="photo" style="width: 50%" value="${vo.menu_img}" />
-                  <!-- <img src="${pageContext.request.contextPath}/images/${vo.menu_img}" alt="메뉴사진" /> -->
                 </td>
-              </tr>
+              </tr> -->
 
               <!-- 메뉴상태 -->
               <tr>

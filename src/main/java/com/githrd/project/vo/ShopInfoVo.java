@@ -7,7 +7,8 @@ import lombok.Data;
 @Data
 @Alias("ShopInfoVo")
 public class ShopInfoVo {
-    int shop_idx;
+    // int shop_idx;
+    Integer shop_idx;
     int owner_idx;
     int shop_cate_idx;
     String shop_name;
@@ -37,5 +38,4 @@ public class ShopInfoVo {
     String shop_update;
     String shop_status;
 
-    
 }

@@ -25,8 +25,7 @@ public interface ShopService {
         int menuInsert(ShopMenuVo vo, @RequestParam MultipartFile photo) throws IllegalStateException, IOException;
 
         // 가게 정보 수정
-        int shopModify(ShopInfoVo vo, @RequestParam(name = "photo") MultipartFile[] photo_array)
-                        throws IllegalStateException, IOException;
+        int shopModify(ShopInfoVo vo);
 
         // 메뉴 조회
         List<ShopMenuVo> selectMenuAll(int shop_idx);
@@ -35,5 +34,14 @@ public interface ShopService {
         ShopMenuVo selectMenuOne(int menu_idx);
 
         // 메뉴 수정
-        int menuModify(ShopMenuVo vo, @RequestParam MultipartFile photo) throws IllegalStateException, IOException;
+        int menuModify(ShopMenuVo vo);
+
+        // 메뉴 사진 수정
+        int menuPhotoUpload(ShopMenuVo vo, MultipartFile photo) throws IllegalStateException, IOException;
+
+        // 가게 사진 수정
+        int PhotoUpload(ShopInfoVo vo, MultipartFile photo) throws IllegalStateException, IOException;
+
+        // 가게 로고 수정
+        int LogoUpload(ShopInfoVo vo, MultipartFile photo) throws IllegalStateException, IOException;
 }

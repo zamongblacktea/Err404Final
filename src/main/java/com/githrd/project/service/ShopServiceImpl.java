@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -144,8 +143,76 @@ public class ShopServiceImpl implements ShopService {
     }
 
     // 가게 정보 수정
+    // @Override
+    // public int shopModify(ShopInfoVo vo, MultipartFile[] photo_array) throws
+    // IllegalStateException, IOException {
+    // OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+    // // \n -> <br> 변환
+    // String shop_notice = vo.getShop_notice().replaceAll("\n", "<br>");
+    // String shop_intro = vo.getShop_intro().replaceAll("\n", "<br>");
+    // vo.setShop_notice(shop_notice);
+    // vo.setShop_intro(shop_intro);
+
+    // // 저장 경로
+    // String saveDir = application.getRealPath("/images/");
+
+    // // 기존 이미지 가져오기 (DB에서 미리 채워둔다고 가정)
+    // String shop_logo = vo.getShop_logo() != null ? vo.getShop_logo() : "no_file";
+    // String shop_img = vo.getShop_img() != null ? vo.getShop_img() : "no_file";
+
+    // for (int i = 0; i < photo_array.length; i++) {
+    // MultipartFile photo = photo_array[i];
+    // if (!photo.isEmpty()) {
+    // String filename = photo.getOriginalFilename();
+    // File f = new File(saveDir, filename);
+
+    // // 기존 이미지 확인 및 삭제
+    // File oldFile = new File(saveDir, filename);
+
+    // if (i == 0 && !"no_file".equals(shop_logo)) {
+    // File oldLogo = new File(saveDir, shop_logo);
+    // if (oldLogo.exists()) oldLogo.delete();
+    // }
+    // if (i == 1 && !"no_file".equals(shop_img)) {
+    // File oldImg = new File(saveDir, shop_img);
+    // if (oldImg.exists()) oldImg.delete();
+    // }
+
+    // System.out.println("이미지 삭제 완료");
+
+    // // 중복 파일명 처리
+    // if (f.exists()) {
+    // long tm = System.currentTimeMillis();
+    // filename = tm + "_" + filename;
+    // f = new File(saveDir, filename);
+    // }
+
+    // // 파일 복사
+    // photo.transferTo(f);
+
+    // if (i == 0) {
+    // shop_logo = filename;
+    // } else if (i == 1) {
+    // shop_img = filename;
+    // }
+    // }
+    // }
+
+    // // 변경된 이미지명 세팅
+    // vo.setShop_logo(shop_logo);
+    // vo.setShop_img(shop_img);
+
+    // // DB update
+    // int res = shopInfoMapper.shopModify(vo);
+
+    // return res;
+
+    // }
+
+    // 가게 정보 수정
     @Override
-    public int shopModify(ShopInfoVo vo, MultipartFile[] photo_array) throws IllegalStateException, IOException {
+    public int shopModify(ShopInfoVo vo) {
         OwnerVo user = (OwnerVo) session.getAttribute("user");
 
         // \n -> <br> 변환
@@ -154,46 +221,9 @@ public class ShopServiceImpl implements ShopService {
         vo.setShop_notice(shop_notice);
         vo.setShop_intro(shop_intro);
 
-        // 저장 경로
-        String saveDir = application.getRealPath("/images/");
-
-        // 기존 이미지 가져오기 (DB에서 미리 채워둔다고 가정)
-        String shop_logo = vo.getShop_logo() != null ? vo.getShop_logo() : "no_file";
-        String shop_img = vo.getShop_img() != null ? vo.getShop_img() : "no_file";
-
-        for (int i = 0; i < photo_array.length; i++) {
-            MultipartFile photo = photo_array[i];
-            if (!photo.isEmpty()) {
-                String filename = photo.getOriginalFilename();
-                File f = new File(saveDir, filename);
-
-                // 중복 파일명 처리
-                if (f.exists()) {
-                    long tm = System.currentTimeMillis();
-                    filename = tm + "_" + filename;
-                    f = new File(saveDir, filename);
-                }
-
-                // 파일 복사
-                photo.transferTo(f);
-
-                if (i == 0) {
-                    shop_logo = filename;
-                } else if (i == 1) {
-                    shop_img = filename;
-                }
-            }
-        }
-
-        // 변경된 이미지명 세팅
-        vo.setShop_logo(shop_logo);
-        vo.setShop_img(shop_img);
-
-        // DB update
+        // DB 업데이트
         int res = shopInfoMapper.shopModify(vo);
-
         return res;
-
     }
 
     // 메뉴 전체 조회
@@ -210,47 +240,125 @@ public class ShopServiceImpl implements ShopService {
 
     // 메뉴 수정
     @Override
-    public int menuModify(ShopMenuVo vo, MultipartFile photo) throws IllegalStateException, IOException {
+    public int menuModify(ShopMenuVo vo) {
         ShopInfoVo shop = (ShopInfoVo) session.getAttribute("shop");
 
         // \n -> <br>
         String menu_explain = vo.getMenu_explain().replaceAll("\n", "<br>");
         vo.setMenu_explain(menu_explain);
 
-        // 저장위치 얻어오기
+        int res = shopMenuMapper.menuModify(vo);
+        return res;
+    }
+
+    // 메뉴 사진 수정
+    @Override
+    public int menuPhotoUpload(ShopMenuVo vo, MultipartFile photo) throws IllegalStateException, IOException {
+
+        // 저장 경로
         String saveDir = application.getRealPath("/images/");
 
-        System.out.println(saveDir);
+        // 기존 이미지 파일명 (DB에서 채워져 있다고 가정)
+        // String menu_img = vo.getMenu_img() != null ? vo.getMenu_img() : "no_file";
 
-        // String filename = "no_file";
-
-        // 기존 이미지 가져오기 (DB에서 미리 채워둔다고 가정)
-        String filename = vo.getMenu_img() != null ? vo.getMenu_img() : "no_file";
-
-        // 업로드된 화일이 있으면
-        if (photo.isEmpty() == false) { // if(!photo.isEmpty())
-
-            // 업로드된 화일이름 얻어오기
-            filename = photo.getOriginalFilename();
-
-            File f = new File(saveDir, filename);
-            // 화일존재유무체크
-            if (f.exists()) {
-
-                long tm = System.currentTimeMillis();
-                // 화일이름변경 : 시간_화일명
-                filename = String.format("%d_%s", tm, filename);
-
-                f = new File(saveDir, filename);
-            }
-
-            // 임시화일(photo)을 f로 지정된 화일로 복사
-            photo.transferTo(f);
-
+        // 기존 이미지 삭제
+        if (vo.getMenu_img() != null && !"no_file".equals(vo.getMenu_img())) {
+            File oldImg = new File(saveDir, vo.getMenu_img());
+            if (oldImg.exists())
+                oldImg.delete();
         }
+
+        String menu_img = photo.getOriginalFilename();
+
+        String filename = menu_img;
+
+        // 중복 방지를 위한 파일명 처리
+        File f = new File(saveDir, filename);
+        if (f.exists()) {
+            long tm = System.currentTimeMillis();
+            filename = tm + "_" + filename;
+            f = new File(saveDir, filename);
+        }
+        // 파일 저장
+        photo.transferTo(f);
+
         vo.setMenu_img(filename);
 
-        int res = shopMenuMapper.menuModify(vo);
+        int res = shopMenuMapper.menuPhotoUpload(vo);
+
+        return res;
+    }
+
+    // 가게 사진 수정
+    @Override
+    public int PhotoUpload(ShopInfoVo vo, MultipartFile photo) throws IllegalStateException, IOException {
+        // 저장 경로
+        String saveDir = application.getRealPath("/images/");
+
+        // 기존 이미지 파일명 (DB에서 채워져 있다고 가정)
+        // String menu_img = vo.getMenu_img() != null ? vo.getMenu_img() : "no_file";
+
+        // 기존 이미지 삭제
+        if (vo.getShop_img() != null && !"no_file".equals(vo.getShop_img())) {
+            File oldImg = new File(saveDir, vo.getShop_img());
+            if (oldImg.exists())
+                oldImg.delete();
+        }
+
+        String shop_img = photo.getOriginalFilename();
+
+        String filename = shop_img;
+
+        // 중복 방지를 위한 파일명 처리
+        File f = new File(saveDir, filename);
+        if (f.exists()) {
+            long tm = System.currentTimeMillis();
+            filename = tm + "_" + filename;
+            f = new File(saveDir, filename);
+        }
+        // 파일 저장
+        photo.transferTo(f);
+
+        vo.setShop_img(filename);
+
+        int res = shopInfoMapper.PhotoUpload(vo);
+
+        return res;
+    }
+
+    // 가게 로고 수정
+    @Override
+    public int LogoUpload(ShopInfoVo vo, MultipartFile photo) throws IllegalStateException, IOException {
+        // 저장 경로
+        String saveDir = application.getRealPath("/images/");
+
+        // 기존 이미지 파일명 (DB에서 채워져 있다고 가정)
+        // String menu_img = vo.getMenu_img() != null ? vo.getMenu_img() : "no_file";
+
+        // 기존 이미지 삭제
+        if (vo.getShop_logo() != null && !"no_file".equals(vo.getShop_logo())) {
+            File oldImg = new File(saveDir, vo.getShop_logo());
+            if (oldImg.exists())
+                oldImg.delete();
+        }
+
+        String shop_logo = photo.getOriginalFilename();
+
+        String filename = shop_logo;
+
+        // 중복 방지를 위한 파일명 처리
+        File f = new File(saveDir, filename);
+        if (f.exists()) {
+            long tm = System.currentTimeMillis();
+            filename = tm + "_" + filename;
+            f = new File(saveDir, filename);
+        }
+        // 파일 저장
+        photo.transferTo(f);
+
+        vo.setShop_logo(filename);
+
+        int res = shopInfoMapper.LogoUpload(vo);
 
         return res;
     }
