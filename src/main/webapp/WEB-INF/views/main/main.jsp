@@ -67,36 +67,6 @@
       <nav class="navbar">
         <%@ include file="navbar.jsp" %>
       </nav>
-      <header class="header">헤더</header>
-      <div class="content">
-        <div id="mybox">
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-        </div>
-      </div>
-  <body>
-    <nav class="navbar">    <div class="col-sm-9 col-md-9" style="text-align: right">
-     
-      <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
-      <c:if test="${ empty sessionScope.user }">
-	      <input class="btn btn-primary"  type="button" value="로그인" 
-		            onclick="location.href='login_form.do'">
-	  </c:if>  
-	  
-	  <!-- 로그인이 되어있을 경우(session에 user가 있냐?) -->
-      <c:if test="${ not empty sessionScope.user }">
-          <b>${ user.mem_name }</b>님 환영합니다
-	      <input class="btn btn-primary"  type="button" value="로그아웃" 
-		         onclick="location.href='logout.do'">
-	  </c:if>   </nav>
     <header class="header">
       <%@ include file="header.jsp" %> 헤더</header>
     <div class="content">
