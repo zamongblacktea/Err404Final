@@ -27,6 +27,10 @@ public interface OwnerMapper {
 
 	public int delete(int owner_idx);
 
-	public String selectOneFindInfo(String email);
+	//사장님 이메일 인증 api
+	public int selectOneFromEmail(String email);
+
+	//아이디 비밀번호 찾기
+	public OwnerVo selectOneFindInfo(String email);
 
 }

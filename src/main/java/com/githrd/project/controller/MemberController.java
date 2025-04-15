@@ -246,7 +246,7 @@ public class MemberController {
 		// 해당세션에 있는 user정보 삭제
 		session.removeAttribute("user");
 
-		return "redirect:../member/list.do";
+		return "redirect:../main/main.do";
 	}
 
 	// 네이버 간편회원가입폼 띄우기
@@ -424,13 +424,68 @@ public class MemberController {
 		return "redirect:list.do";
 	}// end: delete_rider
 
-	//아이디 비밀번호 찾기 페이지 폼
-	@RequestMapping("find_info.do")
-	public String find_info(String rider_email,String owner_email) {
+	//라이더 아이디 비밀번호 찾기 페이지 
+	@RequestMapping("rider_find.do")
+	public String findRider() {
 		
 		
-		return "member/member_find_form";
+		return "member/member_find_rider";
 	}
+
+	//사장님 아이디 비밀번호 찾기 페이지 
+	@RequestMapping("owner_find.do")
+	public String findOwner() {
+		
+		
+		return "member/member_find_owner";
+	}
+
+	//라이더 아이디 찾기
+	@RequestMapping("rider_verifyId.do")
+	public String riderVerfyId(@RequestParam String rider_email,Model model) {
+		
+
+		//이메일로 조회
+		RiderVo rider = riderMapper.selectOneFindInfo(rider_email);
+
+		//라이더 아이디 가져오기
+		String rider_id = rider.getRider_id();
+
+		model.addAttribute("rider_id", rider_id);
+	
+		return "member/member_rider_verify_id";
+	}
+
+
+	//라이더 비밀번호 변경 페이지
+	@RequestMapping("rider_verifyPwd.do")
+	public String riderChangePwd(@RequestParam String rider_email,Model model) {
+		
+	
+		return "member/member_rider_verify_pwd";
+	}
+
+
+	//라이더 비밀번호 변경
+	@RequestMapping("rider_changePwd.do")
+	public String riderVerifyPwd(@RequestParam String rider_email,
+								 @RequestParam String rider_pwd,
+								 RiderVo vo) {
+		
+
+
+		//이메일로 조회
+		RiderVo rider = riderMapper.selectOneFindInfo(rider_email);
+
+		// IP구해서 vo에 넣기
+		String rider_ip = request.getRemoteAddr();
+		vo.setRider_ip(rider_ip);
+
+
+		int res = riderMapper.pwdUpdate(vo); //비밀번호 update
+
+		return "redirect:login_form.do";//로그인 화면으로 redirect
+	}//end: rider_changePwd
 	
 
 }// end: class memberController

@@ -92,6 +92,23 @@
       margin-top: 40px;
     }
   </style>
+
+  <script>
+    function sendId(f){
+      let email = f.owner_email.value.trim();
+
+
+
+
+      f.method = "POST";
+      f.action = "/EmailAuth";
+
+
+    };
+
+
+
+  </script>
 </head>
 <body>
   <div class="container">
@@ -102,19 +119,19 @@
       <div class="tab active" onclick="showTab('id')">아이디 찾기</div>
       <div class="tab" onclick="showTab('pw')">비밀번호 찾기</div>
     </div>
+    <form>
     <div id="id" class="form-section active">
       <div class="info">Eating 아이디를 모르시나요?<br>가입시 인증한 이메일로 아이디를 찾을 수 있습니다.</div>
       <br>
       <input type="email" class="input-box" placeholder="이메일 주소 입력">
-      <button class="btn">확인</button>
+      <input type="button" class="btn" value="확인" onclick="sendId(this.form);">
     </div>
     <div id="pw" class="form-section">
       <div class="info">가입시 인증한 이메일로 비밀번호를 재설정할 수 있습니다.</div>
       <input type="text" class="input-box" placeholder="이메일 주소 입력">
-      <button class="btn">확인</button>
+      <input type="button" class="btn" value="확인" onclick="sendPwd(this.form);">
     </div>
-
-    <footer>푸터</footer>
+  </form>
   </div>
 
   <script>
