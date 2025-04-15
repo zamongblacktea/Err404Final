@@ -15,7 +15,6 @@ import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
-import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.RiderVo;
 
 import jakarta.servlet.http.HttpServletRequest;
