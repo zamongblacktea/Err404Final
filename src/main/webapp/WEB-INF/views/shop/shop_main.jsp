@@ -34,7 +34,7 @@
       }
 
       .container-flex {
-        height: 95vh;
+        /* height: 95vh; */
         display: flex;
         flex-direction: row;
       }
@@ -127,7 +127,7 @@
         </div>
         <div class="menu-group">
           <div class="menu-title">가맹점관리</div>
-          <a onclick="loadContent('shop_info.do')">가게정보</a>
+          <a onclick="loadContent('modify_form.do')">가게정보</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">주문관리</div>

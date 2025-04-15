@@ -43,7 +43,7 @@
 	<update id="PhotoUpload" parameterType="ShopInfoVo"> update shop_info set shop_img = #{shop_img}
 		where shop_idx = #{shop_idx} </update>
 
-	<!-- 가게 동록 여부 -->
+	<!-- 가게 등록 여부 -->
 	<select id="countShopByOwnerIdx" parameterType="int" resultType="int"> select IFNULL(COUNT(*),
 		0) from shop_info where owner_idx = #{owner_idx} </select>
 </mapper>

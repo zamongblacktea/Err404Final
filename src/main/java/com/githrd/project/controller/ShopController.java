@@ -251,7 +251,11 @@ public class ShopController {
 
     // 가게 정보 수정
     @PostMapping("/modify.do")
-    public String shop_modify(ShopInfoVo vo, Model model) {
+    public String shop_modify(ShopInfoVo vo, RedirectAttributes ra) {
+
+        // vo.getShop_idx();
+        System.out.println("넘어온 휴무일: " + vo.getShop_closeday());
+
 
         int shop_modify_no = 0;
 
@@ -265,9 +269,10 @@ public class ShopController {
             e.printStackTrace();
         }
 
-        model.addAttribute("shop_modify_no", shop_modify_no);
+        ra.addAttribute("shop_idx", vo.getShop_idx());
 
         return "redirect:order_list.do";
+        // return "redirect:main.do";
     }
 
     // 가게 사진 수정
