@@ -297,14 +297,24 @@
               <tr>
                 <th>휴무일</th>
                 <td>
-                  <input type="checkbox" name="shop_closeday" id="" value="" /><label for="">연중무휴</label>&nbsp;
+                  <!-- <input type="checkbox" name="shop_closeday" id="" value="" /><label for="">연중무휴</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="monday" value="monday" /><label for="monday"> 월</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="tuesday" value="tuesday" /><label for="tuesday"> 화</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="wednesday" value="wednesday" /><label for="wednesday"> 수</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="thursday" value="thursday" /><label for="thursday"> 목</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="friday" value="friday" /><label for="friday"> 금</label>&nbsp;
                   <input type="checkbox" name="shop_closeday" id="saturday" value="saturday" /><label for="saturday"> 토</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="sunday" value="sunday" /><label for="sunday"> 일</label>
+                  <input type="checkbox" name="shop_closeday" id="sunday" value="sunday" /><label for="sunday"> 일</label> -->
+                  <select name="shop_closeday" class="form-control" id="close-select">
+                    <option value="">연중무휴</option>
+                    <option value="Monday">월요일</option>
+                    <option value="Tuesday">화요일</option>
+                    <option value="Wednesday">수요일</option>
+                    <option value="Thursday">목요일</option>
+                    <option value="friday">금요일</option>
+                    <option value="Saturday">토요일</option>
+                    <option value="Sunday">일요일</option>
+                  </select>
                 </td>
               </tr>
 

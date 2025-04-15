@@ -70,12 +70,12 @@
 
         if (photo == "") {
           alert("메뉴사진을 입력하세요!");
-          f.menu_img.value = "";
-          f.menu_img.focus();
+          f.photo.value = "";
+          f.photo.focus();
           return;
         }
 
-        f.action = "menu_insert.do"; // MenuInsertAction
+        f.action = "menu_modify.do"; // MenuModifyAction
         f.submit();
       } //end:send()
     </script>
@@ -83,7 +83,6 @@
   <body>
     <form class="form-inline" method="post" enctype="multipart/form-data">
       <input type="hidden" name="shop_idx" value="${shop_idx}" />
-      가게 번호 : ${shop_idx}
       <div id="box">
         <div class="panel panel-primary">
           <div class="panel-heading"><h4>메뉴정보입력</h4></div>

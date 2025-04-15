@@ -18,6 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectOneFromId"  parameterType="String"  resultType="OwnerVo">
      select * from owner where owner_id=#{ owner_id }
   </select>
+
+  <select id="selectOneFindInfo" parameterType="String"  resultType="RiderVo">
+
+   SELECT owner_id FROM owner WHERE owner_email = #{email}
+
+  </select>
   
   <!-- 회원추가 -->
   <insert id="insert"  parameterType="OwnerVo">
@@ -55,15 +61,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

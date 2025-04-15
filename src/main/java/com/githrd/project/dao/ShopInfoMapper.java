@@ -18,4 +18,13 @@ public interface ShopInfoMapper {
     // 가게 입력
     int shopInsert(ShopInfoVo vo);
 
+    // 가게 수정
+    int shopModify(ShopInfoVo vo);
+
+    // 가게 사진 수정
+    int PhotoUpload(ShopInfoVo vo);
+
+    // 로고 수정
+    int LogoUpload(ShopInfoVo vo);
+
 }

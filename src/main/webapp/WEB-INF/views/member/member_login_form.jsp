@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+<link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
 <!-- SweetAlert2 설정 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -91,10 +91,10 @@ $(document).ready(function(){
       form_inputs.hide();
       mem.show();
       sns.hide();
-      hidden_input.css({
-        "opacity" : "1",
-        "display" : "none"
-      });
+      // hidden_input.css({
+      //   "opacity" : "1",
+      //   "display" : "none"
+      // });
       signin_btn.text("Login");
     });
 
@@ -109,10 +109,10 @@ $(document).ready(function(){
       mem.hide();
       rider_btn.hide();
       rider_info.hide();
-      hidden_input.css({
-        "opacity" : "1",
-        "display" : "none"
-      });
+      // hidden_input.css({
+      //   "opacity" : "1",
+      //   "display" : "none"
+      // });
       signin_btn.text("Login");
     });
 
@@ -127,10 +127,10 @@ $(document).ready(function(){
       mem.hide();
       owner_btn.hide();
       owner_info.hide();
-      hidden_input.css({
-        "opacity" : "1",
-        "display" : "none"
-      });
+      // hidden_input.css({
+      //   "opacity" : "1",
+      //   "display" : "none"
+      // });
       signin_btn.text("Login");
     });
     
@@ -350,7 +350,6 @@ h1 {
 
 .links li:nth-child(3) {
   opacity: 0.6;
-  float: right;
 }
 
 .links li:nth-child(3):hover {
@@ -377,8 +376,8 @@ form .input__block {
   position: relative;
 }
 
-form .first-input__block::before {
-  content: "";
+/* form .first-input__block::before {
+  content: "sdf";
   position: absolute;
   top: -15px;
   left: 50px;
@@ -390,7 +389,7 @@ form .first-input__block::before {
   border-right: 15px solid transparent;
   border-bottom: 15px solid rgba(15, 19, 42, 0.1);
   transition: 0.2s linear;
-}
+} */
 
 form .signup-input__block::before {
   content: "";
@@ -436,7 +435,7 @@ form .input__block input.repeat__password {
 }
 
 form .signin__btn {
-  background: #ff6b3f;
+  background: #ff694a;
   color: white;
   display: block;
   width: 92.5%;
@@ -576,7 +575,18 @@ footer p a {
   margin: 0 5px;
 }
 
+.find{
+  display: block;
+  width: 90%;
 
+  max-width: 680px;
+  height: 40px;
+  margin: 0 auto;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+
+}
 
 
 </style>
@@ -612,11 +622,12 @@ footer p a {
         <i class="fa fa-google"></i>
         Sign in with Google
         </button>
-        <!-- google button -->
+        <!-- 카카오 로그인 -->
         <button class="kakao__btn mem" type="button" onclick="location.href=kakaoUrl">
         <i class="fa fa-github"> <img src="../images/kakao.png" ></i>
         </button>
         <div class="mem">
+        <!-- 네이버 로그인 -->
         <button class="naver__btn mem" type="button" onclick="location.href=naverUrl">
            <img src="../images/naver.png"> Naver 계정 로그인
         </button>
@@ -627,7 +638,7 @@ footer p a {
 
       <!-- owner -->
       <!-- id input -->
-      <div class="first-input input__block first-input__block owner_info">
+      <div class="first-input input__block owner_info">
          <input placeholder="사장님 아이디" class="input" id="email" name="owner_id"/>
       </div>
       <!-- password input -->
@@ -637,17 +648,17 @@ footer p a {
 
       <!-- rider -->
       <!-- id input -->
-      <div class="first-input input__block first-input__block rider_info">
+      <div class="first-input input__block rider_info">
          <input placeholder="라이더 아이디" class="input" id="email" name="rider_id"/>
       </div>
       <!-- password input -->
       <div class="input__block rider_info">
          <input type="password" placeholder="비밀번호" class="input" id="password" name="rider_pwd"   />
       </div>
-      
-      <!-- sign in owner button -->
+      <div class="sns find"><a href="find_info.do">▶아이디 / 비밀번호 찾기</a></div>
+      <!-- 사장님 로그인 버튼 -->
       <input class="signin__btn input__block" id="owner_btn" value="Login" style="text-align: center;" onclick="owner_send(this.form);">
-      <!-- sign in rider button -->
+      <!-- 라이더 로그인 버튼 -->
       <input class="signin__btn input__block" id="rider_btn" value="Login" style="text-align: center;" onclick="rider_send(this.form);">
     </form>
     <!-- separator -->
@@ -655,12 +666,12 @@ footer p a {
     <div class="separator">
       <p>OR</p>
     </div>
-    <!-- google button -->
+    <!-- 회원가입 사장님 -->
     <button class="google__btn" onclick="location.href='owner_form.do'">
       <i class="fa fa-google"></i>
       사장님 회원 가입
     </button>
-    <!-- google button -->
+    <!-- 회원가입 라이더 -->
     <button class="rider__btn" onclick="location.href='rider_form.do'">
       <i class="fa fa-github"></i>
       라이더 회원 가입

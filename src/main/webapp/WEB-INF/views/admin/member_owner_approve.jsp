@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
 <!-- bootstrap 3.x 사용설정 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -141,7 +141,6 @@
         <th>이름</th>
         <th>아이디</th>
         <th>이메일</th>
-        <th>사업장 주소</th>
         <th>사업자 번호</th>
         <th>승인</th>
         <th></th>
@@ -172,7 +171,6 @@
            <td>${ vo.owner_name }</td>
            <td>${ vo.owner_id }</td>
            <td>${ vo.owner_email }</td>
-           <td>${ vo.owner_zipcode } ${ vo.owner_addr }</td>
            <td>${ vo.owner_num }</td>
            <td>${ vo.owner_status }</td>
            

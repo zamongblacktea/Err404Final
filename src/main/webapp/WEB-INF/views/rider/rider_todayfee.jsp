@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>당일 정산내역 확인페이지</title>
+    <!-- 파비콘 -->
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 </head>
 <body>
     모달로 오늘의 정산내역을 확인할 수 있는 페이지 띄우기
