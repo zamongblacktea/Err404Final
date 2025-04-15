@@ -11,11 +11,12 @@
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
     <script>
-        function rider_accept(order_idx,rider_idx){
+
+      function rider_accept(order_idx,rider_idx){
 
           $.ajax({
             url : "rider_accept.do",
-            //컨트롤로에게 보내야할 데이터들
+            //컨트롤러에게 보내야할 데이터들 order_idx,rider_idx
             data: {"order_idx":order_idx,"rider_idx":rider_idx},
             //컨트롤러가 어떤 데이터형식으로 받을것인가 ? json
             dataType:"json",
@@ -33,7 +34,7 @@
             }
   
           });
-       }//end: fuction () 
+       }//end: fuction rider_accept(order_idx,rider_idx)
 
 
     </script>
@@ -66,7 +67,7 @@
 
         <input  type="button"  value="경로보기"    onclick="location.href='../route/route.do'" />
         <!-- 배차받기를 누르면 배달현황으로 넘어가기 -->
-        <input type="button" value="배차받기" onclick="rider_accept('${ vo.order_idx }','${ vo.rider_idx}');" />
+        <input type="button" value="배차받기" onclick="rider_accept('${ vo.order_idx }','${ user.rider_idx}');" />
         <!-- 배차받기 누르면 고객,가게쪽으로 알림뜨드록 -->
          <hr>
       </c:forEach>

@@ -5,8 +5,8 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
-@Alias("TestRider1Vo")
-public class TestRider1Vo {
+@Alias("DeliveryVo")
+public class DeliveryVo {
     int order_idx;
     String shop_name;
     String shop_addr1;

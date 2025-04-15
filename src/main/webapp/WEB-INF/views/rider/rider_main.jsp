@@ -36,11 +36,14 @@ pageEncoding="UTF-8"%>
 
 </style>
 <script>
+  const rider_idx = document.getElementById("rider_idx");
+
   function standby(){
   		$.ajax({ //key value jason형식
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
 			url  : "standby.do",
+      data :{"rider_idx" : rider_idx},
 			success: function(result_data){
 				
 				//result_data <=서버로부터 응답받은 데이터
@@ -59,6 +62,7 @@ pageEncoding="UTF-8"%>
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
 			url  : "progress.do",
+      data :{"rider_idx" : rider_idx},
 			success: function(result_data){
 				
 				//result_data <=서버로부터 응답받은 데이터
@@ -76,7 +80,9 @@ pageEncoding="UTF-8"%>
   		$.ajax({ //key value jason형식
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
-			url  : "complete.do",
+			data: {"rider_idx":rider_idx},
+      url  : "complete.do",
+
 			success: function(result_data){
 				
 				//result_data <=서버로부터 응답받은 데이터
@@ -93,9 +99,13 @@ pageEncoding="UTF-8"%>
 </script>
   </head>
   <body>
-    <div  class="nav" style="text-align: center;">
+    <br>
+    <p style="text-align: center;">오늘도 안전운행! 라이더님 전용 화면입니다*^^* </p>
+    <div  class="nav" style="text-align: center; padding-left: 700px;">
     <!-- 바인딩해둔곳 추가하기 -->
-    라이더 페이지 ${rider_id}님 환영합니다.
+    ${sessionScope.user.rider_name}님 환영합니다.
+    <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
+   
       <input type="button" value="로그아웃" />
 
       <input type="button" value="마이페이지" />

@@ -190,7 +190,7 @@ public class MemberController {
 
 
 
-	// 로그인
+	// 라이더 로그인
 	@RequestMapping("rider_login.do")
 	public String riderLogin(String rider_id, String rider_pwd,
 			@RequestParam(name = "url", defaultValue = "") String url,
@@ -234,7 +234,7 @@ public class MemberController {
 		// DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
 
 		if (url.isEmpty())
-			return "redirect:../main/main.do"; // 메인화면 이동시켜라
+			return "redirect:../rider/main.do"; // 메인화면 이동시켜라
 		else
 			return "redirect:" + url; // 원래있던 페이지로 이동시켜라
 	}
