@@ -174,6 +174,7 @@
   </head>
   <body>
     <form method="post" class="form-inline" enctype="multipart/form-data">
+      <input type="hidden" name="owner_idx" value="${user.owner_idx}" />
       <div id="box">
         <div class="panel panel-primary">
           <div class="panel-heading"><h4>가게정보입력</h4></div>

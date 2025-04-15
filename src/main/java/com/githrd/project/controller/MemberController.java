@@ -189,7 +189,7 @@ public class MemberController {
 			if (shopCount == 0) {
 				return "redirect:../shop/insert_form.do?owner_idx=" + user.getOwner_idx(); // 가게 등록 페이지
 			} else {
-				return "redirect:../shop/order_list.do"; // 주문 현황 페이지
+				return "redirect:../shop/main.do"; // 주문 현황 페이지
 			}
 		}
 	}

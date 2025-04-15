@@ -9,14 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.githrd.project.dao.OwnerMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
 import com.githrd.project.service.ShopService;
@@ -27,7 +26,6 @@ import com.githrd.project.vo.ShopMenuVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/shop")
@@ -51,67 +49,106 @@ public class ShopController {
     @Autowired
     ServletContext application;
 
-    // 주문현황리스트
-    @GetMapping("/order_list.do")
-    public String order_list() {
-        return "shop/shop_order_list";
-    }
+    // 가게 main
+    @GetMapping("/main.do")
+    public String main(Model model) {
+        // 1. 로그인한 사장님 정보 꺼내오기
+        OwnerVo owner = (OwnerVo) session.getAttribute("user");
 
-    // 주문완료리스트
-    @GetMapping("/order_list_complete.do")
-    public String order_list_complete() {
-        return "shop/shop_order_list";
+        if (owner == null) {
+            return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+        }
+
+        int owner_idx = owner.getOwner_idx();
+
+        // 2. 사장님이 등록한 가게 정보 가져오기
+        ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
+
+        // 3. shop이 null이면 → 아직 가게 등록 안 한 상태
+        if (shop == null) {
+            return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
+        }
+
+        // 4. 세션에 shop_idx 저장 (필요 시)
+        session.setAttribute("shop_idx", shop.getShop_idx());
+
+        // 5. 모델에 담기
+        model.addAttribute("owner_idx", owner.getOwner_idx());
+        model.addAttribute("shop_idx", shop.getShop_idx());
+
+        return "shop/shop_main";
     }
 
     // 가게 메뉴 조회
     @GetMapping("/menu_list.do")
-    public String menu_list(@RequestParam int shop_idx, Model model) {
+    public String menu_list(@RequestParam(required = false) Integer shop_idx, Model model) {
+        // shop_idx가 없는 경우 세션에서 가져오기
+        if (shop_idx == null) {
+            shop_idx = (Integer) session.getAttribute("shop_idx");
+            if (shop_idx == null) {
+                return "redirect:/shop/main.do"; // 세션에도 없으면 메인으로 리다이렉트
+            }
+        }
 
         List<ShopMenuVo> list = shopService.selectMenuAll(shop_idx);
-
         model.addAttribute("list", list);
         return "shop/menu_list";
     }
 
     // 가게 메뉴 등록 폼
     @GetMapping("/menu_insert_form.do")
-    public String menu_insert_form(@RequestParam(name = "shop_idx") int shop_idx, Model model) {
+    public String menu_insert_form(@RequestParam int shop_idx, Model model) {
 
-        // ShopInfoVo shop_info_vo = shopInfoMapper.selectShopOne(shop_idx);
+        session.setAttribute("shop_idx", shop_idx);
 
-        // model.addAttribute("shop_list", shop_list);
+        model.addAttribute("shop_idx", shop_idx);
         return "shop/menu_insert_form";
     }
 
     // 가게 메뉴 등록
     @PostMapping("/menu_insert.do")
-    public String menu_insert(ShopMenuVo vo, @RequestParam MultipartFile photo, Model model) {
-
-        int menu_insert_no = 0;
-
-        // 임시로 가게 idx를 1로 고정
-        // vo.setShop_idx(1);
-
+    @ResponseBody
+    public Map<String, Object> menu_insert(ShopMenuVo vo, @RequestParam MultipartFile photo) {
+        Map<String, Object> response = new HashMap<>();
+        
         try {
-            menu_insert_no = shopService.menuInsert(vo, photo);
-        } catch (IllegalStateException | IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // 세션에서 shop_idx 가져오기
+            Integer shop_idx = (Integer) session.getAttribute("shop_idx");
+            if (shop_idx == null) {
+                response.put("success", false);
+                response.put("message", "가게 정보를 찾을 수 없습니다.");
+                return response;
+            }
+            
+            vo.setShop_idx(shop_idx);
+            int result = shopService.menuInsert(vo, photo);
+            
+            if (result > 0) {
+                response.put("success", true);
+                response.put("message", "메뉴가 성공적으로 등록되었습니다.");
+            } else {
+                response.put("success", false);
+                response.put("message", "메뉴 등록에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "오류가 발생했습니다: " + e.getMessage());
         }
-
-        model.addAttribute("menu_insert_no", menu_insert_no);
-
-        return "redirect:menu_list.do";
+        
+        return response;
     }
 
     // 메뉴 수정 폼
     @GetMapping("/menu_modify_form.do")
     public String menu_modify_form(@RequestParam int menu_idx,
-            @RequestParam int shop_idx, Model model) {
+            @RequestParam Integer shop_idx, Model model) {
 
-        ShopMenuVo vo = shopService.selectMenuOne(menu_idx);
+        // 세션에서 꺼내기 (파라미터로도 받을 수 있지만 세션 우선)
+        if (shop_idx == null) {
+            shop_idx = (Integer) session.getAttribute("shop_idx");
+        }
 
-        model.addAttribute("vo", vo);
+        model.addAttribute("shop_idx", shop_idx);
 
         return "shop/menu_modify_form";
     }
@@ -174,7 +211,8 @@ public class ShopController {
 
     // 가게 등록
     @PostMapping("/insert.do")
-    public String shop_insert(ShopInfoVo vo, @RequestParam(name = "photo") MultipartFile[] photo_array, Model model) {
+    public String shop_insert(ShopInfoVo vo, @RequestParam(name = "photo") MultipartFile[] photo_array,
+            RedirectAttributes ra) {
 
         int shop_insert_no = 0;
 
@@ -188,8 +226,10 @@ public class ShopController {
             e.printStackTrace();
         }
 
+        session.setAttribute("shop_idx", shop_insert_no);
+
         // Redirect시 Parameter로 이용
-        model.addAttribute("shop_insert_no", shop_insert_no);
+        ra.addAttribute("shop_idx", shop_insert_no);
 
         System.out.println("vo 등록: " + vo);
 
@@ -283,6 +323,46 @@ public class ShopController {
         }
 
         return map;
+    }
+
+    // 주문현황리스트
+    @GetMapping("/order_list.do")
+    public String order_list(Model model) {
+        OwnerVo owner = (OwnerVo) session.getAttribute("user");
+        int owner_idx = owner.getOwner_idx();
+        ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
+        
+        if (shop == null) {
+            return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
+        }
+
+        session.setAttribute("shop_idx", shop.getShop_idx());
+        model.addAttribute("shop", shop);
+        return "shop/shop_order_list";
+    }
+
+    // 주문완료리스트
+    @GetMapping("/order_list_complete.do")
+    public String order_list_complete() {
+        return "shop/shop_order_list";
+    }
+
+    // 사장 정보
+    @GetMapping("/owner_info.do")
+    public String owner_info() {
+        return "shop/owner_info";
+    }
+
+    // 가게 정보
+    @GetMapping("/shop_info.do")
+    public String shop_info() {
+        return "shop/shop_info";
+    }
+
+    // 리뷰 목록
+    @GetMapping("/review_list.do")
+    public String review_list() {
+        return "shop/review_list";
     }
 
 }
