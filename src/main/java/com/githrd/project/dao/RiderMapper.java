@@ -21,15 +21,17 @@ public interface RiderMapper {
 	public RiderVo selectOneFromId(String rider_id);
 
 	//rider_email api 인증 가입
-	public int selectOneFromEmail(String rider_email);
+	public int selectOneFromEmail(String email);
 
 	//rider_email 인증 아이디 찾기/비밀번호 변경
-	public String selectOneFindInfo(String email);
+	public RiderVo selectOneFindInfo(String email);
 
 	//추가
 	public int insert(RiderVo vo);
 
 	public int update(RiderVo vo);
+
+	public int pwdUpdate(RiderVo vo);
 
 	public int delete(int rider_idx);
 

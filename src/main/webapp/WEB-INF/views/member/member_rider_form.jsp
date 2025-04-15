@@ -207,7 +207,7 @@ $("#emailAuth").click(function() {
     		
     	//Ajax로 전송
         $.ajax({
-        	url : "/EmailAuth",
+        	url : "/EmailAuthR",
         	data : {
         		email : email
         	},
@@ -216,7 +216,7 @@ $("#emailAuth").click(function() {
         	success : function(res_data) {
 
             //이메일 중복가입 방지
-            if(res_data == -1){//이미 가입된 이메일이 있을 때
+            if(res_data == 1){//이미 가입된 이메일이 있을 때
 
 
 

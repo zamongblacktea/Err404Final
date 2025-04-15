@@ -170,7 +170,7 @@
 			      <!-- 이름 -->
 			      <tr>
 			         <th>이름</th>
-			         <td><input  class="form-control" required="required" name="mem_name" value="${ vo.mem_name }" style="width: 30%;"></td>
+			         <td><input  class="form-control" readonly name="mem_name" value="${ vo.mem_name }" style="width: 30%;"></td>
 			      </tr>
 			      
 			      <!-- 아이디 -->
@@ -180,19 +180,11 @@
 			             <input  class="form-control"  name="mem_id"  value="${ vo.mem_id }" style="width: 30%;" readonly="readonly">
 			         </td>
 			      </tr>
-			      
-			      <!-- 비밀번호 -->
+				  <!-- 아이디 -->
 			      <tr>
-			         <th>비밀번호</th>
-			         <td><input  class="form-control" required="required" type="password"  name="mem_pwd"  
-			                     value="${ vo.mem_pwd }" style="width: 30%;"></td>
-			      </tr>
-			      
-			      <!-- 이메일 -->
-			      <tr>
-			         <th>이메일</th>
-			         <td><input  class="form-control"  required="required"  type="email" name="mem_email" 
-			                     value="${ vo.mem_email }" style="width: 30%;">
+			         <th>닉네임</th>
+			         <td>
+			             <input  class="form-control"  name="mem_nickname"  value="${ vo.mem_nickname }" style="width: 30%;" required>
 			         </td>
 			      </tr>
 			      
@@ -213,14 +205,11 @@
 			                     value="${ vo.mem_curaddr }" style="width: 100%;"></td>
 			      </tr>
 			      
-			      <!-- 등급  -->
+				<!-- 아이디 -->
 			      <tr>
-			         <th>등급</th>
+			         <th>연동 SNS</th>
 			         <td>
-			             <select class="form-control"  name="mem_grade" id="mem_grade">
-			                <option value="일반">일반</option>
-			                <option value="관리자">관리자</option>
-			             </select> 
+			             <input  class="form-control"  name="mem_type"  value="${ vo.mem_type }" style="width: 30%;" readonly="readonly">
 			         </td>
 			      </tr>
 			      

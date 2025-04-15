@@ -62,6 +62,7 @@
 
 <!-- 로그인 페이지 js -->
 <script>
+  //API url 변수 설정
   const naverUrl = "${naverUrl}";
   const kakaoUrl = "${kakaoUrl}";
 
@@ -655,7 +656,8 @@ footer p a {
       <div class="input__block rider_info">
          <input type="password" placeholder="비밀번호" class="input" id="password" name="rider_pwd"   />
       </div>
-      <div class="sns find"><a href="find_info.do">▶아이디 / 비밀번호 찾기</a></div>
+      <div class="sns find rider_info"><a href="rider_find.do">▶아이디 / 비밀번호 찾기</a></div>
+      <div class="sns find owner_info"><a href="owner_find.do">▶아이디 / 비밀번호 찾기</a></div>
       <!-- 사장님 로그인 버튼 -->
       <input class="signin__btn input__block" id="owner_btn" value="Login" style="text-align: center;" onclick="owner_send(this.form);">
       <!-- 라이더 로그인 버튼 -->

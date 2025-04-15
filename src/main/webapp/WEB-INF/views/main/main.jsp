@@ -12,8 +12,6 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
-      <!-- SweetAlert2 설정 -->
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <style>
       * {
@@ -26,6 +24,7 @@
         width: 100%;
         height: 300px;
       }
+
       
       #mybox {
       margin: 0 auto;
@@ -53,7 +52,7 @@
         <%@ include file="navbar.jsp" %>
       </nav>
       <header class="header">
-        <%@ include file="header.jsp" %> 헤더
+        <%@ include file="header.jsp" %>
       </header>
       <div class="content">
         <div id="mybox">

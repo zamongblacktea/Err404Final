@@ -19,11 +19,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from owner where owner_id=#{ owner_id }
   </select>
 
-  <select id="selectOneFindInfo" parameterType="String"  resultType="RiderVo">
+   <!-- 사장님 이메일 인증 api -->
+  <select id="selectOneFromEmail" parameterType="String"  resultType="OwnerVo">
 
-   SELECT owner_id FROM owner WHERE owner_email = #{email}
+   SELECT owner_id FROM owner WHERE owner_email = #{ email }
 
   </select>
+
+   <!-- 사장님 아이디 비밀번호 찾기 -->
+   <select id="selectOneFindInfo"  parameterType="String"  resultType="OwnerVo">
+   select owner_id from owner where owner_email=#{ email }
+   </select>
   
   <!-- 회원추가 -->
   <insert id="insert"  parameterType="OwnerVo">

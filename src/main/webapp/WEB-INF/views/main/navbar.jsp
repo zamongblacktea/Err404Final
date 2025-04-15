@@ -7,17 +7,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .navbar{
+
+.navbar{
         background:#ff694a ;
         width: 100%;
         height: 80px;
+        /* !important 최우선 적용 */
+        margin-bottom: 0 !important; 
+        border-radius: 0 !important;
         clear: both;
     }
 
 
     img{
         margin: 0 auto;
-        width: 330px;
+        width: 310px;
         height: 75px;
 
 
@@ -29,6 +33,7 @@
         float: right;
 
     }
+
 
 </style>
 </head>
