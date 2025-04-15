@@ -20,8 +20,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-
-
 //sns api 연동 로그인 callback controller
 @Controller
 @RequiredArgsConstructor
@@ -72,7 +70,7 @@ public class CallbackController {
             session.setAttribute("user", user);
 
             // 로그인 성공 페이지로 리다이렉트
-            return "redirect:../member/list.do";
+            return "redirect:../main/main.do";
 
         }
 
@@ -97,7 +95,7 @@ public class CallbackController {
 
         MemberVo user = memberMapper.selectSns(mem_id);
 
-        //유저 정보가 없을 때 (비회원)
+        // 유저 정보가 없을 때 (비회원)
         if (user == null) {
 
             // ra로 ridirect url에 정보 넣어서 보내주기
@@ -105,7 +103,7 @@ public class CallbackController {
             ra.addAttribute("mem_type", mem_type);
             ra.addAttribute("mem_id", mem_id);
 
-            //간편 회원가입 페이지로 리다이렉트
+            // 간편 회원가입 페이지로 리다이렉트
             return "redirect:../member/insert_kakao.do";
         }
 
@@ -115,7 +113,7 @@ public class CallbackController {
             session.setAttribute("user", user);
 
             // 로그인 성공 페이지로 리다이렉트
-            return "redirect:../member/list.do";
+            return "redirect:../main/main.do";
 
         }
 
