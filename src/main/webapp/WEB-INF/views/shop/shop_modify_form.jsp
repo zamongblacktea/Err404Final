@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%@ taglib
+uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -150,7 +151,18 @@
         // f.action = "modify.do"; // ShopModifyAction
         // f.submit();
 
+        // 체크박스 상태를 숨겨진 input에 반영
+        const isCloseDay = document.getElementById("shop_closeday").checked;
+        // document.getElementById("shop_closeday").value = isCloseDay ? shop_closeday : "연중무휴";
+
         const formData = new FormData(f);
+
+        // 휴무일 값 수동 추가
+        let closedayArray = [];
+        document.querySelectorAll('input[name="shop_closeday"]:checked').forEach((checkbox) => {
+          closedayArray.push(checkbox.value);
+        });
+        formData.set("shop_closeday", closedayArray.join(","));
 
         $.ajax({
           url: "modify.do",
@@ -160,7 +172,7 @@
           contentType: false,
           success: function (result) {
             alert("가게 정보가 수정되었습니다");
-            location.href = "order_list.do";
+            location.href = "main.do";
           },
           error: function (err) {
             alert(err.responseText);
@@ -187,19 +199,6 @@
         });
       }
 
-      // db를 select box에 띄우는 작업 - 카테고리
-
-      document.addEventListener("DOMContentLoaded", function () {
-        const selectedCate = "${shop.shop_cate_idx}";
-        const selectedClo = "${shop.shop_closeday}";
-
-        if (selectedCate) {
-          document.getElementById("cate-select").value = selectedCate;
-        }
-        if (selectedClo) {
-          document.getElementById("close-select").value = selectedClo;
-        }
-      });
     </script>
 
     <!-- 이미지 수정 코드 -->
@@ -219,7 +218,7 @@
         const form = $("#ajaxFormImg")[0];
         const formData = new FormData(form);
         // 전송 해야할 parameter 세팅
-        formData.append("shop_idx", "${vo.shop_idx}");
+        formData.append("shop_idx", "${shop.shop_idx}");
         formData.append("photo", $("#ajaxFileImg")[0].files[0]);
 
         // Ajax 전송
@@ -249,7 +248,7 @@
         const form = $("#ajaxFormLogo")[0];
         const formData = new FormData(form);
         // 전송 해야할 parameter 세팅
-        formData.append("shop_idx", "${vo.shop_idx}");
+        formData.append("shop_idx", "${shop.shop_idx}");
         formData.append("photo", $("#ajaxFileLogo")[0].files[0]);
 
         // Ajax 전송
@@ -285,18 +284,20 @@
 
     <!-- shop_logo 이미지 수정 -->
     <div style="text-align: center; padding: 10px">
-      <img id="my_logo" src="${pageContext.request.contextPath}/images/${vo.shop_logo}" style="width: 100px; height: 100px" /><br /><br />
+      <img id="my_logo" src="${pageContext.request.contextPath}/images/${shop.shop_logo}" style="width: 100px; height: 100px" /><br /><br />
       <input class="btn btn-info" type="button" value="로고 수정" onclick="logo_update();" />
     </div>
 
     <!-- shop_img 이미지 수정 -->
     <div style="text-align: center; padding: 10px">
-      <img id="my_img" src="${pageContext.request.contextPath}/images/${vo.shop_img}" style="width: 100px; height: 100px" /><br /><br />
+      <img id="my_img" src="${pageContext.request.contextPath}/images/${shop.shop_img}" style="width: 100px; height: 100px" /><br /><br />
       <input class="btn btn-info" type="button" value="이미지 수정" onclick="img_update();" />
     </div>
 
     <form class="form-inline" enctype="multipart/form-data">
-      <input type="hidden" name="shop_idx" value="${vo.shop_idx}" />
+      <input type="hidden" name="shop_idx" value="${shop.shop_idx}" />
+      <input type="hidden" name="shop_logo" id="shop_logo" value="${shop.shop_logo}" />
+      <input type="hidden" name="shop_img" id="shop_img" value="${shop.shop_img}" />
       <div id="box">
         <div class="panel panel-primary">
           <div class="panel-heading"><h4>가게정보수정</h4></div>
@@ -408,25 +409,85 @@
               <tr>
                 <th>휴무일</th>
                 <td>
-                  <!-- <input type="checkbox" name="shop_closeday" id="" value="" /><label for="">연중무휴</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="monday" value="monday" /><label for="monday"> 월</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="tuesday" value="tuesday" /><label for="tuesday"> 화</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="wednesday" value="wednesday" /><label for="wednesday"> 수</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="thursday" value="thursday" /><label for="thursday"> 목</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="friday" value="friday" /><label for="friday"> 금</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="saturday" value="saturday" /><label for="saturday"> 토</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="sunday" value="sunday" /><label for="sunday"> 일</label> -->
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Monday')}">
+                      <input type="checkbox" name="shop_closeday" id="monday" value="Monday" checked />
+                      <label for="monday">월요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="monday" value="Monday" />
+                      <label for="monday">월요일</label>
+                    </c:otherwise>
+                  </c:choose>
 
-                  <select name="shop_closeday" class="form-control" id="close-select">
-                    <option value="">연중무휴</option>
-                    <option value="Monday">월요일</option>
-                    <option value="Tuesday">화요일</option>
-                    <option value="Wednesday">수요일</option>
-                    <option value="Thursday">목요일</option>
-                    <option value="Friday">금요일</option>
-                    <option value="Saturday">토요일</option>
-                    <option value="Sunday">일요일</option>
-                  </select>
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Tuesday')}">
+                      <input type="checkbox" name="shop_closeday" id="tuesday" value="Tuesday" checked />
+                      <label for="tuesday">화요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="tuesday" value="Tuesday" />
+                      <label for="tuesday">화요일</label>
+                    </c:otherwise>
+                  </c:choose>
+
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Wednesday')}">
+                      <input type="checkbox" name="shop_closeday" id="wednesday" value="Wednesday" checked />
+                      <label for="wednesday">수요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="wednesday" value="Wednesday" />
+                      <label for="wednesday">수요일</label>
+                    </c:otherwise>
+                  </c:choose>
+
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Thursday')}">
+                      <input type="checkbox" name="shop_closeday" id="thursday" value="Thursday" checked />
+                      <label for="thursday">목요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="thursday" value="Thursday" />
+                      <label for="thursday">목요일</label>
+                    </c:otherwise>
+                  </c:choose>
+
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Friday')}">
+                      <input type="checkbox" name="shop_closeday" id="friday" value="Friday" checked />
+                      <label for="friday">금요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="friday" value="Friday" />
+                      <label for="friday">금요일</label>
+                    </c:otherwise>
+                  </c:choose>
+
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Saturday')}">
+                      <input type="checkbox" name="shop_closeday" id="saturday" value="Saturday" checked />
+                      <label for="saturday">토요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="saturday" value="Saturday" />
+                      <label for="saturday">토요일</label>
+                    </c:otherwise>
+                  </c:choose>
+
+                  <c:choose>
+                    <c:when test="${fn:contains(shop.shop_closeday, 'Sunday')}">
+                      <input type="checkbox" name="shop_closeday" id="sunday" value="Sunday" checked />
+                      <label for="sunday">일요일</label>
+                    </c:when>
+                    <c:otherwise>
+                      <input type="checkbox" name="shop_closeday" id="sunday" value="Sunday" />
+                      <label for="sunday">일요일</label>
+                    </c:otherwise>
+                  </c:choose>
+
+                  <!-- 연중무휴 체크박스를 처리하는 로직 -->
+                  <input type="hidden" name="shop_closeday" id="shop_closeday" value="" />
                 </td>
               </tr>
 
@@ -439,7 +500,7 @@
               <!-- 버튼 -->
               <tr>
                 <td colspan="2" align="center">
-                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='../main/list.do'" />
+                  <!-- <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='../main/list.do'" /> -->
                   <input class="btn btn-primary" type="button" value="정보수정" onclick="send(this.form);" id="btn_register" />
                 </td>
               </tr>

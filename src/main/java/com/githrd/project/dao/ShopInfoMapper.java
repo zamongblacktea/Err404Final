@@ -27,4 +27,10 @@ public interface ShopInfoMapper {
     // 로고 수정
     int LogoUpload(ShopInfoVo vo);
 
+    // 가게 등록 여부
+    int countShopByOwnerIdx(int owner_idx);
+
+    // owner_idx로 가게 조회
+    ShopInfoVo selectByOwnerIdx(int owner_idx);
+
 }

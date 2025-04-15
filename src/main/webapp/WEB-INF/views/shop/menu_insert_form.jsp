@@ -3,27 +3,18 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
-
-    <!-- bootstrap 사용설정 -->
+    <title>메뉴 등록</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <style type="text/css">
-      #box {
-        width: 800px;
-        margin: auto;
-        margin-top: 80px;
+    <style>
+      .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
       }
-
-      th {
-        width: 100px;
-        vertical-align: middle !important;
-      }
-
-      #id_msg {
-        margin-left: 10px;
+      .form-group {
+        margin-bottom: 15px;
       }
     </style>
 
@@ -75,75 +66,62 @@
           return;
         }
 
-        f.action = "menu_modify.do"; // MenuModifyAction
+        f.action = "menu_insert.do"; // MenuInsertAction
         f.submit();
       } //end:send()
     </script>
   </head>
   <body>
-    <form class="form-inline" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="shop_idx" value="${shop_idx}" />
-      <div id="box">
-        <div class="panel panel-primary">
-          <div class="panel-heading"><h4>메뉴정보입력</h4></div>
-          <div class="panel-body">
-            <table class="table">
-              <!-- 메뉴명 -->
-              <tr>
-                <th>메뉴명</th>
-                <td>
-                  <input class="form-control" name="menu_name" style="width: 30%" />
-                </td>
-              </tr>
-
-              <!-- 가격 -->
-              <tr>
-                <th>가격</th>
-                <td>
-                  <input class="form-control" name="menu_price" style="width: 30%" />
-                </td>
-              </tr>
-
-              <!-- 메뉴설명 -->
-              <tr>
-                <th>메뉴설명</th>
-                <td>
-                  <textarea class="form-control" id="menu_explain" name="menu_explain"></textarea>
-                </td>
-              </tr>
-
-              <!-- 메뉴사진 -->
-              <tr>
-                <th>메뉴사진</th>
-                <td>
-                  <input type="file" name="photo" id="photo" style="width: 50%" />
-                </td>
-              </tr>
-
-              <!-- 메뉴상태 -->
-              <tr>
-                <th>메뉴상태</th>
-                <td>
-                  <!-- <input id="menu_pop" type="checkbox" name="menu_status" />
-                  <label for="menu_pop">인기</label><br />
-                  <input id="menu_hide" type="checkbox" name="menu_status" />
-                  <label for="menu_hide">숨기기</label><br /> -->
-                  <input id="menu_soldout" type="checkbox" name="menu_status" />
-                  <label for="menu_soldout">품절</label>
-                </td>
-              </tr>
-
-              <!-- 버튼 -->
-              <tr>
-                <td colspan="2" align="center">
-                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='./shop/menu_list.do'" />
-                  <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
-                </td>
-              </tr>
-            </table>
-          </div>
+    <div class="form-container">
+      <h2>메뉴 등록</h2>
+      <form id="menuForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="menu_name">메뉴명</label>
+          <input type="text" class="form-control" id="menu_name" name="menu_name" required />
         </div>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="menu_explain">메뉴 설명</label>
+          <textarea class="form-control" id="menu_explain" name="menu_explain" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="menu_price">가격</label>
+          <input type="number" class="form-control" id="menu_price" name="menu_price" required />
+        </div>
+        <div class="form-group">
+          <label for="menu_status">상태</label>
+          <select class="form-control" id="menu_status" name="menu_status" required>
+            <option value="판매중">판매중</option>
+            <option value="품절">품절</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="photo">메뉴 사진</label>
+          <input type="file" class="form-control" id="photo" name="photo" required />
+        </div>
+        <button type="button" class="btn btn-primary" onclick="submitForm()">등록</button>
+      </form>
+    </div>
+
+    <script>
+      function submitForm() {
+        const formData = new FormData($('#menuForm')[0]);
+        const shop_idx = "${sessionScope.shop_idx}";
+        
+        $.ajax({
+          url: 'menu_insert.do',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            alert('메뉴가 성공적으로 등록되었습니다.');
+            loadContent('menu_list.do');
+          },
+          error: function(xhr, status, error) {
+            alert('메뉴 등록 중 오류가 발생했습니다: ' + error);
+          }
+        });
+      }
+    </script>
   </body>
 </html>

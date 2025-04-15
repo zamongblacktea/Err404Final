@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ShopServiceImpl implements ShopService {
+
     @Autowired
     ShopInfoMapper shopInfoMapper;
 
@@ -102,7 +103,9 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public int menuInsert(ShopMenuVo vo, @RequestParam MultipartFile photo) throws IllegalStateException, IOException {
 
-        ShopInfoVo shop = (ShopInfoVo) session.getAttribute("shop");
+        Integer shop_idx = (Integer) session.getAttribute("shop_idx");
+
+        vo.setShop_idx(shop_idx);
 
         // \n -> <br>
         String menu_explain = vo.getMenu_explain().replaceAll("\n", "<br>");
@@ -361,6 +364,19 @@ public class ShopServiceImpl implements ShopService {
         int res = shopInfoMapper.LogoUpload(vo);
 
         return res;
+    }
+
+    // 로그인한 유저가 가게 등록했는지 체크
+    @Override
+    public int countShopByOwnerIdx(int owner_idx) {
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+        return shopInfoMapper.countShopByOwnerIdx(user.getOwner_idx());
+    }
+
+    @Override
+    public ShopInfoVo selectByOwnerIdx(int owner_idx) {
+        return shopInfoMapper.selectByOwnerIdx(owner_idx);
     }
 
 }

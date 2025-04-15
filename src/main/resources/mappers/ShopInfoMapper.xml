@@ -3,20 +3,28 @@
 <mapper namespace="com.githrd.project.dao.ShopInfoMapper">
 	<!-- 가게전체조회 -->
 	<select id="selectListAll" resultType="ShopInfoVo"> select * from shop_info </select>
+
 	<!-- 가게 하나만 조회 -->
 	<select id="selectShopOne" parameterType="int" resultType="ShopInfoVo"> select * from shop_info
 		where shop_idx=#{shop_idx} </select>
+
+	<!-- owner_idx로 가게 조회 -->
+	<select id="selectByOwnerIdx" parameterType="int" resultType="ShopInfoVo"> select * from
+		shop_info where owner_idx = #{owner_idx} </select>
+
 	<!-- 카테고리별 가게조회 -->
 	<select id="selectListFromCate" parameterType="int" resultType="ShopInfoVo"> select * from
 		shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx </select>
+
 	<!-- 가게추가 -->
-	<insert id="shopInsert" parameterType="ShopInfoVo"> insert into shop_info values( null, #{
-		owner_idx }, #{ shop_cate_idx }, #{ shop_name }, #{ shop_company }, #{ shop_bnumber }, #{
-		shop_addr1 }, #{ shop_addr2 }, #{ shop_longitude }, #{ shop_latitude }, #{ shop_phone }, #{
-		shop_dfee }, #{ shop_logo }, #{ shop_img }, #{ shop_notice }, #{ shop_intro }, #{
-		shop_minprice }, #{ shop_mintime }, #{ shop_maxtime }, #{ shop_rating}, #{ shop_favor}, #{
-		shop_reviewcnt }, #{ shop_optime }, #{ shop_cltime}, #{ shop_closeday}, #{ shop_loc },
-		NOW(), null, '영업중') </insert>
+	<insert id="shopInsert" parameterType="ShopInfoVo" useGeneratedKeys="true"
+		keyProperty="shop_idx"> insert into shop_info values( null, #{ owner_idx }, #{ shop_cate_idx
+		}, #{ shop_name }, #{ shop_company }, #{ shop_bnumber }, #{ shop_addr1 }, #{ shop_addr2 },
+		#{ shop_longitude }, #{ shop_latitude }, #{ shop_phone }, #{ shop_dfee }, #{ shop_logo }, #{
+		shop_img }, #{ shop_notice }, #{ shop_intro }, #{ shop_minprice }, #{ shop_mintime }, #{
+		shop_maxtime }, #{ shop_rating}, #{ shop_favor}, #{ shop_reviewcnt }, #{ shop_optime }, #{
+		shop_cltime}, #{ shop_closeday}, #{ shop_loc }, NOW(), null, '영업중') </insert>
+
 	<!-- 가게 수정하기 -->
 	<update id="shopModify" parameterType="ShopInfoVo"> update shop_info set shop_name =
 		#{shop_name}, shop_company = #{shop_company}, shop_bnumber = #{shop_bnumber}, shop_addr1 =
@@ -34,4 +42,8 @@
 	<!-- 가게 사진 수정 -->
 	<update id="PhotoUpload" parameterType="ShopInfoVo"> update shop_info set shop_img = #{shop_img}
 		where shop_idx = #{shop_idx} </update>
+
+	<!-- 가게 등록 여부 -->
+	<select id="countShopByOwnerIdx" parameterType="int" resultType="int"> select IFNULL(COUNT(*),
+		0) from shop_info where owner_idx = #{owner_idx} </select>
 </mapper>

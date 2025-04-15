@@ -1,7 +1,6 @@
 package com.githrd.project.controller;
 
 import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,23 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.NaverMapper;
 import com.githrd.project.dao.OwnerMapper;
 import com.githrd.project.dao.RiderMapper;
 import com.githrd.project.service.KakaoServiceImpl;
 import com.githrd.project.service.NaverServiceImpl;
+import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.RiderVo;
+import com.githrd.project.vo.ShopInfoVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 
 @Controller
 @RequestMapping("/member/")
@@ -43,6 +41,9 @@ public class MemberController {
 	OwnerMapper ownerMapper;
 
 	@Autowired
+	ShopService shopService;
+
+	@Autowired
 	RiderMapper riderMapper;
 
 	@Autowired
@@ -50,7 +51,6 @@ public class MemberController {
 
 	@Autowired
 	HttpServletRequest request;
-
 
 	@Autowired
 	HttpSession session;
@@ -101,7 +101,7 @@ public class MemberController {
 			// viewName인 경우에는 request binding시킨다
 			model.addAttribute("reason", "fail_id");
 			model.addAttribute("url", url);
-			//response.sendRedirect("login_form.do?reason=fail_id");
+			// response.sendRedirect("login_form.do?reason=fail_id");
 			return "redirect:login_form.do?reason=fail_id";
 		}
 
@@ -115,7 +115,7 @@ public class MemberController {
 			model.addAttribute("mem_id", mem_id);
 			model.addAttribute("url", url);
 			// 접속한 유저에게 비밀번호가 틀렸다는 정보를 넘기면서 다시로그인해라..
-			//response.sendRedirect("login_form.do?reason=fail_pwd&mem_id=" + mem_id);
+			// response.sendRedirect("login_form.do?reason=fail_pwd&mem_id=" + mem_id);
 			return "redirect:login_form.do?reason=fail_pwd";
 		}
 
@@ -138,57 +138,61 @@ public class MemberController {
 			return "redirect:" + url; // 원래있던 페이지로 이동시켜라
 	}
 
-		// 로그인
-		@RequestMapping("owner_login.do")
-		public String ownerLogin(String owner_id, String owner_pwd,
-				@RequestParam(name = "url", defaultValue = "") String url,
-				HttpServletResponse response,
-				Model model) throws IOException {
-	
-			// 1.owner_id 이용해서 회원정보 검색
-			OwnerVo user = ownerMapper.selectOneFromId(owner_id);
-	
-			// 2.아이디가 틀린경우
-			if (user == null) {
-	
-				// Dispatcher Servlet이 아래과 같이 처리한다
-				// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
-				// viewName인 경우에는 request binding시킨다
-				model.addAttribute("reason", "fail_id");
-				model.addAttribute("url", url);
-				//response.sendRedirect("login_form.do?reason=fail_id");
-				return "redirect:login_form.do?reason=fail_id";
-			}
-	
-			// 3.비밀번호가 틀린경우
-			if (user.getOwner_pwd().equals(owner_pwd) == false) {
-	
-				// Dispatcher Servlet이 아래과 같이 처리한다
-				// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
-				// viewName인 경우에는 request binding시킨다
-				model.addAttribute("reason", "fail_pwd");
-				model.addAttribute("owner_id", owner_id);
-				model.addAttribute("url", url);
-				// 접속한 유저에게 비밀번호가 틀렸다는 정보를 넘기면서 다시로그인해라..
-				//response.sendRedirect("login_form.do?reason=fail_pwd&owner_id=" + owner_id);
-				return "redirect:login_form.do?reason=fail_pwd";
-			}
-	
+	// 사장님 로그인
+	@RequestMapping("owner_login.do")
+	public String ownerLogin(String owner_id, String owner_pwd,
+			@RequestParam(name = "url", defaultValue = "") String url,
+			HttpServletResponse response,
+			Model model) throws IOException {
 
-	
-			// 4.로그인 처리(세션공간에 user저장)
-			session.setAttribute("user", user);
-	
-			// 6.메인화면으로 이동
-			// DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
-	
-			if (url.isEmpty())
-				return "redirect:../main/main.do"; // 메인화면 이동시켜라
-			else
-				return "redirect:" + url; // 원래있던 페이지로 이동시켜라
+		// 1.owner_id 이용해서 회원정보 검색
+		OwnerVo user = ownerMapper.selectOneFromId(owner_id);
+
+		// 2.아이디가 틀린경우
+		if (user == null) {
+
+			// Dispatcher Servlet이 아래과 같이 처리한다
+			// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
+			// viewName인 경우에는 request binding시킨다
+			model.addAttribute("reason", "fail_id");
+			model.addAttribute("url", url);
+			// response.sendRedirect("login_form.do?reason=fail_id");
+			return "redirect:login_form.do?reason=fail_id";
 		}
 
+		// 3.비밀번호가 틀린경우
+		if (user.getOwner_pwd().equals(owner_pwd) == false) {
 
+			// Dispatcher Servlet이 아래과 같이 처리한다
+			// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
+			// viewName인 경우에는 request binding시킨다
+			model.addAttribute("reason", "fail_pwd");
+			model.addAttribute("owner_id", owner_id);
+			model.addAttribute("url", url);
+			// 접속한 유저에게 비밀번호가 틀렸다는 정보를 넘기면서 다시로그인해라..
+			// response.sendRedirect("login_form.do?reason=fail_pwd&owner_id=" + owner_id);
+			return "redirect:login_form.do?reason=fail_pwd";
+		}
+
+		// 4.로그인 처리(세션공간에 user저장)
+		session.setAttribute("user", user);
+
+		// 가게 등록 여부 확인
+		int shopCount = shopService.countShopByOwnerIdx(user.getOwner_idx());
+
+		// 6.메인화면으로 이동
+		// DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
+
+		if (!url.isEmpty()) {
+			return "redirect:" + url;
+		} else {
+			if (shopCount == 0) {
+				return "redirect:../shop/insert_form.do?owner_idx=" + user.getOwner_idx(); // 가게 등록 페이지
+			} else {
+				return "redirect:../shop/main.do"; // 주문 현황 페이지
+			}
+		}
+	}
 
 	// 라이더 로그인
 	@RequestMapping("rider_login.do")
@@ -208,7 +212,7 @@ public class MemberController {
 			// viewName인 경우에는 request binding시킨다
 			model.addAttribute("reason", "fail_id");
 			model.addAttribute("url", url);
-			//response.sendRedirect("login_form.do?reason=fail_id");
+			// response.sendRedirect("login_form.do?reason=fail_id");
 			return "redirect:login_form.do?reason=fail_id";
 		}
 
@@ -222,10 +226,9 @@ public class MemberController {
 			model.addAttribute("rider_id", rider_id);
 			model.addAttribute("url", url);
 			// 접속한 유저에게 비밀번호가 틀렸다는 정보를 넘기면서 다시로그인해라..
-			//response.sendRedirect("login_form.do?reason=fail_pwd&rider_id=" + rider_id);
+			// response.sendRedirect("login_form.do?reason=fail_pwd&rider_id=" + rider_id);
 			return "redirect:login_form.do?reason=fail_pwd";
 		}
-
 
 		// 4.로그인 처리(세션공간에 user저장)
 		session.setAttribute("user", user);
@@ -340,7 +343,7 @@ public class MemberController {
 		// 2.DB insert
 		int res = ownerMapper.insert(vo);
 
-		return "redirect:list.do";
+		return "redirect:login_form.do";
 	}
 
 	// 라이더 회원 가입
