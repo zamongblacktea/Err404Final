@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ShopServiceImpl implements ShopService {
+
     @Autowired
     ShopInfoMapper shopInfoMapper;
 
@@ -361,6 +362,13 @@ public class ShopServiceImpl implements ShopService {
         int res = shopInfoMapper.LogoUpload(vo);
 
         return res;
+    }
+
+    @Override
+    public int countShopByOwnerIdx(int owner_idx) {
+        OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+        return shopInfoMapper.countShopByOwnerIdx(user.getOwner_idx());
     }
 
 }
