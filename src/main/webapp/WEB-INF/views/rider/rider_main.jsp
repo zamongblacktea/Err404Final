@@ -33,12 +33,35 @@ pageEncoding="UTF-8"%>
   .buttons:hover {
     background-color: #e090b5;
   }
-
+  .buttons.active {
+    background-color: #e090b5 !important;
+    font-weight: bold;
+    box-shadow: 0 0 5px #d36caa;
+  }
 </style>
 <script>
+
+    window.onload = function () {
+    // 페이지 로딩될 때 standby 함수 자동 호출
+    standby();
+  };
+
+  function setActiveButton(activeId) {
+    // 모든 버튼 클래스 제거
+    document.querySelectorAll(".buttons").forEach(btn => {
+      btn.classList.remove("active");
+    });
+
+    // 활성화 버튼에 active 클래스 추가
+    document.getElementById(activeId).classList.add("active");
+  }
+
   const rider_idx = document.getElementById("rider_idx");
 
   function standby(){
+
+    setActiveButton("btn-standby"); // 버튼 활성화 표시
+
   		$.ajax({ //key value jason형식
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
@@ -58,6 +81,9 @@ pageEncoding="UTF-8"%>
   }//end : function standby()
 
   function progress(){
+
+    setActiveButton("btn-progress"); //버튼 활성화 표시 
+
   		$.ajax({ //key value jason형식
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
@@ -77,7 +103,9 @@ pageEncoding="UTF-8"%>
   }//end : function prograss()
 
   function complete(){
-  		$.ajax({ //key value jason형식
+    setActiveButton("btn-complete");// 버튼 활성화 표시 
+    
+     $.ajax({ //key value jason형식
 			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
 			data: {"rider_idx":rider_idx},
@@ -124,12 +152,19 @@ pageEncoding="UTF-8"%>
             <div class="panel-body">
               <div class="body">
                 <!-- onclick=location.href="넣어야함" -->
-                <input class="buttons" type="button" value="배차대기" onclick="standby();" />
+                <!-- <input class="buttons" type="button" value="배차대기" onclick="standby();" />
                 <input class="buttons" type="button" value="배달현황" onclick="progress()" />
-                <input class="buttons" type="button" value="배달완료" onclick="complete()"/>
+                <input class="buttons" type="button" value="배달완료" onclick="complete()"/> -->
+                <input class="buttons" id="btn-standby" type="button" value="배차대기" onclick="standby();" />
+                <input class="buttons" id="btn-progress" type="button" value="배달현황" onclick="progress()" />
+                <input class="buttons" id="btn-complete" type="button" value="배달완료" onclick="complete()"/>
               </div>
               </div>
           </div>
+          <!-- 
+          나는 이 페이지들 들어 왔을 때 
+          배차대기 버튼 활성화되어있는 상태였으면 좋겠고(그에따른 내용이 출력된 상태) 배달현황, 
+          배달완료 각각 버튼을 눌렀을때 버튼이 활성화된 상태였으면 좋겠어 -->
 
           <!-- ajax내용불러올것넣기
             자바스크립트안에서 호출하기 ->ajax standby.do 여기서 호출 -->

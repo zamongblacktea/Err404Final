@@ -98,8 +98,8 @@ pageEncoding="UTF-8"%>
   <body>
     <div id="map" style="width:100%;height:500px;"></div><br>
     <div id ="text">
-      총거리 : <fmt:formatNumber value="${rescal}" pattern="#,#00.00#"/>m<br>
-      배달수수료 :<fmt:formatNumber value="${fee}" pattern="#,#00.00#"/>원<br>
+      총거리 : <fmt:formatNumber value="${totalDistance}" pattern="#,#00.00#"/>m<br>
+      배달수수료 :<fmt:formatNumber value="${delivery_fee}" pattern="#,#00.00#"/>원<br>
       <!-- 1km 미만은 3000원(최솟값) 가게에서 측정한 배달값으로 하고 (마지막에 가게칼럼명 갖고오기) -->
     </div>
     <!-- 카카오 경로 상세 보기  -->

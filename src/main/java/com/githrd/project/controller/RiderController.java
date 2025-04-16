@@ -164,18 +164,19 @@ public class RiderController {
             //거리계산하기(미터단위)
             double calculateDistance =  kakaoMapService.calculateDistance( storeCoords[0], storeCoords[1], customerCoords[0], customerCoords[1]);
             double calculateDistance1 =  kakaoMapService.calculateDistance( customerCoords[0], customerCoords[1],riderCoords[0], riderCoords[1]);
-            double rescal = calculateDistance + calculateDistance1;
+            //double rescal = calculateDistance + calculateDistance1;
+            double totalDistance = calculateDistance + calculateDistance1;
            
             
             //수수료 계산
             //1km보다 이하는 3,000원(일단 테스트용)
             //초과분부터 1001m부터 1m당 1원 
-            double fee = 0;
-            if(rescal>1000){
+            double delivery_fee = 0;
+            if(totalDistance>1000){
                 //fee = 3000 +  (rescal-1000);
                  // 소수점 셋째 자리에서 절사 (버림)
-                fee = 3000 + Math.round((rescal-1000)*1000/1000.0);
-            }else fee = 3000;
+                 delivery_fee = 3000 + Math.round((totalDistance-1000)*1000/1000.0);
+            }else delivery_fee = 3000;
 
             // 위도경도 requstbinding
             model.addAttribute("shop_longitude", storeCoords[1]);
@@ -186,8 +187,8 @@ public class RiderController {
             model.addAttribute("rider_latitude", riderCoords[0]);
 
             // 거리 및 수수료 requstbinding
-            model.addAttribute("rescal", rescal);
-            model.addAttribute("fee", fee);
+            model.addAttribute("totalDistance", totalDistance);
+            model.addAttribute("delivery_fee", delivery_fee);
 
             // 주소도 전달 (경로보기 버튼용) 가게와 배달지 경로보기 카카오맵
             model.addAttribute("shop_addr", shopAddress);
