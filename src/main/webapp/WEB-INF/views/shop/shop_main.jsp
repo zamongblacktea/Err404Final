@@ -74,9 +74,10 @@
 
       /* 본문 영역 */
       .contents {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         width: 1320px;
-        margin: 0 auto;
+        margin: 30px auto;
+
       }
     </style>
 
