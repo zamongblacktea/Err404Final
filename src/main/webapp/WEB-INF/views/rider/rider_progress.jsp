@@ -11,6 +11,15 @@
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
     <script>
+    function setActiveButton(activeId) {
+        // 모든 버튼 클래스 제거
+        document.querySelectorAll(".buttons").forEach(btn => {
+        btn.classList.remove("active");
+        });
+
+        // 활성화 버튼에 active 클래스 추가
+        document.getElementById(activeId).classList.add("active");
+            }
        
     function delivery_complete(order_idx){
 
@@ -37,6 +46,7 @@
     }//end: fuction rider_accept(order_idx,rider_idx)    
 
     function complete(){
+        setActiveButton("btn-complete");// 버튼 활성화 표시 
         $.ajax({ //key value jason형식
           tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
           async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
@@ -60,7 +70,7 @@
 <body>
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
      <!-- 하나의 div넣고 경로보기랑 픽업완료도 div로 넣고 그리드로 넣어야 할듯 -->
-    
+    <!-- 배차 받기를 누르면 아래에 나오는것에 고객 전화번호도 추가시켜야함 포린키로 설정해야할듯 -->
     <c:choose>
         <c:when test="${empty rider_list}">
             <p>현재 배달 진행 중인 건이 없습니다.</p>
@@ -71,8 +81,10 @@
             <div>주문상태 : ${vo.order_status}</div> 
             <div>가게이름 :  ${vo.shop_name}</div>
             <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div> 
+            <!-- <div>가게전화번호 : ${vo.shop_phone}</div>  -->
             <div>회원번호 :  ${vo.mem_idx}</div>
-            <div>배달장소 :${vo.mem_caddr} ${vo.mem_caddr}</div> 
+            <!-- <div>회원전화번호 :  ${vo.mem_phone}</div> -->
+            <div>배달장소 :${vo.mem_caddr} ${vo.mem_cdaddr}</div> 
             <div>배달요청사항 :  ${vo.rider_request}</div>
             <div>배달상태: ${vo.delivery_status}</div>  
     
