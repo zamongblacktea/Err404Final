@@ -88,7 +88,7 @@
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>라이더 회원 수정</h4>
+						<h4>라이더 마이 페이지</h4>
 					</div>
 					<div class="panel-body">
 

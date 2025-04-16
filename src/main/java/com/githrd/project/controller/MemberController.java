@@ -345,6 +345,7 @@ public class MemberController {
 
 	// 사장님 마이페이지 수정폼 띄우기
 	// /member/modify_form.do?mem_idx=2
+	@ResponseBody
 	@RequestMapping("modify_form_owner.do")
 	public String modifyFormOwner(int owner_idx, Model model) {
 
