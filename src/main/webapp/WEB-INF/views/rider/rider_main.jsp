@@ -108,7 +108,7 @@ pageEncoding="UTF-8"%>
    
       <input type="button" value="로그아웃" />
 
-      <input type="button" value="마이페이지" />
+      <input type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
     </div>
    
 

@@ -57,20 +57,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ rider_loc }, 
                           #{ rider_type }, 
                           '대기',
-                          #{ rider_img })
+                          #{ rider_img },
+                          #{ rider_phone }
+                          )
   </insert>
   
   <!-- 회원수정 -->
   <update id="update"  parameterType="RiderVo">
      update rider set rider_name=#{ rider_name },
-                       rider_nickname=#{ rider_nickname },
                        rider_pwd=#{ rider_pwd },
-                       rider_email=#{ rider_email },
-                       rider_zipcode=#{ rider_zipcode },
-                       rider_curaddr=#{ rider_curaddr },
-                       rider_grade=#{ rider_grade },
                        rider_ip=#{ rider_ip },
-                       rider_update = now()  
+                       rider_update = now(),  
+                       rider_phone=#{ rider_phone }
      where rider_idx=#{ rider_idx }
   </update>
   

@@ -22,6 +22,7 @@ public class RiderVo {
 	String rider_type;
 	String rider_approve;
 	String rider_img;
+	String rider_phone;
 	
 
 

@@ -23,11 +23,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+
     }
 
     .signup-container {
-      width: 400px;
+      width: 600px;
       background: #fff;
       box-shadow: 0 0 70px rgba(0, 0, 0, 0.05);
       border-top: 5px solid var(--green);
@@ -87,9 +87,14 @@
     }
 
     th {
-				width: 100px;
+				width: 120px !important;
 				vertical-align: middle !important;
 			}
+    
+    td{
+        width: 300px;
+
+    }
 
   </style>
 
@@ -103,11 +108,11 @@ function send(f) {
   let rider_name = f.rider_name.value.trim();
   let rider_pwd = f.rider_pwd.value.trim();
   let rider_email = f.rider_email.value;
-  let rider_nickname = f.rider_nickname.value;
   let rider_account = f.rider_account.value;
   let rider_loc = f.rider_loc.value;
   let rider_type = f.rider_type.value;
-  let rider_img = f.rider_img.value;
+  let rider_phone = f.rider_phone.value;
+  let photo = f.photo.value.trim();
   
  
   if (rider_id == "") {
@@ -170,7 +175,7 @@ function check_id() {
   // 서버로 입력된 아이디를 전송->중복 아이디 체크
   // Ajax통해서 background로 요청
   $.ajax({
-    url: "check_id.do",     //MemberCheckIdAction
+    url: "check_id_rider.do",     //MemberCheckIdAction
     data: { "rider_id": rider_id },//parameter  :  check_id.do?rider_id=hong
     dataType: "json",            //결과수신을 JSON으로 받겠다		   
     success: function (res_data) {
@@ -257,6 +262,28 @@ $("#emailAuth").click(function() {
     	}
     });
   });
+
+
+
+    //비밀번호 비교
+    $(document).ready(function () {
+    $("#authPwd").on("focusout", function() {
+    	const inputPwd = $("#authPwd").val(); //비밀번호 입력 칸에 작성한 내용 가져오기
+    	const pwd = $("#pwd").val();
+
+    		
+    	if(inputPwd === pwd){
+        	$("#pwdWarn").html('비밀번호가 일치합니다.');
+        	$("#pwdWarn").css('color', 'green');
+    		$(".pw-btn").attr("disabled", false);
+
+    	}else{
+        	$("#pwdWarn").html('비밀번호가 불일치 합니다. 다시 확인해주세요!');
+        	$("#pwdWarn").css('color', 'red');
+        	$(".pw-btn").attr("disabled", true);
+    	}
+    });
+  });
 </script>
 
 
@@ -265,13 +292,14 @@ $("#emailAuth").click(function() {
 <body>
   <div class="signup-container">
     <h2>라이더 회원 가입</h2>
-    <form>
+    <!-- 파일전송 method 설정 -->
+    <form method="post" class="form-inline" enctype="multipart/form-data">
       <table class="table">
 
         <!-- 이름 -->
         <tr>
           <th>이름</th>
-          <td><input class="form-control" required="required" name="rider_name" >
+          <td><input class="form-control" required="required" name="rider_name" style="width: 50%;">
           </td>
         </tr>
 
@@ -279,8 +307,8 @@ $("#emailAuth").click(function() {
         <tr>
           <th>아이디</th>
           <td>
-            <input class="form-control" id="rider_id" name="rider_id" 
-              onkeyup="check_id();">
+            <input class="form-control" id="rider_id" name="rider_id" style="width: 50%;"
+              onkeyup="check_id();"><br>
             <span id="id_msg"></span>
           </td>
         </tr>
@@ -288,27 +316,36 @@ $("#emailAuth").click(function() {
         <!-- 비밀번호 -->
         <tr>
           <th>비밀번호</th>
-          <td><input class="form-control" required="required" type="password" name="rider_pwd"></td>
+          <td><input type="password" class="form-control" style="width: 50%;" placeholder="비밀번호 입력" id="pwd" name="rider_pwd"></td>
+
         </tr>
-        <!-- 닉네임 -->
         <tr>
-          <th>닉네임</th>
-          <td><input class="form-control" required="required" name="rider_nickname">
-          </td>
+          <th>비밀번호 확인</th>
+          <td><input type="password" class="form-control" style="width: 50%;" placeholder="비밀번호 확인" id="authPwd" >
+          <span id="pwdWarn"></span></td>
+
         </tr>
+
 
         <!-- 이메일 -->
         <tr>
           <th>이메일</th>
-          <td><input class="form-control" placeholder="이메일" required="required" id="rider_email" name="rider_email"></td>
-          <td><input type="button" value="인증" class="btn btn-primary" id="emailAuth"></td>
+          <td><input class="form-control" placeholder="이메일" required="required" id="rider_email" name="rider_email">
+            <input type="button" style="width: 30%;" value="인증" class="btn btn-primary" id="emailAuth"></td>
         </tr>
         <tr>
           <th>이메일 인증</th>          
-          <td><input class="form-control" placeholder="인증 코드 6자리를 입력해주세요." maxlength="6" disabled="disabled" name="authCode" id="authCode" type="text" autofocus></td>
-          <td><span id="emailAuthWarn"></span></td>
+          <td><input class="form-control" placeholder="인증 코드 6자리를 입력해주세요." maxlength="6" disabled="disabled" name="authCode" id="authCode" type="text" autofocus>
+            <span id="emailAuthWarn"></span></td>
+
         </tr>
 
+        <!-- 전화번호 -->
+        <tr>
+            <th>전화번호</th>
+            <td><input type="tel" name="rider_phone" style="width: 50%;" pattern="^01[016789]-\d{3,4}-\d{4}$" placeholder="휴대전화 번호 입력" required></td>
+            </td>
+        </tr>
         <!-- 계좌번호 -->
         <tr>
           <th>지급 계좌</th>
@@ -327,7 +364,7 @@ $("#emailAuth").click(function() {
         <!-- 이미지 -->
         <tr>
           <th>운전면허증 등록</th>
-          <td><input class="form-control" required="required" type="email"  name="rider_img"></td>
+          <td><input class="form-control" required="required" type="file"  name="photo"></td>
         </tr>
 
 

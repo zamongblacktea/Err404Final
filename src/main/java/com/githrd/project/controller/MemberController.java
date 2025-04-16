@@ -1,5 +1,6 @@
 package com.githrd.project.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.NaverMapper;
@@ -27,6 +29,7 @@ import com.githrd.project.vo.ShopInfoVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -55,10 +58,11 @@ public class MemberController {
 	@Autowired
 	HttpSession session;
 
+	@Autowired
+	ServletContext application;
+
 	private final NaverServiceImpl naverService;
 	private final KakaoServiceImpl kakaoService;
-
-
 
 	// 로그인 폼 띄우기(SNS 로그인 연동)
 	@RequestMapping("login_form.do")
@@ -140,14 +144,13 @@ public class MemberController {
 	}
 
 	// 네이버 간편회원가입폼 띄우기
-	@RequestMapping("insert_form.do")
-	public String insert_form(Model model, String naver_id, long mem_id) throws Exception {
+	@RequestMapping("insert_naver.do")
+	public String insert_form(Model model, String naver_id) throws Exception {
 
 		// SNS 연동된 정보 가져오기
 		// NaverVo naverInfo = naverService.getNaverInfo(naver_id);
-		model.addAttribute("mem_id", mem_id);
 		model.addAttribute("naver_id", naver_id);
-		return "member/member_insert_form";
+		return "member/member_insert_naver";
 	}
 
 	// 카카오 간편 회원가입폼 띄우기
@@ -157,9 +160,8 @@ public class MemberController {
 		// SNS 연동된 정보 가져오기
 		model.addAttribute("mem_id", mem_id);
 
-		return "member/member_insert_form_kakao";
+		return "member/member_insert_kakao";
 	}
-
 
 	// 일반회원 가입
 	@RequestMapping("insert.do")
@@ -173,7 +175,7 @@ public class MemberController {
 		// 2.DB insert
 		int res = memberMapper.insert(vo);
 
-		return "redirect:member/list.do";
+		return "redirect:../main/main.do";
 	}
 
 	// 수정폼 띄우기
@@ -201,6 +203,8 @@ public class MemberController {
 		// 수정
 		int res = memberMapper.update(vo);
 
+		System.out.println(vo);
+
 		// 현재 수정한 멤버가 로그인한 멤버냐?
 		MemberVo user = (MemberVo) session.getAttribute("user");
 
@@ -211,7 +215,7 @@ public class MemberController {
 			session.setAttribute("user", user);
 		}
 
-		return "redirect:list.do";
+		return "redirect:../main/main.do";
 	}
 
 	// 회원 탈퇴
@@ -223,9 +227,7 @@ public class MemberController {
 		return "redirect:list.do";
 	}
 
-////////////////////////////////////////////////////////////////// 사장님//////////////////////////////////////////////
-
-
+	////////////////////////////////////////////////////////////////// 사장님//////////////////////////////////////////////
 
 	// 사장님 회원 가입
 	@RequestMapping("insert_owner.do")
@@ -332,14 +334,53 @@ public class MemberController {
 				return "redirect:../shop/main.do"; // 주문 현황 페이지
 			}
 		}
-	}//end: owner_login
+	}// end: owner_login
 
 	// 사장님 아이디 비밀번호 찾기 페이지
 	@RequestMapping("owner_find.do")
 	public String findOwner() {
 
 		return "member/member_find_owner";
-	}
+	}// end: owner_find
+
+	// 사장님 마이페이지 수정폼 띄우기
+	// /member/modify_form.do?mem_idx=2
+	@RequestMapping("modify_form_owner.do")
+	public String modifyFormOwner(int owner_idx, Model model) {
+
+		// 1.mem_idx에 대한 MemberVo 구한다
+		OwnerVo vo = ownerMapper.selectOneFromIdx(owner_idx);
+
+		// 3.request binding
+		model.addAttribute("vo", vo);
+
+		return "member/member_modify_owner";
+	}// end: modify_form_owner
+
+	// 사장님 마이페이지 수정하기
+	@RequestMapping("modify_owner.do")
+	public String modifyOwner(OwnerVo vo) {
+
+		// IP구해서 vo에 넣기
+		String owner_ip = request.getRemoteAddr();
+		vo.setOwner_ip(owner_ip);
+
+		// 수정
+		int res = ownerMapper.update(vo);
+
+		// 현재 수정한 멤버가 로그인한 멤버냐?
+		OwnerVo user = (OwnerVo) session.getAttribute("user");
+
+		if (user.getOwner_idx() == vo.getOwner_idx()) {
+			// 수정된 정보를 다시 얻어온다
+			user = ownerMapper.selectOneFromIdx(vo.getOwner_idx());
+			// 가져온 정보를 세션에 다시 넣는다
+			session.setAttribute("user", user);
+		}
+
+		return "redirect:../shop/main.do"; // 메인 페이지로 리다이렉트
+
+	}// end : modify_owner
 
 	// 사장님 회원 탈퇴
 	@RequestMapping("delete_owner.do")
@@ -350,31 +391,99 @@ public class MemberController {
 		return "redirect:list.do";
 	}// end : delete_owner
 
-////////////////////////////////////////////////////////////////////// 라이더//////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////// 라이더//////////////////////////////////////////////////////
 
 	// 라이더 회원가입 폼 띄우기
 	@RequestMapping("rider_form.do")
 	public String insert_form_rider() throws Exception {
 
 		return "member/member_rider_form";
-	}//end: rider_form
+	}// end: rider_form
 
+	// 라이더 중복아이디 체크
+	@RequestMapping("check_id_rider.do")
+	// @ResponseBody : 응답데이터를 DS가 직접 응답해라
+	@ResponseBody
+	public Map<String, Boolean> check_id_rider(String rider_id) {
+
+		// 1.owner_id에 해당되는 사용자정보 얻어오기
+		RiderVo vo = riderMapper.selectOneFromId(rider_id);
+
+		// 2.사용유무 판단
+		boolean bResult = false;
+
+		// 현재 아이디에 대한 회원이 없으면 사용가능하다 설정
+		if (vo == null)
+			bResult = true;
+
+		// {"result" : true} or {"result" : false}
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		// key value
+		// String Boolean
+		map.put("result", bResult);
+
+		// Map을 JSON으로 반환시켜주는 객체(jsonConverter:context-7-jsonconverter.xml)
+		// DS이 받아서 MappingJackson2HttpMessageConverter에 지시
+		// 반환데이터(자바의 모든 데이터)를 JSON객체로 생성해서 반환해준다
+		return map;
+	}
 
 	// 라이더 회원 가입
 	@RequestMapping("insert_rider.do")
-	public String insert_rider(RiderVo vo) {
+	public String insert_rider(RiderVo vo,
+			@RequestParam(name = "photo") MultipartFile[] photo_array)
+			throws IllegalStateException, IOException {
+
+		// 운전 면허증 사진 등록
+		int rider_insert_no = 0;
+
+		// 파일 처리
+		// 웹경로 -> 절대경로 구하기
+		// import ServletContext 후 Autowired application 설정
+		String saveDir = application.getRealPath("/images/");
+		String rider_img = "no_file";
+
+		for (int i = 0; i < photo_array.length; i++) {
+			MultipartFile photo = photo_array[i];
+			if (!photo.isEmpty()) {
+				// 업로드된 파일명 구하기
+				String filename = photo.getOriginalFilename();
+				File f = new File(saveDir, filename);
+
+				// 중복파일 체크
+				if (f.exists()) {
+					long tm = System.currentTimeMillis();
+					filename = String.format("%d_%s", tm, filename);
+					f = new File(saveDir, filename);
+				}
+
+				// 임시 공간에 저장된 파일 -> 내가 지정한 파일로 복사
+				photo.transferTo(f);
+
+				if (i == 0) {
+					rider_img = filename;
+					vo.setRider_img(rider_img);
+
+				}
+			}
+		} // end : for
 
 		// 1.회원가입자의 IP구하기
 		String rider_ip = request.getRemoteAddr();
 		vo.setRider_ip(rider_ip);
 
+		try {
+			rider_insert_no = riderMapper.insert(vo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// 입력값 확인용
 		System.out.println(vo);
-		// 2.DB insert
-		int res = riderMapper.insert(vo);
 
-		return "redirect:list.do";
-	}//end : insert_rider
+		return "redirect:login_form.do";
+	}// end : insert_rider
 
 	// 라이더 회원 탈퇴
 	@RequestMapping("delete_rider.do")
@@ -382,7 +491,7 @@ public class MemberController {
 
 		int res = riderMapper.delete(rider_idx);
 
-		return "redirect:list.do";
+		return "redirect:../main/main.do";
 	}// end: delete_rider
 
 	// 라이더 로그인
@@ -431,9 +540,9 @@ public class MemberController {
 			return "redirect:../rider/main.do"; // 메인화면 이동시켜라
 		else
 			return "redirect:" + url; // 원래있던 페이지로 이동시켜라
-	}//end : rider_login
+	}// end : rider_login
 
-	// 라이더 아이디 비밀번호 찾기 페이지
+	// 라이더 아이디/비밀번호 찾기 페이지
 	@RequestMapping("rider_find.do")
 	public String findRider() {
 
@@ -444,7 +553,7 @@ public class MemberController {
 	@RequestMapping("rider_verifyId.do")
 	public String riderVerfyId(@RequestParam String rider_email, Model model) {
 
-		// 이메일로 조회
+		// 이메일로 조회(select)
 		RiderVo rider = riderMapper.selectOneFindInfo(rider_email);
 
 		// 라이더 아이디 가져오기
@@ -479,5 +588,44 @@ public class MemberController {
 
 		return "redirect:login_form.do";// 로그인 화면으로 redirect
 	}// end: rider_changePwd
+
+	// 라이더 마이페이지 수정폼 띄우기
+	// /member/modify_form.do?mem_idx=2
+	@RequestMapping("modify_form_rider.do")
+	public String modifyFormRider(int rider_idx, Model model) {
+
+		// 1.mem_idx에 대한 MemberVo 구한다
+		RiderVo vo = riderMapper.selectOneFromIdx(rider_idx);
+
+		// 3.request binding
+		model.addAttribute("vo", vo);
+
+		return "member/member_modify_rider";
+	}// end: modify_form_rider
+
+	// 라이더 마이페이지 수정하기
+	@RequestMapping("modify_rider.do")
+	public String modifyRider(RiderVo vo) {
+
+		// IP구해서 vo에 넣기
+		String rider_ip = request.getRemoteAddr();
+		vo.setRider_ip(rider_ip);
+
+		// 수정
+		int res = riderMapper.update(vo);
+
+		// 현재 수정한 멤버가 로그인한 멤버냐?
+		RiderVo user = (RiderVo) session.getAttribute("user");
+
+		if (user.getRider_idx() == vo.getRider_idx()) {
+			// 수정된 정보를 다시 얻어온다
+			user = riderMapper.selectOneFromIdx(vo.getRider_idx());
+			// 가져온 정보를 세션에 다시 넣는다
+			session.setAttribute("user", user);
+		}
+
+		return "redirect:../rider/main.do"; // 메인페이지로 리다이렉트
+
+	}// end : modify_rider
 
 }// end: class memberController

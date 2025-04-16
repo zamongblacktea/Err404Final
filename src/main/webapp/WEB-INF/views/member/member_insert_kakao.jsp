@@ -105,6 +105,7 @@
         //입력값 체크
         let mem_name = f.mem_name.value.trim();
         let mem_nickname = f.mem_nickname.value.trim();
+        let mem_phone = f.mem_phone.value.trim();
 
 
 
@@ -140,6 +141,14 @@
           f.mem_curaddr.value = "";
           f.mem_curaddr.focus();
           return;
+        }
+
+        if (mem_phone == "") {
+
+        alert("전화번호를 입력하세요!");
+        f.mem_phone.value = "";
+        f.mem_phone.focus();
+        return;
         }
 
 
@@ -212,6 +221,13 @@
           <tr>
             <th>닉네임</th>
             <td><input class="form-control" required="required" name="mem_nickname" value="${param.mem_nickname}">
+            </td>
+          </tr>
+
+          <!-- 전화번호 -->
+          <tr>
+            <th>전화번호</th>
+            <td><input type="tel" name="mem_phone" value="${mem_phone}" pattern="^01[016789]-\d{3,4}-\d{4}$" placeholder="휴대전화 번호 입력" required></td>
             </td>
           </tr>
 

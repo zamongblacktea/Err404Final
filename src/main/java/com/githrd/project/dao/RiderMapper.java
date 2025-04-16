@@ -1,8 +1,11 @@
 package com.githrd.project.dao;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.githrd.project.vo.RiderVo;
 
@@ -27,7 +30,7 @@ public interface RiderMapper {
 	public RiderVo selectOneFindInfo(String email);
 
 	//추가
-	public int insert(RiderVo vo);
+	public int insert(RiderVo vo) throws IllegalStateException, IOException;
 
 	public int update(RiderVo vo);
 

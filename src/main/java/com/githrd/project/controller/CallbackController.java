@@ -63,7 +63,7 @@ public class CallbackController {
             ra.addAttribute("mem_email", mem_email);
             ra.addAttribute("mem_type", mem_type);
             ra.addAttribute("naver_id", naver_id);
-            return "redirect:../member/insert_form.do";
+            return "redirect:../member/insert_naver.do";
         }
 
         if (naver_id.equals(user.getMem_id())) {// DB에 로그인 유저 정보(id)가 있을 때
@@ -80,6 +80,7 @@ public class CallbackController {
 
     }// end : naver Callback
 
+    //카카오 연동 로그인 api 콜백
     @GetMapping("/kakao/callback")
     public String kakaoCallback(@RequestParam String code,
             HttpServletRequest request,
