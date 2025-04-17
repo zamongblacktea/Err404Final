@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+
 import com.githrd.project.vo.ShopInfoVo;
 
 @Mapper
@@ -32,5 +33,6 @@ public interface ShopInfoMapper {
 
     // owner_idx로 가게 조회
     ShopInfoVo selectByOwnerIdx(int owner_idx);
+
 
 }

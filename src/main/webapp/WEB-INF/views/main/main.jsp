@@ -54,16 +54,16 @@
       </header>
       <div class="content">
         <div id="mybox">
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
-          <div class="category">카테고리(이미지)</div>
+          <div class="category" onclick="location.href='../main/list.do'">전체보기</div>
+          <div class="category">치킨</div>
+          <div class="category">피자/양식</div>
+          <div class="category">중국집</div>
+          <div class="category">한식</div>
+          <div class="category">일식/돈까스</div>
+          <div class="category">족발/보쌈</div>
+          <div class="category">야식</div>
+          <div class="category">분식</div>
+          <div class="category">카페/디저트</div>
         </div>
       </div>
     </div>

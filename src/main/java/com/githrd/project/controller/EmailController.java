@@ -74,7 +74,7 @@ public class EmailController {
 			helper.setText(content, true);
 			mailSender.send(message);
 		} catch (Exception e) {
-			log.error("이메일 발송 오류", e); // 에러 로그 확인용
+			//log.error("이메일 발송 오류", e); // 에러 로그 확인용
 		}
 
 		log.info("랜덤숫자 : " + checkNum);
@@ -125,7 +125,7 @@ public class EmailController {
 				helper.setText(content, true);
 				mailSender.send(message);
 			} catch (Exception e) {
-				log.error("이메일 발송 오류", e); // 에러 로그 확인용
+				//log.error("이메일 발송 오류", e); // 에러 로그 확인용
 			}
 	
 			log.info("랜덤숫자 : " + checkNum);
@@ -178,7 +178,7 @@ public class EmailController {
 			helper.setText(content, true);
 			mailSender.send(message);
 		} catch (Exception e) {
-			log.error("이메일 발송 오류", e); // 에러 로그 확인용
+			//log.error("이메일 발송 오류", e); // 에러 로그 확인용
 		}
 
 		log.info("랜덤숫자 : " + checkNum);

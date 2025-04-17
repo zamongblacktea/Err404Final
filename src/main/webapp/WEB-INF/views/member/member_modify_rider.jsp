@@ -11,8 +11,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
-		<!-- 다음 주소검색 API -->
-		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 
 
 		<style type="text/css">
@@ -40,8 +39,10 @@
 			function send(f) {
 
 				//입력값 체크
+				let rider_idx = f.rider_idx.value;
 				let rider_name = f.rider_name.value.trim();
 				let rider_email = f.rider_email.value.trim();
+				let rider_phone = f.rider_phone.value;
 
 				if (rider_name == "") {
 
@@ -62,7 +63,7 @@
 
 
 
-				f.action = "modify.do";// MemberModifyAction
+				f.action = "modify_rider.do";// MemberModifyAction
 				f.submit();
 
 			}//end:send()
@@ -70,61 +71,11 @@
 
 
 
-			//주소검색
-			function find_curaddr() {
-
-				/* new daum.Postcode({
-					 oncomplete: function(data) {
-						 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-						 // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-						 //data : JOSN형식
-						 //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
-						 //console.log(data);
-						 $("#rider_zipcode").val(data.zonecode);
-						 $("#rider_curaddr").val(data.address);
-			    
-					 }
-				 }).open(); */
-
-
-				const width = 500; //팝업의 너비
-				const height = 600; //팝업의 높이
-				new daum.Postcode({
-					width: width, //생성자에 크기 값을 명시적으로 지정해야 합니다.
-					height: height,
-					oncomplete: function (data) {
-						//data : JOSN형식
-						//  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
-						//console.log(data);
-						$("#rider_zipcode").val(data.zonecode);
-						$("#rider_curaddr").val(data.address);
-
-					}
-				}).open({
-					left: (window.screen.width / 2) - (width / 2),
-					top: (window.screen.height / 2) - (height / 2)
-				});
-
-
-			}
 
 		</script>
 
 
 
-		<script type="text/javascript">
-			//javascript
-			//window.onload = function(){};
-
-			//jQuery초기화
-			$(document).ready(function () {
-
-				//select value에 원본데이터 넣기
-				$("#rider_grade").val("${ vo.rider_grade }");
-
-			});
-
-		</script>
 
 
 
@@ -137,12 +88,12 @@
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h4>회원수정</h4>
+						<h4>라이더 마이 페이지</h4>
 					</div>
 					<div class="panel-body">
 
 						<table class="table">
-
+							<input type="hidden" value="${vo.rider_idx}" name="rider_idx">
 							<!-- 회원번호 -->
 							<!-- <tr>
 			         <th>회원번호</th>
@@ -156,11 +107,6 @@
 										style="width: 30%;" readonly></td>
 							</tr>
 
-							<tr>
-								<th>닉네임</th>
-								<td><input class="form-control" required="required" name="rider_nickname"
-										value="${ vo.rider_nickname }" style="width: 30%;"></td>
-							</tr>
 
 							<!-- 아이디 -->
 							<tr>
@@ -171,11 +117,42 @@
 								</td>
 							</tr>
 
+							<tr>
+								<th>비밀번호</th>
+								<td>
+									<input class="form-control" type="password" name="rider_pwd"
+										value="${ vo.rider_pwd }" style="width: 30%;">
+								</td>
+							</tr>
+
 							<!-- 이메일 -->
 							<tr>
 								<th>이메일</th>
 								<td><input class="form-control" type="email" name="rider_email"
 										value="${ vo.rider_email }" style="width: 30%;" readonly>
+								</td>
+							</tr>
+							<!-- 전화번호 -->
+							<tr>
+								<th>전화번호</th>
+								<td><input class="form-control" name="rider_phone" value="${vo.rider_phone}"
+										pattern="^01[016789]-\d{3,4}-\d{4}$" placeholder="휴대전화 번호 입력" required></td>
+								</td>
+							</tr>
+
+							<!-- 배달지역 -->
+							<tr>
+								<th>배달 지역</th>
+								<td><input class="form-control" type="text" name="rider_loc" value="${ vo.rider_loc }"
+										style="width: 30%;" readonly>
+								</td>
+							</tr>
+
+							<!-- 배달지역 -->
+							<tr>
+								<th>승인 상태</th>
+								<td><input class="form-control" type="text" name="rider_approve"
+										value="${ vo.rider_approve }" style="width: 30%;" readonly>
 								</td>
 							</tr>
 
@@ -184,8 +161,8 @@
 							<!-- 버튼 -->
 							<tr>
 								<td colspan="2" align="center">
-									<input class="btn btn-success" type="button" value="목록보기"
-										onclick="location.href='list.do'">
+									<input class="btn btn-success" type="button" value="메인으로"
+										onclick="location.href='../rider/main.do'">
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 									<input class="btn btn-primary" type="button" value="탈퇴하기"

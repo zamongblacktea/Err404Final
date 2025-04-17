@@ -40,7 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                            now(),
                            null,
                           '일반',
-                          #{mem_type})
+                          #{mem_type},
+                          #{mem_phone}
+                          )
    </insert>
 
    <!-- 회원수정 -->
@@ -50,7 +52,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                        mem_zipcode=#{ mem_zipcode }, 
                        mem_curaddr=#{ mem_curaddr }, 
                        mem_ip=#{ mem_ip },
-                       mem_update = now()  
+                       mem_update = now(),
+                      mem_phone=#{ mem_phone } 
      where mem_idx=#{ mem_idx }
    </update>
 

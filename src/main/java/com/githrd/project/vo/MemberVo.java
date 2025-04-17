@@ -22,6 +22,7 @@ public class MemberVo {
 	String mem_update;
 	String mem_grade;
 	String mem_type;
+	String mem_phone;
 
 
 	

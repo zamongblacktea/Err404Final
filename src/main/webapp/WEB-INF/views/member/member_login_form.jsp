@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Eatting Login</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -618,11 +618,6 @@ footer p a {
     
     <!-- Form -->
     <form>
-        <!-- google button -->
-        <button class="google__btn mem">
-        <i class="fa fa-google"></i>
-        Sign in with Google
-        </button>
         <!-- 카카오 로그인 -->
         <button class="kakao__btn mem" type="button" onclick="location.href=kakaoUrl">
         <i class="fa fa-github"> <img src="../images/kakao.png" ></i>
