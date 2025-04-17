@@ -113,15 +113,15 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
     <div class="content">
       <div class="shop-detail">
         <div id="mybox">
-          <div class="shop-title">가게 이름</div>
+          <div class="shop-title">${shop.shop_name}</div>
           <div class="row shop-content">
             <div id="shop_logo" class="col-sm-4">
-              <img src="${pageContext.request.contextPath}/images/${shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
+              <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
             </div>
 
             <ul class="list">
-              <li>별점 ${shop_rating}</li>
-              <li><fmt:formatNumber value="${shop_minprice}" pattern="#,#00" />원 이상 주문</li>
+              <li>별점 ${shop.shop_rating}</li>
+              <li><fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원 이상 주문</li>
               <li>결제 카카오결제</li>
             </ul>
           </div>
@@ -139,7 +139,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
                 <div class="menu-name">메뉴이름</div>
                 <div class="menu-price">메뉴가격</div>
               </div>
-              <div class="menu-img col-sm-4"><img src="${pageContext.request.contextPath}/images/${menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" /></div>
+              <div class="menu-img col-sm-4"><img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" /></div>
             </div>
           </div>
         </div>

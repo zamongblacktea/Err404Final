@@ -63,7 +63,7 @@ pageEncoding="UTF-8"%>
       <div class="list">
 
         <c:forEach var="vo" items="${shop_list}">
-          <div class="shop-list container" onclick="location.href='../main/detail.do'">
+          <div class="shop-list container" onclick="location.href='../main/detail.do?shop_idx=${vo.shop_idx}'">
             <div class="row">
 
               <div id="shop_logo" class="col-sm-3">

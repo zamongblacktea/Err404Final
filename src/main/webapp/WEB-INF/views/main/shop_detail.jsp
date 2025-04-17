@@ -107,21 +107,42 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
     }
   </style>
 
+<script>
+  $.ajax({
+    url: "",
+    type: "POST",
+    data: {
+      "menu_idx":"${vo.menu_idx}",
+      "mem_idx" : "${vo.mem_idx}"
+    },
+    dataType: "json",
+    success: function(res_data){
+      alert("장바구니에 추가되었습니다");
+
+
+    },
+    error: function(err){
+      alert(err.responseText);
+    }
+  });
+
+</script>
+
   <body>
     <nav class="navbar">네비바 로그인/로그아웃</nav>
     <header class="header">헤더</header>
     <div class="content">
       <div class="shop-detail">
         <div id="mybox">
-          <div class="shop-title">가게 이름</div>
+          <div class="shop-title">${shop.shop_name}</div>
           <div class="row shop-content">
             <div id="shop_logo" class="col-sm-4">
-              <img src="${pageContext.request.contextPath}/images/${shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
+              <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
             </div>
 
             <ul class="list">
-              <li>별점 ${shop_rating}</li>
-              <li><fmt:formatNumber value="${shop_minprice}" pattern="#,#00" />원 이상 주문</li>
+              <li>별점 ${shop.shop_rating}</li>
+              <li><fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원 이상 주문</li>
               <li>결제 카카오결제</li>
             </ul>
           </div>
@@ -134,18 +155,26 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
           </ul>
           <div>
             <div>메뉴카테고리</div>
-            <div class="row">
-              <div class="menu-text col-sm-8">
-                <div class="menu-name">메뉴이름</div>
-                <div class="menu-price">메뉴가격</div>
+            <c:forEach var="menu" items="${menu_list}">
+              <div class="row" id="myBtn" onclick="shopModal();">
+                <div class="menu-text col-sm-8">
+                  <div>${menu.menu_name}</div>
+                  <div class="menu-name">${menu.menu_name}</div>
+                  <div class="menu-price">${menu.menu_price}</div>
+                </div>
+                <div class="menu-img col-sm-4"><img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" /></div>
+                <input type="button" class="btn btn-primary" value="장바구니">
               </div>
-              <div class="menu-img col-sm-4"><img src="${pageContext.request.contextPath}/images/${menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" /></div>
-            </div>
+            </c:forEach>
           </div>
         </div>
+
+
         <div class="cart">
           <div>주문표/취소</div>
-          <div>메뉴/가격/수량</div>
+          <div>${menu_name}<br>
+            ${menu_price} &nbsp;&nbsp;&nbsp;
+            menu_cnt</div>
           <div>최소주문금액 얼마</div>
           <div>합계 얼마</div>
           <div>주문하기 버튼</div>
