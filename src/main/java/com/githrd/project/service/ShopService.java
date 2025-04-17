@@ -50,4 +50,7 @@ public interface ShopService {
 
         // owner_idx로 가게 조회
         ShopInfoVo selectByOwnerIdx(int owner_idx);
+
+        // 메뉴 삭제
+        int menuDelete(int menu_idx);
 }

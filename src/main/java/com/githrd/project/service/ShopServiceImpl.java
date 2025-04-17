@@ -374,9 +374,18 @@ public class ShopServiceImpl implements ShopService {
         return shopInfoMapper.countShopByOwnerIdx(user.getOwner_idx());
     }
 
+    // owner_idx로 가게 조회
     @Override
     public ShopInfoVo selectByOwnerIdx(int owner_idx) {
         return shopInfoMapper.selectByOwnerIdx(owner_idx);
     }
+
+    // 메뉴 삭제
+    @Override
+    public int menuDelete(int menu_idx) {
+        return shopMenuMapper.menuDelete(menu_idx);
+    }
+
+
 
 }

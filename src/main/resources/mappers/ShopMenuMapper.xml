@@ -40,4 +40,9 @@
       update menu set menu_img = #{menu_img} where menu_idx = #{menu_idx}
     </update>
 
+    <!-- 메뉴 삭제 -->
+    <delete id="menuDelete" parameterType="int">
+      delete from menu where menu_idx = #{menu_idx}
+    </delete>  
+
 </mapper>
