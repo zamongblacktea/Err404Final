@@ -83,10 +83,12 @@
     <script>
       function loadContent(url) {
         const shop_idx = "${sessionScope.shop_idx}"; // 세션에서 shop_idx 꺼냄
-
+        const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
-          data: { shop_idx: shop_idx },
+          data: { shop_idx: shop_idx,
+                  owner_idx: owner_idx,
+           },
           success: function(res_data) {
             $("#disp").html(res_data);
           },
@@ -118,7 +120,7 @@
       <div id="sidebar">
         <div class="menu-group">
           <div class="menu-title">사장관리</div>
-          <a onclick="loadContent('owner_info.do')">사장정보</a>
+          <a onclick="loadContent('../member/modify_form_owner.do')">사장정보</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">메뉴관리</div>
