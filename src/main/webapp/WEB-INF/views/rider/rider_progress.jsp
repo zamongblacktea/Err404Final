@@ -81,9 +81,9 @@
             <div>주문상태 : ${vo.order_status}</div> 
             <div>가게이름 :  ${vo.shop_name}</div>
             <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div> 
-            <!-- <div>가게전화번호 : ${vo.shop_phone}</div>  -->
+            <%-- <div>가게전화번호 : ${vo.shop_phone}</div>  --%>
             <div>회원번호 :  ${vo.mem_idx}</div>
-            <!-- <div>회원전화번호 :  ${vo.mem_phone}</div> -->
+            <%-- <div>회원전화번호 :  ${vo.mem_phone}</div> --%>
             <div>배달장소 :${vo.mem_caddr} ${vo.mem_cdaddr}</div> 
             <div>배달요청사항 :  ${vo.rider_request}</div>
             <div>배달상태: ${vo.delivery_status}</div>  

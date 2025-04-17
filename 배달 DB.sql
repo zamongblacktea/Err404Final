@@ -13,9 +13,10 @@ CREATE TABLE delivery (
 	mem_cdaddr	varchar(100)	NULL,
 	rider_request	varchar(100)	NULL,
     order_status varchar(100)	default 'N',
-    delivery_status varchar(100)	default 'N',
     rider_status varchar(100)	default 'N',
+    delivery_status varchar(100)	default 'N',
     pay_date datetime,
+    totalDistance double NULL,
     delivery_fee int
  
 
@@ -32,3 +33,10 @@ insert into delivery values(null,'맛나요BBQ','가게주소1','가게주소2',
 						'안전하게배달해주세요','N','N','N',now(),3000,20,0);
               
 alter table delivery add constraint fk_delivery foreign key(rider_idx) references rider(rider_idx);     
+
+-- date_format : 시간을 없애고 년월일만 가져온다.
+-- 포린키는 조인을 하는 조건으로 사용 즉 포린키는 연결하는 조건임
+-- inner조인 1대1조인
+
+select date_format(now(),'%Y-%m-%d') from dual
+where date_format(now(),'%Y-%m-%d')='2025-04-16'
