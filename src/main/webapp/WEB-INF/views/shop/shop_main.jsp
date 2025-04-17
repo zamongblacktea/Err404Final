@@ -77,6 +77,7 @@
         /* border: 1px solid red; */
         width: 1320px;
         margin: 30px auto;
+        padding-left: 50px;
 
       }
     </style>

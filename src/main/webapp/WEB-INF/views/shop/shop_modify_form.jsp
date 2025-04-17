@@ -29,6 +29,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       #id_msg {
         margin-left: 10px;
       }
+
+      textarea{
+        resize: none;
+        width: 60%;
+        height: 100px;
+      }
     </style>
 
     <script type="text/javascript">
@@ -364,19 +370,19 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <!-- 배달료 -->
               <tr>
                 <th>배달료</th>
-                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" value="${shop.shop_dfee}" /></td>
+                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%;" value="${shop.shop_dfee}" /></td>
               </tr>
 
               <!-- 가게 공지 -->
               <tr>
                 <th>가게공지</th>
-                <td><textarea class="form-control" required="required" name="shop_notice">${shop.shop_notice}</textarea></td>
+                <td><textarea class="form-control" required="required" name="shop_notice" style="width: 60%; height: 100px;">${shop.shop_notice}</textarea></td>
               </tr>
 
               <!-- 소개글 -->
               <tr>
                 <th>소개글</th>
-                <td><textarea class="form-control" required="required" name="shop_intro">${shop.shop_intro}</textarea></td>
+                <td><textarea class="form-control" required="required" name="shop_intro" style="width: 60%; height: 100px;">${shop.shop_intro}</textarea></td>
               </tr>
 
               <!-- 최소주문금액 -->

@@ -28,6 +28,12 @@
       #id_msg {
         margin-left: 10px;
       }
+
+      textarea{
+        resize: none;
+        width: 60%;
+        height: 100px;
+      }
     </style>
 
     <script type="text/javascript">

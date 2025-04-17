@@ -13,8 +13,9 @@
         padding: 15px;
         margin-bottom: 15px;
         border-radius: 8px;
-        width: 800px;
+        width: 600px;
         margin: 20px auto;
+        padding-left: 50px;
       }
       .menu-item img {
         width: 130px;

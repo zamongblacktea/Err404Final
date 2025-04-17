@@ -19,6 +19,23 @@
       .form-group {
         margin-bottom: 15px;
       }
+/* 
+      h2{
+        display: inline-block;
+        width: 200px;
+        margin-left: 50px;
+      } */
+
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+      }
+
+      textarea{
+        resize: none;
+      }
     </style>
 
     <script type="text/javascript">
@@ -132,6 +149,7 @@
     </script>
   </head>
   <body>
+    <h2>메뉴 수정</h2>
     <!-- 이미지 선택/폼 -->
     <form method="POST" enctype="multipart/form-data" id="ajaxForm" style="display: none">
       <input type="file" id="ajaxFile" onchange="ajaxFileChange();" />
@@ -142,8 +160,8 @@
       <input class="btn btn-info" type="button" value="이미지 수정" onclick="photo_update();" />
     </div>
 
+    
     <div class="form-container">
-      <h2>메뉴 수정</h2>
       <form id="menuModifyForm" enctype="multipart/form-data">
         <input type="hidden" name="menu_idx" value="${vo.menu_idx}" />
         <div class="form-group">
