@@ -12,6 +12,8 @@ CREATE TABLE order (
 
 );
 
+-- order_check 주문확인 번호 가게 주문정보에도 있어야함(shop_order테이블에서 가져와야함)
+
 -- shop_order테이블에서 sorder_staus가 y 인것만 출력되도록 해야함
 
 -- order_status A:조리중 B:조리완료 C:배차완료 D: 배달완료 

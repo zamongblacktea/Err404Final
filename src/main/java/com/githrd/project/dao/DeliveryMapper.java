@@ -10,7 +10,7 @@ import com.githrd.project.vo.DeliveryVo;
 @Mapper
 public interface DeliveryMapper {
     
-       // 임시테이블 조회
+       // 배달 테이블 조회
        public List<DeliveryVo> selectList();
 
        //배차받기를 누르면 배차상태가 Y로 바뀌도록하기
