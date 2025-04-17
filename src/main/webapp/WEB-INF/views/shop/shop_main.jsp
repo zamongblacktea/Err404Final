@@ -86,7 +86,6 @@
         const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
-          type: "get",
           data: { shop_idx: shop_idx,
                   owner_idx: owner_idx,
            },
