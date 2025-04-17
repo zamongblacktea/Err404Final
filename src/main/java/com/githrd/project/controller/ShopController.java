@@ -154,7 +154,6 @@ public class ShopController {
     }
 
     // 메뉴 수정
-    @ResponseBody
     @PostMapping("/menu_modify.do")
     public String menu_modify(ShopMenuVo vo, Model model) {
 

@@ -345,32 +345,17 @@ public class MemberController {
 
 	// 사장님 마이페이지 수정폼 띄우기
 	// /member/modify_form.do?mem_idx=2
-
 	@RequestMapping("modify_form_owner.do")
-    public String modifyFormOwner(int owner_idx, Model model) {
+	public String modifyFormOwner(int owner_idx, Model model) {
 
-        OwnerVo vo = ownerMapper.selectOneFromIdx(owner_idx);
+		// 1.mem_idx에 대한 MemberVo 구한다
+		OwnerVo vo = ownerMapper.selectOneFromIdx(owner_idx);
 
-        model.addAttribute("vo", vo);
-		
-        return "member/member_modify_owner";
-    }
+		// 3.request binding
+		model.addAttribute("vo", vo);
 
-
-	// @ResponseBody
-	// @RequestMapping("modify_form_owner.do")
-	// public Map<String, Object> modifyFormOwner(@RequestParam int owner_idx, Model model) {
-
-	// 	// 1.owner_idx에 대한 MemberVo 구한다
-	// 	OwnerVo vo = ownerMapper.selectOneFromIdx(owner_idx);
-
-	
-	// 	Map<String, Object> map = new HashMap<String, Object>();
-
-	// 	map.put("vo", vo);
-
-	// 	return map;
-	// }// end: modify_form_owner
+		return "member/member_modify_owner";
+	}// end: modify_form_owner
 
 	// 사장님 마이페이지 수정하기
 	@RequestMapping("modify_owner.do")
