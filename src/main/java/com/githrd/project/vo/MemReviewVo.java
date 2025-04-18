@@ -19,6 +19,8 @@ public class MemReviewVo {
     String review_pwd;
     double review_rating;
     int review_available;
+    String delivery_status;
+    String menu_idx;
     
 
 

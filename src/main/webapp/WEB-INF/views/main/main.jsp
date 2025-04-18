@@ -36,7 +36,7 @@
     }
     .header {
       width: 100%;
-      height: 160px;
+      height: 380px;
     }
 
     .footer {

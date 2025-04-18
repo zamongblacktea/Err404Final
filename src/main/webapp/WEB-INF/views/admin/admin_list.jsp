@@ -90,7 +90,7 @@
 </head>
 <body>
    <div class="bar">
-      <%@ include file="member_bar.jsp" %>
+      <%@ include file="admin_bar.jsp" %>
 
    </div>
 <div id="box">
@@ -102,15 +102,13 @@
   
   <div class="row"  style="margin-top: 30px; margin-bottom: 5px;">
     <div class="col-sm-3 col-md-3" >
-      <input class="btn btn-primary"  type="button" value="회원가입" 
-	            onclick="location.href='insert_form.do'">
     </div>
     <div class="col-sm-9 col-md-9" style="text-align: right">
      
       <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
       <c:if test="${ empty sessionScope.user }">
 	      <input class="btn btn-primary"  type="button" value="로그인" 
-		            onclick="location.href='login_form.do'">
+		            onclick="location.href='admin_login_form.do'">
 	  </c:if>  
 	  
 	  <!-- 로그인이 되어있을 경우(session에 user가 있냐?) -->

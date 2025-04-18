@@ -141,10 +141,10 @@
         <div class="nav-wrap">
           <nav class="main-nav" role="navigation">
             <ul class="unstyled list-hover-slide">
-              <li><a href="list.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">회원 목록</a></li>
-              <li><a href="owner_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">사업자 승인</a></li>
-              <li><a href="rider_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">라이더 승인</a></li>
-              <li><a href="#">Blog</a></li>
+              <li><a href="modify_form.do?mem_idx=${ user.mem_idx }">내 정보</a></li>
+              <li><a href="review_list.do?mem_idx=${ user.mem_idx }">내 주문 내역</a></li>
+              <li><a href="owner_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">내가 쓴 리뷰</a></li>
+              <li><a href="rider_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">내 문의 내역</a></li>
             </ul>
           </nav>
         </div>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.NaverMapper;
 import com.githrd.project.dao.OwnerMapper;
@@ -21,15 +22,15 @@ import com.githrd.project.dao.RiderMapper;
 import com.githrd.project.service.KakaoServiceImpl;
 import com.githrd.project.service.NaverServiceImpl;
 import com.githrd.project.service.ShopService;
+import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.RiderVo;
-import com.githrd.project.vo.ShopInfoVo;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -51,6 +52,9 @@ public class MemberController {
 
 	@Autowired
 	NaverMapper naverMapper;
+
+	@Autowired
+	MemReviewMapper memReviewMapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -225,7 +229,33 @@ public class MemberController {
 		int res = memberMapper.delete(mem_idx);
 
 		return "redirect:list.do";
-	}
+	}// end: member_delete
+
+	// 회원 내 리뷰 내역 리스트 폼 띄우기
+	@RequestMapping("review_list.do")
+	public String reviewList(@RequestParam int mem_idx, Model model) {
+
+		List<MemReviewVo> list = memReviewMapper.selectListOne(mem_idx);
+
+		model.addAttribute("list", list);
+		return "member/member_review_list";
+	}// end: member_review
+
+	// 회원 리뷰 작성 폼 띄우기
+	@RequestMapping("review_form.do")
+	public String reviewForm(@RequestParam int mem_idx, Model model) {
+
+		return "member/member_review_form";
+	}// end: member_review_form
+
+	// 회원 리뷰 작성 
+	@RequestMapping("review_insert.do")
+	public String reviewInsert(@RequestParam int mem_idx, Model model,MemReviewVo vo) {
+
+		int res = memReviewMapper.insert(vo);
+
+		return "member/member_review_form";
+	}// end: member_review_form
 
 	////////////////////////////////////////////////////////////////// 사장님//////////////////////////////////////////////
 

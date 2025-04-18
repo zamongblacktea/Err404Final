@@ -18,7 +18,7 @@ public class OwnerVo {
 	String owner_regdate;
 	String owner_update;
 	String owner_num;
-	String owner_status;
+	String owner_approve;
 	
 
 

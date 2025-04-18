@@ -50,7 +50,7 @@
 
 <script type="text/javascript">
 
-  function del(rider_idx){
+  function del(owner_idx){
 	  
 	  //삭제 확인?                           (취소)
 	  //if(confirm("정말 삭제 하시겠습니까?")==false) return;
@@ -66,8 +66,8 @@
 		}).then((result) => {
 		  if (result.isConfirmed) { //삭제버튼 클릭
 		    
-			  //삭제처리       delete.do?rider_idx=1
-			  location.href = "delete.do?rider_idx=" + rider_idx;	// MemberDeleteAction  
+			  //삭제처리       delete.do?owner_idx=1
+			  location.href = "delete.do?owner_idx=" + owner_idx;	// MemberDeleteAction  
 		  }
 		});
 	  
@@ -85,7 +85,7 @@
 </head>
 <body>
    <div class="bar">
-      <%@ include file="member_bar.jsp" %>
+      <%@ include file="admin_bar.jsp" %>
 
    </div>
 <div id="box">
@@ -114,11 +114,6 @@
     </div>
     <div class="col-sm-9 col-md-9" style="text-align: right">
      
-      <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
-      <c:if test="${ empty sessionScope.user }">
-	      <input class="btn btn-primary"  type="button" value="로그인" 
-		            onclick="location.href='login_form.do'">
-	  </c:if>  
 	  
 	  <!-- 로그인이 되어있을 경우(session에 user가 있냐?) -->
       <c:if test="${ not empty sessionScope.user }">
@@ -141,9 +136,8 @@
         <th>이름</th>
         <th>아이디</th>
         <th>이메일</th>
-        <th>면허증 사진</th>
-        <th>계좌번호</th>
-        <th>승인 여부</th>
+        <th>사업자 번호</th>
+        <th>승인</th>
         <th></th>
         
         <!-- 로그인 유저가 관리자면 -->
@@ -156,7 +150,7 @@
      <!-- 데이터 출력 -->
      
      <!-- 데이터가 없을경우 -->
-     <c:if test="${ (empty rider_list) and (empty rider_list) }">
+     <c:if test="${ (empty owner_list) and (empty rider_list) }">
         <tr>
            <td colspan="10" align="center">
               <font color="red">가입된 회원정보가 없습니다</font>
@@ -166,24 +160,23 @@
      
      <!-- 데이터가 있는경우 -->
      <!-- for(MemberVo vo : list) 동일  -->
-     <c:forEach var="vo" items="${ rider_list }">
+     <c:forEach var="vo" items="${ owner_list }">
         <tr>
-           <td>${ vo.rider_idx }</td>
-           <td>${ vo.rider_name }</td>
-           <td>${ vo.rider_id }</td>
-           <td>${ vo.rider_email }</td>
-           <td>${ vo.rider_img }</td>
-           <td>${ vo.rider_account }</td>
-           <td>${ vo.rider_status }</td>
+           <td>${ vo.owner_idx }</td>
+           <td>${ vo.owner_name }</td>
+           <td>${ vo.owner_id }</td>
+           <td>${ vo.owner_email }</td>
+           <td>${ vo.owner_num }</td>
+           <td>${ vo.owner_approve }</td>
            
            <!-- 로그인 유저가 관리자면 -->
            <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
 	           <td>
 	               <input class="btn btn-success" type="button"  value="승인"
-	                      onclick="location.href='modify_form.do?rider_idx=${ vo.rider_idx }'" >
+	                      onclick="location.href='owner_approval.do?owner_idx=${ vo.owner_idx }'" >
 	                      
 	               <input class="btn btn-danger"  type="button"  value="거부"
-	                      onclick="del('${ vo.rider_idx }');">
+	                      onclick="del('${ vo.owner_idx }');">
 	           </td>
            </c:if>
            

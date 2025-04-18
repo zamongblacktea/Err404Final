@@ -131,7 +131,7 @@
 
 		<form class="form-inline">
 			<div id="box">
-
+				<%@ include file="member_bar.jsp" %>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h4>회원수정</h4>
@@ -202,7 +202,7 @@
 							<tr>
 								<td colspan="2" align="center">
 									<input class="btn btn-success" type="button" value="목록보기"
-										onclick="location.href='list.do'">
+										onclick="location.href='../main/main.do'">
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 								</td>

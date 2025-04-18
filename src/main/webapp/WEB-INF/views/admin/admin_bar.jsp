@@ -136,7 +136,7 @@
 <body>
     <header class="header" role="banner">
         <h1 class="logo">
-          <a href="#">Terence <span>Devine</span></a>
+          <a href="#">Eatting <span>관리자용</span></a>
         </h1>
         <div class="nav-wrap">
           <nav class="main-nav" role="navigation">
