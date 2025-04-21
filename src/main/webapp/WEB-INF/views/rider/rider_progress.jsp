@@ -84,7 +84,7 @@
             <%-- <div>가게전화번호 : ${vo.shop_phone}</div>  --%>
             <div>회원번호 :  ${vo.mem_idx}</div>
             <%-- <div>회원전화번호 :  ${vo.mem_phone}</div> --%>
-            <div>배달장소 :${vo.mem_caddr} ${vo.mem_cdaddr}</div> 
+            <div>배달장소 :${vo.mem_addr1} ${vo.mem_addr2}</div> 
             <div>배달요청사항 :  ${vo.rider_request}</div>
             <div>배달상태: ${vo.delivery_status}</div>  
     

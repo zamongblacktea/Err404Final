@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.MemberMapper;
+import com.githrd.project.dao.RiderDeliveryFeeMapper;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
+import com.githrd.project.vo.RiderDeliveryFeeVo;
 import com.githrd.project.vo.RiderVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,8 +35,13 @@ public class RiderController {
 	@Autowired
 	HttpSession session;
 
+    
     @Autowired
-    private KakaoMapService kakaoMapService;
+    RiderDeliveryFeeMapper riderDeliveryFeeMapper;
+
+    @Autowired
+    private KakaoMapService kakaoMapService; 
+
 
     @RequestMapping("/rider/main.do")
     public String main(){
@@ -81,6 +88,7 @@ public class RiderController {
         RiderVo 	user 	= (RiderVo) session.getAttribute("user");
         int rider_idx = user.getRider_idx();
         
+        
         //로그인된 라이더 정보가 없을 경우 
         if (user == null) {
             return "redirect:/login_form.do";
@@ -91,10 +99,9 @@ public class RiderController {
         List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(rider_idx);
 
         //rider_list는 배차완료한 라이더의 현황을 볼수 있는 리스트이다.
-        
-        System.out.println("---------------------------");
-        System.out.println(rider_list.size());
-        System.out.println("---------------------------");
+        // System.out.println("---------------------------");
+        // System.out.println(rider_list.size());
+        // System.out.println("---------------------------");
         
 		// 결과적으로 request binding
 		model.addAttribute("rider_list", rider_list);
@@ -138,6 +145,21 @@ public class RiderController {
         return "rider/rider_complete";
     }
 
+    //전체 내역 정산조회
+    @RequestMapping("/rider/deliveryfee.do")
+    public String riderTotalDeliveryFee(int rider_idx,Model model){
+
+        List<RiderDeliveryFeeVo> riderdelivery_list =riderDeliveryFeeMapper.selectList(rider_idx);
+        
+        //request binding
+        model.addAttribute("riderdelivery_list", riderdelivery_list);
+
+        
+        return "rider/rider_deliveryfee";
+    }
+
+
+    //당일내역 정산
     @RequestMapping("/rider/todayfee.do")
     public String riderTodayDeliveryFee(){
 

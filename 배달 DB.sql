@@ -5,8 +5,9 @@ CREATE TABLE delivery (
     delivery_idx int primary key auto_increment,
 	order_idx	int NULL,
 	shop_idx 	int NULL,
-	mem_idx int,
-    rider_idx int, 
+	mem_idx int null,
+    rider_idx int null,
+    menu_idx int null,
     menu_name   varchar(100)	NULL,
 	menu_price	int	NOT NULL,	
 	mem_caddr	varchar(100)	NULL,
@@ -18,8 +19,6 @@ CREATE TABLE delivery (
     pay_date datetime,
     totalDistance double NULL,
     delivery_fee int
- 
-
 );
 -- shop_idx로 가져와서(조인) shop_name,shop_addr1,shop_addr2,shop_phone 가져와야함 mapper 수정
 -- mem_idx로 가져와서(조인) mem_phone 출력되도록 해야함

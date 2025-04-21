@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,7 +58,7 @@
       }
 
       .button_style {
-        background-color: #f0a8d0;
+        background-color: #e4a159;
         color: white;
         border: none;
         border-radius: 5px;
@@ -65,7 +68,7 @@
       }
 
       .button_style:hover {
-        background-color: #e090b5;
+        background-color: #e4a159;
       }
 
       .table {
@@ -113,7 +116,7 @@
     <div class="header">
         <h2>배달 완료 목록</h2>
         <form action="list.do" method="get" class="form-inline">
-          <input type="hidden" name="raiders_id" value="${param.raiders_id}" />
+          <input type="hidden" name="rider_idx" value="${param.rider_idx}" />
   
           <!-- html5에서 지원하는 달력 태그 형식 -->
           <div class="form-group">
@@ -144,41 +147,42 @@
             class="button_style"
             id="btn_popup_update"
             value="마이페이지"
-            onclick="location.href ='../mypage.do'"
+            onclick="location.href ='../modify_form_rider.do'"
           />
         </form>
 
     </div>
-     가게 이름 주문금액 주문 날짜 배달주소 배달료 
+    <!-- 가게 이름 주문금액 주문 날짜 배달주소 배달료 
     표만들기
     날짜 설정
     전체 정산내역 ->동적쿼리사용
-    5개씩 출력 페이징처리
+    5개씩 출력 페이징처리 -->
 
     <table id="delivery-table" class="table table-striped">
         <thead>
           <tr>
             <th>가게 이름</th>
-            <th>주문 금액</th>
+            <th>주문 번호</th>
             <th>주문 날짜</th>
-            <th>배달 주소</th>
+            <!-- <th>배달 주소</th> -->
             <th>배 달 료</th>
           </tr>
         </thead>
         <tbody>
-          <c:forEach var="vo" items="${completedDeliveries}">
-            <!-- <tr>
+          <c:forEach var="vo" items="${riderdelivery_list}">
+              <tr>
               <td>${vo.shop_name}</td>
-              <td>${vo.order_price} 원</td>
-              <td>${vo.}</td>
-              <td>${vo.addr_line1}, ${vo.addr_line2}</td>
-              <td>${vo.commission} 원</td>
-            </tr> -->
+              <td>${vo.order_check}</td>
+              <td>${vo.pay_regdate}</td>
+              <%-- <td>${vo.mem_addr1}, ${vo.mem_addr2}</td> --%>
+
+              <td>${vo.delivery_fee} 원</td>
+            </tr>  
           </c:forEach>
         </tbody>
       </table>
 
-      <h3>총 수입: ${totalCommission} 원</h3>
+      <!-- <h3>총 수입: ${총배달금액} 원</h3> -->
     
 </body>
 </html>

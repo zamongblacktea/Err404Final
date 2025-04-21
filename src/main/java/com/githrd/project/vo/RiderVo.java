@@ -2,9 +2,12 @@ package com.githrd.project.vo;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data // @getter @setter @toString
+
+//@Data // @getter @setter @toString
+@Getter @Setter
 //@NoArgsConstructor // 기본생성자는 생성자가 없으면 자동으로 생성해서 쓰기 때문에 굳이 만들 필요 없음.
 @Alias("RiderVo")
 public class RiderVo {

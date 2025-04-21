@@ -45,7 +45,7 @@
      <!-- foreign키로 라이더의 아이디도 받아와야한다. -->
 
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
-    <!-- forEach문으로 출력할듯?  여기서 주문대기 할때 거리가 짧은순으로 orderby해서 출력되도록 하기  -->
+    <!-- forEach문으로 출력 여기서 주문대기 할때 거리가 짧은순으로 orderby해서 출력되도록 하기  -->
      <!-- for(DeliveryVo vo : standby_list) -->
     <c:forEach var="vo" items="${standby_list}">
       <div>주문번호 : ${vo.order_idx}</div>
@@ -53,17 +53,8 @@
       <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div>
       <div>메뉴 : ${vo.menu_name} </div>
       <div>메뉴가격 : ${vo.menu_price}</div>
-      <div>배달장소 : ${vo.mem_caddr} ${vo.mem_cdaddr}</div>
+      <div>배달장소 : ${vo.mem_addr1} ${vo.mem_addr2}</div>
       <div>배달요청사항 : ${vo.rider_request}</div>
-    
-        <!-- <div>주문번호 : </div> ${order.order_idx}
-        <div>가게이름 : </div> ${shop_name}
-        <div>가게위치 : </div> ${shop_addr1} ${shop_addr2}
-        <div>메뉴 : </div> ${menu_name}
-        <div>메뉴가격 : </div> ${menu_price}
-        <div>배달장소 :</div> ${mem_caddr} ${mem_cdaddr}
-        <div>배달요청사항 : </div> ${rider_request}
-        <div>배달상태 : </div> ${delivery_status} -->
 
         <input  type="button"  value="경로보기"    onclick="location.href='../route/route.do'" />
         <!-- 배차받기를 누르면 배달현황으로 넘어가기 -->
