@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+ 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +11,7 @@
     <title>Document</title>
 </head>
 <body>
+    
     라이더 테스트 페이지
     
     주소를 위도경도로 얻어와서 

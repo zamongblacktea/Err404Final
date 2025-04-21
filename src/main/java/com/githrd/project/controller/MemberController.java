@@ -69,9 +69,7 @@ public class MemberController {
 	public String login_form(Model model) {
 
 		// sns연동 로그인
-		String naverUrl = naverService.getNaverLogin();
-		String kakaoUrl = kakaoService.getKakaoLogin();
-		System.out.println("네이버 로그인 URL: " + naverUrl);
+
 		model.addAttribute("naverUrl", naverService.getNaverLogin());
 		model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin());
 

@@ -18,6 +18,9 @@ public class RiderDeliveryFeeVo {
     int mem_idx;
     String mem_name;
     int delivery_idx;
-    String pay_date; 
+    String pay_regdate;
+    int delivery_fee;
+    String mem_addr1;
+    String mem_addr2; 
 
 }

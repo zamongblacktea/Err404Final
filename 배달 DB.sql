@@ -19,8 +19,6 @@ CREATE TABLE delivery (
     pay_date datetime,
     totalDistance double NULL,
     delivery_fee int
- 
-
 );
 -- shop_idx로 가져와서(조인) shop_name,shop_addr1,shop_addr2,shop_phone 가져와야함 mapper 수정
 -- mem_idx로 가져와서(조인) mem_phone 출력되도록 해야함
