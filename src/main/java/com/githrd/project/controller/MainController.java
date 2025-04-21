@@ -37,6 +37,7 @@ public class MainController {
         List<ShopInfoVo> list = shopService.selectListAll();
 
         model.addAttribute("shop_list", list);
+        System.out.println(list);
 
         return "main/shop_list";
     }
