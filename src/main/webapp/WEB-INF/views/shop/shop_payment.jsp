@@ -216,7 +216,7 @@ h {
 				<div class="mb-3">
 					<label for="addr" class="form-label">주소</label> <input type="text"
 							class="form-control" id="mem_curaddr" name="mem_curaddr"
-							value="${ sessionScope.user.mem_curaddr }" required>
+							value="${ sessionScope.user.mem_addr }" required>
 				</div>
 				<div class="mb-3">
 					<label for="name" class="form-label">이름</label> <input type="text"
