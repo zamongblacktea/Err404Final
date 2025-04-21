@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>사장 정보</title>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -78,7 +79,6 @@
         width: 1320px;
         margin: 30px auto;
         padding-left: 50px;
-
       }
     </style>
 
@@ -88,20 +88,18 @@
         const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
-          data: { shop_idx: shop_idx,
-                  owner_idx: owner_idx,
-           },
-          success: function(res_data) {
+          data: { shop_idx: shop_idx, owner_idx: owner_idx },
+          success: function (res_data) {
             $("#disp").html(res_data);
           },
-          error: function(err) {
+          error: function (err) {
             alert("에러 발생: " + err.responseText);
-          }
+          },
         });
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      $(document).ready(function() {
+      $(document).ready(function () {
         loadContent("menu_list.do");
       });
     </script>
@@ -112,7 +110,7 @@
     <div id="nav">
       <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />
       <div class="user-info">
-        <button class="btn">로그아웃</button>
+        <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
       </div>
     </div>
 
