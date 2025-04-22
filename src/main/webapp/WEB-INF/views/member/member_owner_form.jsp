@@ -8,7 +8,7 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
-  <title>라이더 회원가입</title>
+  <title>사장님 회원가입</title>
   <style>
     :root {
       --green: #ff694a;
@@ -147,7 +147,7 @@ function send(f) {
 
 
 
-  f.action = "insert_rider.do";// MemberInsertAction
+  f.action = "insert_owner.do";// MemberInsertAction
   f.submit();
 
 }//end:send()
@@ -172,7 +172,7 @@ function check_id() {
   // 서버로 입력된 아이디를 전송->중복 아이디 체크
   // Ajax통해서 background로 요청
   $.ajax({
-    url: "check_id_rider.do",     //MemberCheckIdAction
+    url: "check_id_owner.do",     //MemberCheckIdAction
     data: { "owner_id": owner_id },//parameter  :  check_id.do?owner_id=hong
     dataType: "json",            //결과수신을 JSON으로 받겠다		   
     success: function (res_data) {
@@ -288,7 +288,7 @@ $("#emailAuth").click(function() {
 </head>
 <body>
   <div class="signup-container">
-    <h2>라이더 회원 가입</h2>
+    <h2>사장님 회원 가입</h2>
     <!-- 파일전송 method 설정 -->
     <form method="post" class="form-inline" enctype="multipart/form-data">
       <table class="table">
