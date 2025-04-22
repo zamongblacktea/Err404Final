@@ -347,21 +347,6 @@ public class ShopController {
         return map;
     }
 
-    // 주문현황리스트
-    @GetMapping("/order_list.do")
-    public String order_list(Model model) {
-        OwnerVo owner = (OwnerVo) session.getAttribute("user");
-        int owner_idx = owner.getOwner_idx();
-        ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
-        
-        if (shop == null) {
-            return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
-        }
-
-        session.setAttribute("shop_idx", shop.getShop_idx());
-        model.addAttribute("shop", shop);
-        return "shop/shop_order_list";
-    }
 
     // 주문완료리스트
     @GetMapping("/order_list_complete.do")
