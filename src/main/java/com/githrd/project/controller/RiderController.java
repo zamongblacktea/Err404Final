@@ -168,7 +168,7 @@ public class RiderController {
 
     
 
-
+    //경로 지도에 띄우기
     @RequestMapping("/route/route.do")
     public String showDeliveryMap(Model model) {
         try {

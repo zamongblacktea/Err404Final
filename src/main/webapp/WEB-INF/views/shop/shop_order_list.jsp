@@ -6,6 +6,9 @@
     <head>
       <meta charset="UTF-8" />
       <title>Insert title here</title>
+      <!-- 웹소캣 -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
       <style>
         #box {
@@ -42,6 +45,18 @@
   });
 });
 
+      //웹소캣 구독 
+      var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+      var stompClient = Stomp.over(socket);
+  
+      // WebSocket 연결 설정
+      stompClient.connect({}, function (frame) {
+          // 주문 상태 업데이트 메시지 구독
+      stompClient.subscribe('/topic/orders', function (message) {
+              // 서버에서 메시지가 올 때마다 DOM 업데이트
+      location.reload(); // 페이지를 새로고침하여 새로운 데이터를 반영
+          });
+      });
 
 
       </script>

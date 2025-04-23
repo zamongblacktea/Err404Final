@@ -22,12 +22,15 @@ pageEncoding="UTF-8"%>
   
   .buttons{
         background-color: #f0bba8;
+        font-size: medium;
         color: white;
         border: none;
+        width: 200px;
         border-radius: 5px;
         padding: 10px 15px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        margin-right: 20px;
       }
 
   .buttons:hover {
@@ -36,6 +39,7 @@ pageEncoding="UTF-8"%>
   .buttons.active {
     background-color: #e090b5 !important;
     font-weight: bold;
+    font-size: large;
     box-shadow: 0 0 5px #d36caa;
   }
 </style>
@@ -150,8 +154,8 @@ pageEncoding="UTF-8"%>
     ${sessionScope.user.rider_name}님 환영합니다.
     <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
    
+      <!-- <input type="button" value="로그아웃" onclick="location.href='../main/main.do'"/> -->
       <input type="button" value="로그아웃" />
-
       <input type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
     </div>
    
