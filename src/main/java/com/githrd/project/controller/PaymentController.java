@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.githrd.project.dao.MemberAddrMapper;
 import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.service.PaymentService;
+import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.PaymentVo;
 
-@RequestMapping("/shop/")
+@RequestMapping("/order/")
 @Controller
 public class PaymentController {
 
@@ -24,11 +26,19 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
+    @Autowired
+    MemberAddrMapper memberAddrMapper;
+
     // 결제 페이지 폼 불러오기
     @RequestMapping("payment_form.do")
-    public String paymentForm() {
+    public String paymentForm(int mem_idx, Model model) {
 
-        return "shop/shop_payment";
+        // 회원 현재주소 가져오기
+        MemberAddrVo vo = memberAddrMapper.selectOneFromIdx(mem_idx);
+
+        model.addAttribute("vo", vo);
+
+        return "order/shop_payment";
     }
 
     // 결제 api 요청 REST API

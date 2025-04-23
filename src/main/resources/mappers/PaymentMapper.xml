@@ -15,7 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 결제 정보 추가 -->
      <!--                      #{ menu_name },      #{ shop_request },
                            #{ rider_request }, 연동시 추가해야 함 -->
-    <insert id="insert" parameterType="PaymentVo">
+                           <!-- max값으로 최신값을 가져와도 됨 -->
+    <insert id="insert" parameterType="PaymentVo" useGeneratedKeys="true" keyProperty="pay_idx">
       insert into payment values(
                            null,
                            #{ mem_idx },
@@ -34,7 +35,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                            #{ amount },
                            '맛있게 만들어주세요',
                            '조심히 와주세요',
-                           null
+                           null,
+                           #{ mem_addr1 },
+                           #{ mem_addr2 }
                            )
   </insert>
 

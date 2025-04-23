@@ -4,7 +4,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>사장 정보</title>
-    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -79,8 +78,24 @@
         width: 1320px;
         margin: 30px auto;
         padding-left: 50px;
+
       }
     </style>
+
+<script>
+  (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+
+  ChannelIO('boot', {
+    "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
+    "memberId": "${ user.owner_id }", // fill user's member id
+    "profile": { // fill user's profile
+      "name": "${user.owner_name}", // fill user's name
+      "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
+      "CUSTOM_VALUE_1": "VALUE_1", // custom property
+      "CUSTOM_VALUE_2": "VALUE_2" // custom property
+    }
+  });
+</script>
 
     <script>
       function loadContent(url) {
@@ -88,18 +103,20 @@
         const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
-          data: { shop_idx: shop_idx, owner_idx: owner_idx },
-          success: function (res_data) {
+          data: { shop_idx: shop_idx,
+                  owner_idx: owner_idx,
+           },
+          success: function(res_data) {
             $("#disp").html(res_data);
           },
-          error: function (err) {
+          error: function(err) {
             alert("에러 발생: " + err.responseText);
-          },
+          }
         });
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      $(document).ready(function () {
+      $(document).ready(function() {
         loadContent("menu_list.do");
       });
     </script>
@@ -110,7 +127,7 @@
     <div id="nav">
       <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />
       <div class="user-info">
-        <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
+        <button class="btn">로그아웃</button>
       </div>
     </div>
 
@@ -133,8 +150,8 @@
         </div>
         <div class="menu-group">
           <div class="menu-title">주문관리</div>
-          <a onclick="loadContent('order_list.do')">주문 내역</a>
-          <a onclick="loadContent('order_list_complete.do')">완료 주문 내역</a>
+          <a onclick="loadContent('../order/order_list.do')">주문 내역</a>
+          <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">리뷰관리</div>

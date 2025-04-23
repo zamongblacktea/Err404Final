@@ -7,7 +7,10 @@ import lombok.Data;
 @Data
 @Alias("DeliveryVo")
 public class DeliveryVo {
+
+    int delivery_idx;
     int order_idx;
+    int shop_idx;
     String shop_name;
     String shop_addr1;
     String shop_addr2;

@@ -147,7 +147,7 @@
             class="button_style"
             id="btn_popup_update"
             value="마이페이지"
-            onclick="location.href ='../modify_form_rider.do'"
+            onclick="location.href ='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'"
           />
         </form>
 

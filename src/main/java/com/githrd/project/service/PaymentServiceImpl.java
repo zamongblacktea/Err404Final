@@ -4,7 +4,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.PaymentMapper;
+import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.PaymentVo;
 
 import lombok.RequiredArgsConstructor;
@@ -21,27 +23,30 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     PaymentMapper paymentMapper;
 
+    @Autowired
+    OrderStatusMapper orderStatusMapper;
+
 
 	@Override
     public JSONObject verifyPayment(PaymentVo vo) throws Exception {
 
-        //insert 변수 설정
-        // int mem_idx             = vo.getMem_idx();
-        // int cart_idx            = vo.getCart_idx();
-        // int mcuraddr_idx        = vo.getMcuraddr_idx();
-        // int menu_idx            = vo.getMenu_idx();
-        // int shop_idx            = vo.getShop_idx();
-        // String mem_name         = vo.getMem_name();
-        // String mem_phone        = vo.getMem_phone();
-        // String menu_name        = vo.getMenu_name();
-           String imp_uid          = vo.getImp_uid();
-        // String merchernt_uid    = vo.getMerchant_uid();
-        // int amount              = vo.getAmount();
+        //imp_uid 가져오기
+        String imp_uid          = vo.getImp_uid();
+        int shop_idx            = vo.getShop_idx();
+        int menu_idx            = vo.getMenu_idx();
+        int mem_idx             = vo.getMem_idx();
+        String mem_phone        = vo.getMem_phone();
+        String order_request    = vo.getShop_request();
+        String rider_request    = vo.getRider_request();
+        int amount              = vo.getAmount();
+        String coupon_use       = vo.getCoupon_use();
+        String mem_addr1        = vo.getMem_addr1();
+        String mem_addr2        = vo.getMem_addr2();
+        int mcuraddr_idx        = vo.getMcuraddr_idx();
 
 
-        // System.out.println("imp_uid:" + imp_uid);
-        // System.out.println("mem_idx:" + mem_idx);
-        // System.out.println("cart_idx:" + cart_idx);
+
+
 
         // 1. 포트원 API 토큰 가져오기
         String accessToken = PaymentUtil.getAccessToken();
@@ -51,32 +56,56 @@ public class PaymentServiceImpl implements PaymentService {
 
         // 3. 결제 상태 확인
         String status = payment.getJSONObject("response").getString("status");
-        System.out.println(">>> 결제 상태: " + status);
-        if ("paid".equals(status)) { //지불 정보가 일치할 떄 (기본 입력 카카오페이로 설정)
-            System.out.println(">>> paid 상태 진입");
-            
-            // vo.setMem_idx(mem_idx);
-            // vo.setCart_idx(cart_idx);
-            // vo.setMcuraddr_idx(mcuraddr_idx);
-            // vo.setMenu_idx(menu_idx);
-            // vo.setShop_idx(shop_idx);
-            // vo.setMem_name(mem_name);
-            // vo.setMem_phone(mem_phone);
-            // vo.setMenu_name(menu_name);
-            // vo.setImp_uid(imp_uid);
-            // vo.setMerchant_uid(merchernt_uid);
-            // vo.setAmount(amount);
 
+        if ("paid".equals(status)) { //지불 정보가 일치할 떄 (기본 입력 카카오페이로 설정)
+
+
+            //결제 정보 입력
             try {
-                System.out.println(">>> insert 호출 전");
+                System.out.println("insert 호출 전");
             
+
+                //Payment DB insert
                 int res = paymentMapper.insert(vo); // 여기서 터질 확률 매우 높음
-            
-                System.out.println(">>> insert 결과: " + res);
+                
+
+                System.out.println("insert 결과: " + res);
+
+                
+                String pay_type         = vo.getPay_type();
+                int pay_idx             = vo.getPay_idx();
+                //주문 현황 insert (OrderStatus)
+                OrderStatusVo orderStatus = new OrderStatusVo(shop_idx,menu_idx,mem_idx,pay_idx,mcuraddr_idx,mem_phone,order_request,rider_request,amount,pay_type,coupon_use,mem_addr1,mem_addr2);
+                orderStatus.setShop_idx(shop_idx);
+                orderStatus.setMenu_idx(menu_idx);
+                orderStatus.setMem_idx(mem_idx);
+                orderStatus.setPay_idx(pay_idx);
+                orderStatus.setMcuraddr_idx(mcuraddr_idx);
+                orderStatus.setMem_phone(mem_phone);
+                orderStatus.setOrder_request(order_request);
+                orderStatus.setRider_request(rider_request);
+                orderStatus.setAmount(amount);
+                orderStatus.setPay_type(pay_type);
+                orderStatus.setCoupon_use(coupon_use);
+                orderStatus.setMem_addr1(mem_addr1);
+                orderStatus.setMem_addr2(mem_addr2);
+
+                //출력
+                System.out.println("menu_idx = " + orderStatus.getMenu_idx());
+    
+                System.out.println("입력값:"+ orderStatus);
+    
+    
+                int res2 = orderStatusMapper.insert(orderStatus);
+
+
+
+
             } catch (Exception e) {
-                System.out.println(">>> insert 중 예외 발생");
+                System.out.println("insert 중 예외 발생");
                 e.printStackTrace();
             }
+
 
             return new JSONObject().put("success", true).put("message", "결제 검증 완료");
         } else {

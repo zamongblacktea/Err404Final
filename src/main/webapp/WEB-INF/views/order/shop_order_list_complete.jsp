@@ -16,7 +16,15 @@ pageEncoding="UTF-8"%>
     </style>
   </head>
   <body>
-    주문내역조회
+    완료주문내역조회
+    <div id="box">
+      주문번호: <br />
+      주문일자: <br />
+      주문가격: <br />
+      고객주소: <br />
+      주문요청사항: <br />
+      배달요청사항: <br />
+    </div>
     <div id="box">
       주문번호: <br />
       주문일자: <br />

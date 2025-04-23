@@ -1,10 +1,16 @@
 package com.githrd.project.vo;
 
+import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
+
+@Data
+@Alias("MemberAddrVo")
 public class MemberAddrVo {
 
     int mcuraddr_idx;
-    String mem_caddr;
-    String mem_daddr;
+    String mem_addr1;
+    String mem_addr2;
     double mem_latitude;
     double mem_longitude; 
     

@@ -22,12 +22,15 @@ pageEncoding="UTF-8"%>
   
   .buttons{
         background-color: #f0bba8;
+        font-size: medium;
         color: white;
         border: none;
+        width: 200px;
         border-radius: 5px;
         padding: 10px 15px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        margin-right: 20px;
       }
 
   .buttons:hover {
@@ -36,6 +39,7 @@ pageEncoding="UTF-8"%>
   .buttons.active {
     background-color: #e090b5 !important;
     font-weight: bold;
+    font-size: large;
     box-shadow: 0 0 5px #d36caa;
   }
 </style>
@@ -125,6 +129,22 @@ pageEncoding="UTF-8"%>
   }//end : function complete()
 
 </script>
+
+<script>
+  (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+
+  ChannelIO('boot', {
+    "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
+    "memberId": "${ user.rider_id }", // fill user's member id
+    "profile": { // fill user's profile
+      "name": "${user.rider_name}", // fill user's name
+      "mobileNumber": "${user.rider_phone}", // fill user's mobile number
+      "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
+      "CUSTOM_VALUE_1": "VALUE_1", // custom property
+      "CUSTOM_VALUE_2": "VALUE_2" // custom property
+    }
+  });
+</script>
   </head>
   <body>
     <br>
@@ -134,8 +154,8 @@ pageEncoding="UTF-8"%>
     ${sessionScope.user.rider_name}님 환영합니다.
     <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
    
+      <!-- <input type="button" value="로그아웃" onclick="location.href='../main/main.do'"/> -->
       <input type="button" value="로그아웃" />
-
       <input type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
     </div>
    
