@@ -14,4 +14,7 @@ public class CartVo {
     int cart_price;
     int cart_cnt;
 
+    String menu_name;
+    int menu_price;
+
 }

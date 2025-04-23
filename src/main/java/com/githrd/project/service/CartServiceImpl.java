@@ -1,5 +1,7 @@
 package com.githrd.project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ public class CartServiceImpl implements CartService {
     // 장바구니 등록 여부 확인
     @Override
     public CartVo selectOneExist(CartVo vo) {
-        CartVo reVo = cartMapper.selectIneExist(vo);
+        CartVo reVo = cartMapper.selectOneExist(vo);
         return reVo;
     }
 
@@ -24,6 +26,29 @@ public class CartServiceImpl implements CartService {
     public int insert(CartVo vo) {
         int res = cartMapper.insert(vo);
         return res;
+    }
+
+    @Override
+    public List<CartVo> selectList(int mem_idx) {
+        return cartMapper.selectList(mem_idx);
+    }
+
+    // 총액 구하기
+    @Override
+    public Integer selectTotalAmount(int mem_idx) {
+        return cartMapper.selectTotalAmount(mem_idx);
+    }
+
+    // 같은 메뉴 넣을시 cnt +1
+    @Override
+    public int updateCnt(CartVo reVo) {
+        return cartMapper.updateCnt(reVo);
+    }
+
+    // 메뉴 전체 삭제
+    @Override
+    public int deleteAll(int mem_idx) {
+        return cartMapper.deleteAll(mem_idx);
     }
 
 }

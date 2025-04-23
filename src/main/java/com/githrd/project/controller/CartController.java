@@ -1,15 +1,25 @@
 package com.githrd.project.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.githrd.project.service.CartService;
 import com.githrd.project.vo.CartVo;
+import com.githrd.project.vo.MemberVo;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cart")
@@ -18,8 +28,12 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    HttpSession session;
+
     // 카트에 등록
-    @GetMapping("/insert.do")
+    @RequestMapping(value = "/insert.do", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
     public Map<String, Object> insert(CartVo vo) {
 
         // 결과
@@ -27,9 +41,29 @@ public class CartController {
 
         // 장바구니에 등록되었는지 여부
         CartVo reVo = cartService.selectOneExist(vo);
+        // 현재 유저의 장바구니 전체 조회 (shop_idx 비교용)
+        // List<CartVo> cartList = cartService.selectList(vo.getMem_idx());
+
+        // 장바구니가 비어있지 않고, 다른 가게의 상품이 담겨 있으면 장바구니 비우기
+        // if (!cartList.isEmpty()) {
+        // int currentShop = cartList.get(0).getShop_idx();
+        // if (currentShop != vo.getShop_idx()) {
+        // int del = cartService.deleteAll(vo.getMem_idx());
+        // }
+        // }
+
+        // if (!cartList.isEmpty()) {
+        // int currentShop = cartList.get(0).getShop_idx();
+        // if (currentShop != vo.getShop_idx()) {
+        // map.put("result", "diff");
+        // return map;
+        // }
+        // }
 
         if (reVo != null) {
-            map.put("result", "exist");
+            // map.put("result", "exist");
+            reVo.setCart_cnt(reVo.getCart_cnt() + 1);
+            int res = cartService.updateCnt(reVo);
         } else {
             int res = cartService.insert(vo);
 
@@ -43,4 +77,36 @@ public class CartController {
         return map;
 
     }
+
+    // 장바구니 리스트 조회
+    @GetMapping("/list.do")
+    public String cart_list(Model model, RedirectAttributes ra) {
+
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        // 세션 만료 체크
+        if (session.getAttribute("user") == null) {
+            ra.addAttribute("reason", "session_timeout");
+            return "redirect:../member/login_form.do";
+        }
+
+        int mem_idx = user.getMem_idx();
+
+        // 회원별 장바구니 목록
+        List<CartVo> cart_list = cartService.selectList(mem_idx);
+        Integer total_amount = cartService.selectTotalAmount(mem_idx);
+
+        model.addAttribute("cart_list", cart_list);
+        model.addAttribute("total_amount", total_amount);
+
+        return "user/cart_list";
+    }
+
+    // 장바구니 비우기
+    @PostMapping("/delete_all.do")
+    @ResponseBody
+    public int deleteAll(@RequestParam int mem_idx) {
+
+        return cartService.deleteAll(mem_idx);
+    }
+
 }
