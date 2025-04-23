@@ -40,6 +40,15 @@ public class MainController {
     }
 
     @GetMapping("/detail.do")
+    public String shop_detail(@RequestParam int shop_idx, Model model) {
+
+        ShopInfoVo shop = shopService.selectShopOne(shop_idx);
+
+        List<ShopMenuVo> menu = shopService.selectMenuAll(shop_idx);
+
+        model.addAttribute("shop", shop);
+        model.addAttribute("menu", menu);
+        // 임시 push
     public String shop_detail() {
 
         return "main/shop_detail";
