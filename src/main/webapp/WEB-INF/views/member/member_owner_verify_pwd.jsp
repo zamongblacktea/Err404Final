@@ -7,7 +7,7 @@
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>라이더 아이디/비밀번호 찾기</title>
+      <title>사업자 아이디/비밀번호 찾기</title>
       <!-- bootstrap 사용설정 -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -113,7 +113,45 @@
           margin-top: 40px;
         }
       </style>
+  <script>
+    function changePwd(f){
+      let rider_pwd = f.rider_pwd.value;
+      let rider_email = f.rider_email.value;
 
+
+
+      f.method = "POST";
+      f.action = location.href="owner_changePwd.do";
+      f.submit();
+
+
+
+
+    }
+
+
+  //비밀번호 비교
+  $(document).ready(function () {
+    $("#authCode").on("focusout", function() {
+    	const inputCode = $("#authCode").val(); //비밀번호 입력 칸에 작성한 내용 가져오기
+    	const pwd = $("#pwd").val();
+
+    		
+    	if(inputCode === pwd){
+        	$("#pwdWarn").html('비밀번호가 일치합니다.');
+        	$("#pwdWarn").css('color', 'green');
+    		$(".pw-btn").attr("disabled", false);
+
+    	}else{
+        	$("#pwdWarn").html('비밀번호가 불일치 합니다. 다시 확인해주세요!');
+        	$("#pwdWarn").css('color', 'red');
+        	$(".pw-btn").attr("disabled", true);
+    	}
+    });
+  });
+
+
+  </script>
 
 
 
@@ -125,11 +163,14 @@
         <div class="logo">
           <img src="${pageContext.request.contextPath}/images/로고.png" >
         </div>
-        <div class="info">귀하의 아이디는<br><h4>${rider_id}</h4>입니다.</div>
-          <!-- 로그인 버튼 -->
-          <input type="button" value="로그인" class="btn id-btn" id="verifyBtn" onclick="location.href='login_form.do'">
-          <!-- 비밀번호 찾기 버튼 -->
-          <input type="button" value="비밀번호 찾기" class="btn pw-btn" id="verifyBtn" onclick="location.href='rider_find.do'">
+        <form>
+        <input type="hidden" name="owner_email" value="${param.owner_email}">
+        <input type="password" class="input-box" placeholder="비밀번호 변경" id="pwd" name="owner_pwd">
+        <span id="pwdWarn"></span>
+        <input type="password" class="input-box" placeholder="비밀번호 확인" id="authCode" >
+          <!-- 비밀번호 변경 -->
+          <input type="button" value="비밀번호 변경" class="btn pw-btn" onclick="changePwd(this.form);" disabled>
+        </form>
       </div>
 
 

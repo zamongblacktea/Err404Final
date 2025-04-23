@@ -7,7 +7,7 @@
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>라이더 아이디/비밀번호 찾기</title>
+      <title>사업자 아이디/비밀번호 찾기</title>
       <!-- bootstrap 사용설정 -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -125,11 +125,11 @@
         <div class="logo">
           <img src="${pageContext.request.contextPath}/images/로고.png" >
         </div>
-        <div class="info">귀하의 아이디는<br><h4>${rider_id}</h4>입니다.</div>
+        <div class="info">귀하의 아이디는<br><h4>${owner_id}</h4>입니다.</div>
           <!-- 로그인 버튼 -->
           <input type="button" value="로그인" class="btn id-btn" id="verifyBtn" onclick="location.href='login_form.do'">
           <!-- 비밀번호 찾기 버튼 -->
-          <input type="button" value="비밀번호 찾기" class="btn pw-btn" id="verifyBtn" onclick="location.href='rider_find.do'">
+          <input type="button" value="비밀번호 찾기" class="btn pw-btn" id="verifyBtn" onclick="location.href='owner_find.do'">
       </div>
 
 
