@@ -27,7 +27,7 @@
   console.log(orderIdx, nextStatus);
 
   $.ajax({
-    url: 'update_status.do',
+    url: '../order/update_status.do',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({
@@ -37,7 +37,7 @@
     success: function (res) {
       confirm("주문 상태를 변경 하시겠습니까 ? " + res.updatedStatus);
       // TODO: 화면 갱신 로직 추가
-      loadContent('order_list.do');
+      loadContent('../order/order_list.do');
     },
     error: function (err) {
       alert("상태 변경 실패");
@@ -86,7 +86,7 @@
             data-next-status="조리중">조리 시작</button>
   </c:if>
 
-  <c:if test="${vo.order_status eq '조리대기'}">
+  <c:if test="${vo.order_status eq '조리중'}">
     <button class="status-btn"
             data-order-idx="${vo.order_idx}"
             data-next-status="픽업대기">조리 완료</button>

@@ -26,5 +26,8 @@ public class PaymentVo {
     String shop_request;
     String rider_request;
     String coupon_use;
+    String mem_addr1;
+    String mem_addr2;
+    
 
 }
