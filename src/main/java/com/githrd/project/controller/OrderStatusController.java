@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.OrderStatusVo;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@RequestMapping("/shop")
+@RequestMapping("/order")
 @Controller
 public class OrderStatusController {
 
@@ -31,6 +32,9 @@ public class OrderStatusController {
 
     @Autowired
     OrderStatusMapper orderStatusMapper;
+
+    @Autowired
+    DeliveryMapper deliveryMapper;
 
     @Autowired
     HttpSession session;
@@ -47,13 +51,13 @@ public class OrderStatusController {
 
         
         if (shop == null) {
-            return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
+            return "redirect:../shop/insert_form.do?owner_idx=" + owner_idx;
         }
 
         session.setAttribute("shop_idx", shop.getShop_idx());
         model.addAttribute("shop", shop);
         model.addAttribute("status", list);
-        return "shop/shop_order_list";
+        return "order/shop_order_list";
     }
 
 

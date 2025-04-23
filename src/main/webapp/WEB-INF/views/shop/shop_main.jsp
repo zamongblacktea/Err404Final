@@ -151,8 +151,8 @@
         </div>
         <div class="menu-group">
           <div class="menu-title">주문관리</div>
-          <a onclick="loadContent('order_list.do')">주문 내역</a>
-          <a onclick="loadContent('order_list_complete.do')">완료 주문 내역</a>
+          <a onclick="loadContent('../order/order_list.do')">주문 내역</a>
+          <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">리뷰관리</div>

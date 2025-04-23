@@ -91,7 +91,7 @@
             data-order-idx="${vo.order_idx}"
             data-next-status="픽업대기">조리 완료</button>
   </c:if>
-  
+  <!-- 픽업완료/배달중/배달완료 -->
   
 </div>
 </div>
