@@ -10,14 +10,16 @@ import lombok.Data;
 @Data
 @Alias("OrderStatusVo")
 public class OrderStatusVo {
+
     @Builder
-    public OrderStatusVo(int shop_idx, int menu_idx, int mem_idx, int pay_idx,
+    public OrderStatusVo(int shop_idx, int menu_idx, int mem_idx, int pay_idx,int delivery_idx,
             String mem_phone, String order_request, String rider_request,
             int amount, String pay_type, String coupon_use) {
         this.shop_idx = shop_idx;
         this.menu_idx = menu_idx;
         this.mem_idx = mem_idx;
         this.pay_idx = pay_idx;
+        this.delivery_idx =  delivery_idx;
         this.mem_phone = mem_phone;
         this.order_request = order_request;
         this.rider_request = rider_request;
@@ -32,6 +34,7 @@ public class OrderStatusVo {
     Integer menu_idx;
     Integer mem_idx;
     Integer pay_idx;
+    Integer delivery_idx;
     String order_regdate;
     @JsonProperty("orderStatus")
     String order_status;
