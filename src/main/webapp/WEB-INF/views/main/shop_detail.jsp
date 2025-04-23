@@ -167,7 +167,7 @@
     <div class="content">
       <div class="shop-detail">
         <div id="mybox">
-          <div class="shop-title">가게 이름</div>
+          <div class="shop-title">${shop.shop_name}</div>
           <div class="row shop-content">
             <div id="shop_logo" class="col-sm-4">
               <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
@@ -197,7 +197,7 @@
                 <div class="row" onclick="this.closest('form').requestSubmit();">
                 <div class="menu-text col-sm-8">
                   <div class="menu-name">${menu.menu_name}</div>
-                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00" var="menu_price" />원</div>
+                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00"/>원</div>
                   <input type="hidden" name="menu_price" value="${menu.menu_price}">
                 </div>
                 <div class="menu-img col-sm-4">

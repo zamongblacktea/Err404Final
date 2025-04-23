@@ -143,7 +143,7 @@
                         }
 
                         //f.method = "POST";
-                        f.action = "../shop/payment_form.do"; // 결제폼 PaymentController
+                        f.action = "../order/payment_form.do"; // 결제폼 PaymentController
                         f.submit();
                     }
 
@@ -214,6 +214,7 @@
                                     <td colspan="5" style="text-align: right;">총액</td>
                                     <td class="currency" colspan="2">
                                         <fmt:formatNumber value="${total_amount }" type="currency" />
+                                        <input type="hidden" name="amount" value="${total_amount}">
                                     </td>
                                 </tr>
 
