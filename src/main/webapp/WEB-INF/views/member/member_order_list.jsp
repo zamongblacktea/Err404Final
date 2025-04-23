@@ -48,7 +48,7 @@
     </head>
 
     <body>
-      주문내역조회
+      내 주문
       <c:forEach var="vo" items="${ status }">
         <div id="box">
           주문번호:${ vo.order_idx } <br />
@@ -68,15 +68,8 @@
   <c:if test="${vo.order_status eq '조리대기'}">
     <button class="status-btn"
             data-order-idx="${vo.order_idx}"
-            data-next-status="조리중">조리 시작</button>
-  </c:if>
-
-  <c:if test="${vo.order_status eq '조리대기'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
             data-next-status="픽업대기">조리 완료</button>
   </c:if>
-  
   
 </div>
 </div>
