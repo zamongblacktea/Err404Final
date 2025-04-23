@@ -69,7 +69,7 @@
           주문번호:${ vo.order_idx } <br />
           주문일자: ${ vo.order_regdate }<br />
           주문가격: ${ vo.amount }<br />
-          고객주소: <br />
+          고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />

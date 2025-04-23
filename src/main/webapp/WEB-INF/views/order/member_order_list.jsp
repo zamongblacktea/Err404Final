@@ -54,24 +54,11 @@
           주문번호:${ vo.order_idx } <br />
           주문일자: ${ vo.order_regdate }<br />
           주문가격: ${ vo.amount }<br />
-          고객주소: <br />
+          고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />
-<div>
-  <c:if test="${vo.order_status eq 'NONE'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="조리대기">주문 수락</button>
-  </c:if>
-  
-  <c:if test="${vo.order_status eq '조리대기'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="픽업대기">조리 완료</button>
-  </c:if>
-  
-</div>
+
 </div>
       </c:forEach>
     </body>
