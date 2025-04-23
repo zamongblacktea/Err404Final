@@ -6,9 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Alias("OrderStatusVo")
+//기본 생성자 생성 (constructor로 원하는 값만 getter/setter 설정했을 땐 넣어줘야 함)
+@NoArgsConstructor
 public class OrderStatusVo {
     @Builder
     public OrderStatusVo(int shop_idx, int menu_idx, int mem_idx, int pay_idx,

@@ -7,7 +7,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>아이디/비밀번호 찾기</title>
+  <title>사장님 아이디/비밀번호 찾기</title>
   <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
   <style>
@@ -113,7 +113,7 @@
 <body>
   <div class="container">
     <div class="logo">
-      <img src="https://img.danawa.com/newdanawa/main/logo_danawa.png" alt="잇팅 로고사진">
+      <img src="${pageContext.request.contextPath}/images/로고.png">
     </div>
     <div class="tabs">
       <div class="tab active" onclick="showTab('id')">아이디 찾기</div>
