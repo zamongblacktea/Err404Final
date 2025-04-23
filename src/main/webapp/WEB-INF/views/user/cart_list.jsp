@@ -93,30 +93,6 @@
 
                 <!-- Check Box 처리 -->
                 <script>
-                    $(document).ready(function () {
-                        // 전체가 눌리면
-                        $("#checkAll").click(function () {
-                            // 현재 체크 상태 구하기
-                            let bChecked = $(this).prop("checked");
-
-                            // 아래쪽 체크박스에 적용
-                            $("input[name='cart_idx']").prop("checked", bChecked);
-                        });
-
-                        // 각각의 체크박스가 클릭되면
-                        $("input[name='cart_idx']").click(function () {
-
-                            // 전체갯수
-                            let total_count = $("input[name='cart_idx']").length;
-                            // 체크된 상태의 갯수
-                            let check_count = $("input[name='cart_idx']:checked").length;
-
-                            // alert(total_count + "중에 체크된 갯수는" + check_count + "개");
-
-                            // 전체 체크 
-                            $("#checkAll").prop("checked", (total_count == check_count));
-                        });
-                    });
 
                     // 삭제하기
                     function cart_delete(f) {
@@ -136,15 +112,68 @@
 
                     // 결제하기
                     function cart_payment(f) {
-                        let checked_count = $("input[name='cart_idx']:checked").length;
-                        if (checked_count == 0) {
-                            alert("장바구니에서 결제할 상품을 선택하세요");
-                            return;
-                        }
+                        // let checked_count = $("input[name='cart_idx']:checked").length;
+                        // if (checked_count == 0) {
+                        //     alert("장바구니에서 결제할 상품을 선택하세요");
+                        //     return;
+                        // }
 
                         //f.method = "POST";
                         f.action = "../order/payment_form.do"; // 결제폼 PaymentController
                         f.submit();
+                    }
+
+                    // 수량 감소
+                    function minus(cart_idx){
+
+                        cart_idx = parseInt(cart_idx);         
+                        // 현재 수량 체크
+                        const input = document.getElementById(`cnt_\${cart_idx}`);
+
+                        // if(!input){
+                        //     console.error(`input 요소: cnt_${cart_idx}`);
+                        //  return;
+                        // }
+
+                        const currentCnt = parseInt(input.value.trim());
+
+                        if(currentCnt > 1){
+                            $.ajax({
+                                url : "../cart/cnt_minus.do",
+                                type: "POST",
+                                data : {
+                                    cart_idx : cart_idx,
+                                    cart_cnt : currentCnt
+                                },
+                                success: function(res_data){
+                                    // console.log("응답확인", res_data);
+                                    // $(`#cnt_${cart_idx}`).val(res_data); 
+                                    document.getElementById(`cnt_\${cart_idx}`).value = res_data.cart_cnt; 
+                                    document.getElementById(`amount_\${cart_idx}`).innerText = "₩" + res_data.amount.toLocaleString(); 
+                                    document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString(); 
+                                },
+                                error : function(err){
+                                    console.error(err);
+                                    alert("수량 변경 오류");
+                                }
+                            });
+                        }else{
+                            $.ajax({
+                                url : "../cart/delete.do",
+                                type: "POST",
+                                data : {
+                                    cart_idx : cart_idx
+                                },
+                                success: function(res_data){
+                                    $(`#row_\${cart_idx}`).remove(); 
+                                    document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
+                                },
+                                error : function(err){
+                                    console.error(err);
+                                    alert("수량 변경 오류");
+                                }
+                            });
+                        }
                     }
 
 
@@ -163,13 +192,13 @@
                             <input type="hidden" name="mem_idx" value="${user.mem_idx}">
                             <!-- check all -->
                             <div>
-                                <input type="checkbox" class="form-control" id="checkAll"><label
-                                    for="checkAll">전체</label>
+                                <!-- <input type="checkbox" class="form-control" id="checkAll"><label
+                                    for="checkAll">전체</label> -->
                             </div>
                             <!-- 장바구니정보 출력 -->
                             <table class="table table-bordered">
                                 <tr class="success">
-                                    <th>일련번호</th>
+                                    <!-- <th>일련번호</th> -->
                                     <!-- <th>이미지</th> -->
                                     <th>상품명</th>
                                     <th>수량</th>
@@ -185,24 +214,28 @@
                                             <font color="red">등록된 상품이 없습니다</font>
                                         </td>
                                     </tr>
-                                </c:if>
-
+                                </c:if>                               
                                 <!-- 장바구니목록 -->
                                 <!-- for(CartVo cart : list)  -->
                                 <c:forEach var="cart" items="${ cart_list }">
-                                    <tr>
-                                        <td><input type="checkbox" name="cart_idx"
-                                                value="${cart.cart_idx}">&nbsp;&nbsp;${cart.cart_idx}</td>
+                                    <tr id="row_${cart.cart_idx}">
+                                        <!-- <td><input type="checkbox" name="cart_idx"
+                                                value="${cart.cart_idx}">&nbsp;&nbsp;${cart.cart_idx}</td> -->
                                       
                                         <td class="content">
                                             ${cart.menu_name}
                                         </td>
-                                        <td><input size="5" id="cnt_${cart.cart_idx}" value="${cart.cart_cnt}"
-                                                style="text-align: center;">
-                                        </td>
                                         <td>
-                                            <fmt:formatNumber value="${cart.menu_price * cart.cart_cnt}" type="currency" />
-                                            <input type="hidden" name="total_price" value="{cart.menu_price * cart.cart_cnt}">
+                                            <span onclick="minus('${cart.cart_idx}');" style="cursor: pointer;">➖</span>
+                                            <input size="5" id="cnt_${cart.cart_idx}" value="${cart.cart_cnt}" style="text-align: center;">
+                                            <span onclick="plus('${cart.cart_idx}');" style="cursor: pointer;">➕</span>
+                                        </td>
+                                        <td><fmt:formatNumber value="${cart.menu_price}" type="currency" /></td>
+                                        <td id="amount_${cart.cart_idx}">
+                                            <!-- <fmt:formatNumber value="${cart.menu_price * cart.cart_cnt}" type="currency" />
+                                            <input type="hidden" name="total_price" value="{cart.menu_price * cart.cart_cnt}"> -->
+                                            <fmt:formatNumber value="${cart.amount}" type="currency" />
+                                            <input type="hidden" name="total_price" value="{cart.amount}">
                                         </td>
                                         <td><input class="btn btn-info" type="button" value="수정"
                                                 onclick="modify_cart('${cart.cart_idx}');"></td>
@@ -212,7 +245,7 @@
                                 <!-- 총액 출력 -->
                                 <tr>
                                     <td colspan="5" style="text-align: right;">총액</td>
-                                    <td class="currency" colspan="2">
+                                    <td class="currency" colspan="2" id="total_amount">
                                         <fmt:formatNumber value="${total_amount }" type="currency" />
                                         <input type="hidden" name="amount" value="${total_amount}">
                                     </td>

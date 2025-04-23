@@ -109,4 +109,36 @@ public class CartController {
         return cartService.deleteAll(mem_idx);
     }
 
+    // 장바구니 메뉴 삭제
+    @PostMapping("/delete.do")
+    @ResponseBody
+    public Map<String, Object> delete(@RequestParam int cart_idx) {
+
+        CartVo vo = cartService.selectOne(cart_idx);
+        cartService.menuDelete(cart_idx);
+        Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("total_amount", total_amount);
+
+        return map;
+    }
+
+    // cart_cnt 감소
+    @PostMapping("/cnt_minus.do")
+    @ResponseBody
+    public Map<String, Object> cnt_minus(@RequestParam int cart_idx, @RequestParam int cart_cnt) {
+
+        cartService.cntMinus(cart_idx, cart_cnt);
+        CartVo vo = cartService.selectOne(cart_idx);
+        Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("cart_cnt", vo.getCart_cnt());
+        map.put("amount", vo.getAmount());
+        map.put("total_amount", total_amount);
+
+        return map;
+    }
+
 }
