@@ -14,11 +14,9 @@ import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.service.PaymentService;
 import com.githrd.project.vo.PaymentVo;
 
-
 @RequestMapping("/shop/")
 @Controller
 public class PaymentController {
-
 
     @Autowired
     PaymentMapper paymentMapper;
@@ -26,18 +24,14 @@ public class PaymentController {
     @Autowired
     PaymentService paymentService;
 
-    //결제 페이지 폼 불러오기
+    // 결제 페이지 폼 불러오기
     @RequestMapping("payment_form.do")
     public String paymentForm() {
 
-
-
         return "shop/shop_payment";
     }
-    
 
-
-    //결제 api 요청 REST API
+    // 결제 api 요청 REST API
     @ResponseBody
     @PostMapping("/verify.do")
     public ResponseEntity<String> verify(@RequestBody PaymentVo vo) {
@@ -46,16 +40,11 @@ public class PaymentController {
             return ResponseEntity.ok(result.toString());
         } catch (Exception e) {
             e.getStackTrace();
-            
+
             return ResponseEntity.badRequest()
-                .body(new JSONObject().put("success", false).put("message", "결제 검증 실패: " + e.getMessage()).toString());
+                    .body(new JSONObject().put("success", false).put("message", "결제 검증 실패: " + e.getMessage())
+                            .toString());
         }
     }
-        
-       
- 
-    
-
-
 
 }

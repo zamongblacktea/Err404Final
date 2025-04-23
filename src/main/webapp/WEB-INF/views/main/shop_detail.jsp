@@ -121,6 +121,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
       let menu_idx = f.menu_idx.value;
       let mem_idx = f.mem_idx.value;
       let shop_idx = f.shop_idx.value;
+      let cart_price = f.menu_price.value;
       // let menu_price = f.menu_price.value;
 
       // Ajax 이용해서 장바구니 등록
@@ -131,6 +132,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
           menu_idx: menu_idx,
           mem_idx: mem_idx,
           shop_idx: shop_idx,
+          cart_price : cart_price,
           cart_cnt : 1
         },
         dataType: "json",
@@ -193,7 +195,8 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
                 <div class="row" onclick="this.closest('form').requestSubmit();">
                 <div class="menu-text col-sm-8">
                   <div class="menu-name">${menu.menu_name}</div>
-                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00" />원</div>
+                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00" var="menu_price" />원</div>
+                  <input type="hidden" name="menu_price" value="${menu.menu_price}">
                 </div>
                 <div class="menu-img col-sm-4">
                   <img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" />
