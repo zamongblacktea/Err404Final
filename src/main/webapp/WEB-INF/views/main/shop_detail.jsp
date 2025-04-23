@@ -123,6 +123,7 @@
       let menu_idx = f.menu_idx.value;
       let mem_idx = f.mem_idx.value;
       let shop_idx = f.shop_idx.value;
+      let cart_price = f.menu_price.value;
       // let menu_price = f.menu_price.value;
 
       // Ajax 이용해서 장바구니 등록
@@ -133,6 +134,7 @@
           menu_idx: menu_idx,
           mem_idx: mem_idx,
           shop_idx: shop_idx,
+          cart_price : cart_price,
           cart_cnt : 1
         },
         dataType: "json",
@@ -165,7 +167,7 @@
     <div class="content">
       <div class="shop-detail">
         <div id="mybox">
-          <div class="shop-title">가게 이름</div>
+          <div class="shop-title">${shop.shop_name}</div>
           <div class="row shop-content">
             <div id="shop_logo" class="col-sm-4">
               <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
@@ -195,7 +197,8 @@
                 <div class="row" onclick="this.closest('form').requestSubmit();">
                 <div class="menu-text col-sm-8">
                   <div class="menu-name">${menu.menu_name}</div>
-                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00" />원</div>
+                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00"/>원</div>
+                  <input type="hidden" name="menu_price" value="${menu.menu_price}">
                 </div>
                 <div class="menu-img col-sm-4">
                   <img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" />

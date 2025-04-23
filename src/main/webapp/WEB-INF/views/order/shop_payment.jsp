@@ -247,7 +247,7 @@ h {
 						type="hidden" class="form-control" id="cart_price" name="cart_price"
 						value="20000"
 						readonly>
-						<fmt:formatNumber value='20000' type='number' pattern='#,###' />
+						<fmt:formatNumber value='${amount}' type='number' pattern='#,###' />
 
 				</div>
 
