@@ -136,6 +136,8 @@
 
                     // 결제하기
                     function cart_payment(f) {
+                        let shop_idx = f.shop_idx.value;
+                        let menu_idx = f.menu_idx.value;
                         let checked_count = $("input[name='cart_idx']:checked").length;
                         if (checked_count == 0) {
                             alert("장바구니에서 결제할 상품을 선택하세요");
@@ -143,7 +145,7 @@
                         }
 
                         //f.method = "POST";
-                        f.action = "../order/payment_form.do"; // 결제폼 PaymentController
+                        f.action = "../order/payment_form.do?shop_idx="+ shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
                         f.submit();
                     }
 
@@ -191,6 +193,8 @@
                                 <!-- for(CartVo cart : list)  -->
                                 <c:forEach var="cart" items="${ cart_list }">
                                     <tr>
+                                        <input type="hidden" value="${ param.shop_idx }" name="shop_idx">
+                                        <input type="hidden" value="${ cart.menu_idx }" name="menu_idx">
                                         <td><input type="checkbox" name="cart_idx"
                                                 value="${cart.cart_idx}">&nbsp;&nbsp;${cart.cart_idx}</td>
                                       

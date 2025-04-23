@@ -101,7 +101,7 @@ h {
 <script>
 	IMP.init("imp23446565"); // 아임포트 가맹점 고객사 식별 코드 입력
 
-	//임시로 보낼 변수값 1 설정을 위해 앞에 Number 형변환 해놨으니 실제 연동할 땐 제거해야 함
+	//임시로 보낼 변수값 1 설정을 위해 앞에 Number 형변환 
 	function requestPay() {
 		const mem_idx = Number($("#mem_idx").val());
 		const shop_idx = Number($("#shop_idx").val());
@@ -174,9 +174,9 @@ h {
 				"imp_uid" : imp_uid,
 				"merchant_uid" : merchant_uid,
 				"mem_idx" : mem_idx,
-				"menu_idx" : 1,
-				"shop_idx" : 1,
-				"cart_idx" : 1,
+				"menu_idx" : menu_idx,
+				"shop_idx" : shop_idx,
+				"cart_idx" : cart_idx,
 				"amount"   : cart_price,
 				"mcuraddr_idx" : mcuraddr_idx,
 				"mem_name": mem_name,
@@ -215,9 +215,9 @@ h {
 			<form id="bookingForm">
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
 				<!-- 테스트 후 변경해야 함 -->
-				<!-- <input type="hidden" name="shop_idx" id="shop_idx" value="${sessionScope.user.mem_idx }"> 
-				<input type="hidden" name="cart_idx" id="cart_idx" value="${sessionScope.user.mem_idx }"> 
-				<input type="hidden" name="menu_idx" id="menu_idx" value="${sessionScope.user.mem_idx }">  -->
+				<input type="hidden" name="shop_idx" id="shop_idx" value="${ param.shop_idx }"> 
+				<input type="hidden" name="cart_idx" id="cart_idx" value="${ param.cart_idx }"> 
+				<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
 				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx" value="${ vo.mcuraddr_idx }">
 				<div class="mb-3">
 					<label for="addr" class="form-label">주소</label> <input type="text"
@@ -245,7 +245,7 @@ h {
 				<div class="mb-3">
 				<label for="cart_price" class="form-label">가격</label> <input
 						type="hidden" class="form-control" id="cart_price" name="cart_price"
-						value="20000"
+						value="${amount}"
 						readonly>
 						<fmt:formatNumber value='${amount}' type='number' pattern='#,###' />
 

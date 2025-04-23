@@ -150,7 +150,7 @@
           if (confirm("장바구니에 등록되었습니다\n장바구니 화면으로 이동하시겠습니까?") == false) return;
 
           // 장바구니 보기로 이동
-          location.href = "../cart/list.do?mem_idx=${user.mem_idx}";
+          location.href = "../cart/list.do?mem_idx=${user.mem_idx}&shop_idx=" + shop_idx;
         },
         error: function (err) {
           alert(err.responseText);
