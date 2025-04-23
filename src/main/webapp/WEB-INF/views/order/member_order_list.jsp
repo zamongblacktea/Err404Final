@@ -6,9 +6,6 @@
     <head>
       <meta charset="UTF-8" />
       <title>Insert title here</title>
-      <!-- 웹소캣 -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
       <style>
         #box {
@@ -45,25 +42,13 @@
   });
 });
 
-      //웹소캣 구독 
-      var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
-      var stompClient = Stomp.over(socket);
-  
-      // WebSocket 연결 설정
-      stompClient.connect({}, function (frame) {
-          // 주문 상태 업데이트 메시지 구독
-      stompClient.subscribe('/topic/orders', function (message) {
-              // 서버에서 메시지가 올 때마다 DOM 업데이트
-      location.reload(); // 페이지를 새로고침하여 새로운 데이터를 반영
-          });
-      });
 
 
       </script>
     </head>
 
     <body>
-      주문내역조회
+      내 주문
       <c:forEach var="vo" items="${ status }">
         <div id="box">
           주문번호:${ vo.order_idx } <br />
@@ -73,27 +58,7 @@
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />
-<div>
-  <c:if test="${vo.order_status eq 'NONE'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="조리대기">주문 수락</button>
-  </c:if>
-  
-  <c:if test="${vo.order_status eq '조리대기'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="조리중">조리 시작</button>
-  </c:if>
 
-  <c:if test="${vo.order_status eq '조리대기'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="픽업대기">조리 완료</button>
-  </c:if>
-  <!-- 픽업완료/배달중/배달완료 -->
-  
-</div>
 </div>
       </c:forEach>
     </body>

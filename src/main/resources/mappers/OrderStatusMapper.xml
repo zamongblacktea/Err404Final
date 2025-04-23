@@ -26,7 +26,9 @@
                           #{ rider_request },
                           #{ amount },
                           #{ pay_type },
-                          #{ coupon_use }
+                          #{ coupon_use },
+                          #{ mem_addr1 },
+                          #{ mem_addr2 }
                           )
   </insert>
 

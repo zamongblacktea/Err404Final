@@ -49,5 +49,7 @@ public class OrderStatusVo {
     Integer amount;
     String pay_type;
     String coupon_use;
+    String mem_addr1;
+    String mem_addr2;
 
 }
