@@ -52,6 +52,7 @@ public class MainController {
 
         model.addAttribute("shop", shop);
         model.addAttribute("menu", menu);
+        // 임시 push
 
         return "main/shop_detail";
     }
