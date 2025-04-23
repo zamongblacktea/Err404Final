@@ -143,7 +143,7 @@
                         }
 
                         //f.method = "POST";
-                        f.action = "../payment/payment_form.do"; // 결제폼 PaymentController
+                        f.action = "../order/payment_form.do"; // 결제폼 PaymentController
                         f.submit();
                     }
 
