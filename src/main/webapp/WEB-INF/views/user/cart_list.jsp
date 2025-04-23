@@ -202,6 +202,7 @@
                                         </td>
                                         <td>
                                             <fmt:formatNumber value="${cart.menu_price * cart.cart_cnt}" type="currency" />
+                                            <input type="hidden" name="total_price" value="{cart.menu_price * cart.cart_cnt}">
                                         </td>
                                         <td><input class="btn btn-info" type="button" value="수정"
                                                 onclick="modify_cart('${cart.cart_idx}');"></td>
@@ -211,9 +212,10 @@
                                 <!-- 총액 출력 -->
                                 <tr>
                                     <td colspan="5" style="text-align: right;">총액</td>
-                                    <!-- <td class="currency" colspan="2">
+                                    <td class="currency" colspan="2">
                                         <fmt:formatNumber value="${total_amount }" type="currency" />
-                                    </td> -->
+                                        <input type="hidden" name="amount" value="${total_amount}">
+                                    </td>
                                 </tr>
 
                             </table>
