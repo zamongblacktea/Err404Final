@@ -73,9 +73,7 @@ public class MemberController {
 	public String login_form(Model model) {
 
 		// sns연동 로그인
-		String naverUrl = naverService.getNaverLogin();
-		String kakaoUrl = kakaoService.getKakaoLogin();
-		System.out.println("네이버 로그인 URL: " + naverUrl);
+
 		model.addAttribute("naverUrl", naverService.getNaverLogin());
 		model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin());
 
@@ -259,21 +257,7 @@ public class MemberController {
 
 	////////////////////////////////////////////////////////////////// 사장님//////////////////////////////////////////////
 
-	// 사장님 회원 가입
-	@RequestMapping("insert_owner.do")
-	public String insert_owner(OwnerVo vo) {
 
-		// 1.회원가입자의 IP구하기
-		String owner_ip = request.getRemoteAddr();
-		vo.setOwner_ip(owner_ip);
-
-		// 입력값 확인용 sysprint
-		System.out.println(vo);
-		// 2.DB insert
-		int res = ownerMapper.insert(vo);
-
-		return "redirect:login_form.do";
-	}
 
 	// 사장님 회원가입 폼 띄우기
 	@RequestMapping("owner_form.do")
@@ -309,6 +293,65 @@ public class MemberController {
 		// 반환데이터(자바의 모든 데이터)를 JSON객체로 생성해서 반환해준다
 		return map;
 	}
+
+
+
+		// 사장님 회원 가입
+		@RequestMapping("insert_owner.do")
+		public String insert_owner(OwnerVo vo,
+				@RequestParam(name = "photo") MultipartFile[] photo_array)
+				throws IllegalStateException, IOException {
+	
+			// 운전 면허증 사진 등록
+			int owner_insert_no = 0;
+	
+			// 파일 처리
+			// 웹경로 -> 절대경로 구하기
+			// import ServletContext 후 Autowired application 설정
+			String saveDir = application.getRealPath("/images/");
+			String owner_num = "no_file";
+	
+			for (int i = 0; i < photo_array.length; i++) {
+				MultipartFile photo = photo_array[i];
+				if (!photo.isEmpty()) {
+					// 업로드된 파일명 구하기
+					String filename = photo.getOriginalFilename();
+					File f = new File(saveDir, filename);
+	
+					// 중복파일 체크
+					if (f.exists()) {
+						long tm = System.currentTimeMillis();
+						filename = String.format("%d_%s", tm, filename);
+						f = new File(saveDir, filename);
+					}
+	
+					// 임시 공간에 저장된 파일 -> 내가 지정한 파일로 복사
+					photo.transferTo(f);
+	
+					if (i == 0) {
+						owner_num = filename;
+						vo.setOwner_num(owner_num);
+	
+					}
+				}
+			} // end : for
+	
+			// 1.회원가입자의 IP구하기
+			String owner_ip = request.getRemoteAddr();
+			vo.setOwner_ip(owner_ip);
+	
+			try {
+				owner_insert_no = ownerMapper.insert(vo);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			// 입력값 확인용
+			System.out.println(vo);
+	
+			return "redirect:login_form.do";
+		}// end : insert_owner
 
 	// 사장님 로그인
 	@RequestMapping("owner_login.do")

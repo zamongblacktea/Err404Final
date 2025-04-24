@@ -29,6 +29,12 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       #id_msg {
         margin-left: 10px;
       }
+
+      textarea{
+        resize: none;
+        width: 60%;
+        height: 100px;
+      }
     </style>
 
     <script type="text/javascript">
@@ -272,6 +278,7 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     </script>
   </head>
   <body>
+    <h2>가게정보수정</h2>
     <!-- 가게 로고 선택/폼 -->
     <form method="POST" enctype="multipart/form-data" id="ajaxFormLogo" style="display: none">
       <input type="file" id="ajaxFileLogo" onchange="ajaxFileLogoChange();" />
@@ -282,26 +289,29 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
       <input type="file" id="ajaxFileImg" onchange="ajaxFileImgChange();" />
     </form>
 
+    <div style="display: flex; justify-content: center; gap: 20px;" >
     <!-- shop_logo 이미지 수정 -->
     <div style="text-align: center; padding: 10px">
+      <p>가게 로고</p>
       <img id="my_logo" src="${pageContext.request.contextPath}/images/${shop.shop_logo}" style="width: 100px; height: 100px" /><br /><br />
       <input class="btn btn-info" type="button" value="로고 수정" onclick="logo_update();" />
     </div>
 
     <!-- shop_img 이미지 수정 -->
     <div style="text-align: center; padding: 10px">
+      <p>가게 이미지</p>
       <img id="my_img" src="${pageContext.request.contextPath}/images/${shop.shop_img}" style="width: 100px; height: 100px" /><br /><br />
       <input class="btn btn-info" type="button" value="이미지 수정" onclick="img_update();" />
     </div>
+  </div>
 
     <form class="form-inline" enctype="multipart/form-data">
       <input type="hidden" name="shop_idx" value="${shop.shop_idx}" />
       <input type="hidden" name="shop_logo" id="shop_logo" value="${shop.shop_logo}" />
       <input type="hidden" name="shop_img" id="shop_img" value="${shop.shop_img}" />
       <div id="box">
-        <div class="panel panel-primary">
-          <div class="panel-heading"><h4>가게정보수정</h4></div>
-          <div class="panel-body">
+        
+          
             <table class="table">
               <!-- 이름 -->
               <tr>
@@ -344,15 +354,15 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
                 <th>가게 카테고리</th>
                 <td>
                   <select name="shop_cate_idx" class="form-control" id="cate-select">
-                    <option value="1">치킨</option>
-                    <option value="2">피자/양식</option>
-                    <option value="3">중국집</option>
-                    <option value="4">한식</option>
-                    <option value="5">일식/돈까스</option>
-                    <option value="6">족발/보쌈</option>
-                    <option value="7">야식</option>
-                    <option value="8">분식</option>
-                    <option value="9">카페/디저트</option>
+                  <option value="1" ${shop.shop_cate_idx == 1 ? 'selected' : ''}>치킨</option>
+                  <option value="2" ${shop.shop_cate_idx == 2 ? 'selected' : ''}>피자/양식</option>
+                  <option value="3" ${shop.shop_cate_idx == 3 ? 'selected' : ''}>중국집</option>
+                  <option value="4" ${shop.shop_cate_idx == 4 ? 'selected' : ''}>한식</option>
+                  <option value="5" ${shop.shop_cate_idx == 5 ? 'selected' : ''}>일식/돈까스</option>
+                  <option value="6" ${shop.shop_cate_idx == 6 ? 'selected' : ''}>족발/보쌈</option>
+                  <option value="7" ${shop.shop_cate_idx == 7 ? 'selected' : ''}>야식</option>
+                  <option value="8" ${shop.shop_cate_idx == 8 ? 'selected' : ''}>분식</option>
+                  <option value="9" ${shop.shop_cate_idx == 9 ? 'selected' : ''}>카페/디저트</option>
                   </select>
                 </td>
               </tr>
@@ -360,19 +370,19 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               <!-- 배달료 -->
               <tr>
                 <th>배달료</th>
-                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" value="${shop.shop_dfee}" /></td>
+                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%;" value="${shop.shop_dfee}" /></td>
               </tr>
 
               <!-- 가게 공지 -->
               <tr>
                 <th>가게공지</th>
-                <td><textarea class="form-control" required="required" name="shop_notice">${shop.shop_notice}</textarea></td>
+                <td><textarea class="form-control" required="required" name="shop_notice" style="width: 60%; height: 100px;">${shop.shop_notice}</textarea></td>
               </tr>
 
               <!-- 소개글 -->
               <tr>
                 <th>소개글</th>
-                <td><textarea class="form-control" required="required" name="shop_intro">${shop.shop_intro}</textarea></td>
+                <td><textarea class="form-control" required="required" name="shop_intro" style="width: 60%; height: 100px;">${shop.shop_intro}</textarea></td>
               </tr>
 
               <!-- 최소주문금액 -->
@@ -506,8 +516,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
               </tr>
             </table>
           </div>
-        </div>
-      </div>
     </form>
   </body>
 </html>

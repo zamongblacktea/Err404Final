@@ -10,7 +10,7 @@ import com.githrd.project.vo.DeliveryVo;
 @Mapper
 public interface DeliveryMapper {
     
-       // 임시테이블 조회
+       // 배달 테이블 조회
        public List<DeliveryVo> selectList();
 
        //배차받기를 누르면 배차상태가 Y로 바뀌도록하기
@@ -18,6 +18,8 @@ public interface DeliveryMapper {
 
         //배차받기를 누른 라이더에게 라이더 idx가 일치하면 배달현황에 뜨드록하기
         public List<DeliveryVo> selectRiderList(int rider_idx);
+
+        int insert(DeliveryVo vo);
 
         //배달완료를 누르면 배달상태가 y로 바뀌도록하기 
         int deliveryStatusUpdate(Map<String,Object> map);

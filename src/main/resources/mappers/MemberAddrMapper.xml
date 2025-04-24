@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.MemberAddrMapper">
+
+   <!-- 회원전체조회 -->
+   <select id="selectList" resultType="MemberAddrVo">
+     select * from mem_addr order by mem_idx
+   </select>
+
+   <!-- mem_idx에 해당되는 회원정보 1건  -->
+   <select id="selectOneFromIdx" parameterType="int" resultType="MemberAddrVo">
+     select * from mem_addr where mem_idx=#{ mem_idx }
+   </select>
+
+
+
+   <!-- 회원추가 -->
+   <insert id="insert" parameterType="MemberAddrVo">
+     insert into mem_addr values(
+                          null,
+                          #{ mem_idx },
+                          #{ mem_addr1 },
+                          #{ mem_addr2 },
+                          #{ mem_longitude },
+                          #{ mem_latitude }
+
+                          )
+   </insert>
+
+
+   <!-- 회원삭제 -->
+   <delete id="delete" parameterType="int">
+     delete from mem_addr where mem_idx=#{ mem_idx }
+   </delete>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,11 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
    <!-- 사장님 이메일 인증 api -->
-  <select id="selectOneFromEmail" parameterType="String"  resultType="OwnerVo">
-
-   SELECT owner_id FROM owner WHERE owner_email = #{ email }
-
-  </select>
+   <select id="selectOneFromEmail"  parameterType="String"  resultType="int">
+      SELECT COUNT(*)
+      FROM owner
+      WHERE owner_email = #{ email }
+      </select>
 
    <!-- 사장님 아이디 비밀번호 찾기 -->
    <select id="selectOneFindInfo"  parameterType="String"  resultType="OwnerVo">

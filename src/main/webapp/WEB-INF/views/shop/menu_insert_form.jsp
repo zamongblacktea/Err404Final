@@ -16,6 +16,21 @@
       .form-group {
         margin-bottom: 15px;
       }
+
+      label{
+        font-size: 16px;
+      }
+
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+      }
+
+      textarea{
+        resize: none;
+      }
     </style>
 
     <script type="text/javascript">
@@ -72,8 +87,8 @@
     </script>
   </head>
   <body>
+    <h2>메뉴 등록</h2>
     <div class="form-container">
-      <h2>메뉴 등록</h2>
       <form id="menuForm" enctype="multipart/form-data">
         <div class="form-group">
           <label for="menu_name">메뉴명</label>
@@ -96,7 +111,7 @@
         </div>
         <div class="form-group">
           <label for="photo">메뉴 사진</label>
-          <input type="file" class="form-control" id="photo" name="photo" required />
+          <input type="file" id="photo" name="photo" required />
         </div>
         <button type="button" class="btn btn-primary" onclick="submitForm()">등록</button>
       </form>

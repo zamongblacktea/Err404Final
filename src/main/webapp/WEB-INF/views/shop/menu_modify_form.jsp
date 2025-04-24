@@ -3,27 +3,38 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <title>메뉴 수정</title>
 
     <!-- bootstrap 사용설정 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <style type="text/css">
-      #box {
-        width: 800px;
-        margin: auto;
-        margin-top: 80px;
+    <style>
+      .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+/* 
+      h2{
+        display: inline-block;
+        width: 200px;
+        margin-left: 50px;
+      } */
+
+      input[type="number"]::-webkit-outer-spin-button,
+      input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
       }
 
-      th {
-        width: 100px;
-        vertical-align: middle !important;
-      }
-
-      #id_msg {
-        margin-left: 10px;
+      textarea{
+        resize: none;
       }
     </style>
 
@@ -112,9 +123,33 @@
           },
         });
       }
+
+      function submitModifyForm() {
+        const formData = new FormData($('#menuModifyForm')[0]);
+        
+        $.ajax({
+          url: 'menu_modify.do',
+          type: 'POST',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            if (response.success) {
+              alert('메뉴가 성공적으로 수정되었습니다.');
+              loadContent('menu_list.do');
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function(xhr, status, error) {
+            alert('메뉴 수정 중 오류가 발생했습니다: ' + error);
+          }
+        });
+      }
     </script>
   </head>
   <body>
+    <h2>메뉴 수정</h2>
     <!-- 이미지 선택/폼 -->
     <form method="POST" enctype="multipart/form-data" id="ajaxForm" style="display: none">
       <input type="file" id="ajaxFile" onchange="ajaxFileChange();" />
@@ -125,78 +160,36 @@
       <input class="btn btn-info" type="button" value="이미지 수정" onclick="photo_update();" />
     </div>
 
-    <form class="form-inline" method="post">
-      <input type="hidden" name="menu_idx" value="${vo.menu_idx}" />
-      <div id="box">
-        <div class="panel panel-primary">
-          <div class="panel-heading"><h4>메뉴정보수정</h4></div>
-          <div class="panel-body">
-            <table class="table">
-              <!-- 메뉴명 -->
-              <tr>
-                <th>메뉴명</th>
-                <td>
-                  <input class="form-control" name="menu_name" style="width: 30%" value="${vo.menu_name}" />
-                </td>
-              </tr>
-
-              <!-- 가격 -->
-              <tr>
-                <th>가격</th>
-                <td>
-                  <input class="form-control" name="menu_price" style="width: 30%" value="${vo.menu_price}" />
-                </td>
-              </tr>
-
-              <!-- 메뉴설명 -->
-              <tr>
-                <th>메뉴설명</th>
-                <td>
-                  <textarea class="form-control" id="menu_explain" name="menu_explain">${vo.menu_explain}</textarea>
-                </td>
-              </tr>
-
-              <!-- 메뉴사진 -->
-              <!-- <tr>
-                <th>메뉴사진</th>
-                <td>
-                  <input type="file" name="photo" id="photo" style="width: 50%" value="${vo.menu_img}" />
-                </td>
-              </tr> -->
-
-              <!-- 메뉴상태 -->
-              <tr>
-                <th>메뉴상태</th>
-                <td>
-                  <!-- <input id="menu_pop" type="checkbox" name="menu_status" />
-                  <label for="menu_pop">인기</label><br />
-                  <input id="menu_hide" type="checkbox" name="menu_status" />
-                  <label for="menu_hide">숨기기</label><br /> -->
-                  <c:choose>
-                    <c:when test="${vo.menu_status=='품절'}">
-                      <input type="checkbox" id="menu_soldout" value="품절" checked />
-                      <label for="menu_soldout">품절</label>
-                    </c:when>
-                    <c:otherwise>
-                      <input type="checkbox" id="menu_soldout" value="품절" />
-                      <label for="menu_soldout">품절</label>
-                    </c:otherwise>
-                  </c:choose>
-                  <input type="hidden" name="menu_status" id="menu_status" value="판매" />
-                </td>
-              </tr>
-
-              <!-- 버튼 -->
-              <tr>
-                <td colspan="2" align="center">
-                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='menu_list.do'" />
-                  <input class="btn btn-primary" type="button" value="메뉴수정" onclick="send(this.form);" id="btn_register" />
-                </td>
-              </tr>
-            </table>
-          </div>
+    
+    <div class="form-container">
+      <form id="menuModifyForm" enctype="multipart/form-data">
+        <input type="hidden" name="menu_idx" value="${vo.menu_idx}" />
+        <div class="form-group">
+          <label for="menu_name">메뉴명</label>
+          <input type="text" class="form-control" id="menu_name" name="menu_name" value="${vo.menu_name}" required />
         </div>
-      </div>
-    </form>
+        <div class="form-group">
+          <label for="menu_explain">메뉴 설명</label>
+          <textarea class="form-control" id="menu_explain" name="menu_explain" rows="3" required>${vo.menu_explain}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="menu_price">가격</label>
+          <input type="number" class="form-control" id="menu_price" name="menu_price" value="${vo.menu_price}" required />
+        </div>
+        <div class="form-group">
+          <label for="menu_status">상태</label>
+          <select class="form-control" id="menu_status" name="menu_status" required>
+            <option value="판매중" ${vo.menu_status == '판매중' ? 'selected' : ''}>판매중</option>
+            <option value="품절" ${vo.menu_status == '품절' ? 'selected' : ''}>품절</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="submitModifyForm()">수정</button>
+        <button type="button" class="btn btn-secondary" onclick="loadContent('menu_list.do')">취소</button>
+      </form>
+    </div>
+
+    <script>
+      
+    </script>
   </body>
 </html>

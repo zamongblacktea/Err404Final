@@ -1,0 +1,22 @@
+package com.githrd.project.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.githrd.project.vo.MemberAddrVo;
+
+
+
+@Mapper
+public interface MemberAddrMapper {
+    
+	
+    public List<MemberAddrVo> selectList();
+		
+	// mem_idx이용해서 1건 데이터 읽어오기
+	public MemberAddrVo selectOneFromIdx(int mem_idx);
+		
+
+
+}

@@ -74,11 +74,28 @@
 
       /* 본문 영역 */
       .contents {
-        border: 1px solid red;
+        /* border: 1px solid red; */
         width: 1320px;
-        margin: 0 auto;
+        margin: 30px auto;
+        padding-left: 50px;
+
       }
     </style>
+
+<script>
+  (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+
+  ChannelIO('boot', {
+    "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
+    "memberId": "${ user.owner_id }", // fill user's member id
+    "profile": { // fill user's profile
+      "name": "${user.owner_name}", // fill user's name
+      "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
+      "CUSTOM_VALUE_1": "VALUE_1", // custom property
+      "CUSTOM_VALUE_2": "VALUE_2" // custom property
+    }
+  });
+</script>
 
     <script>
       function loadContent(url) {
@@ -133,8 +150,8 @@
         </div>
         <div class="menu-group">
           <div class="menu-title">주문관리</div>
-          <a onclick="loadContent('order_list.do')">주문 내역</a>
-          <a onclick="loadContent('order_list_complete.do')">완료 주문 내역</a>
+          <a onclick="loadContent('../order/order_list.do')">주문 내역</a>
+          <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">리뷰관리</div>

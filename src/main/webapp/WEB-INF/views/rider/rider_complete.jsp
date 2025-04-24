@@ -34,8 +34,8 @@
             <div>가게이름 : ${vo.shop_name}</div>
             <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2} </div> 
             <div>회원번호 : ${vo.mem_idx}</div>
-            <div>배달장소 : ${vo.mem_caddr} ${vo.mem_cdaddr}</div> 
-            <div>배달날짜 : ${vo.pay_date}</div>
+            <div>배달장소 : ${vo.mem_addr1} ${vo.mem_addr2}</div> 
+            <div>배달날짜 : ${vo.pay_regdate}</div>
             <div>배 달 료 : ${vo.delivery_fee}</div> 
             <input type="button" value="당일정산내역확인" onclick="location.href='todayfee.do'"; />
         </c:forEach>

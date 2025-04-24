@@ -140,38 +140,44 @@ public class ShopController {
 
     // 메뉴 수정 폼
     @GetMapping("/menu_modify_form.do")
-    public String menu_modify_form(@RequestParam int menu_idx,
-            @RequestParam Integer shop_idx, Model model) {
-
-        // 세션에서 꺼내기 (파라미터로도 받을 수 있지만 세션 우선)
+    public String menu_modify_form(@RequestParam int menu_idx, Model model) {
+        // 세션에서 shop_idx 가져오기
+        Integer shop_idx = (Integer) session.getAttribute("shop_idx");
         if (shop_idx == null) {
-            shop_idx = (Integer) session.getAttribute("shop_idx");
+            return "redirect:/shop/main.do";
         }
 
-        model.addAttribute("shop_idx", shop_idx);
-
+        // 메뉴 정보 조회
+        ShopMenuVo vo = shopService.selectMenuOne(menu_idx);
+        model.addAttribute("vo", vo);
+        
         return "shop/menu_modify_form";
     }
 
     // 메뉴 수정
     @PostMapping("/menu_modify.do")
-    public String menu_modify(ShopMenuVo vo, Model model) {
+    @ResponseBody
+    //@RequestParam(required = false) MultipartFile photo 나중에 사진 수정 시 사용되면 쓰기
+    public Map<String, Object> menu_modify(ShopMenuVo vo) {
 
-        int menu_modify_no = 0;
-
-        // 임시로 메뉴idx 1로 고정
-        // vo.setMenu_idx(1);
-
+        Map<String, Object> response = new HashMap<>();
+        
         try {
-            menu_modify_no = shopService.menuModify(vo);
+            int result = shopService.menuModify(vo);
+            
+            if (result > 0) {
+                response.put("success", true);
+                response.put("message", "메뉴가 성공적으로 수정되었습니다.");
+            } else {
+                response.put("success", false);
+                response.put("message", "메뉴 수정에 실패했습니다.");
+            }
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            response.put("success", false);
+            response.put("message", "오류가 발생했습니다: " + e.getMessage());
         }
-
-        model.addAttribute("menu_modify_no", menu_modify_no);
-
-        return "redirect:menu_list.do";
+        
+        return response;
     }
 
     // 메뉴 사진 수정
@@ -198,6 +204,16 @@ public class ShopController {
         }
 
         return map;
+    }
+
+    // 메뉴 삭제
+    @PostMapping("/menu_delete.do")
+    public String menu_delete(@RequestParam int menu_idx) {
+        int res = 0;
+
+        res = shopService.menuDelete(menu_idx);
+
+        return "redirect:/shop/menu_list.do";
     }
 
     // 가게 등록 폼
@@ -245,6 +261,7 @@ public class ShopController {
         ShopInfoVo shop = shopService.selectShopOne(shop_idx);
 
         model.addAttribute("shop", shop);
+        model.addAttribute("shop_cate_idx", shop.getShop_cate_idx());
 
         return "shop/shop_modify_form";
     }
@@ -330,21 +347,6 @@ public class ShopController {
         return map;
     }
 
-    // 주문현황리스트
-    @GetMapping("/order_list.do")
-    public String order_list(Model model) {
-        OwnerVo owner = (OwnerVo) session.getAttribute("user");
-        int owner_idx = owner.getOwner_idx();
-        ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
-        
-        if (shop == null) {
-            return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
-        }
-
-        session.setAttribute("shop_idx", shop.getShop_idx());
-        model.addAttribute("shop", shop);
-        return "shop/shop_order_list";
-    }
 
     // 주문완료리스트
     @GetMapping("/order_list_complete.do")

@@ -16,7 +16,7 @@ public class MemberVo {
 	String mem_nickname;
 	String mem_email;
 	String mem_zipcode;
-	String mem_curaddr;
+	String mem_addr;
 	String mem_ip;
 	String mem_regdate;
 	String mem_update;

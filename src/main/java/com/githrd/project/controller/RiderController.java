@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.MemberMapper;
+import com.githrd.project.dao.OrderStatusMapper;
+import com.githrd.project.dao.RiderDeliveryFeeMapper;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
+import com.githrd.project.vo.OrderStatusVo;
+import com.githrd.project.vo.RiderDeliveryFeeVo;
 import com.githrd.project.vo.RiderVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor.AnyAnnotation;
 @Controller
 public class RiderController {
 	@Autowired
@@ -34,7 +39,15 @@ public class RiderController {
 	HttpSession session;
 
     @Autowired
-    private KakaoMapService kakaoMapService;
+    OrderStatusMapper orderStatusMapper;
+
+    
+    @Autowired
+    RiderDeliveryFeeMapper riderDeliveryFeeMapper;
+
+    @Autowired
+    private KakaoMapService kakaoMapService; 
+
 
     @RequestMapping("/rider/main.do")
     public String main(){
@@ -45,7 +58,8 @@ public class RiderController {
     @RequestMapping("/rider/standby.do")
     public String riderStandby(Model model){
 
-        List<DeliveryVo> standby_list = deliveryMapper.selectList();
+        //List<DeliveryVo> standby_list = deliveryMapper.selectList();
+        List<OrderStatusVo> standby_list = orderStatusMapper.selectAcceptList();
         System.out.println(standby_list.size());
 
 		// 결과적으로 request binding
@@ -59,9 +73,35 @@ public class RiderController {
     //parameter map으로 받기 : rider_accept.do?order_idx=1&rider_idx=5
     @RequestMapping("/rider/rider_accept.do")
     @ResponseBody
-    public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
+    // public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
+    public Map<String,Object> riderPrograss(int order_idx,int rider_idx,Model model){
+
+        int res = 0;
+
+        //order_idx 해당되는 vo얻어오기
+        OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
+        //ordersatus테이블 상태정보 업데이트
+
+        //insert를 하기위한 정보 넣기
+        DeliveryVo vo = new DeliveryVo();
+        vo.setOrder_idx(order_idx);
+        vo.setShop_idx(orderStatusVo.getShop_idx());
+        vo.setMem_idx(orderStatusVo.getMem_idx());
+        vo.setRider_idx(rider_idx);
+        vo.setMenu_idx(orderStatusVo.getMenu_idx());
+        vo.setMcuraddr_idx(orderStatusVo.getMenu_idx());
+        vo.setRider_request(orderStatusVo.getRider_request());
+        vo.setOrder_status(orderStatusVo.getOrder_status());
+        vo.setDelivery_status(orderStatusVo.getDelivery_status());
+        vo.setTotalDistance(1500);
+        vo.setDelivery_fee(3000);
+
+
+        //delivery insert용 vo생성->insert
+        res = deliveryMapper.insert(vo);
         
-        int res = deliveryMapper.riderStatusUpdate(paramMap);
+
+        //int res = deliveryMapper.riderStatusUpdate(paramMap);
 
         Map<String,Object>map = new HashMap<>();
 
@@ -81,6 +121,7 @@ public class RiderController {
         RiderVo 	user 	= (RiderVo) session.getAttribute("user");
         int rider_idx = user.getRider_idx();
         
+        
         //로그인된 라이더 정보가 없을 경우 
         if (user == null) {
             return "redirect:/login_form.do";
@@ -91,10 +132,9 @@ public class RiderController {
         List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(rider_idx);
 
         //rider_list는 배차완료한 라이더의 현황을 볼수 있는 리스트이다.
-        
-        System.out.println("---------------------------");
-        System.out.println(rider_list.size());
-        System.out.println("---------------------------");
+        // System.out.println("---------------------------");
+        // System.out.println(rider_list.size());
+        // System.out.println("---------------------------");
         
 		// 결과적으로 request binding
 		model.addAttribute("rider_list", rider_list);
@@ -138,6 +178,21 @@ public class RiderController {
         return "rider/rider_complete";
     }
 
+    //전체 내역 정산조회
+    @RequestMapping("/rider/deliveryfee.do")
+    public String riderTotalDeliveryFee(int rider_idx,Model model){
+
+        List<RiderDeliveryFeeVo> riderdelivery_list =riderDeliveryFeeMapper.selectList(rider_idx);
+        
+        //request binding
+        model.addAttribute("riderdelivery_list", riderdelivery_list);
+
+        
+        return "rider/rider_deliveryfee";
+    }
+
+
+    //당일내역 정산
     @RequestMapping("/rider/todayfee.do")
     public String riderTodayDeliveryFee(){
 
@@ -146,7 +201,7 @@ public class RiderController {
 
     
 
-
+    //경로 지도에 띄우기
     @RequestMapping("/route/route.do")
     public String showDeliveryMap(Model model) {
         try {
@@ -164,18 +219,19 @@ public class RiderController {
             //거리계산하기(미터단위)
             double calculateDistance =  kakaoMapService.calculateDistance( storeCoords[0], storeCoords[1], customerCoords[0], customerCoords[1]);
             double calculateDistance1 =  kakaoMapService.calculateDistance( customerCoords[0], customerCoords[1],riderCoords[0], riderCoords[1]);
-            double rescal = calculateDistance + calculateDistance1;
+            //double rescal = calculateDistance + calculateDistance1;
+            double totalDistance = calculateDistance + calculateDistance1;
            
             
             //수수료 계산
             //1km보다 이하는 3,000원(일단 테스트용)
             //초과분부터 1001m부터 1m당 1원 
-            double fee = 0;
-            if(rescal>1000){
+            double delivery_fee = 0;
+            if(totalDistance>1000){
                 //fee = 3000 +  (rescal-1000);
                  // 소수점 셋째 자리에서 절사 (버림)
-                fee = 3000 + Math.round((rescal-1000)*1000/1000.0);
-            }else fee = 3000;
+                 delivery_fee = 3000 + Math.round((totalDistance-1000)*1000/1000.0);
+            }else delivery_fee = 3000;
 
             // 위도경도 requstbinding
             model.addAttribute("shop_longitude", storeCoords[1]);
@@ -186,8 +242,8 @@ public class RiderController {
             model.addAttribute("rider_latitude", riderCoords[0]);
 
             // 거리 및 수수료 requstbinding
-            model.addAttribute("rescal", rescal);
-            model.addAttribute("fee", fee);
+            model.addAttribute("totalDistance", totalDistance);
+            model.addAttribute("delivery_fee", delivery_fee);
 
             // 주소도 전달 (경로보기 버튼용) 가게와 배달지 경로보기 카카오맵
             model.addAttribute("shop_addr", shopAddress);
