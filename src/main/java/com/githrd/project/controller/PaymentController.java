@@ -17,6 +17,9 @@ import com.githrd.project.service.PaymentService;
 import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.PaymentVo;
 
+
+
+
 @RequestMapping("/order/")
 @Controller
 public class PaymentController {
@@ -36,21 +39,20 @@ public class PaymentController {
 
     // 결제 페이지 폼 불러오기
     @RequestMapping("payment_form.do")
-    public String paymentForm(int mem_idx, Model model) {
+    public String paymentForm(int mem_idx , Model model) {
 
-        // 회원 현재주소 가져오기
+        //회원 현재주소 가져오기
         MemberAddrVo vo = memberAddrMapper.selectOneFromIdx(mem_idx);
 
-        // 결제 할 총 가격 조회
-        Integer total_amount = cartService.selectTotalAmount(mem_idx);
-
         model.addAttribute("vo", vo);
-        model.addAttribute("amount", total_amount);
+
 
         return "order/shop_payment";
     }
     
-    // 결제 api 요청 REST API
+
+
+    //결제 api 요청 REST API
     @ResponseBody
     @PostMapping("/verify.do")
     public ResponseEntity<String> verify(@RequestBody PaymentVo vo) {
@@ -61,9 +63,14 @@ public class PaymentController {
             e.getStackTrace();
             
             return ResponseEntity.badRequest()
-                    .body(new JSONObject().put("success", false).put("message", "결제 검증 실패: " + e.getMessage())
-                            .toString());
+                .body(new JSONObject().put("success", false).put("message", "결제 검증 실패: " + e.getMessage()).toString());
         }
     }
         
+       
+ 
+    
+
+
+
 }

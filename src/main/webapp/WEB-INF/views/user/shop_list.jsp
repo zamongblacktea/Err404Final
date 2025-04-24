@@ -84,7 +84,6 @@ pageEncoding="UTF-8"%>
           </div>
 
         </c:forEach>
-
           <div class="shop-list">가게</div>
           <div class="shop-list">가게</div>
           <div class="shop-list">가게</div>
