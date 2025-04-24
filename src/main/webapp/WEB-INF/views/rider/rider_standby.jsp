@@ -66,8 +66,6 @@
      </c:if>
      
     <c:forEach var="vo" items="${standby_list}">
-      
-    
       <div>주문번호 : ${vo.order_idx}</div>
       <div>가게이름 : ${vo.shop_name}</div>
       <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div>

@@ -17,9 +17,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update> -->
 
        <!-- 배차완료한 배달중 배달현황조회 -->
-    <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
+    <!-- <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
         select * from delivery
         where rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
+    </select> -->
+
+    <!-- 배차완료한 배달중 배달현황조회 -->
+    <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
+            SELECT 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,
+            si.shop_addr1,si.shop_addr2,
+            os.mem_addr1,os.mem_addr2,os.rider_request
+            FROM delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
+                inner join order_status os on d.order_idx=os.order_idx  
+            WHERE rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
     </select>
 
   <!-- 픽업대기상태에서 픽업완료를 누르면 delivery_status가 배달중으로 바뀌도록하기 -->
