@@ -16,12 +16,13 @@ import lombok.NoArgsConstructor;
 
 public class OrderStatusVo {
 
+
+    
     public OrderStatusVo(int shop_idx, int menu_idx, int mem_idx, int pay_idx,int mcuraddr_idx, String mem_phone,
             String order_request, String rider_request, int amount, String pay_type, String coupon_use,
             String mem_addr1, String mem_addr2) {
         //TODO Auto-generated constructor stub
     }
-
     @JsonProperty("orderIdx")
     Integer order_idx;
     Integer shop_idx;
@@ -29,7 +30,7 @@ public class OrderStatusVo {
     Integer mem_idx;
     Integer pay_idx;
     Integer delivery_idx;
-    Integer mcuraddr_idx;
+    int mcuraddr_idx;
     String order_regdate;
     @JsonProperty("orderStatus")
     String order_status;

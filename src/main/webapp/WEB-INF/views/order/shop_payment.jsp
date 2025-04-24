@@ -101,7 +101,7 @@ h {
 <script>
 	IMP.init("imp23446565"); // 아임포트 가맹점 고객사 식별 코드 입력
 
-	//임시로 보낼 변수값 1 설정을 위해 앞에 Number 형변환 해놨으니 실제 연동할 땐 제거해야 함
+	//임시로 보낼 변수값 1 설정을 위해 앞에 Number 형변환 
 	function requestPay() {
 		const mem_idx = Number($("#mem_idx").val());
 		const shop_idx = Number($("#shop_idx").val());
@@ -109,10 +109,11 @@ h {
 		const mcuraddr_idx = Number($("#mcuraddr_idx").val()); //회원 현재주소지 기준으로 바꿀 때 쓸 변수 설정
 		const menu_name = $("#menu_name").val();
 		const cart_idx = Number($("#cart_idx").val());
-		const cart_price = $("#cart_price").val();
+		const cart_price = Number($("#cart_price").val());
 		const mem_name = $("#mem_name").val();
 		const mem_phone = $("#mem_phone").val();
-		const mem_curaddr = $("#mem_curaddr").val();
+		const mem_addr1 = $("#mem_addr1").val();
+		const mem_addr2 = $("#mem_addr2").val();
 
 
 		IMP.request_pay({
@@ -123,7 +124,7 @@ h {
 			amount : cart_price, // 결제 금액 (원) 임시 고정값 20000으로 설정됨 test 마치면 바꿔야 함
 			buyer_name : mem_name,
 			buyer_tel : mem_phone,
-			buyer_curaddr : mem_curaddr,
+			buyer_curaddr : mem_addr1,
 		}, function(response) {
 			if (response.success) {
 				console.log("결제 성공:", response);
@@ -137,10 +138,13 @@ h {
 								menu_idx,
 								shop_idx,
 								cart_idx,
+								cart_price,
 								mcuraddr_idx,
 								mem_name,
 								mem_phone,
-								mem_curaddr);
+								mem_addr1,
+								mem_addr2,
+							);
 				console.log("mem_idx:", mem_idx);
 
 				location.href="../main/main.do?mem_idx=" + mem_idx;//메인 페이지로 이동
@@ -153,7 +157,7 @@ h {
 	}
 
 	// AJAX를 사용한 결제 검증 요청
-	function verifyPayment(imp_uid, merchant_uid, mem_idx, menu_idx, shop_idx, cart_idx, mcuraddr_idx, mem_name, mem_phone, mem_curaddr) {
+	function verifyPayment(imp_uid, merchant_uid, mem_idx, menu_idx, shop_idx, cart_idx,cart_price, mcuraddr_idx, mem_name, mem_phone, mem_addr1 , mem_addr2) {
 		//form에 설정한 변수 선언
 
 
@@ -170,13 +174,15 @@ h {
 				"imp_uid" : imp_uid,
 				"merchant_uid" : merchant_uid,
 				"mem_idx" : mem_idx,
-				"menu_idx" : 1,
-				"shop_idx" : 1,
-				"cart_idx" : 1,
-				"mcuraddr_idx" : 1,
+				"menu_idx" : menu_idx,
+				"shop_idx" : shop_idx,
+				"cart_idx" : cart_idx,
+				"amount"   : cart_price,
+				"mcuraddr_idx" : mcuraddr_idx,
 				"mem_name": mem_name,
 				"mem_phone": mem_phone,
-				"mem_curaddr" : mem_curaddr,
+				"mem_addr1" : mem_addr1,
+				"mem_addr2" : mem_addr2,
 
 			}),
 			dataType : "json",
@@ -209,14 +215,19 @@ h {
 			<form id="bookingForm">
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
 				<!-- 테스트 후 변경해야 함 -->
-				<!-- <input type="hidden" name="shop_idx" id="shop_idx" value="${sessionScope.user.mem_idx }"> 
-				<input type="hidden" name="cart_idx" id="cart_idx" value="${sessionScope.user.mem_idx }"> 
-				<input type="hidden" name="menu_idx" id="menu_idx" value="${sessionScope.user.mem_idx }"> 
-				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx" value="${sessionScope.user.mem_idx }">  -->
+				<input type="hidden" name="shop_idx" id="shop_idx" value="${ param.shop_idx }"> 
+				<input type="hidden" name="cart_idx" id="cart_idx" value="${ param.cart_idx }"> 
+				<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
+				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx" value="${ vo.mcuraddr_idx }">
 				<div class="mb-3">
 					<label for="addr" class="form-label">주소</label> <input type="text"
-							class="form-control" id="mem_curaddr" name="mem_curaddr"
-							value="${ sessionScope.user.mem_addr }" required>
+							class="form-control" id="mem_addr1" name="mem_addr1"
+							value="${ vo.mem_addr1 } " required>
+				</div>
+				<div class="mb-3">
+					<label for="addr" class="form-label">상세주소</label> <input type="text"
+							class="form-control" id="mem_addr2" name="mem_addr2"
+							value="${ vo.mem_addr2 } " required>
 				</div>
 				<div class="mb-3">
 					<label for="name" class="form-label">이름</label> <input type="text"
@@ -234,9 +245,9 @@ h {
 				<div class="mb-3">
 				<label for="cart_price" class="form-label">가격</label> <input
 						type="hidden" class="form-control" id="cart_price" name="cart_price"
-						value="20000"
+						value="${amount}"
 						readonly>
-						<fmt:formatNumber value='20000' type='number' pattern='#,###' />
+						<fmt:formatNumber value='${amount}' type='number' pattern='#,###' />
 
 				</div>
 
