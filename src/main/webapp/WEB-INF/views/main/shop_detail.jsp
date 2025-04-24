@@ -18,11 +18,26 @@
       margin: 0;
       padding: 0;
     }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content{
+      flex: 1;
+    }
 
     #mybox {
       margin: 0 auto;
       /* width: 1150px; */
-      width: 800px;
+      /* width: 800px; */
+      width: 750px;
       padding-left: 10px;
       display: inline-block;
     }
@@ -41,6 +56,7 @@
       /* display: block; */
       display: flex;
       margin: 0 auto;
+      justify-content: space-between;
     }
 
     .row {
@@ -100,12 +116,34 @@
     }
 
     .cart {
+    width: 280px;
+    min-height: 400px; /* 기본 높이 설정 */
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-sizing: border-box;
+    background-color: #fafafa;
+    margin-left: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    flex-shrink: 0; /* 붙는 거 방지 */
+  }
+
+    /* .cart {
       display: inline-block;
       width: 300px;
     }
+
+    span{
+      border: none;
+    }
+
+    .cart_li{
+      list-style: none;
+    } */
     .footer {
       width: 100%;
       height: 150px;
+      display: block;
     }
   </style>
 
@@ -181,6 +219,7 @@
   </script>
 
   <body>
+    <div class="page">
     <nav class="navbar">네비바 로그인/로그아웃
       <input type="button" value="장바구니" onclick="location.href='../cart/list.do?mem_idx=${user.mem_idx}'">
     </nav>
@@ -230,15 +269,35 @@
           </div>
         </div>
         <div class="cart">
-          <div>주문표/취소</div>
-          <div>메뉴/가격/수량</div>
+          <%@ include file="./detail_cart.jsp" %>
+          <!-- <div>주문표/취소</div>
+          <div>
+            <c:forEach var="cart" items="${cart_list}">
+              <li class="cart_li">
+                <div id="menu_name">${cart.menu_name}</div>
+                <div class="row">
+                <div class="col-sm-6 text-left">
+                <span>❌</span>
+                <span><fmt:formatNumber value="${cart.menu_price}" pattern="#,#00" />원</span>
+                </div>
+                <div class="col-sm-6 text-right"><span onclick="minus('${cart.cart_idx}');" style="cursor: pointer;">➖</span>
+                  <span id="cnt_${cart.cart_idx}" style="text-align: center;">${cart.cart_cnt}</span>
+                  <span onclick="plus('${cart.cart_idx}');" style="cursor: pointer;">➕</span></div>
+                </div>
+              </li>
+            </c:forEach>
+          </div>
           <div>최소주문금액 얼마</div>
-          <div>합계 얼마</div>
+          <div id="total_amount"><fmt:formatNumber value="${total_amount }" type="currency" />
+            <input type="hidden" name="amount" value="${total_amount}"></div>
           <div>주문하기 버튼</div>
         </div>
-      </div>
+      </div> -->
+    </div>
     </div>
 
+  </div>
     <footer class="footer">푸터</footer>
+    </div>
   </body>
 </html>

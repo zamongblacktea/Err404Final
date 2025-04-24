@@ -26,6 +26,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     OrderStatusMapper orderStatusMapper;
 
+    @Autowired
+    CartService cartService;
+
 
 	@Override
     public JSONObject verifyPayment(PaymentVo vo) throws Exception {
@@ -105,7 +108,7 @@ public class PaymentServiceImpl implements PaymentService {
     
                 int res2 = orderStatusMapper.insert(orderStatus);
 
-
+                int del = cartService.deleteAll(mem_idx);
 
 
             } catch (Exception e) {
