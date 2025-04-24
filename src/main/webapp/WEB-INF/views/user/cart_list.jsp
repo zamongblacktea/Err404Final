@@ -176,6 +176,11 @@
                         }
                     }
 
+                    // 수량 증가
+                    function plus(cart_idx){
+                        
+                    }
+
 
                 </script>
 
