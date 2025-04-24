@@ -37,7 +37,7 @@ ALTER TABLE rider_addr DROP FOREIGN KEY fk_mem_memberaddr;
 -- shop_order_info에서 order_check 
 -- pay_date도 가져와야함
 -- delivery테이블에서 가져올것들 : delivery_fee totalDistance delivery_status가 y인것
--- member테이블에서 mem_caddr  mem_cdaddr 가져와야함.
+-- member테이블에서 mem_addr1  mem_addr2 가져와야함.
 -- 
 
 

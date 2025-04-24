@@ -7,11 +7,31 @@
     select * from order_status where shop_idx = #{shop_idx}
   </select>
 
+  <select id="selectOrderOne" parameterType="int" resultType="OrderStatusVo">
+      SELECT 
+      os.*,
+      si.shop_name,si.shop_addr1,si.shop_addr2,
+      mi.menu_name,mi.menu_price
+      FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
+                          inner join menu_info mi on os.menu_idx=mi.menu_idx
+      where os.order_idx=#{order_idx}
+  </select>
+
+  <!-- standby_list항목들 조인 -->
+  <select id="selectAcceptList" resultType="OrderStatusVo">
+    SELECT 
+      os.*,
+      si.shop_name,si.shop_addr1,si.shop_addr2,
+      mi.menu_name,mi.menu_price
+    FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
+                          inner join menu_info mi on os.menu_idx=mi.menu_idx
+    where order_status='조리대기' 
+  </select>
 
 
 
   <!-- 주문 현황 insert -->
-  <insert id="insert"  parameterType="OrderStatusVo">
+  <insert id="insert" parameterType="OrderStatusVo">
      insert into order_status values(
                           null,
                           #{ shop_idx },
@@ -32,11 +52,13 @@
                           )
   </insert>
 
-<!-- 주문 배달 현황 실시간 업데이트 -->
+  <!-- 주문 배달 현황 실시간 업데이트 -->
   <update id="updateStatus" parameterType="OrderStatusVo">
         UPDATE order_status SET order_status = #{ order_status }
         WHERE order_idx = #{ order_idx }
   </update>
 
 
+
+    
 </mapper>

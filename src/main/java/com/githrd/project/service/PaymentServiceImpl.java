@@ -72,7 +72,8 @@ public class PaymentServiceImpl implements PaymentService {
                 String pay_type         = vo.getPay_type();
                 int pay_idx             = vo.getPay_idx();
                 //주문 현황 insert (OrderStatus)
-                OrderStatusVo orderStatus = new OrderStatusVo(shop_idx,menu_idx,mem_idx,pay_idx,mem_phone,order_request,rider_request,amount,pay_type,coupon_use);
+                //OrderStatusVo orderStatus = new OrderStatusVo(shop_idx,menu_idx,mem_idx,pay_idx,mem_phone,order_request,rider_request,amount,pay_type,coupon_use);
+                OrderStatusVo orderStatus = new OrderStatusVo();
                 orderStatus.setShop_idx(shop_idx);
                 orderStatus.setMenu_idx(menu_idx);
                 orderStatus.setMem_idx(mem_idx);

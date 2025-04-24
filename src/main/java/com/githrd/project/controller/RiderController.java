@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.MemberMapper;
+import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.RiderDeliveryFeeMapper;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
+import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.RiderDeliveryFeeVo;
 import com.githrd.project.vo.RiderVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor.AnyAnnotation;
 @Controller
 public class RiderController {
 	@Autowired
@@ -34,6 +37,9 @@ public class RiderController {
 	
 	@Autowired
 	HttpSession session;
+
+    @Autowired
+    OrderStatusMapper orderStatusMapper;
 
     
     @Autowired
@@ -52,7 +58,8 @@ public class RiderController {
     @RequestMapping("/rider/standby.do")
     public String riderStandby(Model model){
 
-        List<DeliveryVo> standby_list = deliveryMapper.selectList();
+        //List<DeliveryVo> standby_list = deliveryMapper.selectList();
+        List<OrderStatusVo> standby_list = orderStatusMapper.selectAcceptList();
         System.out.println(standby_list.size());
 
 		// 결과적으로 request binding
@@ -66,9 +73,35 @@ public class RiderController {
     //parameter map으로 받기 : rider_accept.do?order_idx=1&rider_idx=5
     @RequestMapping("/rider/rider_accept.do")
     @ResponseBody
-    public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
+    // public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
+    public Map<String,Object> riderPrograss(int order_idx,int rider_idx,Model model){
+
+        int res = 0;
+
+        //order_idx 해당되는 vo얻어오기
+        OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
+        //ordersatus테이블 상태정보 업데이트
+
+        //insert를 하기위한 정보 넣기
+        DeliveryVo vo = new DeliveryVo();
+        vo.setOrder_idx(order_idx);
+        vo.setShop_idx(orderStatusVo.getShop_idx());
+        vo.setMem_idx(orderStatusVo.getMem_idx());
+        vo.setRider_idx(rider_idx);
+        vo.setMenu_idx(orderStatusVo.getMenu_idx());
+        vo.setMcuraddr_idx(orderStatusVo.getMenu_idx());
+        vo.setRider_request(orderStatusVo.getRider_request());
+        vo.setOrder_status(orderStatusVo.getOrder_status());
+        vo.setDelivery_status(orderStatusVo.getDelivery_status());
+        vo.setTotalDistance(1500);
+        vo.setDelivery_fee(3000);
+
+
+        //delivery insert용 vo생성->insert
+        res = deliveryMapper.insert(vo);
         
-        int res = deliveryMapper.riderStatusUpdate(paramMap);
+
+        //int res = deliveryMapper.riderStatusUpdate(paramMap);
 
         Map<String,Object>map = new HashMap<>();
 
