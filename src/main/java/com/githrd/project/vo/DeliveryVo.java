@@ -28,6 +28,7 @@ public class DeliveryVo {
     int delivery_fee;
     int mem_idx;
     int totalDistance;
+    String rider_status;
    
 
 

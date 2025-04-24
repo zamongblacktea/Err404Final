@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.OrderStatusVo;
 
 
@@ -17,7 +18,11 @@ public interface OrderStatusMapper {
     
     public OrderStatusVo        selectOrderOne(int order_idx);
 
+    //주문수락 받은것 배차대기 리스트에 뜨도록하기
     public List<OrderStatusVo> selectAcceptList();
+
+    //라이더 배차상태 업데이트
+    int riderStatusUpdate(DeliveryVo vo);
 
     public int insert(OrderStatusVo OrderStatus);
 
