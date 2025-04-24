@@ -66,13 +66,14 @@ pageEncoding="UTF-8"%>
       <div class="list">
 
         <c:forEach var="vo" items="${shop_list}">
-          <div class="shop-list container" onclick="location.href='../main/detail.do'">
+          <div class="shop-list container" onclick="location.href='../main/detail.do?shop_idx=${vo.shop_idx}'">
             <div class="row">
 
               <div id="shop_logo" class="col-sm-3">
                 <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고" style="width: 100%; height: 100%;">
               </div>
               <div class="col-sm-9">
+                ${vo.shop_idx}
                 <div class="shop_info">${vo.shop_name}</div><br>
                 <div class="shop_info">별점 ${vo.shop_rating}|리뷰 ${vo.shop_reviewcnt}</div><br>
                 <div class="shop_info">

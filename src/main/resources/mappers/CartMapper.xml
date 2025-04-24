@@ -9,8 +9,7 @@
 		mem_idx = #{mem_idx} </select>
 
 	<!-- cart_idx 1건 조회 -->
-	<select id="selectOne" parameterType="int" resultType="CartVo"> select * from cart_view where
-		cart_idx=#{cart_idx} </select>
+	<select id="selectOne" parameterType="int" resultType="CartVo"> select * from cart_view where cart_idx=#{cart_idx} </select>
 
 	<!-- cart_cnt 조회 -->
 	<select id="selectOneCnt" parameterType="int" resultType="int"> select cart_cnt from cart_view

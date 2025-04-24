@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        <!-- 배차완료한 배달중 배달현황조회 -->
     <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
         select * from delivery
-        where rider_idx=#{rider_idx} and rider_status='Y' and  delivery_status='N'
+        where rider_idx=#{rider_idx}  and  delivery_status='N'
     </select>
 
     <!-- 배달중인 상태에서 배달완료를 누르면 delivery_status가 y로 바뀌도록하기  -->
@@ -34,6 +34,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where rider_idx=#{rider_idx} and delivery_status='Y'
       </select>
        
+       <!-- delivery 정보를 추가 -->
+    <insert id="insert" parameterType="DeliveryVo">
+    insert into delivery values(null,#{order_idx},#{shop_idx},#{mem_idx},
+							#{rider_idx},#{menu_idx},#{mcuraddr_idx},#{rider_request},#{order_status},#{delivery_status}
+                            ,now(),#{totalDistance},#{delivery_fee})
+    
+    </insert>
 
     
+
 </mapper>

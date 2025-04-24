@@ -150,7 +150,7 @@
           if (confirm("장바구니에 등록되었습니다\n장바구니 화면으로 이동하시겠습니까?") == false) return;
 
           // 장바구니 보기로 이동
-          location.href = "../cart/list.do?mem_idx=${user.mem_idx}";
+          location.href = "../cart/list.do?mem_idx=${user.mem_idx}&shop_idx=" + shop_idx;
         },
         error: function (err) {
           alert(err.responseText);
@@ -191,7 +191,7 @@
             <c:forEach var="menu" items="${menu}">
               <form onsubmit="insert_cart(this); return false;">
                 <input type="hidden" id="menu_idx" name="menu_idx" value="${menu.menu_idx}">
-                <input type="hidden" id="shop_idx" name="shop_idx" value="${shop.shop_idx}">
+                <input type="hidden" id="shop_idx" name="shop_idx" value="${menu.shop_idx}">
                 <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}">
                 
                 <div class="row" onclick="this.closest('form').requestSubmit();">

@@ -43,5 +43,17 @@ public class OrderStatusVo {
     String coupon_use;
     String mem_addr1;
     String mem_addr2;
+    String delivery_status;
+    //주문정보 standby_list출력 내용 추가(20250423)
+    String shop_name;
+    String shop_addr1;
+    String shop_addr2;
+    String menu_name;
+    int    menu_price;
+    //delivery 테이블 칼럼
+    String pay_regdate;
+    int totalDistance;
+    int delivery_fee;
+
 
 }

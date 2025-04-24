@@ -119,7 +119,7 @@
                         // }
 
                         //f.method = "POST";
-                        f.action = "../order/payment_form.do"; // 결제폼 PaymentController
+                        f.action = "../order/payment_form.do?shop_idx="+ shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
                         f.submit();
                     }
 

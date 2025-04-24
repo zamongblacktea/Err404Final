@@ -75,7 +75,8 @@ public class PaymentServiceImpl implements PaymentService {
                 String pay_type         = vo.getPay_type();
                 int pay_idx             = vo.getPay_idx();
                 //주문 현황 insert (OrderStatus)
-                OrderStatusVo orderStatus = new OrderStatusVo(shop_idx,menu_idx,mem_idx,pay_idx,mcuraddr_idx,mem_phone,order_request,rider_request,amount,pay_type,coupon_use,mem_addr1,mem_addr2);
+                //OrderStatusVo orderStatus = new OrderStatusVo(shop_idx,menu_idx,mem_idx,pay_idx,mcuraddr_idx,mem_phone,order_request,rider_request,amount,pay_type,coupon_use,mem_addr1,mem_addr2);
+                OrderStatusVo orderStatus = new OrderStatusVo();
                 orderStatus.setShop_idx(shop_idx);
                 orderStatus.setMenu_idx(menu_idx);
                 orderStatus.setMem_idx(mem_idx);
@@ -85,7 +86,7 @@ public class PaymentServiceImpl implements PaymentService {
                 orderStatus.setOrder_request(order_request);
                 orderStatus.setRider_request(rider_request);
                 orderStatus.setAmount(amount);
-                orderStatus.setPay_type(pay_type);
+                orderStatus.setPay_type("카카오");
                 orderStatus.setCoupon_use(coupon_use);
                 orderStatus.setMem_addr1(mem_addr1);
                 orderStatus.setMem_addr2(mem_addr2);
