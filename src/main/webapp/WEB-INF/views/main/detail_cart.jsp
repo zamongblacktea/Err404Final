@@ -15,6 +15,19 @@
       .cart_list > .row{
         width: 247px;
       }
+
+      .cart {
+      display: inline-block;
+      width: 300px;
+    }
+
+    span{
+      border: none;
+    }
+
+    .cart_li{
+      list-style: none;
+    }
     </style>
 
     <script>

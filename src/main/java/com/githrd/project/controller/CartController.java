@@ -112,6 +112,30 @@ public class CartController {
         return "user/cart_list";
     }
 
+    // 장바구니 리스트 조회 뷰
+    @GetMapping("/list_view.do")
+    public String list_view(Model model){
+
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        // 세션 만료 체크
+        // if (session.getAttribute("user") == null) {
+        //     ra.addAttribute("reason", "session_timeout");
+        //     return "redirect:../member/login_form.do";
+        // }
+
+        int mem_idx = user.getMem_idx();
+
+        // 회원별 장바구니 목록
+        List<CartVo> cart_list = cartService.selectList(mem_idx);
+        Integer total_amount = cartService.selectTotalAmount(mem_idx);
+
+        model.addAttribute("cart_list", cart_list);
+        model.addAttribute("total_amount", total_amount);
+
+
+        return "main/detail_cart";
+    }
+
     // 장바구니 비우기
     @PostMapping("/delete_all.do")
     @ResponseBody

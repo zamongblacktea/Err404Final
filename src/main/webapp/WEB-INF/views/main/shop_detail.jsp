@@ -128,7 +128,7 @@
     flex-shrink: 0; /* 붙는 거 방지 */
   }
 
-    /* .cart {
+    .cart {
       display: inline-block;
       width: 300px;
     }
@@ -139,7 +139,7 @@
 
     .cart_li{
       list-style: none;
-    } */
+    }
     .footer {
       width: 100%;
       height: 150px;
@@ -205,6 +205,17 @@
           }
           return;
         }
+        $.ajax({
+          url: "../cart/list_view.do",
+          type: "GET",
+          data: { mem_idx: mem_idx },
+          success: function (html) {
+            $(".cart").html(html);
+          },
+          error: function (err) {
+            console.error("장바구니 리로드 오류", err);
+          }
+        });
           // 성공 했을 때 코드
           if (confirm("장바구니에 등록되었습니다\n장바구니 화면으로 이동하시겠습니까?") == false) return;
 
@@ -215,6 +226,8 @@
           alert(err.responseText);
         },
       });
+
+      
     }
   </script>
 
@@ -290,9 +303,9 @@
           <div>최소주문금액 얼마</div>
           <div id="total_amount"><fmt:formatNumber value="${total_amount }" type="currency" />
             <input type="hidden" name="amount" value="${total_amount}"></div>
-          <div>주문하기 버튼</div>
+          <div>주문하기 버튼</div> -->
         </div>
-      </div> -->
+      </div>
     </div>
     </div>
 
