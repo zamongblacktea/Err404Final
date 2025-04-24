@@ -16,10 +16,12 @@ public class DeliveryVo {
     String shop_name;
     String shop_addr1;
     String shop_addr2;
+    String shop_phone;
     String menu_name;
     int menu_price;
     String mem_addr1;
     String mem_addr2;
+    String mem_phone;
     String rider_request;
     String order_status;
     String delivery_status;

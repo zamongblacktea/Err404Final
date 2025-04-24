@@ -49,6 +49,7 @@ public class OrderStatusVo {
     String shop_name;
     String shop_addr1;
     String shop_addr2;
+    String shop_phone;
     String menu_name;
     int    menu_price;
     //delivery 테이블 칼럼

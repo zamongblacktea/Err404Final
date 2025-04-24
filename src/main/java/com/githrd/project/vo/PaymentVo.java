@@ -10,7 +10,6 @@ public class PaymentVo {
 
     int pay_idx;
     int mem_idx;
-    // int cart_idx;
     int mcuraddr_idx;
     int menu_idx;
     int shop_idx;

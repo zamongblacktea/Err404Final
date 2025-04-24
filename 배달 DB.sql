@@ -55,3 +55,12 @@ select * from delivery
 
 -- order_status테이블에서 라이더의 상태 초깃값 none
 -- 배차대기 배차완료(픽업대기상태) 픽업완료 배달중 배달완료
+
+
+  SELECT 
+        d.*,
+        si.shop_name,si.shop_addr1,si.shop_addr2,
+        os.mem_addr1,os.mem_addr2
+        from delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
+						 inner join order_status os on d.order_idx=os.order_idx  
+        where rider_idx=#1  and  delivery_status in('픽업대기','배달중')
