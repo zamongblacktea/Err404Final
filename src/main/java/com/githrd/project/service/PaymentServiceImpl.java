@@ -63,7 +63,13 @@ public class PaymentServiceImpl implements PaymentService {
             //결제 정보 입력
             try {
                 System.out.println("insert 호출 전");
-            
+
+
+
+
+
+                System.out.println("insert 넣기전 vo:" + vo);
+                
 
                 //Payment DB insert
                 int res = paymentMapper.insert(vo); // 여기서 터질 확률 매우 높음

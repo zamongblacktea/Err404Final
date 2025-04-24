@@ -53,6 +53,7 @@
                           #{ mem_phone }, 
                           #{ order_request }, 
                           #{ rider_request },
+                          'NONE',
                           #{ amount },
                           #{ pay_type },
                           #{ coupon_use },
@@ -63,7 +64,8 @@
 
   <!-- 주문 배달 현황 실시간 업데이트 -->
   <update id="updateStatus" parameterType="OrderStatusVo">
-        UPDATE order_status SET order_status = #{ order_status }
+        UPDATE order_status SET order_status = #{ order_status },
+                                rider_status = '배차대기'
         WHERE order_idx = #{ order_idx }
   </update>
 

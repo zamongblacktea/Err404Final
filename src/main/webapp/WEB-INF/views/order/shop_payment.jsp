@@ -108,7 +108,6 @@ h {
 		const menu_idx = Number($("#menu_idx").val());
 		const mcuraddr_idx = Number($("#mcuraddr_idx").val()); //회원 현재주소지 기준으로 바꿀 때 쓸 변수 설정
 		const menu_name = $("#menu_name").val();
-		const cart_idx = Number($("#cart_idx").val());
 		const cart_price = Number($("#cart_price").val());
 		const mem_name = $("#mem_name").val();
 		const mem_phone = $("#mem_phone").val();
@@ -135,13 +134,12 @@ h {
 				verifyPayment(	response.imp_uid, 
 								response.merchant_uid,	
 								mem_idx,
+								mcuraddr_idx,
 								menu_idx,
 								shop_idx,
-								cart_idx,
-								cart_price,
-								mcuraddr_idx,
 								mem_name,
 								mem_phone,
+								cart_price,
 								mem_addr1,
 								mem_addr2,
 							);
@@ -157,7 +155,7 @@ h {
 	}
 
 	// AJAX를 사용한 결제 검증 요청
-	function verifyPayment(imp_uid, merchant_uid, mem_idx, menu_idx, shop_idx, cart_idx,cart_price, mcuraddr_idx, mem_name, mem_phone, mem_addr1 , mem_addr2) {
+	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_name, mem_phone,cart_price, mem_addr1 , mem_addr2) {
 		//form에 설정한 변수 선언
 
 
@@ -174,13 +172,12 @@ h {
 				"imp_uid" : imp_uid,
 				"merchant_uid" : merchant_uid,
 				"mem_idx" : mem_idx,
+				"mcuraddr_idx" : mcuraddr_idx,
 				"menu_idx" : menu_idx,
 				"shop_idx" : shop_idx,
-				"cart_idx" : cart_idx,
-				"amount"   : cart_price,
-				"mcuraddr_idx" : mcuraddr_idx,
 				"mem_name": mem_name,
 				"mem_phone": mem_phone,
+				"amount"   : cart_price,
 				"mem_addr1" : mem_addr1,
 				"mem_addr2" : mem_addr2,
 
@@ -216,7 +213,6 @@ h {
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
 				<!-- 테스트 후 변경해야 함 -->
 				<input type="hidden" name="shop_idx" id="shop_idx" value="${ param.shop_idx }"> 
-				<input type="hidden" name="cart_idx" id="cart_idx" value="${ param.cart_idx }"> 
 				<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
 				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx" value="${ vo.mcuraddr_idx }">
 				<div class="mb-3">

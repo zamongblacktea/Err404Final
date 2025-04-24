@@ -51,4 +51,39 @@ public class CartServiceImpl implements CartService {
         return cartMapper.deleteAll(mem_idx);
     }
 
+    // 메뉴 cnt 감소
+    @Override
+    public int cntMinus(int cart_idx, int cart_cnt) {
+        return cartMapper.cntMinus(cart_idx, cart_cnt);
+    }
+
+    // 메뉴 1개 삭제
+    @Override
+    public int menuDelete(int cart_idx) {
+        return cartMapper.menuDelete(cart_idx);
+    }
+
+    // 메뉴 1개 cnt 조회
+    @Override
+    public int selectOneCnt(int cart_idx) {
+        return cartMapper.selectOneCnt(cart_idx);
+    }
+
+    // 메뉴 1개 조회
+    @Override
+    public CartVo selectOne(int cart_idx) {
+        return cartMapper.selectOne(cart_idx);
+    }
+
+    // 메뉴 1개 조회 mem_idx
+    @Override
+    public CartVo selectOneMem(int mem_idx) {
+        return cartMapper.selectOneMem(mem_idx);
+    }
+
+    @Override
+    public int cntPlus(int cart_idx, int cart_cnt) {
+        return cartMapper.cntPlus(cart_idx, cart_cnt);
+    }
+
 }
