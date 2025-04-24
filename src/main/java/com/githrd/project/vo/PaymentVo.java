@@ -27,6 +27,5 @@ public class PaymentVo {
     String coupon_use;
     String mem_addr1;
     String mem_addr2;
-    
 
 }
