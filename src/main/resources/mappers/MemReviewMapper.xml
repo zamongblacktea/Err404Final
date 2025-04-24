@@ -4,26 +4,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.githrd.project.dao.MemReviewMapper">
 
-    <!-- 회원 전체 리뷰 조회(관리자 용) -->
-   <select id="selectList" resultType="MemReviewVo">
+  <!-- 회원 전체 리뷰 조회(관리자 용) -->
+  <select id="selectList" resultType="MemReviewVo">
      select * from mem_review order by mem_idx
-   </select>
+  </select>
+
+
+  
+  <select id="selectListOne" resultType="MemReviewVo">
+     select * from delivery WHERE mem_idx = #{mem_idx}
+  </select>
+
+  <!-- 회원 리뷰 조회 -->
+  
+  <select id="selectOneFromIdx" resultType="MemReviewVo">
+     select * from delivery WHERE mem_idx = #{mem_idx} and order_idx = #{order_idx}
+  </select>
+
+
+  <!-- 아이디 조회 -->
+  <select id="selectListId" resultType="MemReviewVo">
+     select * from mem_review WHERE mem_idx = #{mem_idx}
+  </select>
+
+
+  <!-- 해당 가게 리뷰 조회 -->
+  <select id="selectListShop" resultType="MemReviewVo">
+     select * from mem_review WHERE shop_idx = #{shop_idx}
+  </select>
   
 
-    <!-- 특정 회원 리뷰 조회 -->
-   <select id="selectListOne" resultType="MemReviewVo">
-     select * from delivery WHERE mem_idx = #{mem_idx}
-   </select>
 
-   
-    <!-- 아이디 조회 -->
-   <select id="selectListId" resultType="MemReviewVo">
-     select * from mem_review WHERE mem_idx = #{mem_idx}
-   </select>
-   
+  <!-- 가게 리뷰 메뉴 조회 -->
+  <select id="selectMenu" resultType="MemReviewVo">
+      SELECT mem_idx , order_idx, delivery_idx,menu_name,order_status
 
-      <!-- 리뷰 등록 -->
-   <insert id="insert" parameterType="MemReviewVo">
+      FROM delivery d INNER JOIN menu_info m ON d.shop_idx = m.shop_idx and d.menu_idx = m.menu_idx
+
+      WHERE mem_idx = #{mem_idx} AND order_idx = #{order_idx}
+  </select>
+
+
+  <!-- 리뷰 등록 -->
+  <insert id="insert" parameterType="MemReviewVo">
      insert into mem_review values(
                           null,
                           #{mem_idx},
@@ -33,21 +56,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{review_content},
                           now(),
                           null,
-                          #{review_pwd},
                           #{review_rating},
+                          #{review_img},
+                          #{review_ip},
                           1,
                           'Y'
                           )
-   </insert>
+  </insert>
 
-   <!-- 리뷰 수정 -->
-   <update id="update" parameterType="MemReviewVo">
+  <!-- 리뷰 수정 -->
+  <update id="update" parameterType="MemReviewVo">
      update mem_review set review_content   = #{review_content},
-                           review_update    = now(),
-                           review_pwd       = #{review_pwd} 
+                           review_update    = now()
 
      where mem_idx=#{ mem_idx }
-   </update>
+  </update>
+
 </mapper>
 
 

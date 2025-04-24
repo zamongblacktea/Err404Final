@@ -22,15 +22,24 @@
         textarea {
           resize: none;
         }
+
+        .menu-nickname, .menu-menu,.menu-content{
+
+          margin-top: 20px;
+
+        }
+
       </style>
 
       <script>
         function send(f) {
-          let mem_idx         = f.mem_idx.value;
-          let review_content  = f.review_content.value;
-          let review_pwd      = f.review_pwd.value;
-          let photo           = f.photo.value.trim();
-          
+          let mem_idx = f.mem_idx.value;
+          let review_content = f.review_content.value;
+          let shop_idx = f.shop_idx.value;
+          let menu_idx = f.menu_idx.value;
+          let menu_name = f.menu_name.value;
+          let photo = f.photo.value.trim();
+
 
           if (review_content == "") {
 
@@ -46,7 +55,7 @@
 
           }
 
-          f.action = "review_insert.do";
+          f.action = "insert_review.do";
           f.method = "POST";
           f.submit();
 
@@ -60,13 +69,16 @@
     <body class="bg-light py-5">
       <div class="container">
         <div class="card shadow rounded-4 p-4">
-          <form action="multipart/form-data">
+          <form method="POST" enctype="multipart/form-data">
             <h2 class="mb-4">리뷰 작성</h2>
-            <input type="hidden" value="${mem_idx}" name="mem_idx">
+            <input type="hidden" value="${param.mem_idx}" name="mem_idx">
+            <input type="hidden" value="${param.shop_idx}" name="shop_idx">
+            <input type="hidden" value="${param.menu_idx}" name="menu_idx">
+            <input type="hidden" value="${order.menu_name}" name="menu_name">
             <!-- 별점 -->
             <div class="mb-3">
               <label class="form-label">별점</label>
-              <div id="starRating" class="star-rating" >
+              <div id="starRating" class="star-rating">
                 <span data-value="1">★</span>
                 <span data-value="2">★</span>
                 <span data-value="3">★</span>
@@ -74,27 +86,28 @@
                 <span data-value="5">★</span>
               </div>
             </div>
-        <!-- 별점 value 저장용 input -->
-        <input type="hidden" id="ratingValue" name="review_rating" value="0">
+            <!-- 별점 value 저장용 input -->
+            <input type="hidden" id="ratingValue" name="review_rating" value="0">
 
             <!-- 닉네임 -->
-            <div class="mb-3" style="float: left;">
+            <div class="menu-nickname">
               <label class="form-label">닉네임</label>
               <div>
-                <h5>${ user.mem_nickname }</h5>
+                <h5>${ user.mem_nickname }</h5>   
               </div>
             </div>
 
-            <!-- 비밀번호 -->
-            <div class="mb-3" style="float: right;">
-              <label class="form-label">비밀번호</label>
+            <!-- 메뉴 -->
+            <div class="menu-menu" >
+              <label class="form-label">메뉴</label>
               <div>
-                <input type="password" name="review_pwd" required placeholder="비밀번호 입력">
+                <h6>${ order.menu_name }</h6>
               </div>
             </div>
+
 
             <!-- 내용 + 이미지 업로드 -->
-            <div class="mb-3">
+            <div class="menu-content">
               <label for="reviewContent" class="form-label">내용</label>
               <textarea id="reviewContent" class="form-control" rows="5" name="review_content"
                 placeholder="리뷰 내용을 입력해주세요"></textarea>
@@ -107,7 +120,7 @@
                 onclick="location.href='review_list.do?mem_idx=${ param.mem_idx }'">취소</button>
               <button class="btn btn-primary" onclick="send(this.form);">등록</button>
             </div>
-            <div style="clear: both;"></div>
+
           </form>
         </div>
       </div>
@@ -148,9 +161,7 @@
             alert('내용을 입력해주세요.');
             return;
           }
-          // 실제 등록 처리 로직은 여기에 추가
-          alert(`등록 완료!\n별점: ${selectedRating}점\n내용: ${content}\n이미지: ${image ? image.name : '없음'}`);
-          resetForm();
+
         }
       </script>
     </body>

@@ -183,7 +183,7 @@
 
           <ul class="nav row">
             <li class="col-sm-4"><a class="nav-a">메뉴</a></li>
-            <li class="col-sm-4"><a href="" class="nav-a">리뷰</a></li>
+            <li class="col-sm-4"><a href="/main/detail_review.do?shop_idx=${ param.shop_idx }" class="nav-a">리뷰</a></li>
             <li class="col-sm-4"><a href="" class="nav-a">정보</a></li>
           </ul>
           <div>

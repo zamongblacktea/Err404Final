@@ -4,7 +4,6 @@ import org.apache.ibatis.type.Alias;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -54,6 +53,7 @@ public class OrderStatusVo {
     String pay_regdate;
     int totalDistance;
     int delivery_fee;
+    
 
 
 }
