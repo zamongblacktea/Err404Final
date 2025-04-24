@@ -208,7 +208,7 @@
         $.ajax({
           url: "../cart/list_view.do",
           type: "GET",
-          data: { mem_idx: mem_idx },
+          data: { mem_idx: mem_idx, shop_idx:shop_idx },
           success: function (html) {
             $(".cart").html(html);
           },

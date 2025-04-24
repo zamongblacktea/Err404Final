@@ -71,44 +71,6 @@
                 </style>
 
                 <script>
-                    const regular_number = /^[0-9]{1,5}$/;
-                    function modify_cart(cart_idx) {
-                        // let cart_cnt = document.getElementById("cnt_" + cart_idx).value;
-                        // let cart_cnt = document.querySelector("cnt_" + cart_idx).value;
-                        let cart_cnt = $("#cnt_" + cart_idx).val();
-                        if (regular_number.test(cart_cnt) == false) {
-                            alert("1~5자리의 숫자만 입력하세요");
-                            $("#cnt_" + cart_idx).val("");
-                            $("#cnt_" + cart_idx).focus();
-                            return;
-                        }
-
-                        // location.href = "modify.do?cart_idx=" + cart_idx + "&cart_cnt=" + cart_cnt + "&mem_idx=${user.mem_idx}";
-
-                        // backtic : 주의) JSP내에서 String Template사용시 자바스크립트 변수 표현 \${변수명} (앞에 \ 붙인다)
-                        location.href = `modify.do?cart_idx=\${cart_idx}&cart_cnt=\${cart_cnt}&mem_idx=${user.mem_idx}`;
-
-                    }
-                </script>
-
-                <!-- Check Box 처리 -->
-                <script>
-
-                    // 삭제하기
-                    function cart_delete(f) {
-                        let checked_count = $("input[name='cart_idx']:checked").length;
-                        if (checked_count == 0) {
-                            alert("장바구니에서 삭제할 상품을 선택하세요");
-                            return;
-                        }
-
-                        // 삭제확인
-                        if (confirm("정말 삭제하시겠습니까?") == false) return;
-
-                        f.method = "POST";
-                        f.action = "delete.do";
-                        f.submit();
-                    }
 
                     // 결제하기
                     function cart_payment(f) {
