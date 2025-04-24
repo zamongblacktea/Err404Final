@@ -36,4 +36,10 @@ public interface CartService {
     // 메뉴 1개 조회
     CartVo selectOne(int cart_idx);
 
+    // 메뉴 1개 조회 mem_idx
+    CartVo selectOneMem(int mem_idx);
+
+    // 메뉴 cnt 증가
+    int cntPlus(int cart_idx, int cart_cnt);
+
 }

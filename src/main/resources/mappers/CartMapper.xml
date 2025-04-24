@@ -11,6 +11,9 @@
 	<!-- cart_idx 1건 조회 -->
 	<select id="selectOne" parameterType="int" resultType="CartVo"> select * from cart_view where cart_idx=#{cart_idx} </select>
 
+	<!-- mem_idx 1건 조회 -->
+	<select id="selectOneMem" parameterType="int" resultType="CartVo"> select * from cart_view where mem_idx=#{mem_idx} </select>
+
 	<!-- cart_cnt 조회 -->
 	<select id="selectOneCnt" parameterType="int" resultType="int"> select cart_cnt from cart_view
 		where cart_idx=#{cart_idx} </select>
@@ -35,6 +38,11 @@
 	<!-- 메뉴 cnt - 1 -->
 	<update id="cntMinus" parameterType="int"> update cart set cart_cnt = cart_cnt - 1 where
 		cart_idx = #{cart_idx} </update>
+
+	<!-- 메뉴 cnt + 1 -->
+	<update id="cntPlus" parameterType="int">
+		update cart set cart_cnt = cart_cnt + 1 where cart_idx = #{cart_idx}
+	</update>
 
 	<!-- 메뉴 전체 삭제 -->
 	<delete id="deleteAll" parameterType="int"> delete from cart where mem_idx = #{mem_idx} </delete>

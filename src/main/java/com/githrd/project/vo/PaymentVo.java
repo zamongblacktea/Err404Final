@@ -10,7 +10,7 @@ public class PaymentVo {
 
     int pay_idx;
     int mem_idx;
-    int cart_idx;
+    // int cart_idx;
     int mcuraddr_idx;
     int menu_idx;
     int shop_idx;
@@ -28,6 +28,5 @@ public class PaymentVo {
     String coupon_use;
     String mem_addr1;
     String mem_addr2;
-    
 
 }

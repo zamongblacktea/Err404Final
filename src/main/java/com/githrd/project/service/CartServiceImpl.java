@@ -75,4 +75,15 @@ public class CartServiceImpl implements CartService {
         return cartMapper.selectOne(cart_idx);
     }
 
+    // 메뉴 1개 조회 mem_idx
+    @Override
+    public CartVo selectOneMem(int mem_idx) {
+        return cartMapper.selectOneMem(mem_idx);
+    }
+
+    @Override
+    public int cntPlus(int cart_idx, int cart_cnt) {
+        return cartMapper.cntPlus(cart_idx, cart_cnt);
+    }
+
 }

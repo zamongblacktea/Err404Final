@@ -34,23 +34,34 @@ public class CartController {
     // 카트에 등록
     @RequestMapping(value = "/insert.do", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Map<String, Object> insert(CartVo vo) {
+    public Map<String, Object> insert(CartVo vo, @RequestParam(required = false) Boolean force) {
 
         // 결과
         Map<String, Object> map = new HashMap<String, Object>();
+        // System.out.println("▶ force 값: " + force);
 
         // 장바구니에 등록되었는지 여부
         CartVo reVo = cartService.selectOneExist(vo);
         // 현재 유저의 장바구니 전체 조회 (shop_idx 비교용)
-        // List<CartVo> cartList = cartService.selectList(vo.getMem_idx());
+        List<CartVo> cartList = cartService.selectList(vo.getMem_idx());
+
+        CartVo cartOne = cartService.selectOneMem(vo.getMem_idx());
 
         // 장바구니가 비어있지 않고, 다른 가게의 상품이 담겨 있으면 장바구니 비우기
-        // if (!cartList.isEmpty()) {
-        // int currentShop = cartList.get(0).getShop_idx();
-        // if (currentShop != vo.getShop_idx()) {
-        // int del = cartService.deleteAll(vo.getMem_idx());
-        // }
-        // }
+        if (!cartList.isEmpty()) {
+            int currentShop = cartOne.getShop_idx();
+            System.out.println(currentShop);
+            int newShopIdx = vo.getShop_idx();
+            System.out.println(newShopIdx);
+            if (currentShop != newShopIdx) {
+                if (force == null || !force) {
+                    map.put("result", "deleted");
+                    return map;
+                } else {
+                    cartService.deleteAll(vo.getMem_idx());
+                }
+            }
+        }
 
         // if (!cartList.isEmpty()) {
         // int currentShop = cartList.get(0).getShop_idx();
@@ -130,6 +141,23 @@ public class CartController {
     public Map<String, Object> cnt_minus(@RequestParam int cart_idx, @RequestParam int cart_cnt) {
 
         cartService.cntMinus(cart_idx, cart_cnt);
+        CartVo vo = cartService.selectOne(cart_idx);
+        Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("cart_cnt", vo.getCart_cnt());
+        map.put("amount", vo.getAmount());
+        map.put("total_amount", total_amount);
+
+        return map;
+    }
+
+    // cart_cnt 증가
+    @PostMapping("/cnt_plus.do")
+    @ResponseBody
+    public Map<String, Object> cnt_plus(@RequestParam int cart_idx, @RequestParam int cart_cnt) {
+
+        cartService.cntPlus(cart_idx, cart_cnt);
         CartVo vo = cartService.selectOne(cart_idx);
         Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
 

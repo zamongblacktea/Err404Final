@@ -112,13 +112,8 @@
 
                     // 결제하기
                     function cart_payment(f) {
-                        // let checked_count = $("input[name='cart_idx']:checked").length;
-                        // if (checked_count == 0) {
-                        //     alert("장바구니에서 결제할 상품을 선택하세요");
-                        //     return;
-                        // }
-
-                        //f.method = "POST";
+                        let shop_idx = f.shop_idx.value.trim();
+                        let menu_idx = f.menu_idx.value.trim();
                         f.action = "../order/payment_form.do?shop_idx="+ shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
                         f.submit();
                     }
@@ -178,7 +173,31 @@
 
                     // 수량 증가
                     function plus(cart_idx){
-                        
+                        cart_idx = parseInt(cart_idx);         
+                        // 현재 수량 체크
+                        const input = document.getElementById(`cnt_\${cart_idx}`);
+
+                        const currentCnt = parseInt(input.value.trim());
+
+                        $.ajax({
+                                url : "../cart/cnt_plus.do",
+                                type: "POST",
+                                data : {
+                                    cart_idx : cart_idx,
+                                    cart_cnt : currentCnt
+                                },
+                                success: function(res_data){
+                                    // console.log("응답확인", res_data);
+                                    // $(`#cnt_${cart_idx}`).val(res_data); 
+                                    document.getElementById(`cnt_\${cart_idx}`).value = res_data.cart_cnt; 
+                                    document.getElementById(`amount_\${cart_idx}`).innerText = "₩" + res_data.amount.toLocaleString(); 
+                                    document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString(); 
+                                },
+                                error : function(err){
+                                    console.error(err);
+                                    alert("수량 변경 오류");
+                                }
+                            });
                     }
 
 
@@ -195,6 +214,8 @@
 
                         <form class="form-inline">
                             <input type="hidden" name="mem_idx" value="${user.mem_idx}">
+                            
+                             
                             <!-- check all -->
                             <div>
                                 <!-- <input type="checkbox" class="form-control" id="checkAll"><label
@@ -223,6 +244,8 @@
                                 <!-- 장바구니목록 -->
                                 <!-- for(CartVo cart : list)  -->
                                 <c:forEach var="cart" items="${ cart_list }">
+                                    <input type="hidden" name="shop_idx" value="${cart.shop_idx}">
+                                    <input type="hidden" name="menu_idx" value="${cart.menu_idx}">
                                     <tr id="row_${cart.cart_idx}">
                                         <!-- <td><input type="checkbox" name="cart_idx"
                                                 value="${cart.cart_idx}">&nbsp;&nbsp;${cart.cart_idx}</td> -->
