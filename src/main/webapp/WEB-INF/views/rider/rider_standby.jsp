@@ -61,8 +61,13 @@
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
     <!-- forEach문으로 출력 여기서 주문대기 할때 거리가 짧은순으로 orderby해서 출력되도록 하기  -->
      <!-- for(DeliveryVo vo : standby_list) -->
-      
+     <c:if test="${ empty standby_list }">
+      현재 배차대기목록이 없습니다.
+     </c:if>
+     
     <c:forEach var="vo" items="${standby_list}">
+      
+    
       <div>주문번호 : ${vo.order_idx}</div>
       <div>가게이름 : ${vo.shop_name}</div>
       <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div>
@@ -76,6 +81,7 @@
         <input type="button" value="배차받기" onclick="rider_accept('${ vo.order_idx }','${ user.rider_idx}');" />
         <!-- 배차받기 누르면 고객,가게쪽으로 알림뜨드록 -->
          <hr>
+       
       </c:forEach>
    
   </body>

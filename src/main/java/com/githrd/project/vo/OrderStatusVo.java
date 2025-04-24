@@ -44,6 +44,7 @@ public class OrderStatusVo {
     String mem_addr1;
     String mem_addr2;
     String delivery_status;
+    String rider_status;
     //주문정보 standby_list출력 내용 추가(20250423)
     String shop_name;
     String shop_addr1;

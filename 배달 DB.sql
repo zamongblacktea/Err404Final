@@ -52,3 +52,6 @@ insert into delivery values(null,#{order_idx},#{shop_idx},#{mem_idx},
                             ,now(),#{totalDistance},#{delivery_fee})
 
 select * from delivery
+
+-- order_status테이블에서 라이더의 상태 초깃값 none
+-- 배차대기 배차완료(픽업대기상태) 픽업완료 배달중 배달완료

@@ -155,7 +155,7 @@ pageEncoding="UTF-8"%>
     <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
    
       <!-- <input type="button" value="로그아웃" onclick="location.href='../main/main.do'"/> -->
-      <input type="button" value="로그아웃" />
+      <input type="button" value="로그아웃" onclick="location.href='../member/logout.do'"/>
       <input type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
     </div>
    

@@ -11,6 +11,9 @@
     <title>정산내역 확인페이지</title>
     <!-- 파비콘 -->
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+         <!-- 웹소캣 -->
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <!-- Bootstrap 3.x -->
     <link
       rel="stylesheet"

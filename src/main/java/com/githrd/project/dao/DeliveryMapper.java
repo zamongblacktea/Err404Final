@@ -14,14 +14,19 @@ public interface DeliveryMapper {
        public List<DeliveryVo> selectList();
 
        //배차받기를 누르면 배차상태가 Y로 바뀌도록하기
-        int riderStatusUpdate(Map<String,Object> map);
+        // int riderStatusUpdate(Map<String,Object> map);
 
         //배차받기를 누른 라이더에게 라이더 idx가 일치하면 배달현황에 뜨드록하기
         public List<DeliveryVo> selectRiderList(int rider_idx);
 
+        //픽업완료를 누르면 배달상태가 배달중으로 바뀌도록하기
+        int deliveryPickupUpdate(Map<String,Object> map);
+
+        int orderStatusUpdate(Map<String,Object> map);
+
         int insert(DeliveryVo vo);
 
-        //배달완료를 누르면 배달상태가 y로 바뀌도록하기 
+        //배달완료를 누르면 배달상태가 배달완료로 바뀌도록하기 
         int deliveryStatusUpdate(Map<String,Object> map);
 
         //배달완료한 라이더에게 라이더 idx가 일치하면 배달완료한목록에 뜨도록하기

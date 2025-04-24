@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +42,8 @@ public class RiderController {
     @Autowired
     OrderStatusMapper orderStatusMapper;
 
+    @Autowired
+	SimpMessagingTemplate messagingTemplate;
     
     @Autowired
     RiderDeliveryFeeMapper riderDeliveryFeeMapper;
@@ -80,6 +83,7 @@ public class RiderController {
 
         //order_idx 해당되는 vo얻어오기
         OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
+
         //ordersatus테이블 상태정보 업데이트
 
         //insert를 하기위한 정보 넣기
@@ -100,11 +104,9 @@ public class RiderController {
         //delivery insert용 vo생성->insert
         res = deliveryMapper.insert(vo);
         
-
-        //int res = deliveryMapper.riderStatusUpdate(paramMap);
-
+        res = res * orderStatusMapper.riderStatusUpdate(vo);
+       // int res = deliveryMapper.riderStatusUpdate(paramMap);
         Map<String,Object>map = new HashMap<>();
-
         map.put("result", res==1);
 
         return map;
@@ -141,6 +143,30 @@ public class RiderController {
         
         return "rider/rider_progress";
     }
+
+     //parameter map으로 받기 :deliverypickup.do? order_idx=1
+     @RequestMapping("/rider/deliverypickup.do")
+     @ResponseBody
+     public Map<String,Object> deliveryPickup(@RequestParam Map<String,Object> paramMap,Model model){
+         
+         int res = deliveryMapper.deliveryPickupUpdate(paramMap);
+
+         paramMap.put("order_status","배달중");
+         deliveryMapper.orderStatusUpdate(paramMap);
+
+         //웹소켓으로 전송
+
+        messagingTemplate.convertAndSend("/topic/orders", paramMap);
+
+
+ 
+         Map<String,Object>map = new HashMap<>();
+ 
+         map.put("result", res==1);
+ 
+         return map;
+     }
+
     
     //parameter map으로 받기 :deliverycomplete.do? order_idx=1
     @RequestMapping("/rider/deliverycomplete.do")
@@ -148,6 +174,16 @@ public class RiderController {
     public Map<String,Object> deliveryComplete(@RequestParam Map<String,Object> paramMap,Model model){
         
         int res = deliveryMapper.deliveryStatusUpdate(paramMap);
+
+        paramMap.put("order_status","배달완료");
+        deliveryMapper.orderStatusUpdate(paramMap);
+
+
+          //웹소켓으로 전송
+
+          messagingTemplate.convertAndSend("/topic/orders", paramMap);
+
+
 
         Map<String,Object>map = new HashMap<>();
 
