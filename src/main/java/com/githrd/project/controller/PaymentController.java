@@ -43,8 +43,12 @@ public class PaymentController {
 
         //회원 현재주소 가져오기
         MemberAddrVo vo = memberAddrMapper.selectOneFromIdx(mem_idx);
+        
+        // 결제 할 총 가격 조회
+        Integer total_amount = cartService.selectTotalAmount(mem_idx);
 
         model.addAttribute("vo", vo);
+        model.addAttribute("amount", total_amount);
 
 
         return "order/shop_payment";
