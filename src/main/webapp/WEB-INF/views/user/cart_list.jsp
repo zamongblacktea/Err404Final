@@ -77,6 +77,7 @@
                     function cart_payment(f) {
                         let shop_idx = f.shop_idx.value.trim();
                         let menu_idx = f.menu_idx.value.trim();
+                        let amount   = f.amount.value; 
 
                         f.action = "../order/payment_form.do?shop_idx="+ shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
                         f.submit();
@@ -188,7 +189,7 @@
                         <br>
                         <h4 style="text-align: center;">::::장바구니 목록::::</h4>
 
-                        <form class="form-inline">
+                        <form class="form-inline" method="POST">
                             <input type="hidden" name="mem_idx" value="${user.mem_idx}">
                             
                              
@@ -238,7 +239,7 @@
                                             <!-- <fmt:formatNumber value="${cart.menu_price * cart.cart_cnt}" type="currency" />
                                             <input type="hidden" name="total_price" value="{cart.menu_price * cart.cart_cnt}"> -->
                                             <fmt:formatNumber value="${cart.amount}" type="currency" />
-                                            <input type="hidden" name="total_price" value="{cart.amount}">
+                                            <input type="hidden" name="total_price" value="${cart.amount}">
                                         </td>
                                     </tr>
                                 </c:forEach>
