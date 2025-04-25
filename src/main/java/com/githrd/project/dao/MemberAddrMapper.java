@@ -12,7 +12,7 @@ import com.githrd.project.vo.MemberAddrVo;
 public interface MemberAddrMapper {
     
 	
-    public List<MemberAddrVo> selectList();
+    public List<MemberAddrVo> selectList(int mem_idx);
 		
 	// mem_idx이용해서 1건 데이터 읽어오기
 	public MemberAddrVo selectOneFromIdx(int mem_idx);

@@ -200,6 +200,29 @@ h {
 		});
 	}
 
+//주소록 modal Ajax로 띄우기
+	$(document).ready(function(){
+
+	function loadAddrModal() {
+  $.ajax({
+    url: 'member/address.do', // 주소록 JSP
+    type: 'GET',
+	data: {
+			"mem_idx": mem_idx,
+
+	},
+    success: function (data) {
+      $('#addrModalBody').html(data); // 모달 안에 삽입
+      const modal = new bootstrap.Modal(document.getElementById('addrModal'));
+      modal.show();
+    },
+    error: function (xhr, status, error) {
+      alert('주소록 로딩 실패: ' + error);
+    }
+  });
+}
+
+});
 
 </script>
 
@@ -218,12 +241,43 @@ h {
 				<div class="mb-3">
 					<label for="addr" class="form-label">주소</label> <input type="text"
 							class="form-control" id="mem_addr1" name="mem_addr1"
-							value="${ vo.mem_addr1 } " required>
+							value="${ vo.mem_zipcode } " required>
 				</div>
 				<div class="mb-3">
 					<label for="addr" class="form-label">상세주소</label> <input type="text"
 							class="form-control" id="mem_addr2" name="mem_addr2"
-							value="${ vo.mem_addr2 } " required>
+							value="${ vo.mem_addr } " required>
+					<!-- 모달 트리거 버튼 -->
+					<button type="button" class="btn btn-primary" id="openAddrModalBtn">
+						주소록 열기
+					</button>
+  
+					
+					<!-- 모달 구조 -->
+					<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+						<div class="modal-content">
+					
+							<!-- 모달 헤더 -->
+							<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">주소록</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+							</div>
+					
+							<!-- 모달 바디 -->
+
+							<div class="modal-body">
+	
+
+							<!-- 모달 푸터 -->
+							<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-primary">확인</button>
+							</div>
+							</div>
+						</div>
+					</div>
+					
 				</div>
 				<div class="mb-3">
 					<label for="name" class="form-label">이름</label> <input type="text"
@@ -273,6 +327,35 @@ h {
 
 
 	<div class="footer"></div>
+
+
+	<script>
+		$(document).ready(function () {
+  $('#openAddrModalBtn').on('click', function () {
+    const mem_idx = $('#mem_idx').val();
+
+    $.ajax({
+      url: '../member/address.do',
+      type: 'GET',
+      data: {
+        mem_idx: mem_idx
+      },
+      success: function (data) {
+        $('#addrModalBody').html(data); // 모달에 주소 목록 삽입
+        const modal = new bootstrap.Modal(document.getElementById('myModal'));
+        modal.show();
+      },
+      error: function (xhr, status, error) {
+        alert('주소록 로딩 실패: ' + error);
+      }
+    });
+  });
+});
+
+
+
+
+	</script>
 
 </body>
 </html>

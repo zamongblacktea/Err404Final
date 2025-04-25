@@ -173,6 +173,8 @@ public class MemberController {
 		// 2.DB insert
 		int res = memberMapper.insert(vo);
 
+		
+
 		return "redirect:../main/main.do";
 	}
 
