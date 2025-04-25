@@ -63,4 +63,13 @@ select * from delivery
         os.mem_addr1,os.mem_addr2
         from delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
 						 inner join order_status os on d.order_idx=os.order_idx  
-        where rider_idx=#1  and  delivery_status in('픽업대기','배달중')
+        where rider_idx=1  and  delivery_status in('픽업대기','배달중')
+        
+        
+		select 
+		d.*,
+		si.shop_name,si.shop_addr1,si.shop_addr2,
+        os.mem_addr1,os.mem_addr2
+        from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+						inner join order_status os on d.order_idx=os.order_idx 
+        where rider_idx=1 and delivery_status='배달완료'       

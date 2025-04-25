@@ -77,6 +77,11 @@ public class OrderStatusController {
     public Map<String , String> updateStatus(@RequestBody OrderStatusVo vo){
 
 
+        Map<String, Object> message = new HashMap<>();
+        message.put("tab_state", "standby");
+        messagingTemplate.convertAndSend("/topic/orders", message);
+
+
         int res = orderStatusMapper.updateStatus(vo);
 
 
@@ -94,6 +99,7 @@ public class OrderStatusController {
         Map<String, Object> message = new HashMap<>();
         message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
         message.put("orders_id", order_idx); // 주문 IDX
+        message.put("tab_state", "standby");
 
         messagingTemplate.convertAndSend("/topic/orders", message);
 

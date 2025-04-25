@@ -14,6 +14,8 @@ import com.githrd.project.vo.RiderVo;
 @Mapper
 public interface RiderMapper {
     
+	// 라이더 주소얻기
+	String getRiderAddr(int rider_idx);
 	
     public List<RiderVo> selectList();
 		

@@ -66,16 +66,17 @@ pageEncoding="UTF-8"%>
               });
           }
       
+          addMarker(rider1, '라이더');
           addMarker(shop1, '가게');
           addMarker(member1, '고객');
-          addMarker(rider1, '라이더');
+          
 
       
           // 선 그리기
           var linePath = [
-              new kakao.maps.LatLng(shop1.lat, shop1.lng),
-              new kakao.maps.LatLng(rider1.lat, rider1.lng),
-              new kakao.maps.LatLng(member1.lat, member1.lng)
+          new kakao.maps.LatLng(rider1.lat, rider1.lng),    
+          new kakao.maps.LatLng(shop1.lat, shop1.lng),
+          new kakao.maps.LatLng(member1.lat, member1.lng)
           ];
       
           var polyline = new kakao.maps.Polyline({

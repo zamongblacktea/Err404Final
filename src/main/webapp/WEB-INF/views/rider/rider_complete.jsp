@@ -12,9 +12,7 @@
     <!-- 웹소캣 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script>
-    const rider_idx = document.getElementById("rider_idx");
-</script>
+
 </head>
 
 <body>
@@ -27,8 +25,7 @@
             <p>현재 배달 완료한 건이 없습니다.</p>
         </c:when>
         <c:otherwise>
-        
-        <input type="hidden" value="${user.rider_idx}" name="rider_idx">
+     
         <c:forEach var="vo" items="${deliverycomplete_list}">
             <hr>
             <p> 주문번호 ${vo.order_idx}의 배달이 완료되었습니다 </p> 
@@ -40,7 +37,9 @@
             <div>배달장소 : ${vo.mem_addr1} ${vo.mem_addr2}</div> 
             <div>배달날짜 : ${vo.pay_regdate}</div>
             <div>배 달 료 : ${vo.delivery_fee}</div> 
+    
             <input type="button" value="당일정산내역확인" onclick="location.href='todayfee.do'"; />
+            <hr>
         </c:forEach>
     </c:otherwise>
 </c:choose>

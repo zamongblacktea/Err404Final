@@ -83,5 +83,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      delete from rider where rider_idx=#{ rider_idx }
   </delete>
 
-
+<!-- 라이더주소얻기 -->
+<select id="getRiderAddr" resultType="String" parameterType="int">
+    SELECT rider_addr
+    FROM rider_addr
+    WHERE rider_idx = #{rider_idx}
+</select>
 </mapper>

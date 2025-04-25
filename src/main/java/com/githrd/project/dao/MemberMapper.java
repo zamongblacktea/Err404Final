@@ -11,7 +11,7 @@ import com.githrd.project.vo.MemberVo;
 @Mapper
 public interface MemberMapper {
     
-	
+
     public List<MemberVo> selectList();
 		
 	// mem_idx이용해서 1건 데이터 읽어오기

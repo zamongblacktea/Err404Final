@@ -20,7 +20,22 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
+   <script>
+    //웹소캣 구독 
+    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+      var stompClient = Stomp.over(socket);
+  
+      // WebSocket 연결 설정
+      stompClient.connect({}, function (frame) {
+          // 주문 상태 업데이트 메시지 구독
+      stompClient.subscribe('/topic/orders', function (message) {
+              // 서버에서 메시지가 올 때마다 DOM 업데이트
+      location.reload(); // 페이지를 새로고침하여 새로운 데이터를 반영
+          });
+      });
+   </script>
+   
+   <style>
       body {
         background-color: #f8f9fa;
         font-family: Arial, sans-serif;
@@ -113,6 +128,8 @@
           width: 100%;
         }
       }
+
+      
     </style>
 </head>
 <body>

@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
+import com.githrd.project.dao.MemberAddrMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.RiderDeliveryFeeMapper;
+import com.githrd.project.dao.RiderMapper;
+import com.githrd.project.dao.ShopInfoMapper;
+import com.githrd.project.service.CalculateSerive;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.OrderStatusVo;
@@ -24,11 +28,23 @@ import com.githrd.project.vo.RiderVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor.AnyAnnotation;
 @Controller
 public class RiderController {
+    
+    @Autowired
+    CalculateSerive calculateSerive;
+      
+    @Autowired
+    MemberAddrMapper memberAddrMapper;
+
 	@Autowired
 	MemberMapper memberMapper;
+
+    @Autowired
+    ShopInfoMapper shopInfoMapper;
+
+    @Autowired
+    RiderMapper riderMapper;
 
     @Autowired
     DeliveryMapper deliveryMapper;
@@ -77,12 +93,22 @@ public class RiderController {
     @RequestMapping("/rider/rider_accept.do")
     @ResponseBody
     // public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
-    public Map<String,Object> riderPrograss(int order_idx,int rider_idx,Model model){
-
+    public Map<String,Object> riderPrograss(int order_idx,int rider_idx,Model model) throws Exception{
         int res = 0;
 
         //order_idx 해당되는 vo얻어오기
         OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
+
+
+        //주소가져오기
+        String shopAddr = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
+        String memAddr = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
+        String riderAddr = riderMapper.getRiderAddr(rider_idx);
+
+        // 거리와 수수료 계산
+        //DeliveryCalcResult calcResult = calculateService.calculate(shopAddr, memAddr, riderAddr);
+        int totalDistance = calculateSerive.getTotalDistance(shopAddr, memAddr, riderAddr);
+        int deliveryFee   = calculateSerive.getFee(totalDistance);
 
         //ordersatus테이블 상태정보 업데이트
 
@@ -97,9 +123,10 @@ public class RiderController {
         vo.setRider_request(orderStatusVo.getRider_request());
         vo.setOrder_status(orderStatusVo.getOrder_status());
         vo.setDelivery_status(orderStatusVo.getDelivery_status());
-        vo.setTotalDistance(1500);
-        vo.setDelivery_fee(3000);
-
+        // vo.setTotalDistance(1500);
+        // vo.setDelivery_fee(3000);
+        vo.setTotalDistance(totalDistance);
+        vo.setDelivery_fee(deliveryFee);
 
         //delivery insert용 vo생성->insert
         res = deliveryMapper.insert(vo);
@@ -147,18 +174,21 @@ public class RiderController {
      //parameter map으로 받기 :deliverypickup.do? order_idx=1
      @RequestMapping("/rider/deliverypickup.do")
      @ResponseBody
-     public Map<String,Object> deliveryPickup(@RequestParam Map<String,Object> paramMap,Model model){
+     public Map<String,Object> deliveryPickup(int order_idx,int shop_idx,int mem_idx,Model model){
          
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("order_idx", order_idx);
+        paramMap.put("shop_idx", shop_idx);
+        paramMap.put("mem_idx", mem_idx);
+
          int res = deliveryMapper.deliveryPickupUpdate(paramMap);
 
          paramMap.put("order_status","배달중");
          deliveryMapper.orderStatusUpdate(paramMap);
 
          //웹소켓으로 전송
-
-        messagingTemplate.convertAndSend("/topic/orders", paramMap);
-
-
+         paramMap.put("tab_state", "progress");
+         //messagingTemplate.convertAndSend("/topic/orders", paramMap);
  
          Map<String,Object>map = new HashMap<>();
  
@@ -168,22 +198,26 @@ public class RiderController {
      }
 
     
-    //parameter map으로 받기 :deliverycomplete.do? order_idx=1
+    //parameter map으로 받기 :deliverycomplete.do? order_idx=1&shop_idx=3&mem_idx=2
     @RequestMapping("/rider/deliverycomplete.do")
     @ResponseBody
-    public Map<String,Object> deliveryComplete(@RequestParam Map<String,Object> paramMap,Model model){
+    public Map<String,Object> deliveryComplete(int order_idx,int shop_idx,int mem_idx,Model model){
         
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("order_idx", order_idx);
+        paramMap.put("shop_idx", shop_idx);
+        paramMap.put("mem_idx", mem_idx);
+
         int res = deliveryMapper.deliveryStatusUpdate(paramMap);
 
+        //배달완료 ->약속된 내용
         paramMap.put("order_status","배달완료");
         deliveryMapper.orderStatusUpdate(paramMap);
 
 
-          //웹소켓으로 전송
-
-          messagingTemplate.convertAndSend("/topic/orders", paramMap);
-
-
+        //웹소켓으로 전송
+        paramMap.put("tab_state", "complete");
+       // messagingTemplate.convertAndSend("/topic/orders", paramMap);
 
         Map<String,Object>map = new HashMap<>();
 
@@ -239,17 +273,21 @@ public class RiderController {
 
     //경로 지도에 띄우기
     @RequestMapping("/route/route.do")
-    public String showDeliveryMap(Model model) {
+    public String showDeliveryMap(int order_idx, int rider_idx,Model model) {
         try {
             // 예시 주소들 (DB나 폼 입력 등에서 받아오기)
-            String shopAddress = "관악로 165 롯데리아 서울대입구역점";
-            String memberAddress = "서울 관악구 관악로14나길 10 1층";
-            String riderAddress = "서울 관악구 낙성대역길 8";
-            //String riderAddress = "동작대로 129 1층";
+            // String shopAddress = "관악로 165 롯데리아 서울대입구역점";
+            // String memberAddress = "서울 관악구 관악로14나길 10 1층";
+            // String riderAddress = "서울 관악구 낙성대역길 8";
+            OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
+            
+            String shopAddress = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
+            String memAddress = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
+            String riderAddress = riderMapper.getRiderAddr(rider_idx);
 
             //위도경도 얻기 
             double[] storeCoords = kakaoMapService.getCoordinates(shopAddress);
-            double[] customerCoords = kakaoMapService.getCoordinates(memberAddress);
+            double[] customerCoords = kakaoMapService.getCoordinates(memAddress);
             double[] riderCoords = kakaoMapService.getCoordinates(riderAddress);
 
             //거리계산하기(미터단위)
@@ -283,7 +321,7 @@ public class RiderController {
 
             // 주소도 전달 (경로보기 버튼용) 가게와 배달지 경로보기 카카오맵
             model.addAttribute("shop_addr", shopAddress);
-            model.addAttribute("mem_curaddr", memberAddress);
+            model.addAttribute("mem_curaddr", memAddress);
 
         } catch (Exception e) {
             model.addAttribute("error", "위도/경도 변환 중 오류 발생: " + e.getMessage());
