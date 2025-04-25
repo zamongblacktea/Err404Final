@@ -39,6 +39,13 @@
           let menu_idx = f.menu_idx.value;
           let menu_name = f.menu_name.value;
           let photo = f.photo.value.trim();
+          let mem_nickname = f.mem_nickname.value;
+          let delivery_idx = f.delivery_idx.value;
+          let order_idx = f.order_idx.value;
+          let shop_name = f.shop_name.value;
+          const review_rating = f.querySelector('#ratingValue').value;
+          //콘솔 출력
+          console.log('선택한 별점:', review_rating);
 
 
           if (review_content == "") {
@@ -63,6 +70,7 @@
 
 
 
+
       </script>
     </head>
 
@@ -74,7 +82,11 @@
             <input type="hidden" value="${param.mem_idx}" name="mem_idx">
             <input type="hidden" value="${param.shop_idx}" name="shop_idx">
             <input type="hidden" value="${param.menu_idx}" name="menu_idx">
+            <input type="hidden" value="${param.order_idx}" name="order_idx">
             <input type="hidden" value="${order.menu_name}" name="menu_name">
+            <input type="hidden" value="${param.delivery_idx}" name="delivery_idx">
+            <input type="hidden" value="${user.mem_nickname}" name="mem_nickname">
+            <input type="hidden" value="${shop.shop_name}" name="shop_name">
             <!-- 별점 -->
             <div class="mb-3">
               <label class="form-label">별점</label>
@@ -125,45 +137,24 @@
         </div>
       </div>
 
-      <script>
-        let selectedRating = 0;
-        const stars = document.querySelectorAll('#starRating span');
+  <script>
+    //별점 선택 함수
+  document.querySelectorAll('#starRating span').forEach(star => {
+  star.addEventListener('click', function () {
+    const value = this.dataset.value;
+    document.getElementById('ratingValue').value = value;
 
-        stars.forEach(star => {
-          star.addEventListener('click', () => {
-            selectedRating = parseInt(star.getAttribute('data-value'));
-            updateStars();
-          });
-        });
+    // 선택한 별점 콘솔 확인
+    console.log('선택한 별점:', value);
 
-        function updateStars() {
-          stars.forEach(star => {
-            const value = parseInt(star.getAttribute('data-value'));
-            star.classList.toggle('filled', value <= selectedRating);
-          });
-        }
+    // 별 색칠 효과 (선택사항)
+    document.querySelectorAll('#starRating span').forEach(s => {
+      s.style.color = s.dataset.value <= value ? 'gold' : 'gray';
+    });
+  });
+});
 
-        function resetForm() {
-          selectedRating = 0;
-          updateStars();
-          document.getElementById('reviewContent').value = '';
-          document.getElementById('reviewImage').value = '';
-        }
-
-        function submitReview() {
-          const content = document.getElementById('reviewContent').value;
-          const image = document.getElementById('reviewImage').files[0];
-          if (selectedRating === 0) {
-            alert('별점을 선택해주세요.');
-            return;
-          }
-          if (!content.trim()) {
-            alert('내용을 입력해주세요.');
-            return;
-          }
-
-        }
-      </script>
+  </script>
     </body>
 
     </html>

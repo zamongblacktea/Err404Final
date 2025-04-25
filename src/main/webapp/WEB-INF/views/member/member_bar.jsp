@@ -142,8 +142,8 @@
           <nav class="main-nav" role="navigation">
             <ul class="unstyled list-hover-slide">
               <li><a href="modify_form.do?mem_idx=${ user.mem_idx }">내 정보</a></li>
-              <li><a href="review_list.do?mem_idx=${ user.mem_idx }">내 주문 내역</a></li>
-              <li><a href="owner_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">내가 쓴 리뷰</a></li>
+              <li><a href="order_list.do?mem_idx=${ user.mem_idx }">내 주문 내역</a></li>
+              <li><a href="review_list.do?mem_idx=${ user.mem_idx }">내가 쓴 리뷰</a></li>
               <li><a href="rider_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">내 문의 내역</a></li>
             </ul>
           </nav>

@@ -25,6 +25,7 @@
       width: 800px;
       padding-left: 10px;
       display: inline-block;
+      height: auto;
     }
 
     .navbar {
@@ -93,20 +94,35 @@
       margin-top: 10px;
     }
 
-    .menu-img {
-      width: 112px;
-      height: 80px;
-      margin-left: 140px;
-    }
 
     .cart {
       display: inline-block;
       width: 300px;
     }
+    .content-box{
+      width: 100%;
+      height: auto;
+
+    }
+    .review-box{
+      width: 500px;
+      height: auto;
+      margin: auto;
+    }
     .footer {
       width: 100%;
       height: 150px;
     }
+    textarea {
+      resize: none;
+    }
+
+    img{
+      width: 90%;
+      margin: auto;
+
+    }
+
   </style>
 
   <script>
@@ -186,20 +202,29 @@
             <li class="col-sm-4"><a href="" class="nav-a">리뷰</a></li>
             <li class="col-sm-4"><a href="" class="nav-a">정보</a></li>
           </ul>
-          <div>
-            <div>메뉴카테고리</div>
-            <c:forEach var="menu" items="${menu}">
-              <form onsubmit="insert_cart(this); return false;">
-                <input type="hidden" id="menu_idx" name="menu_idx" value="${menu.menu_idx}">
-                <input type="hidden" id="shop_idx" name="shop_idx" value="${menu.shop_idx}">
-                <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}">
-                
-                <div class="row" onclick="this.closest('form').requestSubmit();">
+          <div class="content-box">
+            <div>가게 리뷰</div>
+            <c:forEach var="review" items="${review}">
+    
+                <input type="hidden" id="shop_idx" name="shop_idx" value="${review.shop_idx}">
+                <input type="hidden" id="mem_idx" name="mem_idx" value="${review.mem_idx}">
+                <div class="review-box">
+                <div> 이름 : ${ review.mem_nickname }</div>
+                <div> <img src="../../../images/${ review.review_img }"></div>
+                <div> 평점 : ${ review.review_rating }</div>
+            <!-- 내용 + 이미지 업로드 -->
+            <div class="menu-content">
+              <label for="reviewContent" class="form-label">내용</label>
+              <textarea id="reviewContent" class="form-control" rows="5" >${review.review_content}</textarea>
+            </div>
+                </div>
 
 
-              </div>
-            </form>
+
+            
+
             </c:forEach>
+          </div>
           </div>
         </div>
         <div class="cart">

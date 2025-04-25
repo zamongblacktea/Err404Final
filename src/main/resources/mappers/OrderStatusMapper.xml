@@ -7,6 +7,17 @@
     select * from order_status where shop_idx = #{shop_idx}
   </select>
 
+  <!-- 회원 리뷰 상세내역 검색 -->
+  <select id="selectDetail" resultType="OrderStatusVo">
+    SELECT d.mem_idx,d.order_idx,d.delivery_idx,m.menu_name,o.order_status,s.shop_name,o.amount,o.order_request,o.rider_request
+    FROM order_status o
+    INNER JOIN menu_info m 	ON o.menu_idx 	= m.menu_idx
+    INNER JOIN shop_info s 	ON o.shop_idx 	= s.shop_idx
+    INNER JOIN delivery d		ON d.mem_idx 	  = o.mem_idx	and d.delivery_idx = o.delivery_idx
+    INNER JOIN payment p		ON p.pay_idx 	  = o.pay_idx
+    WHERE d.mem_idx = #{ mem_idx }
+  </select>
+
   <select id="selectOrderOne" parameterType="int" resultType="OrderStatusVo">
       SELECT 
       os.*,

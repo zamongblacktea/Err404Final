@@ -42,6 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     </insert>
 
-    
+  <!-- 회원 리뷰 리스트 조회-->
+  <select id="selectListReview" resultType="DeliveryVo">
+      SELECT d.mem_idx,d.order_idx,d.delivery_idx,d.shop_idx,d.menu_idx,m.menu_name,d.order_status,s.shop_name,d.pay_regdate,d.delivery_status
+      FROM delivery d
+      INNER JOIN menu_info m ON d.menu_idx = m.menu_idx
+      INNER JOIN shop_info s ON d.shop_idx = s.shop_idx
+      WHERE mem_idx = #{mem_idx}
+  </select>
 
 </mapper>

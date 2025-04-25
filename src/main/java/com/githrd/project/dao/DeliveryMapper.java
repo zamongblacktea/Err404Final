@@ -27,6 +27,8 @@ public interface DeliveryMapper {
         //배달완료한 라이더에게 라이더 idx가 일치하면 배달완료한목록에 뜨도록하기
         public List<DeliveryVo> selectDeliveryCompleteList(int rider_idx);
 
+        public List<DeliveryVo> selectListReview(int mem_idx);
+
 
     
 }
