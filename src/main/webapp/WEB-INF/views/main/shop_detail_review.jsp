@@ -198,9 +198,9 @@
           <div class="shop-notice">가게 공지사항</div>
 
           <ul class="nav row">
-            <li class="col-sm-4"><a class="nav-a">메뉴</a></li>
-            <li class="col-sm-4"><a href="" class="nav-a">리뷰</a></li>
-            <li class="col-sm-4"><a href="" class="nav-a">정보</a></li>
+            <li class="col-sm-4"><a href="../main/detail.do?shop_idx=${shop.shop_idx}" class="nav-a">메뉴</a></li>
+            <li class="col-sm-4"><a href="../main/detail_review.do?shop_idx=${param.shop_idx}" class="nav-a">리뷰</a></li>
+            <li class="col-sm-4"><a href="../main/info.do?shop_idx=${shop.shop_idx}" class="nav-a">정보</a></li>
           </ul>
           <div class="content-box">
             <div>가게 리뷰</div>
