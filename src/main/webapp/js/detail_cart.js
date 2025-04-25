@@ -125,6 +125,7 @@ function checkShop() {
   //가입버튼 비활성화
   $("#btn_order").prop("disabled", true);
 
+
   // Ajax통해서 background로 요청
   $.ajax({
     url: "../cart/check_shop_idx.do",
@@ -132,7 +133,7 @@ function checkShop() {
     dataType: "json", //결과수신을 JSON으로 받겠다
     success: function (res_data) {
       if (res_data.result == true) {
-        //가입버튼 활성화
+        //주문버튼 활성화
         $("#btn_order").prop("disabled", false);
       } else {
         $("#btn_order").prop("disabled", true);

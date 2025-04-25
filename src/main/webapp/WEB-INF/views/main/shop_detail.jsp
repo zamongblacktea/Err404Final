@@ -241,6 +241,7 @@
       <div class="shop-detail">
         <div id="mybox">
           <div class="shop-title">${shop.shop_name}</div>
+          <input type="hidden" name="shop_dfee" id="shop_dfee" value="${shop.shop_dfee}">
           <div class="row shop-content">
             <div id="shop_logo" class="col-sm-4">
               <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />

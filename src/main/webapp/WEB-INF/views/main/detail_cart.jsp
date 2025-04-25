@@ -79,6 +79,10 @@
       </div>
     </c:otherwise>
   </c:choose>
+
+      <div id="shop_dfee">배달요금 <fmt:formatNumber value="${dfee}" pattern="#,#00" />원 별도</div>
+      <!-- <input type="hidden" id="dFee" name="dFee" value="${dfee}"> -->
+
       <div><input type="button" class="btn btn-primary" id="btn_order" value="주문하기" onclick="cart_payment(this.form);" disabled="disabled"></div>
 </div>
   </form>

@@ -59,8 +59,11 @@ public class MainController {
 
         List<ShopMenuVo> menu = shopService.selectMenuAll(shop_idx);
 
+        int shop_dfee = shopService.selectShopDfee(shop_idx);
+
         model.addAttribute("shop", shop);
         model.addAttribute("menu", menu);
+        model.addAttribute("dfee", shop_dfee);
         // 임시 push
 
         // 장바구니 화면

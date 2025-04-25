@@ -39,7 +39,7 @@ public class PaymentController {
 
     // 결제 페이지 폼 불러오기
     @RequestMapping("payment_form.do")
-    public String paymentForm(int mem_idx , Model model) {
+    public String paymentForm(int mem_idx, Model model) {
 
         //회원 현재주소 가져오기
         MemberAddrVo vo = memberAddrMapper.selectOneFromIdx(mem_idx);

@@ -71,11 +71,13 @@
                 </style>
 
                 <script>
+                    $("#btn_order").prop("disabled", false);
 
                     // 결제하기
                     function cart_payment(f) {
                         let shop_idx = f.shop_idx.value.trim();
                         let menu_idx = f.menu_idx.value.trim();
+
                         f.action = "../order/payment_form.do?shop_idx="+ shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
                         f.submit();
                     }
@@ -108,6 +110,7 @@
                                     document.getElementById(`cnt_\${cart_idx}`).value = res_data.cart_cnt; 
                                     document.getElementById(`amount_\${cart_idx}`).innerText = "₩" + res_data.amount.toLocaleString(); 
                                     document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString(); 
+                                    document.getElementById(`total`).innerText = "₩" + res_data.total.toLocaleString(); 
                                 },
                                 error : function(err){
                                     console.error(err);
@@ -122,8 +125,18 @@
                                     cart_idx : cart_idx
                                 },
                                 success: function(res_data){
+                                    if(res_data.null == "null"){
+                                        $(`#row_\${cart_idx}`).remove(); 
+                                        document.getElementById(`total_amount`).innerText = "₩" + 0;
+                                        document.getElementById(`total`).innerText = "₩" + 0;
+                                        document.getElementById(`dfee`).innerText = "₩" + 0;
+                                        $("#btn_order").prop("disabled", true);
+                                    }else{
                                     $(`#row_\${cart_idx}`).remove(); 
                                     document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
+                                    document.getElementById(`total`).innerText = "₩" + res_data.total.toLocaleString();
+
+                                    }
                                 },
                                 error : function(err){
                                     console.error(err);
@@ -153,7 +166,8 @@
                                     // $(`#cnt_${cart_idx}`).val(res_data); 
                                     document.getElementById(`cnt_\${cart_idx}`).value = res_data.cart_cnt; 
                                     document.getElementById(`amount_\${cart_idx}`).innerText = "₩" + res_data.amount.toLocaleString(); 
-                                    document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString(); 
+                                    document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
+                                    document.getElementById(`total`).innerText = "₩" + res_data.total.toLocaleString(); 
                                 },
                                 error : function(err){
                                     console.error(err);
@@ -192,7 +206,6 @@
                                     <th>수량</th>
                                     <th>단가</th>
                                     <th>금액</th>
-                                    <th>비고</th>
                                 </tr>
 
                                 <!-- 등록상품이 없는경우 -->
@@ -227,30 +240,43 @@
                                             <fmt:formatNumber value="${cart.amount}" type="currency" />
                                             <input type="hidden" name="total_price" value="{cart.amount}">
                                         </td>
-                                        <td><input class="btn btn-info" type="button" value="수정"
-                                                onclick="modify_cart('${cart.cart_idx}');"></td>
                                     </tr>
                                 </c:forEach>
 
                                 <!-- 총액 출력 -->
                                 <tr>
-                                    <td colspan="5" style="text-align: right;">총액</td>
-                                    <td class="currency" colspan="2" id="total_amount">
-                                        <fmt:formatNumber value="${total_amount }" type="currency" />
-                                        <input type="hidden" name="amount" value="${total_amount}">
+                                    <td colspan="3" style="text-align: right;">총액</td>
+                                    <td class="currency" colspan="1" id="total_amount">
+                                        <fmt:formatNumber value="${total_amount}" type="currency" />
+                                        <input type="hidden" name="total_amount" value="${total_amount}">
                                     </td>
                                 </tr>
+
+                                <!-- 배달비 출력 -->
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">배달비</td>
+                                    <td class="currency" colspan="1" id="dfee">
+                                        <fmt:formatNumber value="${shop_dfee }" type="currency" />
+                                        <input type="hidden" name="dfee" value="${shop_dfee}">
+                                    </td>
+                                </tr>
+
+                                <!-- 총액 + 배달비 출력 -->
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">결제할 금액</td>
+                                    <td class="currency" colspan="1" id="total">
+                                        <fmt:formatNumber value="${total_amount + shop_dfee}" type="currency" />
+                                        <input type="hidden" name="amount" value="${total_amount + shop_dfee}">
+                                    </td>
+                                </tr>
+
 
                             </table>
 
                             <!-- 결제 및 삭제 버튼 -->
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <input class="btn btn-danger" type="button" value="삭제"
-                                        onclick="cart_delete(this.form);">
-                                </div>
-                                <div class="col-sm-6" style="text-align: right;">
-                                    <input class="btn btn-primary" type="button" value="결제"
+                                <div class="col-sm-12" style="text-align: right;">
+                                    <input class="btn btn-primary" type="button" id="btn_order" value="결제"
                                         onclick="cart_payment(this.form);">
 
                                 </div>

@@ -386,6 +386,11 @@ public class ShopServiceImpl implements ShopService {
         return shopMenuMapper.menuDelete(menu_idx);
     }
 
+    @Override
+    public int selectShopDfee(int shop_idx) {
+        return shopInfoMapper.selectShopDfee(shop_idx);
+    }
+
 
 
 }

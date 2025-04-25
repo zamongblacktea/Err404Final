@@ -34,5 +34,8 @@ public interface ShopInfoMapper {
     // owner_idx로 가게 조회
     ShopInfoVo selectByOwnerIdx(int owner_idx);
 
+    // 가게 배달비 조회
+    int selectShopDfee(int shop_idx);
+
 
 }
