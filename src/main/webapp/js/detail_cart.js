@@ -2,6 +2,8 @@
 function cart_payment(f) {
   let shop_idx = f.shop_idx.value.trim();
   let menu_idx = f.menu_idx.value.trim();
+  let amount = f.amount.value.trim();
+
   f.action = "../order/payment_form.do?shop_idx=" + shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
   f.submit();
 }
@@ -54,11 +56,16 @@ function minus(cart_idx) {
         document.getElementById("total_amount").innerText = "₩" + res_data.total_amount.toLocaleString();
 
         // cart_list가 비었으면 detail_cart.jsp 다시 불러오기
-        if (res_data.is_empty) {
+        // if (res_data.is_empty) {
+        //   $("#cart_area").load("../cart/list_view.do");
+        // } else {
+        // 그냥 삭제만 반영 (비어있진 않음)
+        //   $(`#row_${cart_idx}`).remove();
+        // }
+        if (res_data.null == "null") {
           $("#cart_area").load("../cart/list_view.do");
         } else {
-          // 그냥 삭제만 반영 (비어있진 않음)
-          $(`#row_${cart_idx}`).remove();
+          $(`#row_\${cart_idx}`).remove();
         }
       },
       error: function (err) {
@@ -125,7 +132,6 @@ function checkShop() {
   //가입버튼 비활성화
   $("#btn_order").prop("disabled", true);
 
-
   // Ajax통해서 background로 요청
   $.ajax({
     url: "../cart/check_shop_idx.do",
@@ -156,14 +162,19 @@ function delete_one(cart_idx) {
       // $(`#row_${cart_idx}`).remove();
       // document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
       // 총액 등 갱신
-      document.getElementById("total_amount").innerText = "₩" + res_data.total_amount.toLocaleString();
 
       // cart_list가 비었으면 detail_cart.jsp 다시 불러오기
-      if (res_data.is_empty) {
+      // if (res_data.is_empty) {
+      //   $("#cart_area").load("../cart/list_view.do");
+      // } else {
+        // 그냥 삭제만 반영 (비어있진 않음)
+      //   $(`#row_${cart_idx}`).remove();
+      //   document.getElementById("total_amount").innerText = "₩" + res_data.total_amount.toLocaleString();
+      // }
+      if (res_data.null == "null") {
         $("#cart_area").load("../cart/list_view.do");
       } else {
-        // 그냥 삭제만 반영 (비어있진 않음)
-        $(`#row_${cart_idx}`).remove();
+        $(`#row_\${cart_idx}`).remove();
       }
     },
     error: function (err) {

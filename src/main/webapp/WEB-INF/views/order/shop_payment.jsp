@@ -241,9 +241,9 @@ h {
 				<div class="mb-3">
 				<label for="cart_price" class="form-label">가격</label> <input
 						type="hidden" class="form-control" id="cart_price" name="cart_price"
-						value="${amount}"
+						value="${param.amount}"
 						readonly>
-						<fmt:formatNumber value='${amount}' type='number' pattern='#,###' />
+						<fmt:formatNumber value='${param.amount}' type='number' pattern='#,###' />
 
 				</div>
 

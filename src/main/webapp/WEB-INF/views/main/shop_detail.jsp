@@ -228,6 +228,8 @@
       });
 
       
+
+      
     }
   </script>
 
@@ -259,7 +261,7 @@
             <li class="col-sm-4"><a href="" class="nav-a">리뷰</a></li>
             <li class="col-sm-4"><a href="../main/info.do?shop_idx=${shop.shop_idx}" class="nav-a">정보</a></li>
           </ul>
-          <div>
+          <div class="detail-content">
             <div>메뉴카테고리</div>
             <c:forEach var="menu" items="${menu}">
               <form onsubmit="insert_cart(this); return false;">

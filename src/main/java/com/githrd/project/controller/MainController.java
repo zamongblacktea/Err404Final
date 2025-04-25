@@ -61,9 +61,11 @@ public class MainController {
 
         int shop_dfee = shopService.selectShopDfee(shop_idx);
 
+        session.setAttribute("shop_dfee", shop_dfee);
+
         model.addAttribute("shop", shop);
         model.addAttribute("menu", menu);
-        model.addAttribute("dfee", shop_dfee);
+        model.addAttribute("shop_dfee", shop_dfee);
         // 임시 push
 
         // 장바구니 화면
@@ -92,7 +94,7 @@ public class MainController {
 
         model.addAttribute("shop", shop);
         model.addAttribute("menu", menu);
-        model.addAttribute("dfee", shop_dfee);
+        model.addAttribute("shop_dfee", shop_dfee);
 
         // 장바구니 화면
 
