@@ -1,5 +1,6 @@
 package com.githrd.project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +41,11 @@ public class CartController {
     @ResponseBody
     public Map<String, Object> insert(CartVo vo, @RequestParam(required = false) Boolean force) {
         // System.out.println("---------------------------------------------------------------------");
-        
+
         // 결과
         Map<String, Object> map = new HashMap<String, Object>();
         // System.out.println("---------------------------------Map------------------------------------");
-        
+
         // 장바구니에 등록되었는지 여부
         CartVo reVo = cartService.selectOneExist(vo);
         // 현재 유저의 장바구니 전체 조회 (shop_idx 비교용)
@@ -105,7 +106,7 @@ public class CartController {
 
         // 임시 : cart_list가 비어있을때 가게 리스트로 리다이렉트
         // 임시라서 가능하면 alert로 장바구니가 비어있다고 안내 해주면 좋을듯
-        if(cart_list.size() == 0){
+        if (cart_list.size() == 0) {
             return "redirect:/main/list.do";
         }
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
@@ -129,14 +130,20 @@ public class CartController {
 
         // 회원별 장바구니 목록
         List<CartVo> cart_list = cartService.selectList(mem_idx);
-        Integer total_amount = cartService.selectTotalAmount(mem_idx);
-        int shop_idx = cart_list.get(0).getShop_idx();
-        int shop_dfee = shopService.selectShopDfee(shop_idx);
-        System.out.println(cart_list.get(0).getShop_idx());
+        // if (cart_list == null || cart_list.isEmpty()) {
+        //     model.addAttribute("cart_list", new ArrayList<CartVo>());
+        // }
 
+        if(cart_list.size()==0) model.addAttribute("null","null");
+
+        Integer total_amount = cartService.selectTotalAmount(mem_idx);
+        // int shop_idx = cart_list.get(0).getShop_idx();
+        // int shop_dfee = shopService.selectShopDfee(shop_idx);
+
+        session.getAttribute("shop_dfee");
         model.addAttribute("cart_list", cart_list);
         model.addAttribute("total_amount", total_amount);
-        model.addAttribute("dfee", shop_dfee);
+        // model.addAttribute("dfee", shop_dfee);
 
         return "main/detail_cart";
     }
@@ -162,11 +169,12 @@ public class CartController {
         List<CartVo> list = cartService.selectList(vo.getMem_idx());
 
         Map<String, Object> map = new HashMap<>();
+
         if(list.size()==0) map.put("null","null");
+
         map.put("total_amount", total_amount);
         map.put("is_empty", list == null || list.isEmpty());
         map.put("total", total_amount + shop_dfee);
-
 
         return map;
     }

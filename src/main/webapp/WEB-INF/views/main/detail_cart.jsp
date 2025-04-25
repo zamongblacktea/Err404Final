@@ -39,7 +39,7 @@
     </script>
   </head>
   <body>
-    <form class="form-inline">
+    <form class="form-inline" method="POST">
     <div id="cart_area">
     <div>주문표/<span onclick="delete_all();">🗑️</span></div>
       <c:choose>
@@ -75,13 +75,13 @@
       </c:if>
       <div id="total_amount">
         <fmt:formatNumber value="${total_amount }" type="currency" />
-        <input type="hidden" name="amount" value="${total_amount}" />
+        <input type="hidden" name="total_amount" value="${total_amount}" />
       </div>
     </c:otherwise>
   </c:choose>
 
-      <div id="shop_dfee">배달요금 <fmt:formatNumber value="${dfee}" pattern="#,#00" />원 별도</div>
-      <!-- <input type="hidden" id="dFee" name="dFee" value="${dfee}"> -->
+      <div id="shop_dfee">배달요금 <fmt:formatNumber value="${shop_dfee}" pattern="#,#00" />원 별도</div>
+      <input type="hidden" name="amount" value="${total_amount + shop_dfee}">
 
       <div><input type="button" class="btn btn-primary" id="btn_order" value="주문하기" onclick="cart_payment(this.form);" disabled="disabled"></div>
 </div>
