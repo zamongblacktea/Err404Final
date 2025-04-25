@@ -20,9 +20,13 @@ public interface OwnerMapper {
 	// owner_id를 이용해서 1건 데이터 얻어오기
 	public OwnerVo selectOneFromId(String owner_id);
 
+	//사업자 회원 승인 update
+	public int updateApproval(int owner_idx);
+
 	//추가
 	public int insert(OwnerVo vo);
 
+	//수정
 	public int update(OwnerVo vo);
 
 	public int delete(int owner_idx);

@@ -3,7 +3,6 @@ package com.githrd.project.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.NaverMapper;
 import com.githrd.project.dao.OwnerMapper;
@@ -24,12 +24,11 @@ import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.RiderVo;
-import com.githrd.project.vo.ShopInfoVo;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -51,6 +50,9 @@ public class MemberController {
 
 	@Autowired
 	NaverMapper naverMapper;
+
+	@Autowired
+	MemReviewMapper memReviewMapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -223,7 +225,8 @@ public class MemberController {
 		int res = memberMapper.delete(mem_idx);
 
 		return "redirect:list.do";
-	}
+	}// end: member_delete
+
 
 	////////////////////////////////////////////////////////////////// 사장님//////////////////////////////////////////////
 
@@ -272,7 +275,7 @@ public class MemberController {
 				@RequestParam(name = "photo") MultipartFile[] photo_array)
 				throws IllegalStateException, IOException {
 	
-			// 운전 면허증 사진 등록
+			// 사업자 등록증 사진 등록
 			int owner_insert_no = 0;
 	
 			// 파일 처리

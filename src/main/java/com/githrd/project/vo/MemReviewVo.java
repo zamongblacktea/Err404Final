@@ -13,12 +13,19 @@ public class MemReviewVo {
     int order_idx;
     int shop_idx;
     int delivery_idx;
+    String mem_nickname;
     String review_content;
     String review_regdate;
     String review_update;
-    String review_pwd;
     double review_rating;
+    String review_img;
+    String review_ip;
     int review_available;
+    String delivery_status;
+    int menu_idx;
+    String menu_name;
+    String shop_name;
+
     
 
 

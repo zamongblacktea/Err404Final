@@ -38,4 +38,6 @@ public interface RiderMapper {
 
 	public int delete(int rider_idx);
 
+    public int updateApproval(int rider_idx);
+
 }

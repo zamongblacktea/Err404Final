@@ -33,6 +33,8 @@ public interface OrderStatusMapper {
 
     public int deleteOrder(int order_idx);
 
+    public OrderStatusVo selectDetail(int mem_idx);
+
 
 
 
