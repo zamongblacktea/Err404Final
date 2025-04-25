@@ -47,16 +47,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           where order_idx=#{order_idx}
        </update>
 
+        <!-- delivery_satust 상태값이 바뀜에 따라 order_status 상태값 바뀌도록하기 -->
         <update id="orderStatusUpdate" parameterType="Map">
         update order_status set order_status = #{order_status}
           where order_idx=#{order_idx}
        </update>
 
        <!-- 배달완료한 배달현황조회 -->
-       <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
+       <!-- <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
         select * from delivery
         where rider_idx=#{rider_idx} and delivery_status='배달완료'
+      </select> -->
+      
+      <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
+        	select 
+		      d.*,
+		      si.shop_name,si.shop_addr1,si.shop_addr2,
+          os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+					inner join order_status os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
       </select>
+
+
+
        
        <!-- delivery 정보를 추가 -->
     <insert id="insert" parameterType="DeliveryVo">

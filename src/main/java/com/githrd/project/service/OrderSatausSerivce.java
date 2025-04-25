@@ -1,7 +1,6 @@
 package com.githrd.project.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.githrd.project.dao.OrderStatusMapper;
-import com.githrd.project.vo.OrderStatusVo;
 
 @Service
 public class OrderSatausSerivce {

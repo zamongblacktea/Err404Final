@@ -9,19 +9,16 @@
     <title>주문현황 페이지</title>
     <!-- 파비콘 -->
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
-         <!-- 웹소캣 -->
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script>
-    function setActiveButton(activeId) {
-        // 모든 버튼 클래스 제거
-        document.querySelectorAll(".buttons").forEach(btn => {
-        btn.classList.remove("active");
-        });
+    // function setActiveButton(activeId) {
+    //     // 모든 버튼 클래스 제거
+    //     document.querySelectorAll(".buttons").forEach(btn => {
+    //     btn.classList.remove("active");
+    //     });
 
-        // 활성화 버튼에 active 클래스 추가
-        document.getElementById(activeId).classList.add("active");
-            }
+    //     // 활성화 버튼에 active 클래스 추가
+    //     document.getElementById(activeId).classList.add("active");
+    // }
 
     function delivery_pickup(order_idx,shop_idx,mem_idx){
 
@@ -72,25 +69,7 @@
     }//end: fuction rider_accept(order_idx,rider_idx)        
           
 
-    function complete(){
-        setActiveButton("btn-complete");// 버튼 활성화 표시 
-        $.ajax({ //key value jason형식
-          tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
-          async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
-          data:{"rider_idx":rider_idx},
-          
-          url  : "complete.do",
-          success: function(result_data){
-              
-              //result_data <=서버로부터 응답받은 데이터
-              //document.getElementById("disp").innerHTML = result_data;
-              $("#disp").html(result_data);
-          },
-          error  : function(err){
-              alert(err.responseText);
-          }
-      });
-    }//end : function complete()
+   
     
     </script>
 </head>
@@ -133,8 +112,11 @@
             <!-- 픽업완료 버튼을 누르면
             픽업 완료 버튼이 배달완료 버튼으로 바뀌게 하기
             픽업이 완료되었다는 정보가 가게,고객에게 전달됨 -->
+            <c:if test="${ vo.delivery_status eq '배달중'}">
             <input type="button" value="배달완료" onclick="delivery_complete('${vo.order_idx}','${vo.shop_idx}','${ vo.mem_idx }')">
             <!-- 배달이 완료되었다는 정보가 가게,고객에게 전달됨 -->
+         </c:if>
+         <hr>
         </c:forEach>
     </c:otherwise>
 </c:choose>

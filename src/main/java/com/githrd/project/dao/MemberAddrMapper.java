@@ -17,6 +17,7 @@ public interface MemberAddrMapper {
 	// mem_idx이용해서 1건 데이터 읽어오기
 	public MemberAddrVo selectOneFromIdx(int mem_idx);
 		
-
+	// mem주소 얻기
+	String getMemberAddr(int mem_idx);
 
 }

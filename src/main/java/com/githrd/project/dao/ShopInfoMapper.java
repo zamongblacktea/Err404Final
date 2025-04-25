@@ -9,6 +9,9 @@ import com.githrd.project.vo.ShopInfoVo;
 
 @Mapper
 public interface ShopInfoMapper {
+    
+    //가게 주소얻기
+    String getShopAddr(int shop_idx);
 
     // 가게 전체 출력
     List<ShopInfoVo> selectListAll();

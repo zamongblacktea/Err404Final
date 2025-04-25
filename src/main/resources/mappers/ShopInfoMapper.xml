@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.githrd.project.dao.ShopInfoMapper">
+
+	<!-- 주소가져오기 -->
+	<select id="getShopAddr" resultType="String" parameterType="int">
+    SELECT shop_addr1
+    FROM shop_info
+    WHERE shop_idx = #{shop_idx}
+	</select>
+
 	<!-- 가게전체조회 -->
 	<select id="selectListAll" resultType="ShopInfoVo"> select * from shop_info </select>
 
