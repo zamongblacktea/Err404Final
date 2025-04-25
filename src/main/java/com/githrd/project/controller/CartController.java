@@ -35,11 +35,12 @@ public class CartController {
     @RequestMapping(value = "/insert.do", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public Map<String, Object> insert(CartVo vo, @RequestParam(required = false) Boolean force) {
-
+        System.out.println("---------------------------------------------------------------------");
+        
         // 결과
         Map<String, Object> map = new HashMap<String, Object>();
-        // System.out.println("▶ force 값: " + force);
-
+        System.out.println("---------------------------------Map------------------------------------");
+        
         // 장바구니에 등록되었는지 여부
         CartVo reVo = cartService.selectOneExist(vo);
         // 현재 유저의 장바구니 전체 조회 (shop_idx 비교용)

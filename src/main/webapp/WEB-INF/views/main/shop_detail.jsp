@@ -169,9 +169,9 @@
         url: "../cart/insert.do",
         method: "POST",
         data: {
-          menu_idx: menu_idx,
           mem_idx: mem_idx,
           shop_idx: shop_idx,
+          menu_idx: menu_idx,
           cart_price : cart_price,
           cart_cnt : 1,
           force : force ? "true" : "false"
