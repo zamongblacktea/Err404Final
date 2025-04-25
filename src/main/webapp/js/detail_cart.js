@@ -108,7 +108,7 @@ function delete_all() {
       mem_idx: mem_idx,
     },
     success: function (res_data) {
-      $("#cart_area").load("../cart/list_view.do");
+      $("#cart_area").load("/cart/list_view.do");
     },
     error: function (err) {
       console.error(err);

@@ -1,5 +1,6 @@
 package com.githrd.project.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,6 +130,9 @@ public class CartController {
 
         // 회원별 장바구니 목록
         List<CartVo> cart_list = cartService.selectList(mem_idx);
+
+        if(cart_list == null){}
+
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
         int shop_idx = cart_list.get(0).getShop_idx();
         int shop_dfee = shopService.selectShopDfee(shop_idx);

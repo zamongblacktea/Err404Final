@@ -244,8 +244,7 @@
 
             <ul class="list">
               <li>별점 ${shop.shop_rating}</li>
-              <li><fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원 이상 주문</li>
-              <li>결제 카카오결제</li>
+              <li>최소주문금액 <fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</li>
             </ul>
           </div>
           <div class="shop-notice">가게 공지사항</div>
@@ -305,10 +304,6 @@
                       <tr>
                         <th>최소주문금액</th>
                         <td><fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</td>
-                      </tr>
-                      <tr>
-                        <th>결제수단</th>
-                        <td>카카오페이결제</td>
                       </tr>
                     </table>
                   </div>
