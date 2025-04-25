@@ -103,16 +103,11 @@
       list-style: none;
       display: inline-block;
     }
-
-    .menu-text {
-      width: 520px;
-      margin-top: 10px;
-    }
-
-    .menu-img {
-      width: 112px;
-      height: 80px;
-      margin-left: 140px;
+    
+    table.table-borderless td,
+    table.table-borderless th,
+    table.table-borderless tr{
+      border:none !important
     }
 
     .cart {
@@ -261,50 +256,85 @@
             <li class="col-sm-4"><a href="../main/info.do?shop_idx=${shop.shop_idx}" class="nav-a">정보</a></li>
           </ul>
           <div>
-            <div>메뉴카테고리</div>
-            <c:forEach var="menu" items="${menu}">
+            <div>가게 정보</div>
               <form onsubmit="insert_cart(this); return false;">
-                <input type="hidden" id="menu_idx" name="menu_idx" value="${menu.menu_idx}">
-                <input type="hidden" id="shop_idx" name="shop_idx" value="${menu.shop_idx}">
                 <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}">
+                <input type="hidden" id="shop_idx" name="shop_idx" value="${shop.shop_idx}">
                 
-                <div class="row" onclick="this.closest('form').requestSubmit();">
-                <div class="menu-text col-sm-8">
-                  <div class="menu-name">${menu.menu_name}</div>
-                  <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00"/>원</div>
-                  <input type="hidden" name="menu_price" value="${menu.menu_price}">
+                <div class="row">
+                <div class="notice">
+                  📢사장님 알림
+                  <hr>
+                  <div class="notice_content">
+                    ${shop.shop_notice}
+                  </div>
                 </div>
-                <div class="menu-img col-sm-4">
-                  <img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" />
+                <div class="intro">
+                  🤗가게 소개
+                  <hr>
+                  <div class="intro_content">
+                    ${shop.shop_intro}
+                  </div>
+                </div>
+                <div class="info">
+                  🍴업체정보
+                  <hr>
+                  <div class="info_content">
+                    <table class="table table-borderless">
+                      <tr>
+                        <th>영업시간</th>
+                        <td>${shop.shop_optime} - ${shop.shop_cltime}</td>
+                      </tr>
+                      <tr>
+                        <th>전화번호</th>
+                        <td>${shop.shop_phone}</td>
+                      </tr>
+                      <tr>
+                        <th>주소</th>
+                        <td>${shop.shop_addr1} ${shop.shop_addr2}</td>
+                      </tr>
+
+                    </table>
+                  </div>
+                </div>
+                <div class="pay_info">
+                  💳결제 정보
+                  <hr>
+                  <div class="pay_info_content">
+                    <table class="table table-borderless">
+                      <tr>
+                        <th>최소주문금액</th>
+                        <td><fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</td>
+                      </tr>
+                      <tr>
+                        <th>결제수단</th>
+                        <td>카카오페이결제</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="owner_info">
+                  👤사업자 정보
+                  <hr>
+                  <div class="owner_content">
+                    <table class="table table-borderless">
+                      <tr>
+                        <th>상호명</th>
+                        <td>${shop.shop_company}</td>
+                      </tr>
+                      <tr>
+                        <th>사업자등록번호</th>
+                        <td>${shop.shop_bnumber}</td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
               </div>
             </form>
-            </c:forEach>
           </div>
         </div>
         <div class="cart">
           <%@ include file="./detail_cart.jsp" %>
-          <!-- <div>주문표/취소</div>
-          <div>
-            <c:forEach var="cart" items="${cart_list}">
-              <li class="cart_li">
-                <div id="menu_name">${cart.menu_name}</div>
-                <div class="row">
-                <div class="col-sm-6 text-left">
-                <span>❌</span>
-                <span><fmt:formatNumber value="${cart.menu_price}" pattern="#,#00" />원</span>
-                </div>
-                <div class="col-sm-6 text-right"><span onclick="minus('${cart.cart_idx}');" style="cursor: pointer;">➖</span>
-                  <span id="cnt_${cart.cart_idx}" style="text-align: center;">${cart.cart_cnt}</span>
-                  <span onclick="plus('${cart.cart_idx}');" style="cursor: pointer;">➕</span></div>
-                </div>
-              </li>
-            </c:forEach>
-          </div>
-          <div>최소주문금액 얼마</div>
-          <div id="total_amount"><fmt:formatNumber value="${total_amount }" type="currency" />
-            <input type="hidden" name="amount" value="${total_amount}"></div>
-          <div>주문하기 버튼</div> -->
         </div>
       </div>
     </div>
