@@ -53,4 +53,7 @@ public interface ShopService {
 
         // 메뉴 삭제
         int menuDelete(int menu_idx);
+
+        // 가게 배달비 조회
+        int selectShopDfee(int shop_idx);
 }

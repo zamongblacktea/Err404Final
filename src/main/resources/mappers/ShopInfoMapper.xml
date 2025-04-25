@@ -16,6 +16,11 @@
 	<select id="selectListFromCate" parameterType="int" resultType="ShopInfoVo"> select * from
 		shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx </select>
 
+	<!-- 가게 배달비 조회 -->
+	 <select id="selectShopDfee" parameterType="int" resultType="Integer">
+		select shop_dfee from shop_info where shop_idx = #{shop_idx}
+	 </select>
+
 	<!-- 가게추가 -->
 	<insert id="shopInsert" parameterType="ShopInfoVo" useGeneratedKeys="true"
 		keyProperty="shop_idx"> insert into shop_info values( null, #{ owner_idx }, #{ shop_cate_idx

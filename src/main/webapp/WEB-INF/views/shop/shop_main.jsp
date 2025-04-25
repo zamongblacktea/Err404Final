@@ -117,7 +117,7 @@
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
       $(document).ready(function() {
-        loadContent("menu_list.do");
+        loadContent("../order/order_list.do");
       });
     </script>
   </head>
@@ -127,7 +127,7 @@
     <div id="nav">
       <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />
       <div class="user-info">
-        <button class="btn">로그아웃</button>
+        <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
       </div>
     </div>
 

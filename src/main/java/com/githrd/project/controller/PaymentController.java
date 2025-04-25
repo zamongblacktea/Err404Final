@@ -38,21 +38,24 @@ public class PaymentController {
     CartService cartService;
 
     // 결제 페이지 폼 불러오기
-    @RequestMapping("payment_form.do")
-    public String paymentForm(int mem_idx , Model model) {
+    @PostMapping("payment_form.do")
+    public String paymentForm(int mem_idx, Model model ,int amount) {
 
         //회원 현재주소 가져오기
         MemberAddrVo vo = memberAddrMapper.selectOneFromIdx(mem_idx);
         
         // 결제 할 총 가격 조회
-        Integer total_amount = cartService.selectTotalAmount(mem_idx);
+        //Integer total_amount = cartService.selectTotalAmount(mem_idx);
 
         model.addAttribute("vo", vo);
-        model.addAttribute("amount", total_amount);
+        model.addAttribute("amount", amount);
 
 
         return "order/shop_payment";
     }
+    
+
+
     
 
 

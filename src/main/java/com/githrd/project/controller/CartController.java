@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.githrd.project.service.CartService;
+import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.CartVo;
 import com.githrd.project.vo.MemberVo;
 
@@ -29,30 +30,35 @@ public class CartController {
     CartService cartService;
 
     @Autowired
+    ShopService shopService;
+
+    @Autowired
     HttpSession session;
 
     // 카트에 등록
     @RequestMapping(value = "/insert.do", method = { RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
     public Map<String, Object> insert(CartVo vo, @RequestParam(required = false) Boolean force) {
+        // System.out.println("---------------------------------------------------------------------");
 
         // 결과
         Map<String, Object> map = new HashMap<String, Object>();
-        // System.out.println("▶ force 값: " + force);
+        // System.out.println("---------------------------------Map------------------------------------");
 
         // 장바구니에 등록되었는지 여부
         CartVo reVo = cartService.selectOneExist(vo);
         // 현재 유저의 장바구니 전체 조회 (shop_idx 비교용)
         List<CartVo> cartList = cartService.selectList(vo.getMem_idx());
 
-        CartVo cartOne = cartService.selectOneMem(vo.getMem_idx());
+        // CartVo cartOne = cartService.selectOneMem(vo.getMem_idx());
 
         // 장바구니가 비어있지 않고, 다른 가게의 상품이 담겨 있으면 장바구니 비우기
         if (!cartList.isEmpty()) {
-            int currentShop = cartOne.getShop_idx();
-            System.out.println(currentShop);
+            // int currentShop = cartOne.getShop_idx();
+            int currentShop = cartList.get(0).getShop_idx();
+            // System.out.println(currentShop);
             int newShopIdx = vo.getShop_idx();
-            System.out.println(newShopIdx);
+            // System.out.println(newShopIdx);
             if (currentShop != newShopIdx) {
                 if (force == null || !force) {
                     map.put("result", "deleted");
@@ -62,14 +68,6 @@ public class CartController {
                 }
             }
         }
-
-        // if (!cartList.isEmpty()) {
-        // int currentShop = cartList.get(0).getShop_idx();
-        // if (currentShop != vo.getShop_idx()) {
-        // map.put("result", "diff");
-        // return map;
-        // }
-        // }
 
         if (reVo != null) {
             // map.put("result", "exist");
@@ -104,12 +102,49 @@ public class CartController {
 
         // 회원별 장바구니 목록
         List<CartVo> cart_list = cartService.selectList(mem_idx);
+
+        // 임시 : cart_list가 비어있을때 가게 리스트로 리다이렉트
+        // 임시라서 가능하면 alert로 장바구니가 비어있다고 안내 해주면 좋을듯
+        if (cart_list.size() == 0) {
+            return "redirect:/main/list.do";
+        }
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
+        int shop_idx = cart_list.get(0).getShop_idx();
+        int shop_dfee = shopService.selectShopDfee(shop_idx);
+        System.out.println(shop_dfee);
 
         model.addAttribute("cart_list", cart_list);
         model.addAttribute("total_amount", total_amount);
+        model.addAttribute("shop_dfee", shop_dfee);
 
         return "user/cart_list";
+    }
+
+    // 장바구니 리스트 조회 뷰
+    @GetMapping("/list_view.do")
+    public String list_view(Model model) {
+
+        MemberVo user = (MemberVo) session.getAttribute("user");
+        int mem_idx = user.getMem_idx();
+
+        // 회원별 장바구니 목록
+        List<CartVo> cart_list = cartService.selectList(mem_idx);
+        // if (cart_list == null || cart_list.isEmpty()) {
+        //     model.addAttribute("cart_list", new ArrayList<CartVo>());
+        // }
+
+        if(cart_list.size()==0) model.addAttribute("null","null");
+
+        Integer total_amount = cartService.selectTotalAmount(mem_idx);
+        // int shop_idx = cart_list.get(0).getShop_idx();
+        // int shop_dfee = shopService.selectShopDfee(shop_idx);
+
+        session.getAttribute("shop_dfee");
+        model.addAttribute("cart_list", cart_list);
+        model.addAttribute("total_amount", total_amount);
+        // model.addAttribute("dfee", shop_dfee);
+
+        return "main/detail_cart";
     }
 
     // 장바구니 비우기
@@ -128,9 +163,17 @@ public class CartController {
         CartVo vo = cartService.selectOne(cart_idx);
         cartService.menuDelete(cart_idx);
         Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
+        int shop_dfee = shopService.selectShopDfee(vo.getShop_idx());
+
+        List<CartVo> list = cartService.selectList(vo.getMem_idx());
 
         Map<String, Object> map = new HashMap<>();
+
+        if(list.size()==0) map.put("null","null");
+
         map.put("total_amount", total_amount);
+        map.put("is_empty", list == null || list.isEmpty());
+        map.put("total", total_amount + shop_dfee);
 
         return map;
     }
@@ -143,11 +186,13 @@ public class CartController {
         cartService.cntMinus(cart_idx, cart_cnt);
         CartVo vo = cartService.selectOne(cart_idx);
         Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
+        int shop_dfee = shopService.selectShopDfee(vo.getShop_idx());
 
         Map<String, Object> map = new HashMap<>();
         map.put("cart_cnt", vo.getCart_cnt());
         map.put("amount", vo.getAmount());
         map.put("total_amount", total_amount);
+        map.put("total", shop_dfee + total_amount);
 
         return map;
     }
@@ -160,12 +205,43 @@ public class CartController {
         cartService.cntPlus(cart_idx, cart_cnt);
         CartVo vo = cartService.selectOne(cart_idx);
         Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
+        int shop_dfee = shopService.selectShopDfee(vo.getShop_idx());
 
         Map<String, Object> map = new HashMap<>();
         map.put("cart_cnt", vo.getCart_cnt());
         map.put("amount", vo.getAmount());
         map.put("total_amount", total_amount);
+        map.put("total", shop_dfee + total_amount);
 
+        return map;
+    }
+
+    // shop_idx 조회해서 다른 가게인지 비교하기
+    @GetMapping("/check_shop_idx.do")
+    @ResponseBody
+    public Map<String, Object> check_shop_idx(int mem_idx, int shop_idx) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        // 현재 유저의 장바구니 전체 조회 (shop_idx 비교용)
+        List<CartVo> cartList = cartService.selectList(mem_idx);
+
+        // CartVo cartOne = cartService.selectOneMem(vo.getMem_idx());
+
+        // 2.사용유무 판단
+        boolean bResult = false;
+
+        if (!cartList.isEmpty()) {
+            // int currentShop = cartOne.getShop_idx();
+            int currentShop = cartList.get(0).getShop_idx();
+            int newShopIdx = shop_idx;
+            if (currentShop == newShopIdx) {
+                bResult = true;
+            }
+        }
+
+        int shop_dfee = shopService.selectShopDfee(shop_idx);
+        map.put("result", bResult);
+        map.put("dfee", shop_dfee);
         return map;
     }
 
