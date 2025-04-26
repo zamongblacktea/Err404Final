@@ -1,13 +1,17 @@
 package com.githrd.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.service.CartService;
@@ -109,6 +113,44 @@ public class MainController {
         model.addAttribute("total_amount", total_amount);
 
         return "main/shop_detail_info";
+    }
+
+    // detail_info ajax 테스트
+    @GetMapping("detail_info.do")
+    public Map<String, Object> detail_info(@RequestParam int shop_idx) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        ShopInfoVo shop = shopService.selectShopOne(shop_idx);
+
+        List<ShopMenuVo> menu = shopService.selectMenuAll(shop_idx);
+
+        int shop_dfee = shopService.selectShopDfee(shop_idx);
+
+        map.put("shop", shop);
+        map.put("menu", menu);
+        map.put("shop_dfee", shop_dfee);
+
+        return map;
+    }
+
+    // detail_menu ajax 테스트
+    @GetMapping("detail_menu.do")
+    public String detail_menu(@RequestParam int shop_idx, Model model) {
+
+        ShopInfoVo shop = shopService.selectShopOne(shop_idx);
+
+        List<ShopMenuVo> menu = shopService.selectMenuAll(shop_idx);
+
+        int shop_dfee = shopService.selectShopDfee(shop_idx);
+
+        session.setAttribute("shop_dfee", shop_dfee);
+
+        model.addAttribute("shop", shop);
+        model.addAttribute("menu", menu);
+        model.addAttribute("shop_dfee", shop_dfee);
+
+        return "/main/detail_menu";
     }
 
 }

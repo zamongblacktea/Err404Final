@@ -29,16 +29,14 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
 public class ReviewController {
 
+	@Autowired
+	MemReviewMapper memReviewMapper;
 
-    @Autowired
-    MemReviewMapper memReviewMapper;
-
-    @Autowired
-    MemberMapper memberMapper;
+	@Autowired
+	MemberMapper memberMapper;
 
 	@Autowired
 	OrderStatusMapper orderStatusMapper;
@@ -46,32 +44,29 @@ public class ReviewController {
 	@Autowired
 	DeliveryMapper deliveryMapper;
 
-    @Autowired
-    ShopInfoMapper shopInfoMapper;
+	@Autowired
+	ShopInfoMapper shopInfoMapper;
 
-    @Autowired
+	@Autowired
 	HttpSession session;
 
 	@Autowired
 	ServletContext application;
 
-    @Autowired
+	@Autowired
 	HttpServletRequest request;
 
-
-
-    // 회원 내 리뷰 내역 리스트 폼 띄우기
+	// 회원 내 리뷰 내역 리스트 폼 띄우기
 	@RequestMapping("/member/order_list.do")
 	public String reviewList(@RequestParam int mem_idx, Model model) {
 
-		//주문내역 전체 selectList
+		// 주문내역 전체 selectList
 		List<DeliveryVo> list = deliveryMapper.selectListReview(mem_idx);
 
-
-		//리뷰 상세보기 
+		// 리뷰 상세보기
 		OrderStatusVo vo = orderStatusMapper.selectDetail(mem_idx);
 
-		model.addAttribute("detail",vo);
+		model.addAttribute("detail", vo);
 		model.addAttribute("list", list);
 
 		return "/member/member_review_list";
@@ -79,15 +74,15 @@ public class ReviewController {
 
 	// 회원 리뷰 작성 폼 띄우기
 	@RequestMapping("/member/review_form.do")
-	public String reviewForm(@RequestParam int mem_idx,int order_idx,int shop_idx, Model model) {
+	public String reviewForm(@RequestParam int mem_idx, int order_idx, int shop_idx, Model model) {
 
-		//회원 idx로 정보 가져오기
-		MemReviewVo member 	= memReviewMapper.selectOneFromIdx(mem_idx);
+		// 회원 idx로 정보 가져오기
+		MemReviewVo member = memReviewMapper.selectOneFromIdx(mem_idx);
 
-		//해당 가게 리뷰할 메뉴 정보 가져오기
-		MemReviewVo order 	= memReviewMapper.selectMenu(mem_idx, order_idx);
-        //가게 이름 가져오기
-        ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
+		// 해당 가게 리뷰할 메뉴 정보 가져오기
+		MemReviewVo order = memReviewMapper.selectMenu(mem_idx, order_idx);
+		// 가게 이름 가져오기
+		ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
 
 		model.addAttribute("member", member);
 		model.addAttribute("order", order);
@@ -95,9 +90,9 @@ public class ReviewController {
 		return "/member/member_review_form";
 	}// end: member_review_form
 
-	// 회원 리뷰 작성 
+	// 회원 리뷰 작성
 	@RequestMapping("/member/insert_review.do")
-	public String insert_review(MemReviewVo vo,int mem_idx, RedirectAttributes ra,
+	public String insert_review(MemReviewVo vo, int mem_idx, RedirectAttributes ra,
 			@RequestParam(name = "photo") MultipartFile[] photo_array)
 			throws IllegalStateException, IOException {
 
@@ -149,44 +144,36 @@ public class ReviewController {
 		// 입력값 확인용
 		System.out.println(vo);
 
-        ra.addAttribute("mem_idx",mem_idx);
+		ra.addAttribute("mem_idx", mem_idx);
 		return "redirect:/member/review_list.do?";
 	}// end: member_review_form
 
+	//////////////////////////////////////////////////////// 가게//////////////////////////////////////////////////////////////
 
+	// 가게 상세 페이지 리뷰 목록
+	// @GetMapping("/main/detail_review.do")
+	// public String review_detail(@RequestParam int shop_idx, Model model) {
 
+	// List<MemReviewVo> list = memReviewMapper.selectListShop(shop_idx);
 
+	// ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
 
+	// model.addAttribute("review", list);
+	// model.addAttribute("shop", shop);
+	// return "/main/shop_detail_review";
+	// }
 
+	// 가게 상세 페이지 리뷰 목록
+	@GetMapping("/main/detail_review.do")
+	public String detail_review(@RequestParam int shop_idx, Model model) {
 
+		List<MemReviewVo> list = memReviewMapper.selectListShop(shop_idx);
 
+		ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
 
-
-
-////////////////////////////////////////////////////////가게//////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-    //가게 상세 페이지 리뷰 목록
-    @GetMapping("/main/detail_review.do")
-    public String review_detail(@RequestParam int shop_idx, Model model) {
-
-        List<MemReviewVo> list = memReviewMapper.selectListShop(shop_idx);
-
-        model.addAttribute("review", list);
-        return "/main/shop_detail_review";
-    }
-    
-
-
-
-
+		model.addAttribute("review", list);
+		model.addAttribute("shop", shop);
+		return "/main/detail_review";
+	}
 
 }

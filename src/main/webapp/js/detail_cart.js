@@ -3,8 +3,10 @@ function cart_payment(f) {
   let shop_idx = f.shop_idx.value.trim();
   let menu_idx = f.menu_idx.value.trim();
   let amount = f.amount.value.trim();
+  let dfee = $("#shop_dfee").val();
 
-  f.action = "../order/payment_form.do?shop_idx=" + shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
+  // f.action = "../order/payment_form.do?shop_idx=" + shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
+  f.action = "../order/payment_form.do;"; // 결제폼 PaymentController
   f.submit();
 }
 
@@ -36,6 +38,8 @@ function minus(cart_idx) {
         document.getElementById(`cnt_${cart_idx}`).innerText = res_data.cart_cnt;
         // document.getElementById(`amount_\${cart_idx}`).innerText = "₩" + res_data.amount.toLocaleString();
         document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
+
+        $("input[name='amount']").val(parseInt(res_data.total_amount) + parseInt(res_data.shop_dfee));
       },
       error: function (err) {
         console.error(err);
@@ -43,36 +47,7 @@ function minus(cart_idx) {
       },
     });
   } else {
-    $.ajax({
-      url: "../cart/delete.do",
-      type: "POST",
-      data: {
-        cart_idx: cart_idx,
-      },
-      success: function (res_data) {
-        // $(`#row_${cart_idx}`).remove();
-        // document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
-        // 총액 등 갱신
-        document.getElementById("total_amount").innerText = "₩" + res_data.total_amount.toLocaleString();
-
-        // cart_list가 비었으면 detail_cart.jsp 다시 불러오기
-        // if (res_data.is_empty) {
-        //   $("#cart_area").load("../cart/list_view.do");
-        // } else {
-        // 그냥 삭제만 반영 (비어있진 않음)
-        //   $(`#row_${cart_idx}`).remove();
-        // }
-        if (res_data.null == "null") {
-          $("#cart_area").load("../cart/list_view.do");
-        } else {
-          $(`#row_\${cart_idx}`).remove();
-        }
-      },
-      error: function (err) {
-        console.error(err);
-        alert("수량 변경 오류");
-      },
-    });
+    return;
   }
 }
 
@@ -97,6 +72,8 @@ function plus(cart_idx) {
       document.getElementById(`cnt_${cart_idx}`).innerText = res_data.cart_cnt;
       // document.getElementById(`amount_\${cart_idx}`).innerText = "₩" + res_data.amount.toLocaleString();
       document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
+
+      $("input[name='amount']").val(parseInt(res_data.total_amount) + parseInt(res_data.shop_dfee));
     },
     error: function (err) {
       console.error(err);
@@ -115,7 +92,7 @@ function delete_all() {
       mem_idx: mem_idx,
     },
     success: function (res_data) {
-      $("#cart_area").load("/cart/list_view.do");
+      $("#cart_area").load("/cart/list_view.do?mem_idx=" + mem_idx);
     },
     error: function (err) {
       console.error(err);
@@ -124,6 +101,7 @@ function delete_all() {
   });
 }
 
+// cart와 현재 페이지의 shop_idx를 비교
 function checkShop() {
   // shop_idx가 다르면 주문하기 버튼 disable
   let mem_idx = $("#mem_idx").val();
@@ -152,11 +130,14 @@ function checkShop() {
 }
 // 메뉴 1개 삭제
 function delete_one(cart_idx) {
+  let mem_idx = $("#mem_idx").val();
+  let shop_idx = $("#shop_idx").val();
   $.ajax({
     url: "../cart/delete.do",
     type: "POST",
     data: {
       cart_idx: cart_idx,
+      mem_idx: mem_idx,
     },
     success: function (res_data) {
       // $(`#row_${cart_idx}`).remove();
@@ -167,15 +148,19 @@ function delete_one(cart_idx) {
       // if (res_data.is_empty) {
       //   $("#cart_area").load("../cart/list_view.do");
       // } else {
-        // 그냥 삭제만 반영 (비어있진 않음)
+      // 그냥 삭제만 반영 (비어있진 않음)
       //   $(`#row_${cart_idx}`).remove();
       //   document.getElementById("total_amount").innerText = "₩" + res_data.total_amount.toLocaleString();
       // }
       if (res_data.null == "null") {
-        $("#cart_area").load("../cart/list_view.do");
+        // $("#cart_area").load("../cart/list_view.do");
+        $(".cart").load("../cart/list_view.do?mem_idx=" + mem_idx);
       } else {
-        $(`#row_\${cart_idx}`).remove();
+        $(`#row_${cart_idx}`).remove();
+        document.getElementById(`total_amount`).innerText = "₩" + res_data.total_amount.toLocaleString();
       }
+
+      $("input[name='amount']").val(parseInt(res_data.total_amount) + parseInt(res_data.shop_dfee));
     },
     error: function (err) {
       console.error(err);

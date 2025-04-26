@@ -30,17 +30,12 @@
       list-style: none;
     }
     </style>
-
-    <script>
-      $(document).ready(function () {
-        checkShop(); // 페이지 로드 시 한 번 실행
-      });
-    
-    </script>
   </head>
   <body>
     <form class="form-inline" method="POST">
-    <div id="cart_area">
+      <div id="cart_area">
+      <input type="hidden" name="shop_idx" id="shop_idx" value="${shop.shop_idx}">
+      <input type="hidden" name="mem_idx" id="mem_idx" value="${user.mem_idx}">
     <div>주문표/<span onclick="delete_all();">🗑️</span></div>
       <c:choose>
       <c:when test="${empty cart_list}">
@@ -51,9 +46,9 @@
 
       <c:otherwise>      
       <c:forEach var="cart" items="${cart_list}">
-        <input type="hidden" name="shop_idx" id="shop_idx" value="${cart.shop_idx}">
+        <!-- <input type="hidden" name="shop_idx" id="shop_idx" value="${cart.shop_idx}"> -->
         <input type="hidden" name="menu_idx" id="menu_idx" value="${cart.menu_idx}">
-        <input type="hidden" name="mem_idx" id="mem_idx" value="${cart.mem_idx}">
+        <!-- <input type="hidden" name="mem_idx" id="mem_idx" value="${cart.mem_idx}"> -->
         <li class="cart_li" id="row_${cart.cart_idx}">
           <div id="menu_name">${cart.menu_name}</div>
           <div class="row">
@@ -86,6 +81,6 @@
       <div><input type="button" class="btn btn-primary" id="btn_order" value="주문하기" onclick="cart_payment(this.form);" disabled="disabled"></div>
 </div>
   </form>
-  <script src="${pageContext.request.contextPath}/js/detail_cart.js"></script>
+  <!-- <script src="${pageContext.request.contextPath}/js/detail_cart.js"></script> -->
   </body>
 </html>

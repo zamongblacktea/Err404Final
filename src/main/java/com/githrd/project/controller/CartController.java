@@ -121,19 +121,20 @@ public class CartController {
     }
 
     // 장바구니 리스트 조회 뷰
-    @GetMapping("/list_view.do")
-    public String list_view(Model model) {
+    @RequestMapping(value = "/list_view.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String list_view(@RequestParam int mem_idx, Model model) {
 
         MemberVo user = (MemberVo) session.getAttribute("user");
-        int mem_idx = user.getMem_idx();
+        // int mem_idx = user.getMem_idx();
 
         // 회원별 장바구니 목록
         List<CartVo> cart_list = cartService.selectList(mem_idx);
         // if (cart_list == null || cart_list.isEmpty()) {
-        //     model.addAttribute("cart_list", new ArrayList<CartVo>());
+        // model.addAttribute("cart_list", new ArrayList<CartVo>());
         // }
 
-        if(cart_list.size()==0) model.addAttribute("null","null");
+        if (cart_list.size() == 0)
+            model.addAttribute("null", "null");
 
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
         // int shop_idx = cart_list.get(0).getShop_idx();
@@ -142,6 +143,7 @@ public class CartController {
         session.getAttribute("shop_dfee");
         model.addAttribute("cart_list", cart_list);
         model.addAttribute("total_amount", total_amount);
+        model.addAttribute("user", user);
         // model.addAttribute("dfee", shop_dfee);
 
         return "main/detail_cart";
@@ -158,7 +160,7 @@ public class CartController {
     // 장바구니 메뉴 삭제
     @PostMapping("/delete.do")
     @ResponseBody
-    public Map<String, Object> delete(@RequestParam int cart_idx) {
+    public Map<String, Object> delete_one(@RequestParam int cart_idx) {
 
         CartVo vo = cartService.selectOne(cart_idx);
         cartService.menuDelete(cart_idx);
@@ -169,11 +171,13 @@ public class CartController {
 
         Map<String, Object> map = new HashMap<>();
 
-        if(list.size()==0) map.put("null","null");
+        if (list.size() == 0)
+            map.put("null", "null");
 
         map.put("total_amount", total_amount);
-        map.put("is_empty", list == null || list.isEmpty());
         map.put("total", total_amount + shop_dfee);
+        map.put("shop_dfee", shop_dfee);
+        // map.put("is_empty", list == null || list.isEmpty());
 
         return map;
     }
@@ -193,6 +197,7 @@ public class CartController {
         map.put("amount", vo.getAmount());
         map.put("total_amount", total_amount);
         map.put("total", shop_dfee + total_amount);
+        map.put("shop_dfee", shop_dfee);
 
         return map;
     }
@@ -212,6 +217,7 @@ public class CartController {
         map.put("amount", vo.getAmount());
         map.put("total_amount", total_amount);
         map.put("total", shop_dfee + total_amount);
+        map.put("shop_dfee", shop_dfee);
 
         return map;
     }
