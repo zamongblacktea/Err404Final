@@ -27,11 +27,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </insert>
 
 
+      <!-- mem_idx,mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
+      <select id="selectOne" parameterType="int" resultType="MemberAddrVo">
+        SELECT * FROM mem_addr
+        WHERE mem_idx = #{mem_idx} and mcuraddr_idx = #{mcuraddr_idx}
+      </select>
+   
+
+
     <!-- 주소록수정 -->
    <update id="update" parameterType="MemberAddrVo">
      UPDATE mem_addr SET mem_addr1  = #{ mem_addr1 },
                          mem_addr2  = #{ mem_addr2 },
-                         mem_name   = #{ mem_name }
+                         addr_name   = #{ addr_name }
      WHERE mcuraddr_idx = #{ mcuraddr_idx }
    </update>
 
@@ -42,15 +50,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

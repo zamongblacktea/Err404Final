@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/bar.css">
 
+<!-- 다음 주소검색 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 
 <style>
 body {
@@ -201,28 +204,168 @@ h {
 	}
 
 //주소록 modal Ajax로 띄우기
-	$(document).ready(function(){
+$(document).ready(function () {
+  $('#openAddrModalBtn').on('click', function () {
+    const mem_idx = $('#mem_idx').val();
+	
+    $.ajax({
+      url: '../member/address.do',
+      type: 'GET',
+      data: { mem_idx: mem_idx },
+      success: function (data) {
+        $('#addressModalBody').html(data); // (수정된 부분)
+        const modal = new bootstrap.Modal(document.getElementById('myModal'));
+        modal.show();
+      },
+      error: function (xhr, status, error) {
+        alert('주소록 로딩 실패: ' + error);
+      }
+    });
+  });
 
-	function loadAddrModal() {
+});//end: addr ajax
+
+$(document).ready(function () {
+  $('#closeModal').on('click', function () {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('myModal'));
+    if (modal) {
+      modal.hide();
+    }
+  });
+});//end : closeModal
+
+
+
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+	
+
+	function send(f) {
+
+		//입력값 체크
+		let mem_idx = f.mem_idx.value;
+		let mcuraddr_idx = f.mcuraddr_idx.value;
+		let addr_name = f.addr_name.value.trim();
+		let mem_addr1 = f.mem_zipcode.value.trim();
+		let mem_addr2 = f.mem_addr.value.trim();
+
+
+		if (addr_name == "") {
+
+			alert("주소록 이름을 입력하세요!");
+			f.addr_name.value = "";
+			f.addr_name.focus();
+			return;
+		}
+
+
+
+		if (mem_addr1 == "") {
+
+			alert("우편번호 입력하세요!");
+			f.mem_zipcode.value = "";
+			f.mem_zipcode.focus();
+			return;
+		}
+
+		if (mem_addr2 == "") {
+
+			alert("주소를 입력하세요!");
+			f.mem_addr.value = "";
+			f.mem_addr.focus();
+			return;
+		}
+
+
+		f.action = "addr_modify.do";// MemberModifyAction
+		f.submit();
+
+	}//end:send()
+
+
+
+
+	//주소검색
+	function find_curaddr() {
+
+
+
+
+		const width = 500; //팝업의 너비
+		const height = 600; //팝업의 높이
+		new daum.Postcode({
+			width: width, //생성자에 크기 값을 명시적으로 지정해야 합니다.
+			height: height,
+			oncomplete: function (data) {
+				//data : JOSN형식
+				//  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
+				//console.log(data);
+				$("#mem_zipcode").val(data.zonecode);
+				$("#mem_addr").val(data.address);
+
+			}
+		}).open({
+			left: (window.screen.width / 2) - (width / 2),
+			top: (window.screen.height / 2) - (height / 2)
+		});
+
+
+	}
+
+
+
+
+function updateAddress() {
+const mem_idx = $('#mem_idx').val();
+const mcuraddr_idx = $('#mcuraddr_idx').val();
+const addr_name = $('#addr_name').val();
+const mem_zipcode = $('#mem_zipcode').val();
+const mem_addr = $('#mem_addr').val();
+console.log("mcuraddr_idx:", $('#mcuraddr_idx').val());
+
+
+$.ajax({
+url: '/member/address_modify.do',
+type: 'POST',
+data: {
+mem_idx: mem_idx,
+mcuraddr_idx: mcuraddr_idx,
+addr_name: addr_name,
+mem_addr1: mem_zipcode,
+mem_addr2: mem_addr
+},
+success: function(response) {
+alert('주소 수정 완료');
+      // 수정 성공시 다시 주소록 목록을 불러오기
+      reloadAddressList(mem_idx);
+	// 필요하면 화면 새로고침하거나 데이터 다시 로딩
+},
+error: function(xhr, status, error) {
+alert('수정 실패: ' + error);
+}
+});
+}
+
+function reloadAddressList(mem_idx) {
   $.ajax({
-    url: 'member/address.do', // 주소록 JSP
+    url: '/member/address.do',
     type: 'GET',
-	data: {
-			"mem_idx": mem_idx,
-
-	},
-    success: function (data) {
-      $('#addrModalBody').html(data); // 모달 안에 삽입
-      const modal = new bootstrap.Modal(document.getElementById('addrModal'));
-      modal.show();
+    data: { mem_idx: mem_idx },
+    success: function(response) {
+      $('#addressModalBody').html(response);
     },
-    error: function (xhr, status, error) {
-      alert('주소록 로딩 실패: ' + error);
+    error: function(xhr, status, error) {
+      alert('주소록 목록 로딩 실패: ' + error);
     }
   });
 }
 
-});
 
 </script>
 
@@ -256,29 +399,26 @@ h {
 					<!-- 모달 구조 -->
 					<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
-						<div class="modal-content">
-					
+						  <div class="modal-content">
+					  
 							<!-- 모달 헤더 -->
 							<div class="modal-header">
-							<h5 class="modal-title" id="myModalLabel">주소록</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+							  <h5 class="modal-title" id="myModalLabel">주소록</h5>
 							</div>
-					
+					  
 							<!-- 모달 바디 -->
-
-							<div class="modal-body">
-	
-
+							<div class="modal-body" id="addressModalBody">
+									<!-- ajax 처리 -->
+							</div>
+					  
 							<!-- 모달 푸터 -->
 							<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-							<button type="button" class="btn btn-primary">확인</button>
+							  <button type="button" class="btn btn-secondary" id="closeModal" >닫기</button>
 							</div>
-							</div>
+					  
+						  </div>
 						</div>
-					</div>
-					
-				</div>
+					  </div>
 				<div class="mb-3">
 					<label for="name" class="form-label">이름</label> <input type="text"
 						class="form-control" id="mem_name" name="mem_name"
@@ -329,33 +469,6 @@ h {
 	<div class="footer"></div>
 
 
-	<script>
-		$(document).ready(function () {
-  $('#openAddrModalBtn').on('click', function () {
-    const mem_idx = $('#mem_idx').val();
-
-    $.ajax({
-      url: '../member/address.do',
-      type: 'GET',
-      data: {
-        mem_idx: mem_idx
-      },
-      success: function (data) {
-        $('#addrModalBody').html(data); // 모달에 주소 목록 삽입
-        const modal = new bootstrap.Modal(document.getElementById('myModal'));
-        modal.show();
-      },
-      error: function (xhr, status, error) {
-        alert('주소록 로딩 실패: ' + error);
-      }
-    });
-  });
-});
-
-
-
-
-	</script>
 
 </body>
 </html>
