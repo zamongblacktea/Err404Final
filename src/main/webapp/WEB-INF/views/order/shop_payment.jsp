@@ -402,7 +402,7 @@ h {
 			<form id="bookingForm">
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
 				<!-- 테스트 후 변경해야 함 -->
-				<input type="hidden" name="shop_idx" id="shop_idx" value="${ param.shop_idx }"> 
+				<input type="hidden" name="shop_idx" id="shop_idx" value="${ shop_idx }"> 
 				<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
 				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx">
 				<div class="mb-3">

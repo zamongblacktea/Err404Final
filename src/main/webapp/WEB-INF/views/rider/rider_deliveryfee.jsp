@@ -135,7 +135,7 @@
 <body>
     <div class="header">
         <h2>배달 완료 목록</h2>
-        <form action="list.do" method="get" class="form-inline">
+        <form action="deliveryfeefilter.do" method="get" class="form-inline">
           <input type="hidden" name="rider_idx" value="${param.rider_idx}" />
   
           <!-- html5에서 지원하는 달력 태그 형식 -->
@@ -182,7 +182,7 @@
         <thead>
           <tr>
             <th>가게 이름</th>
-            <th>주문 번호</th>
+            <!-- <th>주문 번호</th> -->
             <th>주문 날짜</th>
             <th>배달 주소</th>
             <th>배 달 료</th>
@@ -192,10 +192,9 @@
           <c:forEach var="vo" items="${riderdelivery_list}">
               <tr>
               <td>${vo.shop_name}</td>
-              <td>${vo.order_check}</td>
+              <%-- <td>${vo.order_check}</td> --%>
               <td>${vo.pay_regdate}</td>
               <td>${vo.mem_addr1}, ${vo.mem_addr2}</td>
-
               <td>${vo.delivery_fee} 원</td>
             </tr>  
           </c:forEach>

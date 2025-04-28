@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.RiderAddrMapper">
+
+  <select id="selectList" resultType="RiderAddrVo">
+    select * from rider_addr where r_addr_idx = #{r_addr_idx}
+  </select>
+
+  <insert id="insert" parameterType="RiderAddrVo">
+    insert into rider_addr values(null,
+                                #{rider_addr},
+                                #{rider_idx}
+                                )
+ </insert>
+
+ </mapper>

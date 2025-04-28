@@ -106,7 +106,7 @@
             <c:forEach var="menu" items="${menu}">
               <form onsubmit="insert_cart(this); return false;">
                 <input type="hidden" id="menu_idx" name="menu_idx" value="${menu.menu_idx}">
-                <input type="hidden" id="shop_idx" name="shop_idx" value="${menu.shop_idx}">
+                <input type="hidden" id="shop_idx" name="shop_idx" value="${param.shop_idx}">
                 <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}">
                 
                 <div class="row" onclick="this.closest('form').requestSubmit();">
