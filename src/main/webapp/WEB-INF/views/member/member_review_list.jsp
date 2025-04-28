@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+    테스트
 <c:forEach var="vo" items="${ list }">
 가게 이름 : ${vo.shop_name} <br>
 주문 메뉴 : ${vo.menu_name} <br>

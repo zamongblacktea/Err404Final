@@ -123,6 +123,7 @@
   </head>
 
   <body>
+
     <!-- 상단 nav -->
     <div id="nav">
       <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />

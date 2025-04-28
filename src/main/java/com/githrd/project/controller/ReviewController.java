@@ -19,6 +19,7 @@ import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.dao.ShopInfoMapper;
+import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.OrderStatusVo;
@@ -46,6 +47,9 @@ public class ReviewController {
 
 	@Autowired
 	ShopInfoMapper shopInfoMapper;
+
+	@Autowired
+	ShopService shopService;
 
 	@Autowired
 	HttpSession session;
@@ -136,6 +140,8 @@ public class ReviewController {
 
 		try {
 			insert_review_no = memReviewMapper.insert(vo);
+			int update_rate = shopService.rateUpdate(vo.getShop_idx());
+			System.out.println(update_rate);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -143,6 +149,8 @@ public class ReviewController {
 
 		// 입력값 확인용
 		System.out.println(vo);
+
+		
 
 		ra.addAttribute("mem_idx", mem_idx);
 		return "redirect:/member/review_list.do?";
