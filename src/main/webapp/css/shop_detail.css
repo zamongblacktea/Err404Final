@@ -1,0 +1,153 @@
+/* shop_detail.jsp */
+* {
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding-left: 0;
+}
+
+#mybox {
+  margin: 0 auto;
+  /* width: 1150px; */
+  /* width: 800px; */
+  width: 750px;
+  /* padding-left: 10px; */
+  display: inline-block;
+}
+
+.navbar {
+  width: 100%;
+  height: 80px;
+}
+
+.header {
+  width: 100%;
+  height: 160px;
+  /* height: 100px; */
+  background: url("../images/헤더이미지1.png");
+  background-size: cover;
+  background-position: center 50%;
+}
+
+#search_form {
+  width: 550px;
+  margin: 0 auto;
+  margin-top: 50px;
+  z-index: 2;
+}
+
+#search {
+  width: 450px;
+  height: 50px;
+  display: inline;
+}
+
+.btn_search {
+  width: 70px;
+  height: 50px;
+  display: inline-block;
+}
+
+.shop-detail {
+  width: 1150px;
+  /* display: block; */
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+}
+
+.shop-title {
+  margin-bottom: 0;
+  height: 43px;
+  width: 100%;
+}
+
+.shop-content {
+  height: 100px;
+  width: 100%;
+}
+
+.shop-notice {
+  margin-bottom: 10px;
+  height: 44px;
+}
+
+#shop_logo {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.list {
+  display: inline-block;
+  /* margin-left: 15px; */
+  margin-top: 10px;
+}
+
+/* .list > li {
+  list-style: none;
+} */
+
+li{
+  list-style: none;
+}
+
+.content_nav {
+  height: 47px;
+}
+
+.content_nav > li {
+  list-style: none;
+  display: inline-block;
+}
+
+.cart {
+  width: 280px;
+  min-height: 400px; /* 기본 높이 설정 */
+  border: 1px solid #ccc;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  margin-left: 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  flex-shrink: 0; /* 붙는 거 방지 */
+}
+
+.footer {
+  width: 100%;
+  height: 150px;
+  display: block;
+}
+
+
+/* detail_menu */
+
+.menu-text {
+  width: 520px;
+  margin-top: 10px;
+}
+
+.menu-img {
+  width: 112px;
+  height: 80px;
+  margin-left: 140px;
+}

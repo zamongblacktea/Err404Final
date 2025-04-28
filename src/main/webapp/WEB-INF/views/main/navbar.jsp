@@ -19,7 +19,7 @@
     }
 
 
-    img{
+    #logo_img{
         margin: 0 auto;
         width: 310px;
         height: 75px;
@@ -39,7 +39,7 @@
 </head>
 <body>
     <div class="navbar">
-                    <img src="${pageContext.request.contextPath}/images/로고.png" onclick="location" >            
+                    <img id="logo_img" src="${pageContext.request.contextPath}/images/로고.png" onclick="location" >            
                     
                     <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
                     <c:if test="${ empty sessionScope.user }">

@@ -403,11 +403,5 @@ public class ShopServiceImpl implements ShopService {
         return shopInfoMapper.rateUpdate(shop_idx);
     }
 
-    // 가게 별점 조회
-    @Override
-    public double selectShopRating(int shop_idx) {
-        return shopInfoMapper.selectShopRating(shop_idx);
-    }
-
 
 }

@@ -57,9 +57,6 @@ public interface ShopService {
         // 가게 배달비 조회
         int selectShopDfee(int shop_idx);
 
-        // 가게 별점 평균 조회
-        double selectShopRating(int shop_idx);
-
         // 가게 별점 수정
         int rateUpdate(int shop_idx);
 }

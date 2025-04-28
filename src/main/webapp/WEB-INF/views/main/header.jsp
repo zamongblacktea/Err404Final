@@ -13,9 +13,35 @@
             background-position: center 50%;
         }
 
+        #search_form{
+            width: 550px;
+            margin: 0 auto;
+            margin-top: 165px;
+            z-index: 2;
+        }
+
+        #search{
+            width: 450px;
+            height: 50px;
+            display: inline;
+        }
+
+        .btn_search{
+            width: 70px;
+            height: 50px;
+            display: inline-block;
+        }
+
     </style>
 </head>
 <body>
-    <div class="header"></div>
+    <div class="header">
+        <form id="search_form" action="">
+            <input type="text" id="search" class="form-control">
+            <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
+        </form>
+
+
+    </div>
 </body>
 </html>
