@@ -88,7 +88,7 @@ public class CartController {
     }
 
     // 장바구니 리스트 조회
-    @GetMapping("/list.do")
+    @RequestMapping(value = "/list.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String cart_list(Model model, RedirectAttributes ra) {
 
         MemberVo user = (MemberVo) session.getAttribute("user");
@@ -113,6 +113,7 @@ public class CartController {
         int shop_dfee = shopService.selectShopDfee(shop_idx);
         System.out.println(shop_dfee);
 
+        model.addAttribute("shop_idx", shop_idx);
         model.addAttribute("cart_list", cart_list);
         model.addAttribute("total_amount", total_amount);
         model.addAttribute("shop_dfee", shop_dfee);
@@ -130,10 +131,11 @@ public class CartController {
         // 회원별 장바구니 목록
         List<CartVo> cart_list = cartService.selectList(mem_idx);
         // if (cart_list == null || cart_list.isEmpty()) {
-        //     model.addAttribute("cart_list", new ArrayList<CartVo>());
+        // model.addAttribute("cart_list", new ArrayList<CartVo>());
         // }
 
-        if(cart_list.size()==0) model.addAttribute("null","null");
+        if (cart_list.size() == 0)
+            model.addAttribute("null", "null");
 
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
         // int shop_idx = cart_list.get(0).getShop_idx();
@@ -169,7 +171,8 @@ public class CartController {
 
         Map<String, Object> map = new HashMap<>();
 
-        if(list.size()==0) map.put("null","null");
+        if (list.size() == 0)
+            map.put("null", "null");
 
         map.put("total_amount", total_amount);
         map.put("is_empty", list == null || list.isEmpty());
