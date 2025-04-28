@@ -80,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           where rider_idx=#{rider_idx} and delivery_status='배달완료'
   </select>
 
+<!--  -->
   <select id="selectDeliveryFeeFilterList" parameterType="Map" resultType="DeliveryVo">
           select 
             d.*,

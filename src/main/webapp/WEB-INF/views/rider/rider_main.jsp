@@ -15,7 +15,20 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- 구글 폰트 hi-melody  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Gamja+Flower&family=Hi+Melody&family=Poor+Story&display=swap" rel="stylesheet">
+
 <style type="text/css">
+    
+    
+  .hi-melody-regular {
+  font-family: "Hi Melody", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
   
   #box{
     width: 1000px;
@@ -214,7 +227,7 @@ pageEncoding="UTF-8"%>
     <img src="${pageContext.request.contextPath}/images/로고.png"> 
   
       <br>
-      <p style="text-align: center;">
+      <p style="text-align: center;" class="hi-melody-regular";>
       
         오늘도 안전운행! 라이더님 전용 화면입니다*^^* </p>
       <div  class="nav" style="text-align: center; padding-left: 700px;">

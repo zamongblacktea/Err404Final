@@ -182,7 +182,7 @@
         <thead>
           <tr>
             <th>가게 이름</th>
-            <!-- <th>주문 번호</th> -->
+            <th>주문 번호</th>
             <th>주문 날짜</th>
             <th>배달 주소</th>
             <th>배 달 료</th>
@@ -192,7 +192,7 @@
           <c:forEach var="vo" items="${riderdelivery_list}">
               <tr>
               <td>${vo.shop_name}</td>
-              <%-- <td>${vo.order_check}</td> --%>
+              <td>${vo.order_idx}</td>
               <td>${vo.pay_regdate}</td>
               <td>${vo.mem_addr1}, ${vo.mem_addr2}</td>
               <td>${vo.delivery_fee} 원</td>
@@ -200,7 +200,9 @@
           </c:forEach>
         </tbody>
       </table>
-
+      
+      <hr>
+      <h3>총수입</h3>
       <!-- <h3>총 수입: ${총배달금액} 원</h3> -->
     
 </body>
