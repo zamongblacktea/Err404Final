@@ -4,19 +4,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.githrd.project.dao.MemberAddrMapper">
 
-   <!-- 회원전체조회 -->
-   <select id="selectList" resultType="MemberAddrVo">
-     select * from mem_addr order by mem_idx
-   </select>
 
-   <!-- mem_idx에 해당되는 회원정보 1건  -->
-   <select id="selectOneFromIdx" parameterType="int" resultType="MemberAddrVo">
+
+   <!-- mem_idx에 해당되는 주소록 가져오기  -->
+   <select id="selectList" parameterType="int" resultType="MemberAddrVo">
      select * from mem_addr where mem_idx=#{ mem_idx }
    </select>
 
 
-
-   <!-- 회원추가 -->
+   <!-- 주소록추가 -->
    <insert id="insert" parameterType="MemberAddrVo">
      insert into mem_addr values(
                           null,
@@ -24,15 +20,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ mem_addr1 },
                           #{ mem_addr2 },
                           #{ mem_longitude },
-                          #{ mem_latitude }
+                          #{ mem_latitude },
+                          #{ addr_name }
 
                           )
    </insert>
 
 
-   <!-- 회원삭제 -->
+      <!-- mem_idx,mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
+      <select id="selectOne" parameterType="int" resultType="MemberAddrVo">
+        SELECT * FROM mem_addr
+        WHERE mem_idx = #{mem_idx} and mcuraddr_idx = #{mcuraddr_idx}
+      </select>
+   
+
+
+    <!-- 주소록수정 -->
+   <update id="update" parameterType="MemberAddrVo">
+     UPDATE mem_addr SET mem_addr1  = #{ mem_addr1 },
+                         mem_addr2  = #{ mem_addr2 },
+                         addr_name   = #{ addr_name }
+     WHERE mcuraddr_idx = #{ mcuraddr_idx }
+   </update>
+
+   <!-- 주소 삭제 -->
    <delete id="delete" parameterType="int">
-     delete from mem_addr where mem_idx=#{ mem_idx }
+     delete from mem_addr where mcuraddr_idx = #{ mcuraddr_idx }
    </delete>
 
   <!-- 고객주소 얻기 -->
@@ -42,15 +55,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       WHERE mem_idx = #{mem_idx}
   </select>
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

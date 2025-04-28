@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/bar.css">
 
+<!-- 다음 주소검색 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 
 <style>
 body {
@@ -126,6 +129,7 @@ h {
 			buyer_curaddr : mem_addr1,
 		}, function(response) {
 			if (response.success) {
+				console.log("서버 전송 mcuraddr_idx:", mcuraddr_idx);
 				console.log("결제 성공:", response);
 				alert("결제가 완료되었습니다! 결제 ID: " + response.imp_uid);
 
@@ -160,9 +164,6 @@ h {
 
 
 		//alert(`[\${mem_idx}]`);
-		//Rest APi 형식으로 보내기
-		//test 용으로 idx 값 1로 설정
-		//실제 연동할 땐 mem_idx 제외 다 연동값 들어가게 설정해야 함 "mcuraddr_idx" : mcuraddr_idx, 추가
 		console.log("서버 전송 mem_idx:", mem_idx);
 		$.ajax({
 			url : "verify.do",
@@ -200,31 +201,249 @@ h {
 		});
 	}
 
+</script>
+
+<!-- modal -->
+<script>
+	// 모달 인스턴스 전역 선언
+	let myModal;
+  
+	$(document).ready(function () {
+	  // 모달 인스턴스 초기화
+	  myModal = new bootstrap.Modal(document.getElementById('myModal'));
+  
+	  // 주소록 열기
+	  $('#openAddrModalBtn').on('click', function () {
+		const mem_idx = $('#mem_idx').val();
+  
+		$.ajax({
+		  url: '../member/address.do',
+		  type: 'GET',
+		  data: { mem_idx: mem_idx },
+		  success: function (data) {
+			$('#addressModalBody').html(data);
+			myModal.show();
+		  },
+		  error: function (xhr, status, error) {
+			alert('주소록 로딩 실패: ' + error);
+		  }
+		});
+	  });
+  
+	  // 주소 등록 폼 열기
+	  $('#insertAddr').on('click', function () {
+		const mem_idx = $('#mem_idx').val();
+  
+		$.ajax({
+		  url: '/member/address_insert_form.do',
+		  type: 'GET',
+		  data: { mem_idx: mem_idx },
+		  success: function (data) {
+			$('#addressModalBody').html(data);
+			myModal.show();
+		  },
+		  error: function (xhr, status, error) {
+			alert('주소 등록 폼 로딩 실패: ' + error);
+		  }
+		});
+	  });
+  
+	  // 모달 닫기
+	  $('#closeModal').on('click', function () {
+		myModal.hide();
+	  });
+	});
+  
+	// 주소 선택
+	function selectAddr(addr1, addr2,mcuraddr_idx) {
+	  if (confirm("해당 주소로 변경하시겠습니까?")) {
+		$('#mem_addr1').val(addr1);
+		$('#mem_addr2').val(addr2);
+		$('#mcuraddr_idx').val(mcuraddr_idx);
+		myModal.hide();
+	  }
+	}
+  
+	// 주소 수정 폼 열기
+	function addr_modify(mem_idx, mcuraddr_idx) {
+	  $('#mem_idx').val(mem_idx);
+	  $('#mcuraddr_idx').val(mcuraddr_idx);
+  
+	  $.ajax({
+		url: '/member/address_modify_form.do',
+		type: 'GET',
+		data: { mem_idx: mem_idx, mcuraddr_idx: mcuraddr_idx },
+		success: function (response) {
+		  $('#addressModalBody').html(response);
+		  myModal.show();
+		},
+		error: function (xhr, status, error) {
+		  alert('주소 수정 폼 로딩 실패: ' + error);
+		}
+	  });
+	}
+  
+	// 주소 등록 Ajax
+	function insertAddress() {
+	  const mem_idx = $('#mem_idx').val();
+	  const addr_name = $('#addr_name').val();
+	  const mem_zipcode = $('#mem_zipcode').val();
+	  const mem_addr = $('#mem_addr').val();
+  
+	  $.ajax({
+		url: '/member/address_insert.do',
+		type: 'POST',
+		data: {
+		  mem_idx: mem_idx,
+		  addr_name: addr_name,
+		  mem_addr1: mem_zipcode,
+		  mem_addr2: mem_addr
+		},
+		success: function (response) {
+		  alert('주소 등록 완료');
+		  reloadAddressList(mem_idx);
+		},
+		error: function (xhr, status, error) {
+		  alert('등록 실패: ' + error);
+		}
+	  });
+	}
+  
+	// 주소 수정 Ajax
+	function updateAddress() {
+	  const mem_idx = $('#mem_idx').val();
+	  const mcuraddr_idx = $('#mcuraddr_idx').val();
+	  const addr_name = $('#addr_name').val();
+	  const mem_zipcode = $('#mem_zipcode').val();
+	  const mem_addr = $('#mem_addr').val();
+  
+	  $.ajax({
+		url: '/member/address_modify.do',
+		type: 'POST',
+		data: {
+		  mem_idx: mem_idx,
+		  mcuraddr_idx: mcuraddr_idx,
+		  addr_name: addr_name,
+		  mem_addr1: mem_zipcode,
+		  mem_addr2: mem_addr
+		},
+		success: function (response) {
+		  alert('주소 수정 완료');
+		  reloadAddressList(mem_idx);
+		},
+		error: function (xhr, status, error) {
+		  alert('수정 실패: ' + error);
+		}
+	  });
+	}
+  
+	// 주소 목록 다시 불러오기
+	function reloadAddressList(mem_idx) {
+	  $.ajax({
+		url: '/member/address.do',
+		type: 'GET',
+		data: { mem_idx: mem_idx },
+		success: function (response) {
+		  $('#addressModalBody').html(response);
+		},
+		error: function (xhr, status, error) {
+		  alert('주소록 목록 로딩 실패: ' + error);
+		}
+	  });
+	}
+  </script>
+  
+
+<script type="text/javascript">
+
+
+	//주소검색
+	function find_curaddr() {
+
+
+
+
+		const width = 500; //팝업의 너비
+		const height = 600; //팝업의 높이
+		new daum.Postcode({
+			width: width, //생성자에 크기 값을 명시적으로 지정해야 합니다.
+			height: height,
+			oncomplete: function (data) {
+				//data : JOSN형식
+				//  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
+				//console.log(data);
+				$("#mem_zipcode").val(data.zonecode);
+				$("#mem_addr").val(data.address);
+
+			}
+		}).open({
+			left: (window.screen.width / 2) - (width / 2),
+			top: (window.screen.height / 2) - (height / 2)
+		});
+
+
+	}
+
+
+
+
+
+
 
 </script>
+
 
 </head>
 <body>
 	<div class="container">
 
 		<div class="rsvform shadow">
-			<h2 class="text-center mb-4">결제 페이지</h2>
+			<h2 class="text-center mb-4">결제 하기</h2>
 			<form id="bookingForm">
 				<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
 				<!-- 테스트 후 변경해야 함 -->
 				<input type="hidden" name="shop_idx" id="shop_idx" value="${ param.shop_idx }"> 
 				<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
-				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx" value="${ vo.mcuraddr_idx }">
+				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx">
 				<div class="mb-3">
 					<label for="addr" class="form-label">주소</label> <input type="text"
 							class="form-control" id="mem_addr1" name="mem_addr1"
-							value="${ vo.mem_addr1 } " required>
+							value="${ vo.mem_zipcode } " required>
 				</div>
 				<div class="mb-3">
 					<label for="addr" class="form-label">상세주소</label> <input type="text"
 							class="form-control" id="mem_addr2" name="mem_addr2"
-							value="${ vo.mem_addr2 } " required>
-				</div>
+							value="${ vo.mem_addr } " required>
+					<!-- 모달 트리거 버튼 -->
+					<button type="button" class="btn btn-primary" id="openAddrModalBtn">
+						주소록 열기
+					</button>
+  
+					
+					<!-- 모달 구조 -->
+					<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+						  <div class="modal-content">
+					  
+							<!-- 모달 헤더 -->
+							<div class="modal-header">
+							  <h5 class="modal-title" id="myModalLabel">주소록</h5>
+							</div>
+					  
+							<!-- 모달 바디 -->
+							<div class="modal-body" id="addressModalBody">
+									<!-- ajax 처리 -->
+							</div>
+					  
+							<!-- 모달 푸터 -->
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-primary" id="insertAddr" >주소등록</button>
+							  <button type="button" class="btn btn-secondary" id="closeModal" >닫기</button>
+							</div>
+					  
+						  </div>
+						</div>
+					  </div>
 				<div class="mb-3">
 					<label for="name" class="form-label">이름</label> <input type="text"
 						class="form-control" id="mem_name" name="mem_name"
@@ -249,30 +468,36 @@ h {
 
 	
 		</div>
-		<div class="acominfo shadow">
-			<h4>주문 내역</h4>
-			<div class="acom-img">
-				주문 정보 입력
-			</div>
-			<div class="hr">
-				<hr style="border: 1px solid black;">
-			</div>
-			<div class="btn">
-				<input type="button" class="search-btn"
-					onclick="requestPay()" value="결제하기">
-			</div>
 
-			<div style="clear: both;"></div>
-		</div>
-		</form>
+
 
 
 
 	</div>
 
 
+</form>
+<div class="acominfo shadow">
+	<h4>주문 내역</h4>
+	<div class="acom-img">
+		주문 정보 입력
+	</div>
+	<div class="hr">
+		<hr style="border: 1px solid black;">
+	</div>
+	<div class="btn">
+		<input type="button" class="btn btn-success"
+			onclick="requestPay()" value="결제하기">
+	</div>
+
+
+</div>
+<div style="clear: both;"></div>
+
 
 	<div class="footer"></div>
+
+
 
 </body>
 </html>

@@ -13,5 +13,7 @@ public class MemberAddrVo {
     String mem_addr2;
     double mem_latitude;
     double mem_longitude; 
+    String addr_name;
+    int mem_idx;
     
 }
