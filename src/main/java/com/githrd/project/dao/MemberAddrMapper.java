@@ -20,6 +20,8 @@ public interface MemberAddrMapper {
     public MemberAddrVo selectOne(int mem_idx, int mcuraddr_idx);
 
     public int update(MemberAddrVo vo);
+
+    public int insert(MemberAddrVo vo);
 		
 
 
