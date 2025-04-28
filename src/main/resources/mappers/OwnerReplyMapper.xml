@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.OwnerReplyMapper">
+
+  <!-- 회원전체조회 -->
+  <select id="selectList" resultType="OwnerVo">
+     select * from owner order by owner_idx
+  </select>
+  
+  <!-- owner_idx에 해당되는 회원정보 1건  -->
+  <select id="selectOneFromIdx"  parameterType="int"  resultType="OwnerVo">
+     select * from owner where owner_idx=#{ owner_idx }
+  </select>
+  
+  <!-- owner_id에 해당되는 회원정보 1건  -->
+  <select id="selectOneFromId"  parameterType="String"  resultType="OwnerVo">
+     select * from owner where owner_id=#{ owner_id }
+  </select>
+
+
+  <!-- 회원추가 -->
+  <insert id="insert"  parameterType="OwnerVo">
+     insert into owner values(
+                          null,
+                          #{ owner_id },
+                          #{ owner_pwd },
+                          #{ owner_name },
+                          #{ owner_email },
+                          #{ owner_ip }, 
+                           now(),
+                           null,
+                           #{ owner_num },
+                          '대기')
+  </insert>
+  
+
+</mapper>
