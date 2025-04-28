@@ -53,7 +53,7 @@ public class OrderStatusController {
     //주문현황 페이지 폼 열기
     @GetMapping("/order_list.do")
     public String order_list(Model model,int shop_idx) {
-        OwnerVo owner = (OwnerVo) session.getAttribute("user");
+        OwnerVo owner = (OwnerVo) session.getAttribute("owner");
         int owner_idx = owner.getOwner_idx();
         ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
 

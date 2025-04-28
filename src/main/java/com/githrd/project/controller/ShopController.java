@@ -53,7 +53,7 @@ public class ShopController {
     @GetMapping("/main.do")
     public String main(Model model) {
         // 1. 로그인한 사장님 정보 꺼내오기
-        OwnerVo owner = (OwnerVo) session.getAttribute("user");
+        OwnerVo owner = (OwnerVo) session.getAttribute("owner");
 
         if (owner == null) {
             return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로

@@ -54,7 +54,7 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public int shopInsert(ShopInfoVo vo, @RequestParam(name = "photo") MultipartFile[] photo_array)
             throws IllegalStateException, IOException {
-        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        OwnerVo owner = (OwnerVo) session.getAttribute("owner");
 
         // \n -> <br>
         String shop_notice = vo.getShop_notice().replaceAll("\n", "<br>");
@@ -221,7 +221,7 @@ public class ShopServiceImpl implements ShopService {
     // 가게 정보 수정
     @Override
     public int shopModify(ShopInfoVo vo) {
-        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        OwnerVo owner = (OwnerVo) session.getAttribute("owner");
 
         // \n -> <br> 변환
         String shop_notice = vo.getShop_notice().replaceAll("\n", "<br>");
@@ -374,9 +374,9 @@ public class ShopServiceImpl implements ShopService {
     // 로그인한 유저가 가게 등록했는지 체크
     @Override
     public int countShopByOwnerIdx(int owner_idx) {
-        OwnerVo user = (OwnerVo) session.getAttribute("user");
+        OwnerVo owner = (OwnerVo) session.getAttribute("owner");
 
-        return shopInfoMapper.countShopByOwnerIdx(user.getOwner_idx());
+        return shopInfoMapper.countShopByOwnerIdx(owner.getOwner_idx());
     }
 
     // owner_idx로 가게 조회

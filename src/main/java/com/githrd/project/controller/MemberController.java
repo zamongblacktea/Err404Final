@@ -133,14 +133,14 @@ public class MemberController {
 			return "redirect:" + url; // 원래있던 페이지로 이동시켜라
 	}
 
-	// 로그아웃
+	//회원 로그아웃
 	@RequestMapping("logout.do")
 	public String logout() {
 
 		// 해당세션에 있는 user정보 삭제
 		session.removeAttribute("user");
 
-		return "redirect:../main/main.do";
+		return "redirect:../member/login_form.do";
 	}
 
 	// 네이버 간편회원가입폼 띄우기
@@ -336,10 +336,10 @@ public class MemberController {
 			Model model) throws IOException {
 
 		// 1.owner_id 이용해서 회원정보 검색
-		OwnerVo user = ownerMapper.selectOneFromId(owner_id);
+		OwnerVo owner = ownerMapper.selectOneFromId(owner_id);
 
 		// 2.아이디가 틀린경우
-		if (user == null) {
+		if (owner == null) {
 
 			// Dispatcher Servlet이 아래과 같이 처리한다
 			// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
@@ -351,7 +351,7 @@ public class MemberController {
 		}
 
 		// 3.비밀번호가 틀린경우
-		if (user.getOwner_pwd().equals(owner_pwd) == false) {
+		if (owner.getOwner_pwd().equals(owner_pwd) == false) {
 
 			// Dispatcher Servlet이 아래과 같이 처리한다
 			// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
@@ -365,10 +365,10 @@ public class MemberController {
 		}
 
 		// 4.로그인 처리(세션공간에 user저장)
-		session.setAttribute("user", user);
+		session.setAttribute("owner", owner);
 
 		// 가게 등록 여부 확인
-		int shopCount = shopService.countShopByOwnerIdx(user.getOwner_idx());
+		int shopCount = shopService.countShopByOwnerIdx(owner.getOwner_idx());
 
 		// 6.메인화면으로 이동
 		// DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
@@ -377,7 +377,7 @@ public class MemberController {
 			return "redirect:" + url;
 		} else {
 			if (shopCount == 0) {
-				return "redirect:../shop/insert_form.do?owner_idx=" + user.getOwner_idx(); // 가게 등록 페이지
+				return "redirect:../shop/insert_form.do?owner_idx=" + owner.getOwner_idx(); // 가게 등록 페이지
 			} else {
 				return "redirect:../shop/main.do"; // 주문 현황 페이지
 			}
@@ -417,13 +417,13 @@ public class MemberController {
 		int res = ownerMapper.update(vo);
 
 		// 현재 수정한 멤버가 로그인한 멤버냐?
-		OwnerVo user = (OwnerVo) session.getAttribute("user");
+		OwnerVo owner = (OwnerVo) session.getAttribute("owner");
 
-		if (user.getOwner_idx() == vo.getOwner_idx()) {
+		if (owner.getOwner_idx() == vo.getOwner_idx()) {
 			// 수정된 정보를 다시 얻어온다
-			user = ownerMapper.selectOneFromIdx(vo.getOwner_idx());
+			owner = ownerMapper.selectOneFromIdx(vo.getOwner_idx());
 			// 가져온 정보를 세션에 다시 넣는다
-			session.setAttribute("user", user);
+			session.setAttribute("owner", owner);
 		}
 
 		return "redirect:../shop/main.do"; // 메인 페이지로 리다이렉트
@@ -438,6 +438,16 @@ public class MemberController {
 
 		return "redirect:list.do";
 	}// end : delete_owner
+
+	//사장님 로그아웃
+	@RequestMapping("logout_owner.do")
+	public String logoutOwner() {
+
+		// 해당세션에 있는 user정보 삭제
+		session.removeAttribute("owner");
+
+		return "redirect:../member/login_form.do";
+	}//end: logout_owner
 
 	////////////////////////////////////////////////////////////////////// 라이더//////////////////////////////////////////////////////
 
@@ -550,10 +560,10 @@ public class MemberController {
 			Model model) throws IOException {
 
 		// 1.rider_id 이용해서 회원정보 검색
-		RiderVo user = riderMapper.selectOneFromId(rider_id);
+		RiderVo rider = riderMapper.selectOneFromId(rider_id);
 
 		// 2.아이디가 틀린경우
-		if (user == null) {
+		if (rider == null) {
 
 			// Dispatcher Servlet이 아래과 같이 처리한다
 			// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
@@ -565,7 +575,7 @@ public class MemberController {
 		}
 
 		// 3.비밀번호가 틀린경우
-		if (user.getRider_pwd().equals(rider_pwd) == false) {
+		if (rider.getRider_pwd().equals(rider_pwd) == false) {
 
 			// Dispatcher Servlet이 아래과 같이 처리한다
 			// Model에 넣는 데이터는 redirect인 경우에는 Parameter로 이용한다
@@ -579,7 +589,7 @@ public class MemberController {
 		}
 
 		// 4.로그인 처리(세션공간에 user저장)
-		session.setAttribute("user", user);
+		session.setAttribute("rider", rider);
 
 		// 6.메인화면으로 이동
 		// DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
@@ -663,17 +673,28 @@ public class MemberController {
 		int res = riderMapper.update(vo);
 
 		// 현재 수정한 멤버가 로그인한 멤버냐?
-		RiderVo user = (RiderVo) session.getAttribute("user");
+		RiderVo rider = (RiderVo) session.getAttribute("rider");
 
-		if (user.getRider_idx() == vo.getRider_idx()) {
+		if (rider.getRider_idx() == vo.getRider_idx()) {
 			// 수정된 정보를 다시 얻어온다
-			user = riderMapper.selectOneFromIdx(vo.getRider_idx());
+			rider = riderMapper.selectOneFromIdx(vo.getRider_idx());
 			// 가져온 정보를 세션에 다시 넣는다
-			session.setAttribute("user", user);
+			session.setAttribute("rider", rider);
 		}
 
 		return "redirect:../rider/main.do"; // 메인페이지로 리다이렉트
 
 	}// end : modify_rider
+
+
+		//사장님 로그아웃
+		@RequestMapping("logout_rider.do")
+		public String logoutRider() {
+	
+			// 해당세션에 있는 user정보 삭제
+			session.removeAttribute("rider");
+	
+			return "redirect:../member/login_form.do";
+		}//end: logout_rider
 
 }// end: class memberController
