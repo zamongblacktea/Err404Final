@@ -192,7 +192,7 @@
             </div>
 
             <ul class="list">
-              <li>별점 ${shop.shop_rating}</li>
+              <li>별점 ⭐${shop.shop_rating}</li>
               <li>최소주문금액 <fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</li>
             </ul>
           </div>

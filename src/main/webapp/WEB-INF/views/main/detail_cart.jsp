@@ -78,7 +78,7 @@
       <div id="shop_dfee">배달요금 <fmt:formatNumber value="${shop_dfee}" pattern="#,#00" />원 별도</div>
       <input type="hidden" name="amount" value="${total_amount + shop_dfee}">
 
-      <div><input type="button" class="btn btn-primary" id="btn_order" value="주문하기" onclick="cart_payment(this.form);" disabled="disabled"></div>
+      <div><input type="button" class="btn btn-primary" id="btn_order" value="주문하기" onclick="cart_payment(this.form)" disabled="disabled"></div>
 </div>
   </form>
   <!-- <script src="${pageContext.request.contextPath}/js/detail_cart.js"></script> -->

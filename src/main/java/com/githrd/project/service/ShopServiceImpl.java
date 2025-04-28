@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
+import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
 import com.githrd.project.vo.ShopMenuVo;
@@ -26,6 +28,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     ShopMenuMapper shopMenuMapper;
+
+    @Autowired
+    MemReviewMapper memReviewMapper;
 
     @Autowired
     HttpSession session;
@@ -386,11 +391,23 @@ public class ShopServiceImpl implements ShopService {
         return shopMenuMapper.menuDelete(menu_idx);
     }
 
+    // 가게 배달비 조회
     @Override
     public int selectShopDfee(int shop_idx) {
         return shopInfoMapper.selectShopDfee(shop_idx);
     }
 
+    // 가게 별점 수정
+    @Override
+    public int rateUpdate(int shop_idx) {
+        return shopInfoMapper.rateUpdate(shop_idx);
+    }
+
+    // 가게 별점 조회
+    @Override
+    public double selectShopRating(int shop_idx) {
+        return shopInfoMapper.selectShopRating(shop_idx);
+    }
 
 
 }
