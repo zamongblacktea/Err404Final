@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,59 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <style>
-        #box {
-            width: 1000px;
-            margin: auto;
-            margin-top: 30px;
-        }
-
-        #title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: rgb(51, 122, 183);
-            text-shadow: 1px 1px 1px black;
-            margin-bottom: 80px;
-        }
-
-        .my-menu {
-
-            font-size: 14px;
-            font-weight: bold;
-
-        }
-
-        img {
-            width: 100px;
-            height: 80px;
-        }
-
-        th {
-            text-align: center !important;
-        }
-
-        td {
-            vertical-align: middle !important;
-            text-align: center;
-        }
-
-        label {
-            display: inline-block;
-            width: 50px;
-            text-align: right;
-        }
-
-        .currency {
-            text-align: right;
-            padding-right: 10px;
-        }
-
-        .content {
-            text-align: left;
-            padding-left: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart_list.css">
 
 </head>
 

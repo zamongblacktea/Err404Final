@@ -13,36 +13,34 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_detail.css">
-  </head>
-  
 
-  <script>
-    // detail_content 출력
-    function loadContent(url) {
+     <script>
+      // detail_content 출력
+      function loadContent(url) {
         const shop_idx = "${shop.shop_idx}"; // 세션에서 shop_idx 꺼냄
         $.ajax({
           url: url,
-          data: { shop_idx: shop_idx
-           },
-          success: function(res_data) {
+          data: { shop_idx: shop_idx },
+          success: function (res_data) {
             $("#disp").html(res_data);
           },
-          error: function(err) {
+          error: function (err) {
             alert("에러 발생: " + err.responseText);
-          }
+          },
         });
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      $(document).ready(function() {
+      $(document).ready(function () {
         loadContent("/main/detail_menu.do");
       });
 
       $(document).ready(function () {
         checkShop(); // 페이지 로드 시 한 번 실행
       });
+     </script>
 
-  </script>
+  </head>
 
   <body>
     <div class="page">
@@ -57,29 +55,31 @@
       </form>
   </div>
 
-  <div class="category">가게 카테고리</div>
+  <div class="category">
+    가게 카테고리
+  </div>
 
     <div class="content">
       <div class="shop-detail">
         <div id="mybox">
           <div class="shop-title">${shop.shop_name}</div>
           <input type="hidden" name="shop_dfee" id="shop_dfee" value="${shop.shop_dfee}">
-          <div class="row shop-content">
-            <div id="shop_logo" class="col-sm-4">
-              <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
+          <div class="shop-content">
+            <div id="shop_logo">
+              <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 80px; height: 100%" />
             </div>
 
-            <ul class="list col-sm-8">
+            <ul class="list">
               <li>별점 ⭐${shop.shop_rating}</li>
               <li>최소주문금액 <fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</li>
             </ul>
           </div>
-          <div class="shop-notice">가게 공지사항</div>
+          <div class="shop-notice">가게 공지사항 | ${shop.shop_notice}</div>
 
-          <ul class="content_nav row">
-            <li class="col-sm-4"><a onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a">메뉴</a></li>
-            <li class="col-sm-4"><a onclick="loadContent('../main/detail_review.do?shop_idx=${shop.shop_idx}');" class="nav-a">리뷰</a></li>
-            <li class="col-sm-4"><a onclick="loadContent('../main/detail_info.do?shop_idx=${shop.shop_idx}');" class="nav-a">정보</a></li>
+          <ul class="content_nav">
+            <li><a onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a">메뉴</a></li>
+            <li><a onclick="loadContent('../main/detail_review.do?shop_idx=${shop.shop_idx}');" class="nav-a">리뷰</a></li>
+            <li><a onclick="loadContent('../main/detail_info.do?shop_idx=${shop.shop_idx}');" class="nav-a">정보</a></li>
           </ul>
           <div class="detail-content" id="disp"></div>
         </div>
@@ -94,5 +94,7 @@
     <footer class="footer">푸터</footer>
     </div>
     <script src="${pageContext.request.contextPath}/js/detail_cart.js"></script>
+    <script src="${pageContext.request.contextPath}/js/detail_menu.js"></script>
+    
   </body>
 </html>
