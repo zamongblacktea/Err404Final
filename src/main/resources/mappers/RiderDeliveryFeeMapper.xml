@@ -15,6 +15,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     JOIN order_info o ON o.order_idx = d.order_idx
     WHERE d.rider_idx = #{rider_idx}
   </select> 
+
+
+  <insert id="insert" parameterType="RiderDeliveryFeeVo">
+    insert into rider_deliveryfee values(null,
+                                #{rider_idx},
+                                #{rider_name},
+                                #{order_idx},
+							                  #{rider_idx},
+                                #{order_check},
+                                #{shop_idx},
+                                #{shop_name},
+                                #{mem_idx},
+                                #{mem_name},
+                                #{delivery_idx},
+                                now()
+                                )
+    
+    </insert>
   
   
 

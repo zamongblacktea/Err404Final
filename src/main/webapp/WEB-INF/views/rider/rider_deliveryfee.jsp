@@ -184,7 +184,7 @@
             <th>가게 이름</th>
             <th>주문 번호</th>
             <th>주문 날짜</th>
-            <!-- <th>배달 주소</th> -->
+            <th>배달 주소</th>
             <th>배 달 료</th>
           </tr>
         </thead>
@@ -194,7 +194,7 @@
               <td>${vo.shop_name}</td>
               <td>${vo.order_check}</td>
               <td>${vo.pay_regdate}</td>
-              <%-- <td>${vo.mem_addr1}, ${vo.mem_addr2}</td> --%>
+              <td>${vo.mem_addr1}, ${vo.mem_addr2}</td>
 
               <td>${vo.delivery_fee} 원</td>
             </tr>  
