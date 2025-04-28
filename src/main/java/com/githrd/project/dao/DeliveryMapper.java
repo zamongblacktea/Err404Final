@@ -13,6 +13,9 @@ public interface DeliveryMapper {
        // 배달 테이블 조회
        public List<DeliveryVo> selectList();
 
+       public List<DeliveryVo> selectDeliveryFeeList(int rider_idx);
+       public List<DeliveryVo> selectDeliveryFeeFilterList(Map<String, Object> map);
+
        //배차받기를 누르면 배차상태가 Y로 바뀌도록하기
         // int riderStatusUpdate(Map<String,Object> map);
 
@@ -33,6 +36,8 @@ public interface DeliveryMapper {
         public List<DeliveryVo> selectDeliveryCompleteList(int rider_idx);
 
         public List<DeliveryVo> selectListReview(int mem_idx);
+
+
 
 
     

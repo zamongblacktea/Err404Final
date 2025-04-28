@@ -252,7 +252,7 @@ public class RiderController {
     @RequestMapping("/rider/deliveryfee.do")
     public String riderTotalDeliveryFee(int rider_idx,Model model){
 
-        List<RiderDeliveryFeeVo> riderdelivery_list =riderDeliveryFeeMapper.selectList(rider_idx);
+        List<DeliveryVo> riderdelivery_list =deliveryMapper.selectDeliveryFeeList(rider_idx);
         
         //request binding
         model.addAttribute("riderdelivery_list", riderdelivery_list);
@@ -260,6 +260,24 @@ public class RiderController {
         
         return "rider/rider_deliveryfee";
     }
+
+     //날짜 필터 내역 정산조회
+     @RequestMapping("/rider/deliveryfeefilter.do")
+     public String riderTotalDeliveryFeeFilter(int rider_idx,String startDate,String endDate,Model model){
+        
+        Map<String,Object> map = new HashMap<>();
+        map.put("rider_idx", rider_idx);
+        map.put("startDate",startDate);
+        map.put("endDate", endDate);
+
+        List<DeliveryVo> riderdelivery_list =deliveryMapper.selectDeliveryFeeFilterList(map);
+         
+         //request binding
+        model.addAttribute("riderdelivery_list", riderdelivery_list);
+ 
+         
+        return "rider/rider_deliveryfee";
+     }
 
 
     //당일내역 정산

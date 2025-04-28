@@ -8,22 +8,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectList" resultType="DeliveryVo">
     select * from delivery where rider_status='N'
   </select>
-  
+
   <!--  아래 정보가 업데이트된 정보를 새로담는 리스트가 있어야 한다 여기서는 rider_list-->
-    <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
-    <!-- <update id="riderStatusUpdate" parameterType="Map">
+  <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
+  <!-- <update id="riderStatusUpdate" parameterType="Map">
      update delivery set rider_status ='Y',rider_idx=#{rider_idx}
        where order_idx=#{order_idx}
     </update> -->
 
-       <!-- 배차완료한 배달중 배달현황조회 -->
-    <!-- <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
+  <!-- 배차완료한 배달중 배달현황조회 -->
+  <!-- <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
         select * from delivery
         where rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
     </select> -->
 
-    <!-- 배차완료한 배달중 배달현황조회 -->
-    <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
+  <!-- 배차완료한 배달중 배달현황조회 -->
+  <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
             SELECT 
             d.*,
             si.shop_name,si.shop_addr1,si.shop_addr2,
@@ -32,34 +32,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             FROM delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
                 inner join order_status os on d.order_idx=os.order_idx  
             WHERE rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
-    </select>
+  </select>
 
   <!-- 픽업대기상태에서 픽업완료를 누르면 delivery_status가 배달중으로 바뀌도록하기 -->
   <update id="deliveryPickupUpdate" parameterType="Map">
    update delivery set delivery_status ='배달중'
           where order_idx=#{order_idx}
-    </update>
-    
+  </update>
 
-    <!-- 배달중인 상태에서 배달완료를 누르면 delivery_status가 배달완료로 바뀌도록하기  -->
-    <update id="deliveryStatusUpdate" parameterType="Map">
+
+  <!-- 배달중인 상태에서 배달완료를 누르면 delivery_status가 배달완료로 바뀌도록하기  -->
+  <update id="deliveryStatusUpdate" parameterType="Map">
         update delivery set delivery_status ='배달완료'
           where order_idx=#{order_idx}
-       </update>
+  </update>
 
-        <!-- delivery_satust 상태값이 바뀜에 따라 order_status 상태값 바뀌도록하기 -->
-        <update id="orderStatusUpdate" parameterType="Map">
+  <!-- delivery_satust 상태값이 바뀜에 따라 order_status 상태값 바뀌도록하기 -->
+  <update id="orderStatusUpdate" parameterType="Map">
         update order_status set order_status = #{order_status}
           where order_idx=#{order_idx}
-       </update>
+  </update>
 
-       <!-- 배달완료한 배달현황조회 -->
-       <!-- <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
+  <!-- 배달완료한 배달현황조회 -->
+  <!-- <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
         select * from delivery
         where rider_idx=#{rider_idx} and delivery_status='배달완료'
       </select> -->
-      
-      <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
+
+  <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
         	select 
 		      d.*,
 		      si.shop_name,si.shop_addr1,si.shop_addr2,
@@ -67,13 +67,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
 					inner join order_status os on d.order_idx=os.order_idx 
           where rider_idx=#{rider_idx} and delivery_status='배달완료'
-      </select>
+  </select>
+
+
+  <!-- 정산내역보기 -->
+  <select id="selectDeliveryFeeList" parameterType="int" resultType="DeliveryVo">
+          select 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+  </select>
+
+  <select id="selectDeliveryFeeFilterList" parameterType="Map" resultType="DeliveryVo">
+          select 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+          and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          order by d.pay_regdate 
+  </select>
 
 
 
-       
-       <!-- delivery 정보를 추가 -->
-    <insert id="insert" parameterType="DeliveryVo">
+
+
+
+  <!-- delivery 정보를 추가 -->
+  <insert id="insert" parameterType="DeliveryVo">
     insert into delivery values(null,
                                 #{order_idx},
                                 #{shop_idx},
@@ -89,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                 #{delivery_fee}
                                 )
     
-    </insert>
+  </insert>
 
   <!-- 회원 리뷰 리스트 조회-->
   <select id="selectListReview" resultType="DeliveryVo">
@@ -101,5 +125,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
 
-  
+
 </mapper>
