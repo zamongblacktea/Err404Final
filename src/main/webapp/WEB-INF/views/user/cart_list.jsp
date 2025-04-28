@@ -78,6 +78,7 @@
                         let shop_idx = f.shop_idx.value.trim();
                         let menu_idx = f.menu_idx.value.trim();
                         let amount   = f.amount.value; 
+                        console.log(amount);
 
                         // f.action = "../order/payment_form.do?shop_idx="+ shop_idx + "&menu_idx=" + menu_idx; // 결제폼 PaymentController
                         f.action = "../order/payment_form.do"; // 결제폼 PaymentController

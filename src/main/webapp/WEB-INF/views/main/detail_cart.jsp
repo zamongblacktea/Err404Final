@@ -34,7 +34,7 @@
   <body>
     <form class="form-inline" method="POST">
       <div id="cart_area">
-      <input type="hidden" name="shop_idx" id="shop_idx" value="${shop.shop_idx}">
+      <input type="hidden" name="shop_idx" id="shop_idx" value="${param.shop_idx}">
       <input type="hidden" name="mem_idx" id="mem_idx" value="${user.mem_idx}">
     <div>주문표/<span onclick="delete_all();">🗑️</span></div>
       <c:choose>

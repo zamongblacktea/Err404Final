@@ -17,6 +17,7 @@ import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.service.CartService;
 import com.githrd.project.service.PaymentService;
+import com.githrd.project.vo.CartVo;
 import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.PaymentVo;
@@ -46,16 +47,19 @@ public class PaymentController {
 
     // 결제 페이지 폼 불러오기
     @PostMapping("payment_form.do")
-    public String paymentForm(int mem_idx, Model model ,int amount) {
+    public String paymentForm(int mem_idx, Model model ,int amount,int shop_idx) {
 
         //회원 현재주소 가져오기
         MemberVo vo = memberMapper.selectOneFromIdx(mem_idx);
 
+        List<CartVo> cart_list = cartService.selectList(mem_idx);
+
+        shop_idx = cart_list.get(0).getShop_idx();
 
         
         // 결제 할 총 가격 조회
         //Integer total_amount = cartService.selectTotalAmount(mem_idx);
-
+        model.addAttribute("shop_idx", shop_idx);
         model.addAttribute("vo", vo);
         model.addAttribute("amount", amount);
 
