@@ -589,7 +589,7 @@ public class MemberController {
 		}
 
 		// 4.로그인 처리(세션공간에 user저장)
-		session.setAttribute("rider", rider);
+		session.setAttribute("user", rider);
 
 		// 6.메인화면으로 이동
 		// DS가 다음명령 실행 : response.sendRedirect("../board/list.do");
