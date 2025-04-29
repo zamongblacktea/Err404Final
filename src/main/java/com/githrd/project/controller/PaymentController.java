@@ -55,9 +55,13 @@ public class PaymentController {
 
         // 결제 할 총 가격 조회
         // Integer total_amount = cartService.selectTotalAmount(mem_idx);
+        model.addAttribute("cart_list", cart_list);
         model.addAttribute("shop_idx", shop_idx);
         model.addAttribute("vo", vo);
         model.addAttribute("amount", amount);
+
+        System.out.println(cart_list);
+        System.out.println(cart_list.size());
 
         return "order/shop_payment";
     }
