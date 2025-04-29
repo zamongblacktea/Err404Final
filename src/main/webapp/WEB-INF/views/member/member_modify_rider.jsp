@@ -43,6 +43,7 @@
 				let rider_name = f.rider_name.value.trim();
 				let rider_email = f.rider_email.value.trim();
 				let rider_phone = f.rider_phone.value;
+				let rider_pwd	= f.rider_pwd.value;
 
 				if (rider_name == "") {
 
@@ -85,7 +86,7 @@
 
 		<form class="form-inline">
 			<div id="box">
-
+				<input type="hidden" value="${vo.rider_idx}" name="rider_idx">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h4>라이더 마이 페이지</h4>
@@ -93,7 +94,7 @@
 					<div class="panel-body">
 
 						<table class="table">
-							<input type="hidden" value="${vo.rider_idx}" name="rider_idx">
+
 							<!-- 회원번호 -->
 							<!-- <tr>
 			         <th>회원번호</th>
@@ -166,9 +167,9 @@
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 									<input class="btn btn-primary" type="button" value="탈퇴하기"
-										onclick="location.href='delete.do?rider_idx=${rider.rider_idx}';">
+										onclick="location.href='delete.do?rider_idx=${user.rider_idx}';">
 										<input class="btn btn-warning" type="button" value="정산내역"
-										onclick="location.href='../rider/deliveryfee.do?rider_idx=${rider.rider_idx}'">
+										onclick="location.href='../rider/deliveryfee.do?rider_idx=${user.rider_idx}'">
 									</td>
 							</tr>
 

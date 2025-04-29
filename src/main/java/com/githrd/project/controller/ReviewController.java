@@ -163,11 +163,16 @@ public class ReviewController {
 	@GetMapping("/main/detail_review.do")
 	public String detail_review(@RequestParam int shop_idx, Model model) {
 
-		List<MemReviewVo> list = memReviewMapper.selectListShop(shop_idx);
+        //회원 + 사장 리뷰 리스트
+        List<MemReviewVo> list = memReviewMapper.selectReviewReply(shop_idx);
+
+
+
+
 
 		ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
 
-		model.addAttribute("review", list);
+		model.addAttribute("list", list);
 		model.addAttribute("shop", shop);
 		return "/main/detail_review";
 	}//end: detail_review

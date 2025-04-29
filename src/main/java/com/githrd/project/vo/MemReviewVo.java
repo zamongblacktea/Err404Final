@@ -23,6 +23,7 @@ public class MemReviewVo {
     int review_available;
     String menu_name;
     String shop_name;
+    String reply_content;
 
     OwnerReplyVo owner_reply;
     

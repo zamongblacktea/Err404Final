@@ -20,8 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      insert into owner_reply values(
                           null,
                           #{ mem_idx },
-                          #{ owner_idx },
                           #{ review_idx },
+                          #{ owner_idx },
                           #{ shop_idx },
                           #{ order_idx },
                           #{ reply_content },

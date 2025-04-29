@@ -72,40 +72,53 @@
 
 <body>
 
-  <c:forEach var="review" items="${review}">
-    <div class="review-card" style="width: 700px; margin: auto;">
-      <div class="review-header">
-        <div class="user-icon">U</div>
-        <input type="hidden" id="shop_idx" name="shop_idx" value="${review.shop_idx}">
-        <input type="hidden" id="mem_idx" name="mem_idx" value="${review.mem_idx}">
-        <div>
-          <h5 class="mb-0">${ review.mem_nickname }</h5>
-          <div class="review-meta">어제, 테스트 업로드</div>
+  <div class="container">
+    <c:forEach var="vo" items="${list}">
+      <div class="review-card">
+
+        <!-- 공통 리뷰 표시 -->
+        <div class="review-header">
+          <div class="user-icon">U</div>
+          <div>
+            <h5 class="mb-0">${vo.mem_nickname}</h5>
+            <div class="review-meta">${vo.menu_name}</div>
+            <div class="review-meta">어제, 테스트 업로드</div>
+          </div>
         </div>
-      </div>
 
-      <div class="star-rating">
-        평점 : ${ review.review_rating }
-      </div>
-
-      <div class="review-content">
-        ${review.review_content}
-        <div><img src="../../../images/${ review.review_img }" style="max-width:300px; height:300px;"></div>
-      </div>
-
-      <!-- 사장님 댓글 -->
-      <div class="owner-reply">
-        <div class="owner-icon">O</div>
-        <div class="ms-3">
-          <strong>사장님 답글</strong><br>
-          <p>테스트 회원님, 소중한 리뷰 감사드립니다!<br>
-          앞으로도 신선한 재료와 정성으로 보답하겠습니다. 또 방문해주세요!</p>
+        <div class="star-rating">
+          평점 : ${vo.review_rating}
         </div>
+
+        <div class="review-content">
+          ${vo.review_content}
+          <div>
+            <img src="../../../images/${vo.review_img}" style="max-width:300px; height:300px;">
+          </div>
+        </div>
+
+        <c:choose>
+
+
+          <c:when test="${vo.review_available == 1}">
+
+          </c:when>
+
+          <c:when test="${vo.review_available == 2}">
+            <div class="owner-reply">
+              <div class="owner-icon">O</div>
+              <div class="ms-3" style="flex: 1;">
+                <strong>사장님 답글</strong><br>
+                <div>${vo.reply_content}</div>
+              </div>
+            </div>
+          </c:when>
+
+        </c:choose>
+
       </div>
-    </div>
-  </c:forEach>
-
-
+    </c:forEach>
+  </div>
 
 </body>
 </html>
