@@ -22,12 +22,15 @@ body {
 .content {
   flex: 1;
   padding-left: 0;
+  background-color: #fafafa;
 }
 
 #mybox {
-  width: 100%;
+  /* width: 100%; */
   padding: 0 10px;
   flex: 2;
+  /* flex: 1 1 auto; */
+  /* min-width: 0; */
   /* margin: 0 auto; */
   /* width: 1150px; */
   /* width: 850px; */
@@ -74,7 +77,8 @@ body {
   border: 1px solid #d9d9d9;
   background-color: white;
   box-shadow: 0 1px 3px black;
-  margin-bottom: 10px;
+  z-index: 3;
+  /* margin-bottom: 10px; */
 }
 
 .shop-detail {
@@ -82,7 +86,10 @@ body {
   /* display: block; */
   display: flex;
   margin: 0 auto;
-  justify-content: space-between;
+  padding-top: 10px;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  /* gap: 10px;  */
 }
 
 .shop-title {
@@ -93,6 +100,7 @@ body {
   font-size: 17px;
   padding-top: 10px;
   padding-left: 15px;
+  background-color: white;
 }
 
 .shop-content {
@@ -101,6 +109,7 @@ body {
   display: flex;
   border: 1px solid #d9d9d9;
   border-top: none;
+  background-color: white;
 }
 
 #shop_logo {
@@ -131,6 +140,7 @@ body {
   font-size: 16px;
   padding-top: 12px;
   padding-left: 15px;
+  background-color: white;
 }
 
 .content_nav {
@@ -145,21 +155,39 @@ li {
 .content_nav > li {
   list-style: none;
   flex: 1;
-  border: 1px solid #d9d9d9;
+  /* border: 1px solid #d9d9d9; */
 }
 
 .nav-a {
+  background-color: #ff694a;
+  border: 1px solid #d9d9d9;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
   /* margin-top: 10px; */
+  border-radius: 5px;
   font-size: 17px;
+  color: white;
+  font-weight: bold;
+}
+
+.nav-a.active{
+  background-color: #ff694a;
+  font-weight: bold;
+  font-size: large;
+  box-shadow: 0 0 5px #be4831;
 }
 
 .detail-content {
   width: 100%;
+}
+
+#disp{
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
 }
 
 .cart {
@@ -174,6 +202,9 @@ li {
   font-size: 14px;
   /* border-radius: 8px; */
   flex-shrink: 0; /* 붙는 거 방지 */
+
+  position: sticky;
+  top: 20px;
 }
 
 .footer {
@@ -200,6 +231,7 @@ li {
 
 .cart_li {
   border: 1px solid #d9d9d9;
+  background-color: white;
   list-style: none;
   padding-top: 10px;
   padding-left: 15px;
@@ -241,6 +273,7 @@ li {
   height: 47px;
   font-size: 17px;
   border: 1px solid #d9d9d9;
+  background-color: white;
   text-align: right;
   padding-top: 10px;
   padding-right: 10px;
@@ -263,10 +296,11 @@ li {
   border: 1px solid #d9d9d9;
   padding-left: 15px;
   height: 104px;
+  margin: auto;
 }
 
 .menu-text {
-  width: 520px;
+  /* width: 500px; */
   margin-top: 20px;
   flex: 2;
 }
@@ -286,7 +320,7 @@ li {
 }
 
 .menu-img {
-  width: 112px;
+  /* width: 112px; */
   height: 80px;
   margin-left: 140px;
   padding-right: 10px;
@@ -297,7 +331,8 @@ li {
 
 /* detail_review */
 .review-box {
-  width: 500px;
+  /* width: 500px; */
+  width: 100%;
   height: auto;
   margin: auto;
 }
@@ -311,8 +346,68 @@ textarea {
 }
 
 /* detail_info */
+.detail-info{
+  width: 100%;
+}
+
+hr{
+  border: 0;                      
+  border-top: 1px solid #333;  /* 두께 1px, 색 #333 */
+  width: 705px;
+}
+
 table.table-borderless td,
 table.table-borderless th,
 table.table-borderless tr {
   border: none !important;
+}
+
+.notice,
+.intro,
+.info,
+.pay_info,
+.owner_info{
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.notice > span,
+.intro > span,
+.info > span, 
+.pay_info > span,
+.owner_info > span{
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.notice_content,
+.intro_content{
+  padding-left: 20px;
+  padding-bottom: 10px;
+  font-size: 14px;
+
+}
+
+.owner_content,
+.pay_info_content,
+.info_content{
+  width: 100%;
+}
+
+tbody{
+  width: 100%;
+}
+
+table{
+  /* display: flex; */
+  width: 100%;
+}
+
+th{
+  width: 30%;
+  padding-left: 10px;
+}
+td{
+  width: 70%;
+  padding-left: 50px;
 }

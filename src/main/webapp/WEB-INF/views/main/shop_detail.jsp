@@ -40,6 +40,21 @@
       });
      </script>
 
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const navButtons = document.querySelectorAll('.content_nav .nav-a');
+          navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              navButtons.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+            });
+          });
+          
+          // 첫 번째 버튼 미리 활성화
+          if (navButtons[0]) navButtons[0].classList.add('active');
+        });
+      </script>
+
   </head>
 
   <body>
@@ -77,9 +92,9 @@
           <div class="shop-notice">가게 공지사항 | ${shop.shop_notice}</div>
 
           <ul class="content_nav">
-            <li><a onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a">메뉴</a></li>
-            <li><a onclick="loadContent('../main/detail_review.do?shop_idx=${shop.shop_idx}');" class="nav-a">리뷰</a></li>
-            <li><a onclick="loadContent('../main/detail_info.do?shop_idx=${shop.shop_idx}');" class="nav-a">정보</a></li>
+            <li><input type="button" onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="메뉴"></input></li>
+            <li><input type="button" onclick="loadContent('../main/detail_review.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="리뷰"></input></li>
+            <li><input type="button" onclick="loadContent('../main/detail_info.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="정보"></input></li>
           </ul>
           <div class="detail-content" id="disp"></div>
         </div>

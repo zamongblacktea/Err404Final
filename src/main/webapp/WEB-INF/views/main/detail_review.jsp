@@ -14,8 +14,6 @@
   </head>
 
   <body>
-
-    <div>가게 리뷰</div>
     <c:forEach var="review" items="${review}">
 
       <input type="hidden" id="shop_idx" name="shop_idx" value="${review.shop_idx}">

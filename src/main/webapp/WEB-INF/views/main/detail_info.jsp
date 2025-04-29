@@ -12,24 +12,23 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
   </head>
 
   <body>
-    <div>가게 정보</div>
     <form>
       <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}" />
       <input type="hidden" id="shop_idx" name="shop_idx" value="${shop.shop_idx}" />
 
-      <div class="row">
+      <div class="detail-info">
         <div class="notice">
-          📢사장님 알림
+          <span>📢사장님 알림</span>
           <hr />
           <div class="notice_content">${shop.shop_notice}</div>
         </div>
         <div class="intro">
-          🤗가게 소개
+          <span>🤗가게 소개</span>
           <hr />
           <div class="intro_content">${shop.shop_intro}</div>
         </div>
         <div class="info">
-          🍴업체정보
+          <span>🍴업체정보</span>
           <hr />
           <div class="info_content">
             <table class="table table-borderless">
@@ -49,7 +48,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
           </div>
         </div>
         <div class="pay_info">
-          💳결제 정보
+          <span>💳결제 정보</span>
           <hr />
           <div class="pay_info_content">
             <table class="table table-borderless">
@@ -61,7 +60,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
           </div>
         </div>
         <div class="owner_info">
-          👤사업자 정보
+          <span>👤사업자 정보</span>
           <hr />
           <div class="owner_content">
             <table class="table table-borderless">

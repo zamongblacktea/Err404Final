@@ -128,6 +128,9 @@
 	</head>
 
 	<body>
+		<nav>
+			<%@include file="../main/navbar.jsp" %>
+		</nav>
 
 		<form class="form-inline">
 			<div id="box">
