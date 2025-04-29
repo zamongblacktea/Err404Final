@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           where rider_idx=#{rider_idx} and delivery_status='배달완료'
   </select>
 
-<!--  -->
+<!-- 정산내역 날짜필터링 조회 -->
   <select id="selectDeliveryFeeFilterList" parameterType="Map" resultType="DeliveryVo">
           select 
             d.*,
@@ -92,7 +92,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           order by d.pay_regdate 
   </select>
 
-
+  <!-- 정산내역 날짜필터링 조회 총배달료 조회 -->
+  <select id="selectDeliveryTotalFeeFilterList">
+    select 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+          and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          order by d.pay_regdate 
+  
+  </select>
 
 
 
@@ -124,7 +135,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       INNER JOIN shop_info s ON d.shop_idx = s.shop_idx
       WHERE mem_idx = #{mem_idx}
   </select>
-
-
 
 </mapper>

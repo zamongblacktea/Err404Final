@@ -19,34 +19,49 @@ pageEncoding="UTF-8"%>
     <!-- 구글 폰트 hi-melody  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Gamja+Flower&family=Hi+Melody&family=Poor+Story&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <style type="text/css">
     
-    
-  .hi-melody-regular {
-  font-family: "Hi Melody", sans-serif;
+  *  {
+  font-family: "Jua", sans-serif;
   font-weight: 400;
   font-style: normal;
-}
-  
-  #box{
-    width: 1000px;
-    height: 700px;
-    margin: auto;
+  }
+
+
+  /* #header{
+    width: 95%;
+    display: flex;  
+    font-size: large;
   }
   
+  #box{
+    margin: auto;
+  } */
+
+  .content{
+    padding: 30px;
+  }
+
+
+  
+  /* .panel{
+    width: 90%;
+    margin: auto;
+  } */
+
   .buttons{
         background-color: #f0bba8;
-        font-size: medium;
+        font-size: large;
         color: white;
         border: none;
-        width: 200px;
+        width: 25%;
         border-radius: 5px;
         padding: 10px 15px;
         cursor: pointer;
         transition: background-color 0.3s ease;
         margin-right: 20px;
+        box-sizing: border-box;
       }
 
   .buttons:hover {
@@ -58,6 +73,31 @@ pageEncoding="UTF-8"%>
     font-size: large;
     box-shadow: 0 0 5px #d36caa;
   }
+
+
+  .nav {
+   text-align: right;
+   padding-right: 3%;
+  }
+
+  .nav input[type="button"] {
+  margin-left: 5px;
+  }
+
+  img{
+        margin: 0 auto;
+        width: 250px;
+        height: 60px;
+        margin-left: 20px;
+        margin-top: 20px;
+        }
+
+  .panel-heading{
+    font-size: large;
+    padding-right: 3%;
+  }      
+
+ 
 </style>
 <script>
 
@@ -87,7 +127,7 @@ pageEncoding="UTF-8"%>
       setActiveButton("btn-standby"); // 버튼 활성화 표시
 
   		$.ajax({ //key value jason형식
-			tyep :"GET",				   //요청타입 : GET/POST 생략시 GET
+			type :"GET",				   //요청타입 : GET/POST 생략시 GET
 			async: true,				   //동기/비동기 : true(동기) false(비동기) 생략시 true
 			url  : "standby.do",
       data :{"rider_idx" : "${user.rider_idx}"},
@@ -199,6 +239,7 @@ pageEncoding="UTF-8"%>
 </script>
 
 <script>
+  // 챗봇
   // (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
 
   // ChannelIO('boot', {
@@ -213,59 +254,61 @@ pageEncoding="UTF-8"%>
   //   }
   // });
 </script>
-<style>
-    img{
-        margin: 0 auto;
-        width: 250px;
-        height: 60px;
-        margin-left: 200px;
-        margin-top: 20px;
-        }
-</style>
+
+
+
+
   </head>
   <body>
-    <img src="${pageContext.request.contextPath}/images/로고.png"> 
-  
-      <br>
-      <p style="text-align: center;" class="hi-melody-regular";>
-      
-        오늘도 안전운행! 라이더님 전용 화면입니다*^^* </p>
-      <div  class="nav" style="text-align: center; padding-left: 700px;">
-      <!-- 바인딩해둔곳 추가하기 -->
-      ${sessionScope.user.rider_name}님 환영합니다.
-      <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
 
+
+    <div class="box">
+      <div class="title" style="text-align: center; margin-top: 30px;">
+        <span style="font-size: large;">오늘도 안전운행! 라이더님 전용 화면입니다*^^* </span>
+      </div> <!--div title-->
+
+      <div class="header">
+        <img src="${pageContext.request.contextPath}/images/로고.png"> 
+        
+      </div> <!-- div header -->
+    
+      <div class="nav">
+      ${sessionScope.user.rider_name}님 환영합니다.
+        <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
         <!-- <input type="button" value="로그아웃" onclick="location.href='../main/main.do'"/> -->
         <input type="button" value="로그아웃" onclick="location.href='../member/logout.do'"/>
         <input type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
- 
-        </div>
-    
-      <div id="box">
-
-
-<!-- 컬러색 #F08650 -->
+      </div> 
+      <!--div nav-->
+  
+        <!-- 컬러색 #F08650 -->
 
          <!-- 각 페이지일 경우 ex주문대기 페이지 주문대기버튼이 활성화 되어있음으로 만들기 -->
-          <div class="panel panel-warning"   >
-            <div class="panel-heading" style="background-color:#FFE6C9;">라이더 배달 현황</div>
-            <div class="panel-body">
-              <div class="body">
-                <!-- onclick=location.href="넣어야함" -->
+      <div class="content"> 
+         <div class="panel panel-warning"   >
+          <div class="panel-heading" style="background-color:#FFE6C9;">라이더 배달 현황</div>
+          <div class="panel-body">
+          <div class="body">
+                
+                <div class="button-group" style="text-align: center;">
                 <!-- <input class="buttons" type="button" value="배차대기" onclick="standby();" />
                 <input class="buttons" type="button" value="배달현황" onclick="progress()" />
                 <input class="buttons" type="button" value="배달완료" onclick="complete()"/> -->
                 <input class="buttons" id="btn-standby" type="button" value="배차대기" onclick="standby();" />
                 <input class="buttons" id="btn-progress" type="button" value="배달현황" onclick="progress()" />
                 <input class="buttons" id="btn-complete" type="button" value="배달완료" onclick="complete()"/>
+              </div> <!--버튼 div-->
               </div>
               </div>
-          </div>
-         
+          </div> <!--div panel-->
+       
 
           <!-- ajax내용불러올것넣기
             자바스크립트안에서 호출하기 ->ajax standby.do 여기서 호출 -->
           <div id="disp"></div>
+
+      </div> <!--div content-->
     </div>
+   
   </body>
 </html>
