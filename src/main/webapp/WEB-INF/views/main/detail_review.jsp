@@ -12,34 +12,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
-  <style>
-    * {
-      border: 1px solid black;
-      margin: 0;
-      padding: 0;
-    }
-
-    .content-box{
-      width: 100%;
-      height: auto;
-
-    }
-    .review-box{
-      width: 500px;
-      height: auto;
-      margin: auto;
-    }
-    textarea {
-      resize: none;
-    }
-
-    img{
-      width: 90%;
-      margin: auto;
-
-    }
-
-  </style>
 
   <body>
 
@@ -50,7 +22,7 @@
       <input type="hidden" id="mem_idx" name="mem_idx" value="${review.mem_idx}">
       <div class="review-box">
         <div> 이름 : ${ review.mem_nickname }</div>
-        <div> <img src="../../../images/${ review.review_img }"></div>
+        <div> <img id="review_img" src="../../../images/${ review.review_img }"></div>
         <div> 평점 : ${ review.review_rating }</div>
         <!-- 내용 + 이미지 업로드 -->
         <div class="menu-content">

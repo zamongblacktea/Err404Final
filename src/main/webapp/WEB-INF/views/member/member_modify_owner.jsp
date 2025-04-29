@@ -138,7 +138,7 @@
 							<tr>
 								<th>승인 상태</th>
 								<td><input class="form-control" type="text" name="owner_status"
-										value="${ vo.owner_status }" style="width: 30%;" readonly>
+										value="${ vo.owner_approve }" style="width: 30%;" readonly>
 								</td>
 							</tr>
 

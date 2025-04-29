@@ -10,43 +10,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
-  <style>
-    * {
-      border: 1px solid black;
-      margin: 0;
-      padding: 0;
-    }
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-    }
-
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .content {
-      flex: 1;
-    }
-
-    #mybox {
-      margin: 0 auto;
-      /* width: 1150px; */
-      /* width: 800px; */
-      width: 750px;
-      padding-left: 10px;
-      display: inline-block;
-    }
-
-    table.table-borderless td,
-    table.table-borderless th,
-    table.table-borderless tr {
-      border: none !important;
-    }
-  </style>
 
   <body>
     <div>가게 정보</div>
