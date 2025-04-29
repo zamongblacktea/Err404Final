@@ -13,8 +13,14 @@ public interface DeliveryMapper {
        // 배달 테이블 조회
        public List<DeliveryVo> selectList();
 
+       //전체 정산내역 조회
        public List<DeliveryVo> selectDeliveryFeeList(int rider_idx);
+
+       //날짜 필터링해서 정산리스트 조회
        public List<DeliveryVo> selectDeliveryFeeFilterList(Map<String, Object> map);
+
+       //필터링한 정산내역 더해서 총배달료 조회
+       public List<DeliveryVo> selectDeliveryTotalFeeFilterList(Map<String, Object> map);
 
        //배차받기를 누르면 배차상태가 Y로 바뀌도록하기
         // int riderStatusUpdate(Map<String,Object> map);
@@ -37,6 +43,7 @@ public interface DeliveryMapper {
 
         public List<DeliveryVo> selectListReview(int mem_idx);
 
+        
 
 
 

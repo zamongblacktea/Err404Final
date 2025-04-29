@@ -74,6 +74,7 @@
     </script>
 </head>
 <body>
+    <div class="content-items" style="width: 90%;margin: auto; padding-top: 3%;">
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
      <!-- 하나의 div넣고 경로보기랑 픽업완료도 div로 넣고 그리드로 넣어야 할듯 -->
     <!-- 배차 받기를 누르면 아래에 나오는것에 고객 전화번호도 추가시켜야함 포린키로 설정해야할듯 -->
@@ -120,7 +121,7 @@
         </c:forEach>
     </c:otherwise>
 </c:choose>
-    
+</div><!--div content-items-->
 
 
 </body>

@@ -219,7 +219,7 @@ public class RiderController {
         paramMap.put("tab_state", "complete");
        // messagingTemplate.convertAndSend("/topic/orders", paramMap);
 
-        Map<String,Object>map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
 
         map.put("result", res==1);
 

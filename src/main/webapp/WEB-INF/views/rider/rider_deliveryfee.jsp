@@ -20,20 +20,7 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-   <script>
-    //웹소캣 구독 
-    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
-      var stompClient = Stomp.over(socket);
-  
-      // WebSocket 연결 설정
-      stompClient.connect({}, function (frame) {
-          // 주문 상태 업데이트 메시지 구독
-      stompClient.subscribe('/topic/orders', function (message) {
-              // 서버에서 메시지가 올 때마다 DOM 업데이트
-      location.reload(); // 페이지를 새로고침하여 새로운 데이터를 반영
-          });
-      });
-   </script>
+
    
    <style>
       body {
@@ -41,15 +28,6 @@
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
       .header h2 {
@@ -108,27 +86,6 @@
         display: flex;
         justify-content: center;
       }
-
-      /* Responsive Styles */
-      @media (max-width: 768px) {
-        .form-inline {
-          flex-direction: column;
-        }
-
-        .form-group {
-          margin-bottom: 10px;
-        }
-
-        .button_style {
-          width: 100%;
-          margin-bottom: 10px;
-        }
-
-        .form-control {
-          width: 100%;
-        }
-      }
-
       
     </style>
 </head>
@@ -172,19 +129,15 @@
         </form>
 
     </div>
-    <!-- 가게 이름 주문금액 주문 날짜 배달주소 배달료 
-    표만들기
-    날짜 설정
-    전체 정산내역 ->동적쿼리사용
-    5개씩 출력 페이징처리 -->
 
     <table id="delivery-table" class="table table-striped">
         <thead>
           <tr>
             <th>가게 이름</th>
-            <!-- <th>주문 번호</th> -->
+            <th>주문 번호</th> 
             <th>주문 날짜</th>
             <th>배달 주소</th>
+            <th>총 거 리</th>
             <th>배 달 료</th>
           </tr>
         </thead>
@@ -192,16 +145,19 @@
           <c:forEach var="vo" items="${riderdelivery_list}">
               <tr>
               <td>${vo.shop_name}</td>
-              <%-- <td>${vo.order_check}</td> --%>
+              <td>${vo.order_idx}</td> 
               <td>${vo.pay_regdate}</td>
               <td>${vo.mem_addr1}, ${vo.mem_addr2}</td>
+              <td>${vo.totalDistance}m</td>
               <td>${vo.delivery_fee} 원</td>
             </tr>  
           </c:forEach>
         </tbody>
       </table>
-
-      <!-- <h3>총 수입: ${총배달금액} 원</h3> -->
+      
+      <hr>
+      <h4>총수입 : </h4>
+      <!-- <h3>총 수입: ${totalDilveryFee}} 원</h3> -->
     
 </body>
 </html>
