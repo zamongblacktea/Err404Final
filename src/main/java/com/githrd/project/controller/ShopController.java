@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.OwnerReplyMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
 import com.githrd.project.service.ShopService;
+import com.githrd.project.vo.MemReviewVo;
+import com.githrd.project.vo.OwnerReplyVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
 import com.githrd.project.vo.ShopMenuVo;
@@ -26,6 +30,8 @@ import com.githrd.project.vo.ShopMenuVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/shop")
@@ -39,6 +45,12 @@ public class ShopController {
 
     @Autowired
     ShopMenuMapper shopMenuMapper;
+
+    @Autowired
+    MemReviewMapper memReviewMapper;
+
+    @Autowired
+    OwnerReplyMapper ownerReplyMapper;
 
     @Autowired
     HttpSession session;
@@ -366,10 +378,38 @@ public class ShopController {
         return "shop/shop_info";
     }
 
-    // 리뷰 목록
+    //가게 리뷰 목록
     @GetMapping("/review_list.do")
-    public String review_list() {
+    public String review_list(int shop_idx,Model model) {
+
+        //회원 + 사장 리뷰 리스트
+        List<MemReviewVo> list = memReviewMapper.selectReviewReply(shop_idx);
+
+
+
+        model.addAttribute("list", list);
+
         return "shop/review_list";
+    }//end: review_list.do
+
+
+    //사장 리뷰 답글 등록
+    @ResponseBody
+    @PostMapping("/reply_insert.do")
+    public int replyInsert(@RequestBody OwnerReplyVo vo) {
+        //TODO: process POST request
+
+        System.out.println("입력값" + vo);
+
+        //사장님 답글 DB에 insert
+        int res = ownerReplyMapper.insert(vo);
+
+
+        //리뷰 상태 (답변됨 == 2 로 업데이트)
+        res = memReviewMapper.updateReply(vo.getReview_idx());
+        
+        return res;
     }
+    
 
 }

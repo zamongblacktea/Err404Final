@@ -60,7 +60,7 @@ public class ReviewController {
 	@Autowired
 	HttpServletRequest request;
 
-	// 회원 내 리뷰 내역 리스트 폼 띄우기
+	// 회원 내 주문 내역 리스트 폼 띄우기
 	@RequestMapping("/member/order_list.do")
 	public String reviewList(@RequestParam int mem_idx, Model model) {
 
@@ -158,18 +158,6 @@ public class ReviewController {
 
 	//////////////////////////////////////////////////////// 가게//////////////////////////////////////////////////////////////
 
-	// 가게 상세 페이지 리뷰 목록
-	// @GetMapping("/main/detail_review.do")
-	// public String review_detail(@RequestParam int shop_idx, Model model) {
-
-	// List<MemReviewVo> list = memReviewMapper.selectListShop(shop_idx);
-
-	// ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
-
-	// model.addAttribute("review", list);
-	// model.addAttribute("shop", shop);
-	// return "/main/shop_detail_review";
-	// }
 
 	// 가게 상세 페이지 리뷰 목록
 	@GetMapping("/main/detail_review.do")
@@ -182,6 +170,8 @@ public class ReviewController {
 		model.addAttribute("review", list);
 		model.addAttribute("shop", shop);
 		return "/main/detail_review";
-	}
+	}//end: detail_review
+
+	
 
 }

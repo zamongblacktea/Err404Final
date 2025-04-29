@@ -25,6 +25,10 @@ public interface MemReviewMapper {
     // 별점 조회
     public List<MemReviewVo> selectShopRating(int shop_idx);
 
+    public int updateReply(int review_idx);
+
+    public List<MemReviewVo> selectReviewReply(int shop_idx);
+
 
     
 }

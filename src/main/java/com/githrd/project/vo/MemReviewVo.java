@@ -21,11 +21,10 @@ public class MemReviewVo {
     String review_img;
     String review_ip;
     int review_available;
-    String delivery_status;
-    int menu_idx;
     String menu_name;
     String shop_name;
 
+    OwnerReplyVo owner_reply;
     
 
 

@@ -9,14 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from mem_review order by mem_idx
   </select>
 
-
-
-
   <!-- 회원 리뷰 조회 -->
   
   <select id="selectOneFromIdx" resultType="MemReviewVo">
      select * from delivery WHERE mem_idx = #{mem_idx} and order_idx = #{order_idx}
   </select>
+
 
 
   <!-- 아이디 조회 -->
@@ -64,13 +62,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{delivery_idx},
                           #{mem_nickname},
                           #{shop_name},
+                          #{menu_name},
                           #{review_content},
                           now(),
                           null,
                           #{review_rating},
                           #{review_img},
                           1,
-                         #{review_ip}
+                          #{review_ip}
                           )
   </insert>
 
@@ -81,5 +80,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
      where mem_idx=#{ mem_idx }
   </update>
+
+    <!-- 사장님 답글 등록시 상태 변경 -->
+  <update id="updateReply" parameterType="int">
+     update mem_review set review_available = 2
+
+     where review_idx = #{review_idx}
+  </update>
+
+
+
+<!-- association 1:1 매핑 -->
+<resultMap id="ReviewWithReplyResultMap" type="MemReviewVo" >
+    <result property="review_idx" column="review_idx"/>
+
+
+   <association property="owner_reply" 
+                column="re_idx=review_idx"
+                select="selectOwnerReply"  />
+
+
+</resultMap>
+
+<select id="selectOwnerReply"   resultType="OwnerReplyVo">
+  
+  select * from owner_reply where review_idx=#{re_idx}
+
+</select>
+
+
+  <!-- 회원 리뷰 + 사장 답글 -->
+<select id="selectReviewReply" resultMap="ReviewWithReplyResultMap">
+SELECT 
+    m.review_idx AS review_idx,
+    m.mem_idx AS mem_idx,
+    m.order_idx AS order_idx,
+    m.shop_idx AS shop_idx,
+    m.delivery_idx AS delivery_idx,
+    m.mem_nickname AS mem_nickname,
+    m.review_content AS review_content,
+    m.review_regdate AS review_regdate,
+    m.review_update AS review_update,
+    m.review_rating AS review_rating,
+    m.review_img AS review_img,
+    m.review_ip AS review_ip,
+    m.review_available AS review_available,
+    m.menu_name AS menu_name,
+    m.shop_name AS shop_name,
+    o.owner_idx AS o_owner_idx,
+    o.owner_reply_idx AS o_owner_reply_idx,
+    o.reply_content AS reply_content,
+    o.reply_available AS reply_available
+FROM mem_review m LEFT JOIN owner_reply o ON m.order_idx = o.order_idx
+WHERE m.shop_idx = #{shop_idx}
+
+</select>
 
 </mapper>
