@@ -19,11 +19,34 @@ pageEncoding="UTF-8"%>
         padding: 0;
         border: 1px solid black;
       }
-      nav {
+      .nav {
         height: 80px;
       }
-      header {
+
+      .header{
         height: 100px;
+        background: url("${pageContext.request.contextPath}/images/헤더이미지1.png");
+        background-size: cover;
+        background-position: center 50%;
+        }
+
+      #search_form{
+        width: 550px;
+        margin: 0 auto;
+        margin-top: 20px;
+        z-index: 2;
+      }
+
+      #search{
+        width: 450px;
+        height: 50px;
+        display: inline;
+      }
+
+      .btn_search{
+        width: 70px;
+        height: 50px;
+        display: inline-block;
       }
 
       .list {
@@ -55,8 +78,15 @@ pageEncoding="UTF-8"%>
     </style>
   </head>
   <body>
-    <nav>네비게이션바</nav>
-    <header>헤더</header>
+    <div class="navbar">
+      <%@ include file="navbar.jsp" %>
+    </div>
+    <div class="header">
+      <form id="search_form" action="">
+          <input type="text" id="search" class="form-control">
+          <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
+      </form>
+  </div>
     <div class="category">가게 카테고리</div>
     <div id="main">
 

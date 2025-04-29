@@ -9,49 +9,49 @@
 <style>
 
 .navbar{
-        background:#ff694a ;
-        width: 100%;
-        height: 80px;
-        /* !important 최우선 적용 */
-        margin-bottom: 0 !important; 
-        border-radius: 0 !important;
-        clear: both;
-    }
+    background:#ff694a ;
+    width: 100%;
+    height: 80px;
+    /* !important 최우선 적용 */
+    margin-bottom: 0 !important; 
+    border-radius: 0 !important;
+    clear: both;
+}
 
 
-    img{
-        margin: 0 auto;
-        width: 310px;
-        height: 75px;
+#logo_img{
+    margin: 0 auto;
+    width: 310px;
+    height: 75px;
 
 
-    }
+}
 
-    .login-btn{
-        margin-top: 25px;
-        margin-right: 20px;
-        float: right;
+.login-btn{
+    margin-top: 25px;
+    margin-right: 20px;
+    float: right;
 
-    }
+}
 
 
 </style>
 </head>
 <body>
     <div class="navbar">
-                    <img src="${pageContext.request.contextPath}/images/로고.png" onclick="location" >            
-                    
-                    <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
-                    <c:if test="${ empty sessionScope.user }">
-                        <input class="btn btn-primary login-btn" type="button" value="로그인" onclick="location.href='../member/login_form.do'">
-                      </c:if>
-          
-                      <!-- 로그인이 되어있을 경우(session에 user가 있냐?) -->
-                      <c:if test="${ not empty sessionScope.user }">
-                        <input class="btn btn-primary login-btn" type="button" value="로그아웃" onclick="location.href='../member/logout.do'">
-                        <input class="btn btn-primary login-btn" type="button" value="내 정보" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
-                        <input class="btn btn-primary login-btn" type="button" value="내 주문" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
-                      </c:if>
+        <img id="logo_img" src="${pageContext.request.contextPath}/images/로고.png" onclick="location.href='/main/main.do'" >            
+        
+        <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
+        <c:if test="${ empty sessionScope.user }">
+            <input class="btn btn-primary login-btn" type="button" value="로그인" onclick="location.href='../member/login_form.do'">
+            </c:if>
+
+            <!-- 로그인이 되어있을 경우(session에 user가 있냐?) -->
+            <c:if test="${ not empty sessionScope.user }">
+            <input class="btn btn-primary login-btn" type="button" value="로그아웃" onclick="location.href='../member/logout.do'">
+            <input class="btn btn-primary login-btn" type="button" value="내 정보" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
+            <input class="btn btn-primary login-btn" type="button" value="내 주문" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
+            </c:if>
 
     </div>
 </body>

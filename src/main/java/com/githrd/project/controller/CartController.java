@@ -88,7 +88,7 @@ public class CartController {
     }
 
     // 장바구니 리스트 조회
-    @GetMapping("/list.do")
+    @RequestMapping(value = "/list.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String cart_list(Model model, RedirectAttributes ra) {
 
         MemberVo user = (MemberVo) session.getAttribute("user");
@@ -113,6 +113,7 @@ public class CartController {
         int shop_dfee = shopService.selectShopDfee(shop_idx);
         System.out.println(shop_dfee);
 
+        model.addAttribute("shop_idx", shop_idx);
         model.addAttribute("cart_list", cart_list);
         model.addAttribute("total_amount", total_amount);
         model.addAttribute("shop_dfee", shop_dfee);
