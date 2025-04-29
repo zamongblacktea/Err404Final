@@ -156,8 +156,8 @@
       </table>
       
       <hr>
-      <h4>총수입 : </h4>
-      <!-- <h3>총 수입: ${totalDilveryFee}} 원</h3> -->
+      
+       <h3>총 수입: ${totalDilveryFee}원</h3>
     
 </body>
 </html>

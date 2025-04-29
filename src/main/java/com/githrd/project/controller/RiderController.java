@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -285,6 +286,24 @@ public class RiderController {
          
         return "rider/rider_deliveryfee";
      }
+     //총배달료 조회
+//      @RequestMapping("/rider/deliveryfeefilter.do")
+//     public String riderDeliveryFeeTotalList(int rider_idx,String startDate,String endDate,Model model) {
+
+//     Map<String,Object> map = new HashMap<>();
+//     map.put("rider_idx", rider_idx);
+//     map.put("startDate",startDate);
+//     map.put("endDate", endDate);                                  
+//     // // 1. 목록 조회
+//     // List<DeliveryVo> deliveryFeetotal = deliveryMapper.selectTotalDeliveryFeeFilterList(map);
+//     // model.addAttribute("deliveryFeetotal", deliveryFeetotal);
+
+//     // 2. 총 배달료 합계 조회
+//     int totalDeliveryFee = deliveryMapper.selectTotalDeliveryFeeFilterList(map);
+//     model.addAttribute("totalDilveryFee", totalDeliveryFee);
+
+//     return "rider/rider_deliveryfee"; // JSP 경로
+// }
 
 
     //당일내역 정산

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.githrd.project.vo.DeliveryVo;
 
@@ -20,7 +21,8 @@ public interface DeliveryMapper {
        public List<DeliveryVo> selectDeliveryFeeFilterList(Map<String, Object> map);
 
        //필터링한 정산내역 더해서 총배달료 조회
-       public List<DeliveryVo> selectDeliveryTotalFeeFilterList(Map<String, Object> map);
+       //public List<DeliveryVo> selectDeliveryTotalFeeFilterList(Map<String, Object> map);
+       public int selectTotalDeliveryFeeFilterList(Map<String, Object> map);
 
        //배차받기를 누르면 배차상태가 Y로 바뀌도록하기
         // int riderStatusUpdate(Map<String,Object> map);
