@@ -16,14 +16,15 @@
         #search_form{
             width: 550px;
             margin: 0 auto;
-            margin-top: 165px;
-            z-index: 2;
+            /* margin-top: 165px; */
+            z-index: 5;
         }
 
         #search{
             width: 450px;
             height: 50px;
             display: inline;
+            margin-top: 165px;
         }
 
         .btn_search{
@@ -36,10 +37,12 @@
 </head>
 <body>
     <div class="header">
-        <form id="search_form" action="">
+        <div id="search_form">
+        <form action="">
             <input type="text" id="search" class="form-control">
             <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
         </form>
+    </div>
 
 
     </div>

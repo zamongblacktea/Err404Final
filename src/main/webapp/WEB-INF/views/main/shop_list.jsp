@@ -11,71 +11,8 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
-    <style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
 
-      * {
-        margin: 0;
-        padding: 0;
-        border: 1px solid black;
-      }
-      .nav {
-        height: 80px;
-      }
-
-      .header{
-        height: 100px;
-        background: url("${pageContext.request.contextPath}/images/헤더이미지1.png");
-        background-size: cover;
-        background-position: center 50%;
-        }
-
-      #search_form{
-        width: 550px;
-        margin: 0 auto;
-        margin-top: 20px;
-        z-index: 2;
-      }
-
-      #search{
-        width: 450px;
-        height: 50px;
-        display: inline;
-      }
-
-      .btn_search{
-        width: 70px;
-        height: 50px;
-        display: inline-block;
-      }
-
-      .list {
-        width: 1050px;
-        margin: 10px auto;
-      }
-
-      .shop-list {
-        display: inline-block;
-        width: 490px;
-        height: 110px;
-        margin: 5px 7px;
-      }
-
-      .row{
-        margin: auto;
-        margin-top: 8px;
-      }
-
-      #shop_logo{
-        width: 90px;
-        height: 90px;
-        display: inline-block;
-      }
-
-      .shop_info{
-        display: inline-block;
-      }
-    </style>
   </head>
   <body>
     <div class="navbar">
@@ -93,32 +30,21 @@ pageEncoding="UTF-8"%>
       <div class="list">
 
         <c:forEach var="vo" items="${shop_list}">
-          <div class="shop-list container" onclick="location.href='../main/detail.do?shop_idx=${vo.shop_idx}'">
-            <div class="row">
-
-              <div id="shop_logo" class="col-sm-3">
-                <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고" style="width: 100%; height: 100%;">
+          <div class="container" onclick="location.href='../main/detail.do?shop_idx=${vo.shop_idx}'">
+            <div class="shop-list">
+              <div id="shop_logo">
+                <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고">
               </div>
-              <div class="col-sm-9">
-                <div class="shop_info">${vo.shop_name}</div><br>
-                <div class="shop_info">별점 ${vo.shop_rating}|리뷰 ${vo.shop_reviewcnt}</div><br>
+              <div id="shop_content">
+                <div class="shop_info">${vo.shop_name}</div>
+                <div class="shop_info">별점 ${vo.shop_rating}|리뷰 ${vo.shop_reviewcnt}</div>
                 <div class="shop_info">
                   <fmt:formatNumber value="${vo.shop_minprice}" pattern="#,#00" />원 이상 주문</div>
-              </div>
-            </div>
-            
+              </div>    
+            </div>        
           </div>
 
         </c:forEach>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
         </div>
       </div>
     </div>
