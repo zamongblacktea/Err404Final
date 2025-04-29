@@ -14,128 +14,90 @@
 .header {
   position: fixed;
   left: 0;
-  top: 0;
+  top: 80px;
   bottom: 0;
   width: 17.5em;
-  background: #35302D;
+  /* background: #35302D; */
 }
 
-.logo {
-  text-transform: lowercase;
-  font: 300 2em 'Source Sans Pro', Helvetica, Arial, sans-serif;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-}
-.logo a {
-  display: block;
-  padding: 1em 0;
-  color: #DFDBD9;
-  text-decoration: none;
-  transition: 0.15s linear color;
-}
-.logo a:hover {
-  color: #fff;
-}
-.logo a:hover span {
-  color: #DF4500;
-}
-.logo span {
-  font-weight: 700;
-  transition: 0.15s linear color;
-}
 
-/* MAIN NAV */
-.main-nav ul {
-  border-top: solid 1px #3C3735;
-}
-.main-nav li {
-  border-bottom: solid 1px #3C3735;
-}
-.main-nav a {
-  padding: 1.1em 0;
-  color: #DFDBD9;
-  font: 400 1.125em 'Source Sans Pro', Helvetica, Arial, sans-serif;
-  text-align: center;
-  text-transform: lowercase;
-}
-.main-nav a:hover {
-  color: #fff;
-}
+/* 사이드바 */
+#sidebar {
+        width: 220px;
+        background-color: white;
+        border-right: 1px solid #ddd;
+        padding: 20px;
+        font-size: 18px;
+        height: 100%;
+      }
 
-/* SOCIAL LINKS */
-.social-links {
-  border-bottom: solid 1px #3C3735;
-}
-.social-links li {
-  width: 25%;
-  border-left: solid 1px #3C3735;
-}
-.social-links li:first-child {
-  border: none;
-}
-.social-links a {
-  display: block;
-  height: 5.5em;
-  text-align: center;
-  color: #3C3735;
-  font: 0.75em/5.5em 'Source Sans Pro', Helvetica, Arial, sans-serif;
-}
-.social-links a:hover {
-  color: #DFDBD9;
-}
+      #sidebar .menu-group {
+        margin-bottom: 20px;
+      }
 
-/* REUSABLE STYLES */
-.unstyled {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.unstyled a {
-  text-decoration: none;
-}
-.list-inline {
-  overflow: hidden;
-}
-.list-inline li {
-  float: left;
-}
+      #sidebar .menu-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
 
-/* HOVER SLIDE EFFECT */
-.list-hover-slide li {
-  position: relative;
-  overflow: hidden;
-}
-.list-hover-slide a {
-  display: block;
-  position: relative;
-  z-index: 1;
-  transition: 0.35s ease color;
-}
-.list-hover-slide a:before {
-  content: '';
-  display: block;
-  z-index: -1;
-  position: absolute;
-  left: -100%;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-right: solid 5px #DF4500;
-  background: #3C3735;
-  transition: 0.35s ease left; 
-}
-.list-hover-slide a.is-current:before,
-.list-hover-slide a:hover:before {
-  left: 0;
-}
+      #sidebar a {
+        display: block;
+        text-decoration: none;
+        color: #333;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+
+      #sidebar a:hover {
+        background-color: #ffbeb1;
+        color: white;
+      }
 
 
 </style>
+
+<script>
+  function loadContent(url) {
+    const mem_idx = "${user.mem_idx}"; // 세션에서 shop_idx 꺼냄
+    $.ajax({
+      url: url,
+      data: { mem_idx: mem_idx,
+       },
+      success: function(res_data) {
+        $("#disp").html(res_data);
+      },
+      error: function(err) {
+        alert("에러 발생: " + err.responseText);
+      }
+    });
+  }
+
+  // 페이지 로드 시 기본으로 메뉴 목록 표시
+  $(document).ready(function() {
+    loadContent("modify_form.do?mem_idx=${ user.mem_idx }");
+  });
+</script>
 </head>
 <body>
+
+  <!-- <div id="sidebar">
+    <div class="menu-group">
+      <div class="menu-title">사장관리</div>
+      <a onclick="loadContent('modify_form.do?mem_idx=${ user.mem_idx }')">내 정보</a>
+    </div>
+    <div class="menu-group">
+      <div class="menu-title">주문관리</div>
+      <a onclick="loadContent('../order_list.do?mem_idx=${ user.mem_idx }')">내 주문 내역</a>
+    </div>
+    <div class="menu-group">
+      <div class="menu-title">리뷰관리</div>
+      <a onclick="loadContent('review_list.do?mem_idx=${ user.mem_idx }')">내가 쓴 리뷰</a>
+    </div>
+  </div> -->
+
     <header class="header" role="banner">
-        <h1 class="logo">
+        <!-- <h1 class="logo">
           <a href="#">Terence <span>Devine</span></a>
         </h1>
         <div class="nav-wrap">
@@ -147,6 +109,22 @@
               <li><a href="rider_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">내 문의 내역</a></li>
             </ul>
           </nav>
+        </div> -->
+        <div id="sidebar">
+          <div class="menu-group">
+            <div class="menu-title">내 정보관리</div>
+            <a onclick="loadContent('modify_form.do?mem_idx=${ user.mem_idx }')">내 정보</a>
+          </div>
+          <div class="menu-group">
+            <div class="menu-title">주문관리</div>
+            <a onclick="loadContent('order_list.do?mem_idx=${ user.mem_idx }')">내 주문 내역</a>
+            <a onclick="loadContent('../cart/list.do?mem_idx=${ user.mem_idx }')">장바구니</a>
+            <!-- <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a> -->
+          </div>
+          <div class="menu-group">
+            <div class="menu-title">리뷰관리</div>
+            <a onclick="loadContent('review_list.do?mem_idx=${ user.mem_idx }')">내가 쓴 리뷰</a>
+          </div>
         </div>
       </header>
 

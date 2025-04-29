@@ -148,11 +148,11 @@
 							<tr>
 								<td colspan="2" align="center">
 									<input class="btn btn-success" type="button" value="메인으로"
-										onclick="location.href='../rider/main.do'">
+										onclick="location.href='../owner/main.do'">
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 									<input class="btn btn-primary" type="button" value="탈퇴하기"
-										onclick="location.href='delete.do?owner_idx=${sessionScope.user.owner_idx}';">
+										onclick="location.href='delete.do?owner_idx=${owner.owner_idx}';">
 								</td>
 							</tr>
 

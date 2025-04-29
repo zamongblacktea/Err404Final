@@ -133,14 +133,14 @@ public class MemberController {
 			return "redirect:" + url; // 원래있던 페이지로 이동시켜라
 	}
 
-	// 로그아웃
+	//회원 로그아웃
 	@RequestMapping("logout.do")
 	public String logout() {
 
 		// 해당세션에 있는 user정보 삭제
 		session.removeAttribute("user");
 
-		return "redirect:../main/main.do";
+		return "redirect:../member/login_form.do";
 	}
 
 	// 네이버 간편회원가입폼 띄우기

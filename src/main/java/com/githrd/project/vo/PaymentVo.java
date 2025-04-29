@@ -22,7 +22,7 @@ public class PaymentVo {
     String imp_uid;
     String merchant_uid;
     int amount;
-    String shop_request;
+    String order_request;
     String rider_request;
     String coupon_use;
     String mem_addr1;

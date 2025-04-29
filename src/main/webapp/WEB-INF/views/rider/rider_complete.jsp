@@ -14,9 +14,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 </head>
+<style>
+    .content-items{
+        width: 90%;
+        margin: auto;
+        padding-top: 3%;
+    }
+</style>
 
 <body>
-    
+     <div class="content-items">
+    <!-- <div class="content-items" style="width: 90%;margin: auto; padding-top: 3%;"> -->
     <!-- 배달완료를 누르면 가게/관리자페이지/라이더의 정산페이지에 영향 -->
     <!-- <p> 주문번호 ${order_idx}의 배달이 완료되었습니다 </p> -->
     <!-- 오른쪽에 정산내역확인하기 버튼-->
@@ -43,6 +51,6 @@
         </c:forEach>
     </c:otherwise>
 </c:choose>
-
+</div> <!--div content-items-->
 </body>
 </html>

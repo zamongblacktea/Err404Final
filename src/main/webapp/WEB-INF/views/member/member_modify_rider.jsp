@@ -166,9 +166,9 @@
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 									<input class="btn btn-primary" type="button" value="탈퇴하기"
-										onclick="location.href='delete.do?rider_idx=${sessionScope.user.rider_idx}';">
+										onclick="location.href='delete.do?rider_idx=${rider.rider_idx}';">
 										<input class="btn btn-warning" type="button" value="정산내역"
-										onclick="location.href='../rider/deliveryfee.do?rider_idx=${sessionScope.user.rider_idx}'">
+										onclick="location.href='../rider/deliveryfee.do?rider_idx=${rider.rider_idx}'">
 									</td>
 							</tr>
 

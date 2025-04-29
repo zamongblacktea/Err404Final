@@ -1,0 +1,413 @@
+/* shop_detail.jsp */
+* {
+  /* border: 1px solid black; */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: #fafafa;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding-left: 0;
+  background-color: #fafafa;
+}
+
+#mybox {
+  /* width: 100%; */
+  padding: 0 10px;
+  flex: 2;
+  /* flex: 1 1 auto; */
+  /* min-width: 0; */
+  /* margin: 0 auto; */
+  /* width: 1150px; */
+  /* width: 850px; */
+  /* width: 750px; */
+  /* padding-left: 10px; */
+  /* display: inline-block; */
+}
+
+.navbar {
+  width: 100%;
+  height: 80px;
+}
+
+.header {
+  width: 100%;
+  height: 160px;
+  /* height: 100px; */
+  background: url("../images/헤더이미지1.png");
+  background-size: cover;
+  background-position: center 50%;
+}
+
+#search_form {
+  width: 550px;
+  margin: 0 auto;
+  margin-top: 50px;
+  z-index: 2;
+}
+
+#search {
+  width: 450px;
+  height: 50px;
+  display: inline;
+}
+
+.btn_search {
+  width: 70px;
+  height: 50px;
+  display: inline-block;
+}
+
+.category{
+  height: 60px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  box-shadow: 0 1px 3px black;
+  z-index: 3;
+  /* margin-bottom: 10px; */
+}
+
+.shop-detail {
+  width: 1150px;
+  /* display: block; */
+  display: flex;
+  margin: 0 auto;
+  padding-top: 10px;
+  align-items: flex-start;
+  /* justify-content: space-between; */
+  /* gap: 10px;  */
+}
+
+.shop-title {
+  margin-bottom: 0;
+  height: 43px;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  font-size: 17px;
+  padding-top: 10px;
+  padding-left: 15px;
+  background-color: white;
+}
+
+.shop-content {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  border: 1px solid #d9d9d9;
+  border-top: none;
+  background-color: white;
+}
+
+#shop_logo {
+  width: 80px;
+  height: 80px;
+  flex: 1;
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.list {
+  flex: 6;
+  display: inline-block;
+  /* margin-left: 15px; */
+  margin-top: 25px;
+}
+
+.list > li {
+  font-size: 15px;
+}
+
+.shop-notice {
+  margin-bottom: 10px;
+  height: 44px;
+  border: 1px solid #d9d9d9;
+  border-top: none;
+  font-size: 16px;
+  padding-top: 12px;
+  padding-left: 15px;
+  background-color: white;
+}
+
+.content_nav {
+  height: 47px;
+  display: flex;
+}
+
+li {
+  list-style: none;
+}
+
+.content_nav > li {
+  list-style: none;
+  flex: 1;
+  /* border: 1px solid #d9d9d9; */
+}
+
+.nav-a {
+  background-color: #ff694a;
+  border: 1px solid #d9d9d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* margin-top: 10px; */
+  border-radius: 5px;
+  font-size: 17px;
+  color: white;
+  font-weight: bold;
+}
+
+.nav-a.active{
+  background-color: #ff694a;
+  font-weight: bold;
+  font-size: large;
+  box-shadow: 0 0 5px #be4831;
+}
+
+.detail-content {
+  width: 100%;
+}
+
+#disp{
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.cart {
+  width: 280px;
+  flex: 1;
+  min-height: 400px; /* 기본 높이 설정 */
+  /* border: 1px solid #ccc; */
+  padding: 15px;
+  box-sizing: border-box;
+  /* background-color: #fafafa; */
+  margin-left: 10px;
+  font-size: 14px;
+  /* border-radius: 8px; */
+  flex-shrink: 0; /* 붙는 거 방지 */
+
+  position: sticky;
+  top: 20px;
+}
+
+.footer {
+  width: 100%;
+  height: 150px;
+  display: block;
+}
+
+/* detail_cart */
+#cart_area {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.cart-title {
+  border: 1px solid #d9d9d9;
+  height: 42px;
+  font-size: 17px;
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #fff;
+  background-color: #333;
+}
+
+.cart_li {
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  list-style: none;
+  padding-top: 10px;
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+
+#cart-name {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.cart-price {
+  display: flex;
+  padding-right: 10px;
+}
+
+.order_price {
+  flex: 1;
+}
+
+.cart_cnt {
+  flex: 1;
+  text-align: right;
+}
+
+#total_amount {
+  height: 47px;
+  font-size: 17px;
+  border: 1px solid #d9d9d9;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 10px;
+  font-weight: bold;
+  color: #ff694a;
+  background-color: #fff8eb;
+}
+
+#shop_dfee {
+  height: 47px;
+  font-size: 17px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+#btn_order {
+  height: 47px;
+  width: 100%;
+  background-color: #ff694a;
+  border: none;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+/* detail_menu */
+
+.menu_row {
+  width: 100%;
+  display: flex;
+  border: 1px solid #d9d9d9;
+  padding-left: 15px;
+  height: 104px;
+  margin: auto;
+}
+
+.menu-text {
+  /* width: 500px; */
+  margin-top: 20px;
+  flex: 2;
+}
+
+.menu-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.menu-explain {
+  font-size: 14px;
+  color: #999;
+}
+
+.menu-price {
+  font-size: 16px;
+}
+
+.menu-img {
+  /* width: 112px; */
+  height: 80px;
+  margin-left: 140px;
+  padding-right: 10px;
+  padding-left: 100px;
+  flex: 1;
+  margin-top: 10px;
+}
+
+/* detail_review */
+.review-box {
+  /* width: 500px; */
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
+textarea {
+  resize: none;
+}
+
+#review_img {
+  width: 90%;
+  margin: auto;
+}
+
+/* detail_info */
+.detail-info{
+  width: 100%;
+}
+
+hr{
+  border: 0;                      
+  border-top: 1px solid #333;  /* 두께 1px, 색 #333 */
+  width: 705px;
+}
+
+table.table-borderless td,
+table.table-borderless th,
+table.table-borderless tr {
+  border: none !important;
+}
+
+.notice,
+.intro,
+.info,
+.pay_info,
+.owner_info{
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.notice > span,
+.intro > span,
+.info > span, 
+.pay_info > span,
+.owner_info > span{
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.notice_content,
+.intro_content{
+  padding-left: 20px;
+  padding-bottom: 10px;
+  font-size: 14px;
+
+}
+
+.owner_content,
+.pay_info_content,
+.info_content{
+  width: 100%;
+}
+
+tbody{
+  width: 100%;
+}
+
+table{
+  /* display: flex; */
+  width: 100%;
+}
+
+th{
+  width: 30%;
+  padding-left: 10px;
+}
+td{
+  width: 70%;
+  padding-left: 50px;
+}

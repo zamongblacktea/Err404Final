@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,8 +13,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 포트 원 결제대행 api lib  -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<link rel="stylesheet" href="../css/main.css">
-<link rel="stylesheet" href="../css/bar.css">
+<!-- <link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/bar.css"> -->
 
 <!-- 다음 주소검색 API -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -48,17 +49,22 @@ h {
 
 .rsvform {
 	width: 58%;
+	/* height: 500px; */
+	height: auto;
 	background: white;
 	padding: 20px;
 	border-radius: 10px;
 	margin-top: 50px;
 	margin-right: 10px;
+	margin-bottom: 50px;
 	float: left;
 }
 
 .acominfo {
 	width: 38%;
-	height: auto; background : white;
+	height: auto;
+	min-height: 578px;
+	background : white;
 	border-radius: 10px;
 	margin-top: 50px;
 	margin-left: 10px;
@@ -92,11 +98,16 @@ h {
 	float: right;
 
 }
+
+textarea{
+	resize: none;
+}
+
+.cart_price{
+	font-weight: bold;
+	font-size: 18px;
+}
 </style>
-
-
-
-
 
 <!-- 포트원 SDK 라이브러리 추가 -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
@@ -116,6 +127,8 @@ h {
 		const mem_phone = $("#mem_phone").val();
 		const mem_addr1 = $("#mem_addr1").val();
 		const mem_addr2 = $("#mem_addr2").val();
+		const order_request = $("#order_request").val();
+		const rider_request = $("#rider_request").val();
 
 
 		IMP.request_pay({
@@ -146,6 +159,8 @@ h {
 								cart_price,
 								mem_addr1,
 								mem_addr2,
+								order_request,
+								rider_request
 							);
 				console.log("mem_idx:", mem_idx);
 
@@ -159,9 +174,9 @@ h {
 	}
 
 	// AJAX를 사용한 결제 검증 요청
-	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_name, mem_phone,cart_price, mem_addr1 , mem_addr2) {
+	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_name, mem_phone,cart_price, mem_addr1 , mem_addr2, order_request, rider_request) {
 		//form에 설정한 변수 선언
-
+		
 
 		//alert(`[\${mem_idx}]`);
 		console.log("서버 전송 mem_idx:", mem_idx);
@@ -176,11 +191,13 @@ h {
 				"mcuraddr_idx" : mcuraddr_idx,
 				"menu_idx" : menu_idx,
 				"shop_idx" : shop_idx,
-				"mem_name": mem_name,
+				"mem-name" : mem_name,
 				"mem_phone": mem_phone,
 				"amount"   : cart_price,
 				"mem_addr1" : mem_addr1,
 				"mem_addr2" : mem_addr2,
+				"order_request" : order_request,
+				"rider_request" : rider_request
 
 			}),
 			dataType : "json",
@@ -397,99 +414,110 @@ h {
 <body>
 	<div class="container">
 
-		<div class="rsvform shadow">
-			<h2 class="text-center mb-4">결제 하기</h2>
-			<form id="bookingForm">
-				<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
-				<!-- 테스트 후 변경해야 함 -->
-				<input type="hidden" name="shop_idx" id="shop_idx" value="${ shop_idx }"> 
-				<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
-				<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx">
-				<div class="mb-3">
-					<label for="addr" class="form-label">주소</label> <input type="text"
-							class="form-control" id="mem_addr1" name="mem_addr1"
-							value="${ vo.mem_zipcode } " required>
+	<div class="rsvform shadow">
+		<h2 class="text-center mb-4">결제 하기</h2>
+		<form id="bookingForm">
+			<input type="hidden" name="mem_idx" id="mem_idx" value="${sessionScope.user.mem_idx }"> 
+			<!-- 테스트 후 변경해야 함 -->
+			<input type="hidden" name="shop_idx" id="shop_idx" value="${ shop_idx }"> 
+			<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
+			<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx">
+			<div class="mb-3">
+				<label for="addr" class="form-label">주소</label> <input type="text"
+						class="form-control" id="mem_addr1" name="mem_addr1"
+						value="${ vo.mem_zipcode } " required>
+			</div>
+			<div class="mb-3">
+				<div>
+				<label for="addr" class="form-label" >상세주소</label> <br> <input type="text"
+						class="form-control" id="mem_addr2" name="mem_addr2"
+						value="${ vo.mem_addr } " style="width: 80%; display: inline-block;" required>
+				<!-- 모달 트리거 버튼 -->
+				<button type="button" class="btn btn-primary" id="openAddrModalBtn" style="display: inline-block; margin-bottom: 2px;">
+					주소록 열기
+				</button>
 				</div>
-				<div class="mb-3">
-					<label for="addr" class="form-label">상세주소</label> <input type="text"
-							class="form-control" id="mem_addr2" name="mem_addr2"
-							value="${ vo.mem_addr } " required>
-					<!-- 모달 트리거 버튼 -->
-					<button type="button" class="btn btn-primary" id="openAddrModalBtn">
-						주소록 열기
-					</button>
-  
+
+				
+				<!-- 모달 구조 -->
+				<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
 					
-					<!-- 모달 구조 -->
-					<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-						  <div class="modal-content">
-					  
-							<!-- 모달 헤더 -->
-							<div class="modal-header">
-							  <h5 class="modal-title" id="myModalLabel">주소록</h5>
-							</div>
-					  
-							<!-- 모달 바디 -->
-							<div class="modal-body" id="addressModalBody">
-									<!-- ajax 처리 -->
-							</div>
-					  
-							<!-- 모달 푸터 -->
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-primary" id="insertAddr" >주소등록</button>
-							  <button type="button" class="btn btn-secondary" id="closeModal" >닫기</button>
-							</div>
-					  
-						  </div>
+						<!-- 모달 헤더 -->
+						<div class="modal-header">
+							<h5 class="modal-title" id="myModalLabel">주소록</h5>
 						</div>
-					  </div>
-				<div class="mb-3">
-					<label for="name" class="form-label">이름</label> <input type="text"
-						class="form-control" id="mem_name" name="mem_name"
-						value="${ sessionScope.user.mem_name }" required>
-				</div>
-				<div class="mb-3">
-					<label for="phone" class="form-label">전화번호</label> <input
-						type="tel" class="form-control" id="mem_phone" name="mem_phone"
-						value="${ sessionScope.user.mem_phone }" required>
-				</div>
+					
+						<!-- 모달 바디 -->
+						<div class="modal-body" id="addressModalBody">
+								<!-- ajax 처리 -->
+						</div>
+					
+						<!-- 모달 푸터 -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="insertAddr" >주소등록</button>
+							<button type="button" class="btn btn-secondary" id="closeModal" >닫기</button>
+						</div>
+					
+						</div>
+					</div>
+					</div>
+			<div class="mb-3"><input type="hidden"
+					class="form-control" id="mem_name" name="mem_name"
+					value="${ sessionScope.user.mem_name }" required>
+			</div>
+			<div class="mb-3">
+				<label for="phone" class="form-label">전화번호</label> <input
+					type="tel" class="form-control" id="mem_phone" name="mem_phone"
+					value="${ sessionScope.user.mem_phone }" required>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">가게 요청사항</label> 
+				<textarea class="form-control" id="order_request" name="order_request"></textarea>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">배달 요청사항</label> 
+				<textarea class="form-control" id="rider_request" name="rider_request"></textarea>
+			</div>
 
 
 
-				<div class="mb-3">
-				<label for="cart_price" class="form-label">가격</label> <input
-						type="hidden" class="form-control" id="cart_price" name="cart_price"
-						value="${amount}"
-						readonly>
-						<fmt:formatNumber value='${amount}' type='number' pattern='#,###' />
 
-				</div>
+			
 
-	
+
 		</div>
-
-
-
-
-
 	</div>
-
-
 </form>
 <div class="acominfo shadow">
-	<h4>주문 내역</h4>
+	<br>
+	<h4 style="text-align: center;">주문 내역</h4>
 	<div class="acom-img">
-		주문 정보 입력
-	</div>
-	<div class="hr">
-		<hr style="border: 1px solid black;">
-	</div>
-	<div class="btn">
-		<input type="button" class="btn btn-success"
+		<c:forEach var="cartVo" items="${cart_list}">
+			<br><br>
+			<div style="margin-left: 20px; border: 1px solid black; border-radius: 5px; padding-left: 15px;padding-top: 10px; padding-bottom: 10px;">
+				<span style="font-weight: bold;">메뉴 이름 :</span><span> ${cartVo.menu_name}</span><br><br>
+				<span style="font-weight: bold;">메뉴 가격 :</span><span> ${cartVo.menu_price}</span><br><br>
+				<span style="font-weight: bold;">메뉴 수량 :</span><span> ${cartVo.cart_cnt}</span>
+				
+			</div>
+		</c:forEach>
+		<div class="hr">
+			<hr style="border: 1px solid black;">
+		</div>
+		<div class="mb-3 cart_price" style="display: inline-block; margin-left: 20px;margin-top: 10px;">
+			<label for="cart_price" class="form-label">총 가격</label> <input
+				type="hidden" class="form-control" id="cart_price" name="cart_price"
+				value="${amount}"readonly>
+				<fmt:formatNumber value='${amount}' type='number' pattern='#,###' />
+			</div>
+		<div class="btn">
+			<input type="button" class="btn btn-success"
 			onclick="requestPay()" value="결제하기">
+		</div>
+		
 	</div>
-
 
 </div>
 <div style="clear: both;"></div>

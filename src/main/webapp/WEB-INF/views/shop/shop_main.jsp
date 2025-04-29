@@ -87,9 +87,9 @@
 
   ChannelIO('boot', {
     "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
-    "memberId": "${ user.owner_id }", // fill user's member id
+    "memberId": "${ owner.owner_id }", // fill user's member id
     "profile": { // fill user's profile
-      "name": "${user.owner_name}", // fill user's name
+      "name": "${owner.owner_name}", // fill user's name
       "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
       "CUSTOM_VALUE_1": "VALUE_1", // custom property
       "CUSTOM_VALUE_2": "VALUE_2" // custom property
@@ -100,7 +100,7 @@
     <script>
       function loadContent(url) {
         const shop_idx = "${sessionScope.shop_idx}"; // 세션에서 shop_idx 꺼냄
-        const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
+        const owner_idx = "${owner.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
           data: { shop_idx: shop_idx,

@@ -12,6 +12,16 @@
      <!-- 웹소캣 -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style type="text/css">
+
+      .content-items{
+        width: 90%;
+        margin: auto;
+        padding-top: 3%;
+      }
+
+    </style>
+    
     <script>
 
       function rider_accept(order_idx,rider_idx){
@@ -46,6 +56,8 @@
   </head>
 
   <body>
+    <div class="content-items">
+     <!-- <div class="content-items" style="width: 90%;margin: auto; padding-top: 3%;"> -->
      <!-- foreign키로 라이더의 아이디도 받아와야한다. -->
 
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
@@ -55,22 +67,22 @@
       현재 배차대기목록이 없습니다.
      </c:if>
      
-    <c:forEach var="vo" items="${standby_list}">
-      <div>주문번호 : ${vo.order_idx}</div>
-      <div>가게이름 : ${vo.shop_name}</div>
-      <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div>
-      <div>메뉴 : ${vo.menu_name} </div>
-      <div>메뉴가격 : ${vo.menu_price}</div>
-      <div>배달장소 : ${vo.mem_addr1} ${vo.mem_addr2}</div>
-      <div>배달요청사항 : ${vo.rider_request}</div>
+     <c:forEach var="vo" items="${standby_list}">
+        <div>주문번호 : ${vo.order_idx}</div>
+        <div>가게이름 : ${vo.shop_name}</div>
+        <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div>
+        <div>메뉴 : ${vo.menu_name} </div>
+        <div>메뉴가격 : ${vo.menu_price}</div>
+        <div>배달장소 : ${vo.mem_addr1} ${vo.mem_addr2}</div>
+        <div>배달요청사항 : ${vo.rider_request}</div>
 
-        <input  type="button"  value="경로보기"    onclick="location.href='../route/route.do?order_idx=${vo.order_idx}&rider_idx=${user.rider_idx}'" />
-        <!-- 배차받기를 누르면 배달현황으로 넘어가기 -->
-        <input type="button" value="배차받기" onclick="rider_accept('${ vo.order_idx }','${ user.rider_idx}');" />
-        <!-- 배차받기 누르면 고객,가게쪽으로 알림뜨드록 -->
-         <hr>
+          <input  type="button"  value="경로보기"    onclick="location.href='../route/route.do?order_idx=${vo.order_idx}&rider_idx=${user.rider_idx}'" />
+          <!-- 배차받기를 누르면 배달현황으로 넘어가기 -->
+          <input type="button" value="배차받기" onclick="rider_accept('${ vo.order_idx }','${ user.rider_idx}');" />
+          <!-- 배차받기 누르면 고객,가게쪽으로 알림뜨드록 -->
+          <hr>
        
       </c:forEach>
-   
+    </div><!--div content-items-->
   </body>
 </html>

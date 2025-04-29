@@ -23,6 +23,7 @@ import com.githrd.project.service.CalculateSerive;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.OrderStatusVo;
+import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.RiderDeliveryFeeVo;
 import com.githrd.project.vo.RiderVo;
 
@@ -70,6 +71,12 @@ public class RiderController {
 
     @RequestMapping("/rider/main.do")
     public String main(){
+        // 1. 로그인한 사장님 정보 꺼내오기
+        RiderVo rider = (RiderVo) session.getAttribute("user");
+
+        if (rider == null) {
+            return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+        }
 
         return "rider/rider_main";
     }
@@ -219,7 +226,7 @@ public class RiderController {
         paramMap.put("tab_state", "complete");
        // messagingTemplate.convertAndSend("/topic/orders", paramMap);
 
-        Map<String,Object>map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
 
         map.put("result", res==1);
 

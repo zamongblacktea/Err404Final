@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -180,14 +181,13 @@
   </head>
   <body>
 
-    <c:choose>
-      <c:when test="${user.owner_approve eq '대기'}" >
+      <c:if test="${sessionScope.user.owner_approve eq '대기'}" >
         <script>
           alert("아직 승인받지 않은 유저입니다.");
           history.back();
         </script>
-      </c:when>
-      <c:otherwise>
+      </c:if>
+      <c:if test="${sessionScope.user.owner_approve eq '승인'}">
         <form method="post" class="form-inline" enctype="multipart/form-data">
           <input type="hidden" name="owner_idx" value="${user.owner_idx}" />
           <div id="box">
@@ -344,8 +344,7 @@
             </div>
           </div>
         </form>
-      </c:otherwise>
-    </c:choose>
+      </c:if>
     <!-- <c:if test="${user.owner_approve eq '대기'}">
       <script>
         alert("아직 승인받지 않은 유저입니다.");

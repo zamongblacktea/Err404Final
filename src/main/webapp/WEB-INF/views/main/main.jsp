@@ -8,45 +8,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
   </head>
-  <style>
-    * {
-      border: 1px solid black;
-      margin: 0;
-      padding: 0;
-    }
-
-    #mybox {
-      margin: 0 auto;
-      width: 1150px;
-      padding-left: 10px;
-    }
-
-      .category {
-        border: 1px solid red;
-        width: 270px;
-        height: 220px;
-        display: inline-block;
-        margin: 5px auto;
-      }
-
-    .navbar {
-      width: 100%;
-      height: 80px;
-    }
-    .header {
-      width: 100%;
-      height: 380px;
-    }
-
-    .footer {
-      width: 100%;
-      height: 150px;
-    }
-  </style>
-
-
-
+  
 <!-- 챗봇 AI 연동 api js -->
 
 <script>
@@ -75,16 +39,36 @@
       </header>
       <div class="content">
         <div id="mybox">
-          <div class="category" onclick="location.href='../main/list.do'">전체보기</div>
-          <div class="category">치킨</div>
-          <div class="category">피자/양식</div>
-          <div class="category">중국집</div>
-          <div class="category">한식</div>
-          <div class="category">일식/돈까스</div>
-          <div class="category">족발/보쌈</div>
-          <div class="category">야식</div>
-          <div class="category">분식</div>
-          <div class="category">카페/디저트</div>
+          <div class="category" onclick="location.href='../main/list.do'">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/전체보기.png" alt="카테고리-전체보기">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/치킨.png" alt="카테고리-치킨">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/피자.png" alt="카테고리-피자/양식">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/짜장면.png" alt="카테고리-중국집">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/한식.png" alt="카테고리-한식">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/일식.png" alt="카테고리-일식/돈까스">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/족발.png" alt="카테고리-족발/보쌈">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/야식.png" alt="카테고리-야식">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/떡볶이.png" alt="카테고리-분식">
+          </div>
+          <div class="category">
+            <img src="${pageContext.request.contextPath}/images/카테고리 사진/카페.png" alt="카테고리-카페/디저트">
+          </div>
         </div>
       </div>
     </div>

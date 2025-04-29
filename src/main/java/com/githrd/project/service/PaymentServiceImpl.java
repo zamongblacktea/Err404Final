@@ -39,7 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
         int menu_idx            = vo.getMenu_idx();
         int mem_idx             = vo.getMem_idx();
         String mem_phone        = vo.getMem_phone();
-        String order_request    = vo.getShop_request();
+        String order_request    = vo.getOrder_request();
         String rider_request    = vo.getRider_request();
         int amount              = vo.getAmount();
         String coupon_use       = vo.getCoupon_use();

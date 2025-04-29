@@ -104,7 +104,7 @@ function send(f) {
   let owner_id = f.owner_id.value.trim();
   let owner_pwd = f.owner_pwd.value.trim();
   let owner_email = f.owner_email.value;
-  let owner_num = f.owner_num.value;
+  // let owner_num = f.owner_num.value;
   let photo = f.photo.value.trim();
 
 	if (owner_id == "") {
@@ -222,7 +222,7 @@ function check_id() {
 <body>
   <div class="signup-container">
     <h2>사장님 회원 가입</h2>
-    <form>
+    <form method="post" class="form-inline" enctype="multipart/form-data">
       <table class="table">
 
         <!-- 이름 -->
@@ -257,7 +257,7 @@ function check_id() {
         <!-- 이미지 -->
         <tr>
           <th>사업자 등록증</th>
-          <td><input class="form-control" required="required" type="file"  name="photo"></td>
+          <td><input class="form-control" type="file"  name="photo"></td>
         </tr>
 
 
