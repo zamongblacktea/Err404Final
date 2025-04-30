@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                           #{ mem_nickname },
                           #{ mem_email },
                           #{ mem_zipcode },
-                          #{ mem_curaddr },
+                          #{ mem_addr },
                           #{ mem_ip }, 
                            now(),
                            null,
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      update member set mem_name=#{ mem_name }, 
                        mem_nickname=#{ mem_nickname }, 
                        mem_zipcode=#{ mem_zipcode }, 
-                       mem_curaddr=#{ mem_curaddr }, 
+                       mem_addr=#{ mem_addr }, 
                        mem_ip=#{ mem_ip },
                        mem_update = now(),
                       mem_phone=#{ mem_phone } 
@@ -64,15 +64,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
