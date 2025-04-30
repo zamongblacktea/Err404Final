@@ -1,4 +1,4 @@
-/* shop_detail.jsp */
+/* ==========================shop_detail.jsp============================= */
 * {
   /* border: 1px solid black; */
   box-sizing: border-box;
@@ -213,7 +213,7 @@ li {
   display: block;
 }
 
-/* detail_cart */
+/* ============================detail_cart============================= */
 #cart_area {
   width: 300px;
   margin: 0 auto;
@@ -288,7 +288,10 @@ li {
   font-weight: bold;
 }
 
-/* detail_menu */
+
+
+
+/* ===========================detail_menu========================== */
 
 .menu_row {
   width: 100%;
@@ -329,23 +332,66 @@ li {
   margin-top: 10px;
 }
 
-/* detail_review */
+
+
+
+/* ============================detail_review=========================== */
 .review-box {
   /* width: 500px; */
   width: 100%;
   height: auto;
   margin: auto;
 }
-textarea {
-  resize: none;
+
+.review-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.user-icon, .owner-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 1rem;
+  color: #555;
+}
+.review-meta {
+  font-size: 0.9rem;
+  color: gray;
+}
+.star-rating {
+  color: #ffc107;
+  margin-bottom: 0.5rem;
+}
+.owner-reply {
+  background-color: #f2f6fa;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: flex-start;
+}
+.review-content {
+  margin-bottom: 1rem;
 }
 
-#review_img {
-  width: 90%;
-  margin: auto;
-}
 
-/* detail_info */
+
+
+/* ============================detail_info============================= */
 .detail-info{
   width: 100%;
 }

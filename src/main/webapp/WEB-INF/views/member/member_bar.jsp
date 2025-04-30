@@ -117,7 +117,8 @@
           </div>
           <div class="menu-group">
             <div class="menu-title">주문관리</div>
-            <a onclick="loadContent('order_list.do?mem_idx=${ user.mem_idx }')">내 주문 내역</a>
+            <!-- <a onclick="loadContent('order_list.do?mem_idx=${ user.mem_idx }')">내 주문 내역</a> -->
+            <a onclick="location.href='order_list.do?mem_idx=${ user.mem_idx }'">내 주문 내역</a>
             <a onclick="loadContent('../cart/list.do?mem_idx=${ user.mem_idx }')">장바구니</a>
             <!-- <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a> -->
           </div>

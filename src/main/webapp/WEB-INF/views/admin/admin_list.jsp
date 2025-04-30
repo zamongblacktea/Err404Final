@@ -168,7 +168,7 @@
            <td>${ vo.mem_pwd }</td>
            <td>${ vo.mem_nickname }</td>
            <td>${ vo.mem_email }</td>
-           <td>${ vo.mem_zipcode } ${ vo.mem_curaddr }</td>
+           <td>${ vo.mem_zipcode } ${ vo.mem_addr }</td>
            <td>${ vo.mem_ip }</td>
            <td>${ vo.mem_regdate }</td>
            <td>${ vo.mem_grade }</td>
