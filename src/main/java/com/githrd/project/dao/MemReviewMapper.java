@@ -29,6 +29,8 @@ public interface MemReviewMapper {
 
     public List<MemReviewVo> selectReviewReply(int shop_idx);
 
+    public List<MemReviewVo> selectMemberReviewReply(int mem_idx);
+
 
     
 }

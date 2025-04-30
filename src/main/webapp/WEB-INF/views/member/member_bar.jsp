@@ -59,7 +59,7 @@
 
 <script>
   function loadContent(url) {
-    const mem_idx = "${user.mem_idx}"; // 세션에서 shop_idx 꺼냄
+    const mem_idx = "${user.mem_idx}"; // 세션에서 mem_idx 꺼냄
     $.ajax({
       url: url,
       data: { mem_idx: mem_idx,
@@ -123,7 +123,7 @@
           </div>
           <div class="menu-group">
             <div class="menu-title">리뷰관리</div>
-            <a onclick="loadContent('review_list.do?mem_idx=${ user.mem_idx }')">내가 쓴 리뷰</a>
+            <a onclick="loadContent('my_review.do?mem_idx=${ user.mem_idx }')">내가 쓴 리뷰</a>
           </div>
         </div>
       </header>

@@ -436,7 +436,7 @@ public class MemberController {
 
 		int res = ownerMapper.delete(owner_idx);
 
-		return "redirect:list.do";
+		return "redirect:login_form.do";
 	}// end : delete_owner
 
 	////////////////////////////////////////////////////////////////////// 라이더//////////////////////////////////////////////////////

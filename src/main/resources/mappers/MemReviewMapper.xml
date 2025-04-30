@@ -100,6 +100,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 select="selectOwnerReply"  />
 
 
+
+
 </resultMap>
 
 <select id="selectOwnerReply"   resultType="OwnerReplyVo">
@@ -109,7 +111,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 
 
-  <!-- 회원 리뷰 + 사장 답글 -->
+
+  <!--가게 회원 리뷰 + 사장 답글 -->
 <select id="selectReviewReply" resultMap="ReviewWithReplyResultMap">
 SELECT 
     m.review_idx AS review_idx,
@@ -133,6 +136,32 @@ SELECT
     o.reply_available AS reply_available
 FROM mem_review m LEFT JOIN owner_reply o ON m.order_idx = o.order_idx
 WHERE m.shop_idx = #{shop_idx}
+
+</select>
+
+<!-- 회원 마이페이지 리뷰 + 답글 -->
+<select id="selectMemberReviewReply" resultMap="ReviewWithReplyResultMap">
+SELECT 
+    m.review_idx AS review_idx,
+    m.mem_idx AS mem_idx,
+    m.order_idx AS order_idx,
+    m.shop_idx AS shop_idx,
+    m.delivery_idx AS delivery_idx,
+    m.mem_nickname AS mem_nickname,
+    m.review_content AS review_content,
+    m.review_regdate AS review_regdate,
+    m.review_update AS review_update,
+    m.review_rating AS review_rating,
+    m.review_img AS review_img,
+    m.review_ip AS review_ip,
+    m.review_available AS review_available,
+    m.menu_name AS menu_name,
+    m.shop_name AS shop_name,
+    o.owner_reply_idx AS o_owner_reply_idx,
+    o.reply_content AS reply_content,
+    o.reply_available AS reply_available
+FROM mem_review m LEFT JOIN owner_reply o ON m.order_idx = o.order_idx
+WHERE m.mem_idx = #{mem_idx}
 
 </select>
 

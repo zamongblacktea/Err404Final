@@ -146,7 +146,7 @@
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 									<input class="btn btn-primary" type="button" value="탈퇴하기"
-										onclick="location.href='delete.do?owner_idx=${user.owner_idx}';">
+										onclick="location.href='../member/delete_owner.do?owner_idx=${user.owner_idx}';">
 								</td>
 							</tr>
 
