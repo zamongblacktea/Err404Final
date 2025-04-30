@@ -76,14 +76,27 @@ public class OrderStatusController {
     @ResponseBody
     public Map<String , String> updateStatus(@RequestBody OrderStatusVo vo){
 
+        System.out.println("--------------------------------------------------------");
+        System.out.println(vo);
+        System.out.println("--------------------------------------------------------");
+
+        Map<String,Object>map = new HashMap<>();
+        map.put("order_idx", vo.getOrder_idx());
+        map.put("order_status",vo.getOrder_status());
+
+        int res = orderStatusMapper.updateStatus(map);
+
+        deliveryMapper.orderStatusUpdate(map);
 
         Map<String, Object> message = new HashMap<>();
+
+        System.out.println(vo.getOrder_status());
+
         message.put("tab_state", "standby");
+        message.put("order_status", vo.getOrder_status());
         messagingTemplate.convertAndSend("/topic/orders", message);
 
-
-        int res = orderStatusMapper.updateStatus(vo);
-
+       
 
         return Map.of("updateStatus",vo.getOrder_status());
     }//end: update_status
@@ -93,12 +106,16 @@ public class OrderStatusController {
 	public String acceptOrderList(@RequestParam("order_idx") int order_idx) {
 		
 		// 주문 상태를 '배차 대기'로 변경
-		orderStatusMapper.updateOrderStatus(order_idx, "배차 대기");
+
+        Map<String,Object>map = new HashMap<>();
+        map.put("order_idx", order_idx);
+        map.put("order_status","배차대기");
+		orderStatusMapper.updateOrderStatus(map);
 
 		// 서버 측: 주문이 들어왔을 때 전송할 메시지
         Map<String, Object> message = new HashMap<>();
-        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
-        message.put("orders_id", order_idx); // 주문 IDX
+        message.put("order_status", "주문 정보가 업데이트되었습니다."); // 주문 상태
+        message.put("order_idx", order_idx); // 주문 IDX
         message.put("tab_state", "standby");
 
         messagingTemplate.convertAndSend("/topic/orders", message);
@@ -111,12 +128,23 @@ public class OrderStatusController {
 	public String endCooking(@RequestParam("order_idx") int order_idx) {
 
 		// 주문 상태를 '픽업 대기'로 변경
-		orderStatusMapper.updateOrderStatus(order_idx, "픽업 대기");
+        // OrderStatusVo vo = new OrderStatusVo();
+        // vo.setOrder_idx(order_idx);
+        // vo.setOrder_status("픽업대기");
+		
+        Map<String,Object> map = new HashMap<>();
+        map.put("order_idx", order_idx);
+        map.put("order_status", "픽업대기");
+
+        orderStatusMapper.updateStatus(map);
+
+        deliveryMapper.orderStatusUpdate(map);
+
 
         // 서버 측: 주문이 들어왔을 때 전송할 메시지
         Map<String, Object> message = new HashMap<>();
-        message.put("orderStatus", "주문 정보가 업데이트되었습니다."); // 주문 상태
-        message.put("orders_id", order_idx); // 주문 ID
+        message.put("order_status", "픽업대기"); // 주문 상태
+        message.put("order_idx", order_idx); // 주문 ID
 
         messagingTemplate.convertAndSend("/topic/orders", message);	
 

@@ -9,6 +9,10 @@
     <title>주문현황 페이지</title>
     <!-- 파비콘 -->
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+     <!-- 웹소캣 -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <!-- bootstrap 3.x 사용설정 -->
     <script>
     // function setActiveButton(activeId) {
     //     // 모든 버튼 클래스 제거
@@ -68,8 +72,28 @@
         });
     }//end: fuction rider_accept(order_idx,rider_idx)        
           
+    //웹소캣구독
+    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
+    var stompClient = Stomp.over(socket);
 
-   
+    // WebSocket 연결 설정
+    stompClient.connect({}, function (frame) {
+    console.log('Connected: ' + frame);
+
+      // 주문 상태 업데이트 메시지 구독
+    stompClient.subscribe('/topic/orders', function (message) {
+
+        // JSON.stringify() : JSON->String
+        // JSON.parse()     : String->JSON
+
+        var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱
+         if(receivedMessage.order_status == "픽업대기"){
+            //location.reload(); // 페이지 새로고침
+             progress();
+         }          
+    
+      });
+    });
     
     </script>
 </head>
@@ -89,9 +113,9 @@
             <%-- <div>주문상태 : ${vo.order_status}</div> 고객쪽으로가야함 --%>
             <div>가게이름 :  ${vo.shop_name}</div>
             <div>가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}</div> 
-            <%-- <div>가게전화번호 : ${vo.shop_phone}</div>  --%>
+            <div>가게전화번호 : ${vo.shop_phone}</div> 
             <div>회원번호 :  ${vo.mem_idx}</div>
-            <%-- <div>회원전화번호 :  ${vo.mem_phone}</div> --%>
+            <div>회원전화번호 :  ${vo.mem_phone}</div>
             <div>배달장소 :${vo.mem_addr1} ${vo.mem_addr2}</div> 
             <div>배달요청사항 :  ${vo.rider_request}</div>
             <div>
@@ -106,7 +130,7 @@
             <input type="button" value="경로보기" onclick="location.href='../route/route.do'">
             <!-- 원래는 배달예상시간 버튼 누르고 나서 픽업완료가 뜸(이전기수)
             여기서는 가게가 조리 완료를 누르면 픽업완료가 뜰 수 있도록 하기 -->
-            <c:if test="${ vo.delivery_status eq '픽업대기'}">
+            <c:if test="${ vo.order_status eq '픽업대기'}">
                 <input type="button" value="픽업완료" onclick="delivery_pickup('${vo.order_idx}','${vo.shop_idx}','${ vo.mem_idx }')">
             </c:if>
             

@@ -12,9 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!--  아래 정보가 업데이트된 정보를 새로담는 리스트가 있어야 한다 여기서는 rider_list-->
   <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
   <!-- <update id="riderStatusUpdate" parameterType="Map">
-     update delivery set rider_status ='Y',rider_idx=#{rider_idx}
-       where order_idx=#{order_idx}
-    </update> -->
+        update delivery set rider_status ='Y',rider_idx=#{rider_idx}
+        where order_idx=#{order_idx}
+        </update> -->
 
   <!-- 배차완료한 배달중 배달현황조회 -->
   <!-- <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
@@ -22,34 +22,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
     </select> -->
 
-  <!-- 배차완료한 배달중 배달현황조회 -->
-  <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
+  <!-- 배차완료한 배달현황조회 rider_list-->
+    <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
             SELECT 
             d.*,
             si.shop_name,si.shop_addr1,si.shop_addr2,
-            si.shop_addr1,si.shop_addr2,
-            os.mem_addr1,os.mem_addr2,os.rider_request
+            si.shop_addr1,si.shop_addr2,si.shop_phone,
+            os.mem_addr1,os.mem_addr2,os.rider_request,
+            m.mem_phone
             FROM delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
-                inner join order_status os on d.order_idx=os.order_idx  
+                inner join order_status os on d.order_idx=os.order_idx 
+                inner join member m on d.mem_idx= m.mem_idx 
             WHERE rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
   </select>
 
+
   <!-- 픽업대기상태에서 픽업완료를 누르면 delivery_status가 배달중으로 바뀌도록하기 -->
   <update id="deliveryPickupUpdate" parameterType="Map">
-   update delivery set delivery_status ='배달중'
+          update delivery set delivery_status ='배달중'
           where order_idx=#{order_idx}
   </update>
 
 
   <!-- 배달중인 상태에서 배달완료를 누르면 delivery_status가 배달완료로 바뀌도록하기  -->
   <update id="deliveryStatusUpdate" parameterType="Map">
-        update delivery set delivery_status ='배달완료'
+          update delivery set delivery_status ='배달완료'
           where order_idx=#{order_idx}
   </update>
 
   <!-- delivery_satust 상태값이 바뀜에 따라 order_status 상태값 바뀌도록하기 -->
   <update id="orderStatusUpdate" parameterType="Map">
-        update order_status set order_status = #{order_status}
+        update delivery set order_status = #{order_status}
           where order_idx=#{order_idx}
   </update>
 
@@ -58,7 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from delivery
         where rider_idx=#{rider_idx} and delivery_status='배달완료'
       </select> -->
-
+  
+  <!-- 배달완료한 배달현황조회   -->
   <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
         	select 
 		      d.*,
@@ -80,7 +84,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           where rider_idx=#{rider_idx} and delivery_status='배달완료'
   </select>
 
-<!-- 정산내역 날짜필터링 조회 -->
+
+
+
+  <!-- 정산내역 날짜필터링 조회 총배달료 합계 조회 -->
+  <select id="selectTotalDeliveryFeeFilterList"  parameterType="Map" resultType="int">
+          select 
+            ifnull(sum(d.delivery_fee),0)
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+
+          <if test="startDate!=null and endDate!=null">
+            and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          </if>
+          
+          order by d.pay_regdate 
+  </select>
+
+
   <select id="selectDeliveryFeeFilterList" parameterType="Map" resultType="DeliveryVo">
           select 
             d.*,
@@ -88,22 +110,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
           inner join order_status os on d.order_idx=os.order_idx 
           where rider_idx=#{rider_idx} and delivery_status='배달완료'
-          and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          <if test="startDate!=null and endDate!=null">
+            and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          </if>
           order by d.pay_regdate 
   </select>
 
-  <!-- 정산내역 날짜필터링 조회 총배달료 합계 조회 -->
-  <select id="selectTotalDeliveryFeeFilterList" resultType="int">
-    SELECT 
-      IFNULL(SUM(delivery_fee), 0) 
-    FROM delivery
-    WHERE rider_idx = #{rider_idx}
-      AND delivery_status = '배달완료'
-      AND DATE_FORMAT(pay_regdate, '%Y-%m-%d') BETWEEN #{startDate} AND #{endDate}
-  </select>
-
-
-
+  
 
   <!-- delivery 정보를 추가 -->
   <insert id="insert" parameterType="DeliveryVo">

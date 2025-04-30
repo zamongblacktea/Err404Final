@@ -30,7 +30,11 @@ public class OrderSatausSerivce {
     @Transactional
     public void updateOrderStatus(int order_idx, String order_status) {
 
-        orderStatusMapper.updateOrderStatus(order_idx, order_status);
+        Map<String,Object>map = new HashMap<>();
+        map.put("order_idx", order_idx);
+        map.put("order_status",order_status);
+
+        orderStatusMapper.updateOrderStatus(map);
 
         Map<String, Object> message = new HashMap<>();
         message.put("orderStatus", "주문 정보가 업데이트되었습니다.");

@@ -22,5 +22,6 @@ public class RiderDeliveryFeeVo {
     int delivery_fee;
     String mem_addr1;
     String mem_addr2; 
+    int totalDeliveryFee;
 
 }

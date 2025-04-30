@@ -31,9 +31,6 @@ public class DeliveryVo {
     int mem_idx;
     int totalDistance;
     String rider_status;
-   
-
-
     
     
 }

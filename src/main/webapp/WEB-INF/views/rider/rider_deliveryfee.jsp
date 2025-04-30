@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,6 +93,7 @@
 <body>
     <div class="header">
         <h2>배달 완료 목록</h2>
+
         <form action="deliveryfeefilter.do" method="get" class="form-inline">
           <input type="hidden" name="rider_idx" value="${param.rider_idx}" />
   
@@ -142,6 +144,8 @@
           </tr>
         </thead>
         <tbody>
+          
+
           <c:forEach var="vo" items="${riderdelivery_list}">
               <tr>
               <td>${vo.shop_name}</td>
@@ -152,12 +156,22 @@
               <td>${vo.delivery_fee} 원</td>
             </tr>  
           </c:forEach>
+
+          <tr>
+            <td colspan="6" style="text-align: right;">
+                <c:if test="${ empty param.startDate }">
+                   전체 배달내역                   
+                </c:if>
+                <c:if test="${ not empty param.startDate }">
+                   날짜 조회별                  
+                </c:if>
+                총수입 :   <fmt:formatNumber value="${ totalDeliveryFee }" />(원)  
+             </td>
+          </tr>
         </tbody>
       </table>
       
-      <hr>
-      
-       <h3>총 수입: ${totalDilveryFee}원</h3>
+ 
     
 </body>
 </html>

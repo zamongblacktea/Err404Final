@@ -26,14 +26,16 @@ public interface OrderStatusMapper {
 
     public int insert(OrderStatusVo OrderStatus);
 
-    public int updateStatus(OrderStatusVo vo);
+    public int updateStatus(Map<String,Object> map);
 
     //주문정보업데이트처리
-     public void updateOrderStatus(int order_idx, String order_status);
+    public void updateOrderStatus(Map<String,Object> map); 
 
     public int deleteOrder(int order_idx);
 
     public OrderStatusVo selectDetail(int mem_idx);
+
+    
 
 
 
@@ -43,3 +45,5 @@ public interface OrderStatusMapper {
 		
 
 }
+
+

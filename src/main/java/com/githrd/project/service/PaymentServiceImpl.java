@@ -110,8 +110,9 @@ public class PaymentServiceImpl implements PaymentService {
 
                 int del = cartService.deleteAll(mem_idx);
 
+                //웹소캣 보내는 메세지
 
-            } catch (Exception e) {
+                } catch (Exception e) {
                 System.out.println("insert 중 예외 발생");
                 e.printStackTrace();
             }

@@ -22,28 +22,28 @@
       <script>
 
       $('.status-btn').click(function () {
-  const orderIdx = $(this).data('order-idx');
-  const nextStatus = $(this).data('next-status');
-  console.log(orderIdx, nextStatus);
+          const orderIdx = $(this).data('order-idx');
+          const nextStatus = $(this).data('next-status');
+          console.log(orderIdx, nextStatus);
 
-  $.ajax({
-    url: '../order/update_status.do',
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      orderIdx: orderIdx,
-      orderStatus: nextStatus
-    }),
-    success: function (res) {
-      confirm("주문 상태를 변경 하시겠습니까 ? " + res.updatedStatus);
-      // TODO: 화면 갱신 로직 추가
-      loadContent('../order/order_list.do');
-    },
-    error: function (err) {
-      alert("상태 변경 실패");
-    }
-  });
-});
+          $.ajax({
+              url: '../order/update_status.do',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({
+              orderIdx: orderIdx,
+              orderStatus: nextStatus
+            }),
+            success: function (res) {
+              confirm("주문 상태를 변경 하시겠습니까 ? " + res.updatedStatus);
+              // TODO: 화면 갱신 로직 추가
+              loadContent('../order/order_list.do');
+            },
+            error: function (err) {
+              alert("상태 변경 실패");
+            }
+          });
+    });
 
     //웹소캣구독
     var currentShopIdx = '<%= session.getAttribute("shop_idx") %>';
@@ -70,9 +70,19 @@
         //shop쪽 뱃지
         //새로운 주문이 들어온것이 가장중요한 정보이다.
 
+        //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"픽업완료"}
+        //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"배달완료"}
         // 메시지에 있는 shopIdx와 현재 가게의 idx가 일치하는지 확인
         if (receivedMessage.shop_idx == currentShopIdx) {
-          alert("새로운 주문이 도착했습니다: 주문 번호 - " + receivedMessage.order_idx);
+            if(receivedMessage.order_status == "픽업완료"){
+              
+              alert("픽업완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
+
+            }else if(receivedMessage.order_status == "배달완료"){
+
+              alert("배달완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
+            }
+      
           location.reload(); // 페이지 새로고침
         } else {
           location.reload();

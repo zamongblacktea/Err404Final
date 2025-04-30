@@ -36,7 +36,7 @@
       mi.menu_name,mi.menu_price
     FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
                           inner join menu_info mi on os.menu_idx=mi.menu_idx
-    where rider_status='배차대기' 
+    where  order_status != 'NONE'  and rider_status='NONE' 
   </select>
 
    <!--  아래 정보가 업데이트된 정보를 새로담는 리스트가 있어야 한다 여기서는 rider_list-->
@@ -74,9 +74,13 @@
   </insert>
 
   <!-- 주문 배달 현황 실시간 업데이트 -->
-  <update id="updateStatus" parameterType="OrderStatusVo">
-        UPDATE order_status SET order_status = #{ order_status },
-                                rider_status = '배차대기'
+  <update id="updateStatus" parameterType="Map">
+        UPDATE order_status SET order_status = #{ order_status }
+        WHERE order_idx = #{ order_idx }
+  </update>
+
+   <update id="updateOrderStatus" parameterType="Map">
+        UPDATE order_status SET order_status = #{ order_status }            
         WHERE order_idx = #{ order_idx }
   </update>
 

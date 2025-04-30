@@ -165,7 +165,7 @@ public class RiderController {
         }
 
         //아래코드는 임의로 rider_idx가 1인 사람것을 가져오도록 한다.
-        //List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(1);
+        //List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(1); ->더미데이터 테스트
         List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(rider_idx);
 
         //rider_list는 배차완료한 라이더의 현황을 볼수 있는 리스트이다.
@@ -191,8 +191,9 @@ public class RiderController {
 
          int res = deliveryMapper.deliveryPickupUpdate(paramMap);
 
-         paramMap.put("order_status","배달중");
+        
          deliveryMapper.orderStatusUpdate(paramMap);
+         paramMap.put("order_status","픽업완료");
 
          //웹소켓으로 전송
          paramMap.put("tab_state", "progress");
@@ -225,7 +226,7 @@ public class RiderController {
 
         //웹소켓으로 전송
         paramMap.put("tab_state", "complete");
-       messagingTemplate.convertAndSend("/topic/orders", paramMap);
+        messagingTemplate.convertAndSend("/topic/orders", paramMap);
 
         Map<String,Object> map = new HashMap<>();
 
@@ -260,9 +261,17 @@ public class RiderController {
     @RequestMapping("/rider/deliveryfee.do")
     public String riderTotalDeliveryFee(int rider_idx,Model model){
 
-        List<DeliveryVo> riderdelivery_list =deliveryMapper.selectDeliveryFeeList(rider_idx);
+        Map<String,Object> map = new HashMap<>();
+        map.put("rider_idx", rider_idx);
         
+
+        List<DeliveryVo> riderdelivery_list =deliveryMapper.selectDeliveryFeeFilterList(map);
+        
+         // 날짜 필터링을 걸쳐서 총배달료 조회
+         int totalDeliveryFee = deliveryMapper.selectTotalDeliveryFeeFilterList(map);
+
         //request binding
+        model.addAttribute("totalDeliveryFee", totalDeliveryFee);
         model.addAttribute("riderdelivery_list", riderdelivery_list);
 
         
@@ -280,30 +289,16 @@ public class RiderController {
 
         List<DeliveryVo> riderdelivery_list =deliveryMapper.selectDeliveryFeeFilterList(map);
          
-         //request binding
+        // 날짜 필터링을 걸쳐서 총배달료 조회
+        int totalDeliveryFee = deliveryMapper.selectTotalDeliveryFeeFilterList(map);
+
+        //request binding
+        model.addAttribute("totalDeliveryFee", totalDeliveryFee);
         model.addAttribute("riderdelivery_list", riderdelivery_list);
  
          
         return "rider/rider_deliveryfee";
      }
-     //총배달료 조회
-//      @RequestMapping("/rider/deliveryfeefilter.do")
-//     public String riderDeliveryFeeTotalList(int rider_idx,String startDate,String endDate,Model model) {
-
-//     Map<String,Object> map = new HashMap<>();
-//     map.put("rider_idx", rider_idx);
-//     map.put("startDate",startDate);
-//     map.put("endDate", endDate);                                  
-//     // // 1. 목록 조회
-//     // List<DeliveryVo> deliveryFeetotal = deliveryMapper.selectTotalDeliveryFeeFilterList(map);
-//     // model.addAttribute("deliveryFeetotal", deliveryFeetotal);
-
-//     // 2. 총 배달료 합계 조회
-//     int totalDeliveryFee = deliveryMapper.selectTotalDeliveryFeeFilterList(map);
-//     model.addAttribute("totalDilveryFee", totalDeliveryFee);
-
-//     return "rider/rider_deliveryfee"; // JSP 경로
-// }
 
 
     //당일내역 정산
