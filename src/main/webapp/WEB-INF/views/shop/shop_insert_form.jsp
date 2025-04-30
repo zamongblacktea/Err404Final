@@ -335,7 +335,7 @@
                   <!-- 버튼 -->
                   <tr>
                     <td colspan="2" align="center">
-                      <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='../main/list.do'" />
+                      <!-- <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='/main/list.do'" /> -->
                       <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
                     </td>
                   </tr>

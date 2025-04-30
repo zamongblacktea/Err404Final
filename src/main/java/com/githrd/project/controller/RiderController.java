@@ -195,7 +195,7 @@ public class RiderController {
 
          //웹소켓으로 전송
          paramMap.put("tab_state", "progress");
-         //messagingTemplate.convertAndSend("/topic/orders", paramMap);
+         messagingTemplate.convertAndSend("/topic/orders", paramMap);
  
          Map<String,Object>map = new HashMap<>();
  
@@ -224,7 +224,7 @@ public class RiderController {
 
         //웹소켓으로 전송
         paramMap.put("tab_state", "complete");
-       // messagingTemplate.convertAndSend("/topic/orders", paramMap);
+       messagingTemplate.convertAndSend("/topic/orders", paramMap);
 
         Map<String,Object> map = new HashMap<>();
 
