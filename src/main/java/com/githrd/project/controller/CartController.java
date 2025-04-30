@@ -106,7 +106,9 @@ public class CartController {
         // 임시 : cart_list가 비어있을때 가게 리스트로 리다이렉트
         // 임시라서 가능하면 alert로 장바구니가 비어있다고 안내 해주면 좋을듯
         if (cart_list.size() == 0) {
-            return "redirect:/main/list.do";
+            
+           return "user/cart_list_empty";
+
         }
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
         int shop_idx = cart_list.get(0).getShop_idx();
@@ -120,6 +122,11 @@ public class CartController {
 
         return "user/cart_list";
     }
+
+
+
+
+
 
     // 장바구니 리스트 조회 뷰
     @RequestMapping(value = "/list_view.do", method = { RequestMethod.GET, RequestMethod.POST })

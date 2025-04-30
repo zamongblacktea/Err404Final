@@ -1,0 +1,117 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>배달 주문</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    textarea {
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form id="orderForm" class="form-container" action="order_insert.do" method="post">
+    <h3 class="mb-4 text-center">배달 주문 정보</h3>
+
+    <!-- 주문자 정보 -->
+    <div class="mb-3">
+      <label for="customerName" class="form-label">이름</label>
+      <input type="text" class="form-control" id="customerName" name="customer_name" placeholder="이름을 입력하세요" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="phone" class="form-label">전화번호</label>
+      <input type="tel" class="form-control" id="phone" name="phone" placeholder="010-0000-0000" required>
+    </div>
+
+    <!-- 배달 주소 -->
+    <div class="mb-3">
+      <label for="address" class="form-label">주소</label>
+      <input type="text" class="form-control" id="address" name="address" placeholder="도로명 주소" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="detailAddress" class="form-label">상세 주소</label>
+      <input type="text" class="form-control" id="detailAddress" name="detail_address" placeholder="상세 주소 입력">
+    </div>
+
+    <!-- 메뉴 선택 -->
+    <div class="mb-3">
+      <label for="menu" class="form-label">메뉴 선택</label>
+      <select class="form-select" id="menu" name="menu" required>
+        <option value="" selected disabled>메뉴를 선택하세요</option>
+        <option value="fried_chicken">후라이드 치킨</option>
+        <option value="spicy_chicken">양념 치킨</option>
+        <option value="pizza">피자</option>
+        <option value="tteokbokki">떡볶이</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="quantity" class="form-label">수량</label>
+      <input type="number" class="form-control" id="quantity" name="quantity" min="1" value="1" required>
+    </div>
+
+    <!-- 요청사항 -->
+    <div class="mb-3">
+      <label for="request" class="form-label">요청 사항</label>
+      <textarea class="form-control" id="request" name="request" rows="3" placeholder="예: 문 앞에 두고 벨 눌러주세요"></textarea>
+    </div>
+
+    <!-- 결제 수단 -->
+    <div class="mb-3">
+      <label for="paymentMethod" class="form-label">결제 수단</label>
+      <select class="form-select" id="paymentMethod" name="payment_method" required>
+        <option value="" selected disabled>결제 수단 선택</option>
+        <option value="card">카드</option>
+        <option value="cash">현금</option>
+        <option value="kakao">카카오페이</option>
+      </select>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="d-grid gap-2 mt-4">
+      <button type="submit" class="btn btn-primary">주문하기</button>
+      <button type="reset" class="btn btn-secondary">초기화</button>
+    </div>
+  </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 간단한 JS 유효성 검사 추가 -->
+<script>
+  document.getElementById("orderForm").addEventListener("submit", function (e) {
+    const phone = document.getElementById("phone").value;
+    const phoneRegex = /^010-\d{4}-\d{4}$/;
+
+    if (!phoneRegex.test(phone)) {
+      alert("전화번호 형식이 올바르지 않습니다. 예: 010-1234-5678");
+      e.preventDefault();
+    }
+  });
+</script>
+
+</body>
+</html>

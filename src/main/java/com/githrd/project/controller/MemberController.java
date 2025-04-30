@@ -66,6 +66,29 @@ public class MemberController {
 	private final NaverServiceImpl naverService;
 	private final KakaoServiceImpl kakaoService;
 
+	//회원 페이지
+
+	@RequestMapping("member_main.do")
+	public String memberMain(Model model) {
+
+		// 1. 로그인한 유저 정보 꺼내오기
+		MemberVo user = (MemberVo) session.getAttribute("user");
+
+		if (user == null) {
+			return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+		}
+
+		int mem_idx = user.getMem_idx();
+
+		model.addAttribute("mem_idx", mem_idx);
+
+		return "member/member_main";
+	}
+
+
+
+
+
 	// 로그인 폼 띄우기(SNS 로그인 연동)
 	@RequestMapping("login_form.do")
 	public String login_form(Model model) {

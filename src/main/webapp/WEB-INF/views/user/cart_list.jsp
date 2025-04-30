@@ -41,7 +41,7 @@
                 </tr>
 
                 <!-- 등록상품이 없는경우 -->
-                <c:if test="${ empty cart_list }">
+                <c:if test="${ null eq 'null' }">
                     <tr>
                         <td colspan="7" align="center">
                             <font color="red">등록된 상품이 없습니다</font>

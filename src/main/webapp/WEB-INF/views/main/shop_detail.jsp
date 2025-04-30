@@ -61,7 +61,6 @@
     <div class="page">
       <div class="navbar">
         <%@ include file="navbar.jsp" %>
-        <input type="button" value="장바구니" onclick="location.href='../cart/list.do?mem_idx=${user.mem_idx}'">
       </div>
     <div class="header">
       <form id="search_form" action="">

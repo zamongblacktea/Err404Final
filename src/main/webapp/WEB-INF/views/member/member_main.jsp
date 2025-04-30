@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,9 +10,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!-- 웹소캣 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
     <style>
       * {
@@ -24,18 +23,18 @@
       }
 
       /* 상단 nav */
-      #nav {
+      /* #nav {
         background: #ff694a;
         height: 60px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 20px;
-      }
+      } */
 
-      #nav img {
+      /* #nav img {
         height: 45px;
-      }
+      } */
 
       .container-flex {
         /* height: 95vh; */
@@ -92,55 +91,68 @@
 
   ChannelIO('boot', {
     "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
-    "memberId": "${ owner.owner_id }", // fill user's member id
+    "memberId": "${ user.mem_idx }", // fill user's member id
     "profile": { // fill user's profile
-      "name": "${owner.owner_name}", // fill user's name
+      "name": "${user.mem_name}", // fill user's name
       "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
       "CUSTOM_VALUE_1": "VALUE_1", // custom property
       "CUSTOM_VALUE_2": "VALUE_2" // custom property
     }
   });
 </script>
+<script>
+  const mem_idx = "${user.mem_idx}"; // 세션에서 mem_idx 꺼냄
 
-    <script>
-      function loadContent(url) {
-        const shop_idx = "${sessionScope.shop_idx}"; // 세션에서 shop_idx 꺼냄
-        const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
-        $.ajax({
-          url: url,
-          data: { shop_idx: shop_idx,
-                  owner_idx: owner_idx,
-           },
-          success: function(res_data) {
-            $("#disp").html(res_data);
-          },
-          error: function(err) {
-            alert("에러 발생: " + err.responseText);
-          }
-        });
-      }
 
-      // 페이지 로드 시 기본으로 메뉴 목록 표시
-      if("${menu}" == "null"){
-        $(document).ready(function() {
-        loadContent("menu_insert_form.do");
-      });
-      }else{
-        $(document).ready(function() {
-          loadContent("../order/order_list.do");
-        });
+  function loadCart(url){
+
+    $.ajax({
+      url: url,
+      data: { mem_idx: mem_idx,
+       },
+      success: function(res_data) {
+
+        $("#disp").html(res_data);
+      },
+      error: function(err) {
+        alert("에러 발생: " + err.responseText);
       }
-    </script>
+    });
+
+  }
+
+
+
+  function loadContent(url) {
+    
+    $.ajax({
+      url: url,
+      data: { mem_idx: mem_idx,
+       },
+      success: function(res_data) {
+
+        $("#disp").html(res_data);
+      },
+      error: function(err) {
+        alert("에러 발생: " + err.responseText);
+      }
+    });
+  }
+
+  // 페이지 로드 시 기본으로 메뉴 목록 표시
+  $(document).ready(function() {
+    loadContent("modify_form.do?mem_idx=${ user.mem_idx }"); //내 주문 내역 페이지 메인되도록 설정
+  });
+
+
+</script>
   </head>
 
   <body>
 
     <!-- 상단 nav -->
     <div id="nav">
-      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />
-      <div class="user-info">
-        <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
-      </div>
+      <%@ include file="../main/navbar.jsp" %>
     </div>
 
     <!-- 메인 레이아웃 -->
@@ -148,26 +160,18 @@
       <!-- 사이드바 -->
       <div id="sidebar">
         <div class="menu-group">
-          <div class="menu-title">사장관리</div>
-          <a onclick="loadContent('../member/modify_form_owner.do')">사장정보</a>
-        </div>
-        <div class="menu-group">
-          <div class="menu-title">메뉴관리</div>
-          <a onclick="loadContent('menu_list.do')">메뉴목록</a>
-          <a onclick="loadContent('menu_insert_form.do')">메뉴등록</a>
-        </div>
-        <div class="menu-group">
-          <div class="menu-title">가맹점관리</div>
-          <a onclick="loadContent('modify_form.do')">가게정보</a>
+          <div class="menu-title">내 정보관리</div>
+          <a onclick="loadContent('modify_form.do?mem_idx=${ user.mem_idx }')">내 정보</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">주문관리</div>
-          <a onclick="loadContent('../order/order_list.do')">주문 내역</a>
-          <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a>
+          <a onclick="loadContent('order_list.do?mem_idx=${ user.mem_idx }')">내 주문 내역</a>
+          <a onclick="loadCart('../cart/list.do?mem_idx=${ user.mem_idx }')">장바구니</a>
+          <!-- <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a> -->
         </div>
         <div class="menu-group">
           <div class="menu-title">리뷰관리</div>
-          <a onclick="loadContent('review_list.do')">리뷰관리</a>
+          <a onclick="loadContent('my_review.do?mem_idx=${ user.mem_idx }')">내가 쓴 리뷰</a>
         </div>
       </div>
 
