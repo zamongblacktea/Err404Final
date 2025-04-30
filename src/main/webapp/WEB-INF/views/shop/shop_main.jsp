@@ -116,9 +116,15 @@
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      $(document).ready(function() {
-        loadContent("../order/order_list.do");
+      if("${menu}" == "null"){
+        $(document).ready(function() {
+        loadContent("menu_insert_form.do");
       });
+      }else{
+        $(document).ready(function() {
+          loadContent("../order/order_list.do");
+        });
+      }
     </script>
   </head>
 
