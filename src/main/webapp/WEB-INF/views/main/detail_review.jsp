@@ -20,8 +20,12 @@
 </head>
 
 <body>
-
   <div class="review-box">
+    <c:if test="${empty list}">
+      <div style="text-align: center; padding-top: 35px;">
+          <span style="color: red;">해당 가게의 리뷰가 없습니다.</span>
+      </div>
+    </c:if>
     <c:forEach var="vo" items="${list}">
       <div class="review-card">
 

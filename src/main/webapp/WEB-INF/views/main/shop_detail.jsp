@@ -99,7 +99,7 @@
           <div class="detail-content" id="disp"></div>
         </div>
         <div class="cart">
-          <%@ include file="./detail_cart.jsp" %>
+            <%@ include file="./detail_cart.jsp" %>
         </div>
       </div>
     </div>
