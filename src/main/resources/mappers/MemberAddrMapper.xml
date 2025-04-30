@@ -27,13 +27,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </insert>
 
 
+     <!-- 회원가입시 기본 주소록추가 -->
+   <insert id="memberInsert" parameterType="MemberAddrVo">
+     insert into mem_addr values(
+                          null,
+                          #{ mem_idx },
+                          #{ mem_addr1 },
+                          #{ mem_addr2 },
+                          #{ mem_longitude },
+                          #{ mem_latitude },
+                          '기본주소'
+
+                          )
+   </insert>
+
       <!-- mem_idx,mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
       <select id="selectOne" parameterType="int" resultType="MemberAddrVo">
         SELECT * FROM mem_addr
         WHERE mem_idx = #{mem_idx} and mcuraddr_idx = #{mcuraddr_idx}
       </select>
    
-
+          <!-- mem_idx,mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
+      <select id="selectAddr" parameterType="int" resultType="MemberAddrVo">
+        SELECT * FROM mem_addr
+        WHERE mem_idx = #{mem_idx} and addr_name = '기본주소'
+      </select>
 
     <!-- 주소록수정 -->
    <update id="update" parameterType="MemberAddrVo">

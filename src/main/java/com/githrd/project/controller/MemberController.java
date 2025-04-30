@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.MemberAddrMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.NaverMapper;
 import com.githrd.project.dao.OwnerMapper;
@@ -53,6 +54,9 @@ public class MemberController {
 
 	@Autowired
 	MemReviewMapper memReviewMapper;
+
+	@Autowired
+	MemberAddrMapper memberAddrMapper;
 
 	@Autowired
 	HttpServletRequest request;
@@ -195,10 +199,11 @@ public class MemberController {
 		String mem_ip = request.getRemoteAddr();
 		vo.setMem_ip(mem_ip);
 
-		// 2.DB insert
+		// 2.회원 DB insert
 		int res = memberMapper.insert(vo);
 
-		
+		//3.회원 현재주소 DB insert
+		res = memberAddrMapper.memberInsert(vo);
 
 		return "redirect:../main/main.do";
 	}
@@ -227,6 +232,7 @@ public class MemberController {
 
 		// 수정
 		int res = memberMapper.update(vo);
+
 
 		System.out.println(vo);
 
