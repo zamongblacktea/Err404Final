@@ -4,7 +4,12 @@
 
   <!-- delivery 테이블 전체조회 -->
   <select id="selectList" resultType="OrderStatusVo">
-    select * from order_status where shop_idx = #{shop_idx}
+    select * from order_status where shop_idx = #{shop_idx} and order_status in('주문수락','조리대기','조리시작','조리중','조리완료','배달중')
+  </select>
+
+  <!-- 배달 완료 조회 -->
+  <select id="selectListComp" resultType="OrderStatusVo">
+    select * from order_status where shop_idx = #{shop_idx} and order_status='배달완료'
   </select>
 
   <!-- 회원 리뷰 상세내역 검색 -->
