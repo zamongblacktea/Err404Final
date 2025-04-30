@@ -71,7 +71,7 @@
 
         });
     }//end: fuction rider_accept(order_idx,rider_idx)        
-          
+     
     //웹소캣구독
     var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
     var stompClient = Stomp.over(socket);
