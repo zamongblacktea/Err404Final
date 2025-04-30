@@ -6,7 +6,6 @@
 
       <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>리뷰 페이지 테스트</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -23,6 +22,8 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
             margin-bottom: 2rem;
+            width: 1000px;
+            margin: 30px auto;
           }
 
           .review-header {
@@ -96,7 +97,7 @@
               }),
               success: function (response) {
                 alert('답글 등록 완료');
-                $("#reply_content_" + reviewIdx).val(""); // 등록 완료되면 입력창 비우기
+                loadContent("review_list.do");
               },
               error: function (xhr, status, error) {
                 alert('등록 실패: ' + error);
@@ -104,83 +105,76 @@
             });
           }
         </script>
-
-
       </head>
 
       <body>
 
         <div class="container">
-          <c:forEach var="vo" items="${ list }">
+          <c:forEach var="vo" items="${list}">
+            <div class="review-card">
 
-            <!-- 리뷰 카드 -->
-            <div class="review-card" style="width: 1000px; margin: auto; margin-top: 30px;">
+              <!-- 공통 리뷰 표시 -->
               <div class="review-header">
                 <div class="user-icon">U</div>
                 <div>
                   <h5 class="mb-0">${vo.mem_nickname}</h5>
-                  <div class="review-meta">어제, 테스트 업로드</div>
                   <div class="review-meta">${vo.menu_name}</div>
+                  <div class="review-meta">어제, 테스트 업로드</div>
                 </div>
               </div>
 
               <div class="star-rating">
-                평점 : ${ vo.review_rating }
+                평점 : ${vo.review_rating}
               </div>
 
               <div class="review-content">
-                ${ vo.review_content }
-                <div><img src="../../../images/${vo.review_img}" style="max-width:300px; height:300px;"></div>
+                ${vo.review_content}
+                <div>
+                  <img src="../../../images/${vo.review_img}" style="max-width:300px; height:300px;">
+                </div>
               </div>
-              <!-- 사장님 답글 안 달린 글에만 출력 -->
-              <c:if test="${ vo.review_available == 1 }">
-                <form>
-                  <input type="hidden" id="order_idx_${vo.review_idx}" value="${vo.order_idx}">
-                  <input type="hidden" id="mem_idx_${vo.review_idx}" value="${vo.mem_idx}">
-                  <input type="hidden" id="shop_idx_${vo.review_idx}" value="${vo.shop_idx}">
-                  <input type="hidden" id="owner_idx_${vo.review_idx}" value="${user.owner_idx}">
+
+              <c:choose>
+
+
+                <c:when test="${vo.review_available == 1}">
+                  <form>
+                     리뷰 번호: ${vo.review_idx}
+                    <input type="hidden" id="order_idx_${vo.review_idx}" value="${vo.order_idx}">
+                    <input type="hidden" id="mem_idx_${vo.review_idx}" value="${vo.mem_idx}">
+                    <input type="hidden" id="shop_idx_${vo.review_idx}" value="${vo.shop_idx}">
+                    <input type="hidden" id="owner_idx_${vo.review_idx}" value="${user.owner_idx}">
+                    <div class="owner-reply">
+                      <div class="owner-icon">O</div>
+                      <div class="ms-3" style="flex: 1;">
+                        <strong>사장님 답글</strong><br>
+                        <div style="display: flex; align-items: center; margin-top: 10px; gap: 10px;">
+                          <textarea style="width: 100%; height: 200px; resize: none;" name="reply_content"
+                            id="reply_content_${vo.review_idx}" placeholder="답글을 입력하세요."></textarea>
+
+                          <input type="button" class="btn btn-primary" value="답글"
+                            onclick="sendReply('${vo.review_idx}')" style="height: 200px;">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </c:when>
+
+                <c:when test="${vo.review_available == 2}">
                   <div class="owner-reply">
                     <div class="owner-icon">O</div>
                     <div class="ms-3" style="flex: 1;">
                       <strong>사장님 답글</strong><br>
-                      <div style="display: flex; align-items: center; margin-top: 10px; gap: 10px;">
-                        <textarea style="width: 100%; height: 200px; resize: none;" name="reply_content"
-                          id="reply_content_${vo.review_idx}" placeholder="답글을 입력하세요."></textarea>
-
-                        <input type="button" class="btn btn-primary" value="답글" onclick="sendReply('${vo.review_idx}')"
-                          style="height: 200px;">
-                      </div>
+                      <div>${vo.reply_content}</div>
                     </div>
                   </div>
-                </form>
-              </c:if>
+                </c:when>
 
-              <c:if test="${ vo.review_available == 2 }">
-
-                  <input type="hidden" id="order_idx_${vo.review_idx}" value="${vo.order_idx}">
-                  <input type="hidden" id="mem_idx_${vo.review_idx}" value="${vo.mem_idx}">
-                  <input type="hidden" id="shop_idx_${vo.review_idx}" value="${vo.shop_idx}">
-                  <input type="hidden" id="owner_idx_${vo.review_idx}" value="${user.owner_idx}">
-                  <div class="owner-reply">
-                    <div class="owner-icon">O</div>
-                    <div class="ms-3" style="flex: 1;">
-                      <strong>사장님 답글</strong><br>
-                      <div style="display: flex; align-items: center; margin-top: 10px; gap: 10px;">
-                        <textarea style="width: 100%; height: 200px; resize: none;" name="reply_content"
-                          id="reply_content_${vo.review_idx}" placeholder="답글을 입력하세요."></textarea>
-
-                        <input type="button" class="btn btn-primary" value="답글" onclick="sendReply('${vo.review_idx}')"
-                          style="height: 200px;">
-                      </div>
-                    </div>
-                  </div>
-
-              </c:if>
+              </c:choose>
 
             </div>
           </c:forEach>
         </div>
-
 
       </body>
 

@@ -42,7 +42,7 @@
 				let owner_idx = f.owner_idx.value;
 				let owner_name = f.owner_name.value.trim();
 				let owner_email = f.owner_email.value.trim();
-				let owner_phone = f.owner_phone.value;
+				let owner_pwd	= f.owner_pwd.value;
 
 				if (owner_name == "") {
 
@@ -63,7 +63,7 @@
 
 
 
-				f.action = "modify_rider.do";// MemberModifyAction
+				f.action = "../member/modify_owner.do";// MemberModifyAction
 				f.submit();
 
 			}//end:send()
@@ -91,14 +91,8 @@
 						<h4>사장님 마이 페이지</h4>
 					</div>
 					<div class="panel-body">
-
+						<input type="hidden" value="${vo.owner_idx}" name="owner_idx">
 						<table class="table">
-							<input type="hidden" value="${vo.owner_idx}" name="owner_idx">
-							<!-- 회원번호 -->
-							<!-- <tr>
-			         <th>회원번호</th>
-			         <td><input  class="form-control" readonly="readonly" name="owner_idx" value="${ vo.owner_idx }" style="width: 30%;"></td>
-			      </tr> -->
 
 							<!-- 이름 -->
 							<tr>
@@ -148,11 +142,11 @@
 							<tr>
 								<td colspan="2" align="center">
 									<input class="btn btn-success" type="button" value="메인으로"
-										onclick="location.href='../owner/main.do'">
+										onclick="location.href='../shop/main.do'">
 									<input class="btn btn-primary" type="button" value="수정하기"
 										onclick="send(this.form);">
 									<input class="btn btn-primary" type="button" value="탈퇴하기"
-										onclick="location.href='delete.do?owner_idx=${owner.owner_idx}';">
+										onclick="location.href='delete.do?owner_idx=${user.owner_idx}';">
 								</td>
 							</tr>
 

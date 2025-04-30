@@ -399,12 +399,12 @@ public class ShopController {
     public int replyInsert(@RequestBody OwnerReplyVo vo) {
         //TODO: process POST request
 
-        System.out.println("입력값" + vo);
+        System.out.println("-----------------------------입력전 Vo:" + vo);
 
         //사장님 답글 DB에 insert
         int res = ownerReplyMapper.insert(vo);
 
-
+        System.out.println("-----------------------------입력후 :" + vo);
         //리뷰 상태 (답변됨 == 2 로 업데이트)
         res = memReviewMapper.updateReply(vo.getReview_idx());
         

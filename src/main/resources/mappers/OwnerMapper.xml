@@ -49,12 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 회원수정 -->
   <update id="update"  parameterType="OwnerVo">
      update owner set owner_name=#{ owner_name },
-                       owner_nickname=#{ owner_nickname },
                        owner_pwd=#{ owner_pwd },
                        owner_email=#{ owner_email },
-                       owner_zipcode=#{ owner_zipcode },
-                       owner_curaddr=#{ owner_curaddr },
-                       owner_grade=#{ owner_grade },
                        owner_ip=#{ owner_ip },
                        owner_update = now()  
      where owner_idx=#{ owner_idx }
