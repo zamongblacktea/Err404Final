@@ -55,6 +55,8 @@ public class OrderStatusVo {
     String pay_regdate;
     int totalDistance;
     int delivery_fee;
+    int order_num;
+    int[] cart_idx_array;
     
 
 

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.MemberAddrMapper;
@@ -48,7 +49,8 @@ public class PaymentController {
 
     // 결제 페이지 폼 불러오기
     @PostMapping("payment_form.do")
-    public String paymentForm(int mem_idx, Model model, int amount, int shop_idx) {
+    public String paymentForm(@RequestParam(name="cart_idx") int [] cart_idx_array,
+                                int mem_idx, Model model, int amount, int shop_idx) {
 
 
 		// 1. 로그인한 유저 정보 꺼내오기
@@ -58,18 +60,20 @@ public class PaymentController {
 			return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
 		}
 
-        // 회원 현재주소 가져오기
+        // 회원 정보 가져오기
         MemberVo vo = memberMapper.selectOneFromIdx(mem_idx);
 
         List<CartVo> cart_list = cartService.selectList(mem_idx);
 
         shop_idx = cart_list.get(0).getShop_idx();
 
+        //회원 주소록
         MemberAddrVo addr = memberAddrMapper.selectAddr(mem_idx);
 
         // 결제 할 총 가격 조회
         // Integer total_amount = cartService.selectTotalAmount(mem_idx);
         model.addAttribute("cart_list", cart_list);
+        model.addAttribute("cart_idx_array", cart_idx_array);
         model.addAttribute("shop_idx", shop_idx);
         model.addAttribute("vo", vo);
         model.addAttribute("addr", addr);

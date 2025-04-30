@@ -69,7 +69,8 @@
                           #{ pay_type },
                           #{ coupon_use },
                           #{ mem_addr1 },
-                          #{ mem_addr2 }
+                          #{ mem_addr2 },
+                          #{ order_num }
                           )
   </insert>
 

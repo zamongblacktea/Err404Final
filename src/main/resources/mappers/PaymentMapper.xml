@@ -36,7 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                            '조심히 와주세요',
                            null,
                            #{ mem_addr1 },
-                           #{ mem_addr2 }
+                           #{ mem_addr2 },
+                           #{ order_num }
                            )
   </insert>
 
