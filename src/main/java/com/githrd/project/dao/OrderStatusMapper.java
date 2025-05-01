@@ -35,6 +35,8 @@ public interface OrderStatusMapper {
 
     public OrderStatusVo selectDetail(int mem_idx);
 
+    public int selectOrderCount(int shop_idx);
+
     
 
 

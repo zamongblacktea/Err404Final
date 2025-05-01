@@ -43,6 +43,8 @@ public interface ShopInfoMapper {
     // 별점 업데이트
     int rateUpdate(int shop_idx);
 
+    int selectOrderCount(int shop_idx);
+
 
 
 }

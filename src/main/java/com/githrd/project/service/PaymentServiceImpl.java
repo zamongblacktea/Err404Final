@@ -1,7 +1,11 @@
 package com.githrd.project.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.githrd.project.dao.OrderStatusMapper;
@@ -13,12 +17,12 @@ import lombok.RequiredArgsConstructor;
 import util.PaymentUtil;
 
 
-
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-
+    @Autowired
+	SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     PaymentMapper paymentMapper;
@@ -67,10 +71,6 @@ public class PaymentServiceImpl implements PaymentService {
             try {
                 System.out.println("insert 호출 전");
 
-
-
-
-
                 System.out.println("insert 넣기전 vo:" + vo);
                 
 
@@ -110,7 +110,14 @@ public class PaymentServiceImpl implements PaymentService {
 
                 int del = cartService.deleteAll(mem_idx);
 
-                //웹소캣 보내는 메세지
+                //웹소캣 메시지 전송
+                //웹소켓으로 전송
+                 Map<String,Object> paramMap = new HashMap<>();
+                 paramMap.put("shop_idx", shop_idx);
+                 
+                messagingTemplate.convertAndSend("/topic/orders", paramMap);
+
+
 
                 } catch (Exception e) {
                 System.out.println("insert 중 예외 발생");

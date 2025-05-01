@@ -81,12 +81,24 @@ public class ShopController {
             return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
         }
 
+        
+
+        //order_status의 상태가 NONE인 갯수 구하기
+        int order_count = shopService.selectOrderCount(shop.getShop_idx());
+
+        System.out.println("---------------[begin  shop:main]------------------");
+        System.out.println("shop_idx    : " + shop.getShop_idx());
+        System.out.println("order_count : " + order_count);
+        System.out.println("---------------[end    shop:main]------------------");
+
+
         // 4. 세션에 shop_idx 저장 (필요 시)
         session.setAttribute("shop_idx", shop.getShop_idx());
 
         // 5. 모델에 담기
         model.addAttribute("owner_idx", owner.getOwner_idx());
         model.addAttribute("shop_idx", shop.getShop_idx());
+        model.addAttribute("order_count",order_count);
 
         return "shop/shop_main";
     }

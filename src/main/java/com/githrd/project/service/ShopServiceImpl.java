@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
-import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
 import com.githrd.project.vo.ShopMenuVo;
@@ -28,6 +28,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     ShopMenuMapper shopMenuMapper;
+
+    @Autowired
+    OrderStatusMapper orderStatusMapper;
 
     @Autowired
     MemReviewMapper memReviewMapper;
@@ -401,6 +404,11 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public int rateUpdate(int shop_idx) {
         return shopInfoMapper.rateUpdate(shop_idx);
+    }
+
+    @Override
+    public int selectOrderCount(int shop_idx) {
+         return orderStatusMapper.selectOrderCount(shop_idx);
     }
 
 

@@ -57,6 +57,7 @@
             <input class="btn login-btn" type="button" value="로그아웃" onclick="location.href='../member/logout.do'">
             <input class="btn login-btn" type="button" value="내 정보" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
             <input class="btn login-btn" type="button" value="내 주문" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
+            
             </c:if>
 
     </div>

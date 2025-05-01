@@ -84,7 +84,9 @@
         WHERE order_idx = #{ order_idx }
   </update>
 
-
-
-    
+  <!-- 주문상태 체크(갯수) -->
+  <select id="selectOrderCount" parameterType="int" resultType="int">
+        select ifnull(count(*),0) from order_status 
+		    where shop_idx=#{ shop_idx } and  order_status='NONE'
+  </select>
 </mapper>

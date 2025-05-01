@@ -63,6 +63,10 @@
 	</update>
 
 	<!-- 가게 등록 여부 -->
-	<select id="countShopByOwnerIdx" parameterType="int" resultType="int"> select IFNULL(COUNT(*),
-		0) from shop_info where owner_idx = #{owner_idx} </select>
+	<select id="countShopByOwnerIdx" parameterType="int" resultType="int"> 
+	    select IFNULL(COUNT(*),0) from shop_info where owner_idx = #{owner_idx} 
+	</select>
+
+    
+ 
 </mapper>

@@ -61,20 +61,17 @@
         // JSON.stringify() : JSON->String
         // JSON.parse()     : String->JSON
 
-        var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱
-
-        //shop_idx에 메세지를 보낼때 주문상태 주문이들어왔습니다.라고 보냄
-        //고객이보낸건지 라이더가 보낸건지는 메세지 내용만 달라짐.
-        //메세지전달 관련된 프로토콜을 약속해야한다. 전달하는 정보가 무엇인지 약속
-        //Map으로 포장해서 보낸다.
-        //shop쪽 뱃지
-        //새로운 주문이 들어온것이 가장중요한 정보이다.
-
+        var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱      
         //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"픽업완료"}
         //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"배달완료"}
         // 메시지에 있는 shopIdx와 현재 가게의 idx가 일치하는지 확인
         if (receivedMessage.shop_idx == currentShopIdx) {
-            if(receivedMessage.order_status == "픽업완료"){
+
+          if(receivedMessage.rider_status == "배차완료"){
+
+            alert("배차완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
+            
+          }else if(receivedMessage.order_status == "픽업완료"){
               
               alert("픽업완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
 

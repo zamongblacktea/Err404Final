@@ -65,8 +65,14 @@ public class PaymentController {
 
         return "order/shop_payment";
     }
-
+    
+    //컨트롤러 뷰에서 받아온정보를 서비스한테 보내주는 역할 (서블렛 집합체 느낌)
+    //서비스받아서 백엔드 작업들 
+    //dao 호출해서 db 사용 
+    //mybatis mapper sql명령어 vo를 통해서(crud) 담고 보내고 db 가져올수있게 해주는거
     // 결제 api 요청 REST API
+    
+
     @ResponseBody
     @PostMapping("/verify.do")
     public ResponseEntity<String> verify(@RequestBody PaymentVo vo) {

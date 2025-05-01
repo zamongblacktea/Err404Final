@@ -107,7 +107,6 @@ public class RiderController {
         //order_idx 해당되는 vo얻어오기
         OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
 
-
         //주소가져오기
         String shopAddr = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
         String memAddr = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
@@ -141,9 +140,20 @@ public class RiderController {
         
         res = res * orderStatusMapper.riderStatusUpdate(vo);
        // int res = deliveryMapper.riderStatusUpdate(paramMap);
-        Map<String,Object>map = new HashMap<>();
-        map.put("result", res==1);
+       Map<String,Object>map = new HashMap<>();
+       map.put("result", res==1);
 
+        //배차받기 알림을 위한 웹소캣 전송
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("order_idx", order_idx);
+        paramMap.put("shop_idx", orderStatusVo.getShop_idx());
+
+        paramMap.put("rider_status","배차완료");
+
+         //웹소켓으로 전송
+         paramMap.put("tab_state", "rider_accept");
+         messagingTemplate.convertAndSend("/topic/orders", paramMap);
+   
         return map;
     }
 
