@@ -44,6 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
         int menu_idx            = vo.getMenu_idx();
         int mem_idx             = vo.getMem_idx();
         String mem_phone        = vo.getMem_phone();
+        String mem_name         = vo.getMem_name();
         String order_request    = vo.getOrder_request();
         String rider_request    = vo.getRider_request();
         int amount              = vo.getAmount();
@@ -74,7 +75,7 @@ public class PaymentServiceImpl implements PaymentService {
                 System.out.println("insert 호출 전");
 
 
-                List<CartVo> cart_list = cartService.selectList(vo.getMem_idx());
+                List<CartVo> cart_list = cartService.selectList(mem_idx);
 
 
 
@@ -85,18 +86,19 @@ public class PaymentServiceImpl implements PaymentService {
                 map.put("mem_idx", mem_idx);
 
                 map.put("mcuraddr_idx", mcuraddr_idx);
+                map.put("mem_name", mem_name);
                 map.put("mem_phone", mem_phone);
                 map.put("amount", amount);
                 map.put("order_request", order_request);
                 map.put("rider_request", rider_request);
                 map.put("mem_addr1", mem_addr1);
                 map.put("mem_addr2", mem_addr2);
-                map.put("mem_addr2", mem_addr2);
+                map.put("order_num", order_num);
 
 
                 
                 //Payment DB insert
-                int res = paymentMapper.insert(map); // 여기서 터질 확률 매우 높음
+                int res = paymentMapper.insert(map); 
                 
 
                 System.out.println("insert 결과: " + res);
