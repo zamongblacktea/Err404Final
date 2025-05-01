@@ -69,7 +69,7 @@ public class MainController {
 
         int shop_dfee = shopService.selectShopDfee(shop_idx);
 
-        List<MemReviewVo> rate_list = memReviewMapper.selectShopRating(shop_idx);
+        // List<MemReviewVo> rate_list = memReviewMapper.selectShopRating(shop_idx);
      
 
         session.setAttribute("shop_dfee", shop_dfee);
@@ -97,35 +97,6 @@ public class MainController {
 
         return "main/shop_detail";
     }
-
-    // 가게 정보 폼
-    // @GetMapping("/info.do")
-    // public String shop_detail_info(@RequestParam int shop_idx, Model model) {
-
-    //     ShopInfoVo shop = shopService.selectShopOne(shop_idx);
-
-    //     List<ShopMenuVo> menu = shopService.selectMenuAll(shop_idx);
-
-    //     int shop_dfee = shopService.selectShopDfee(shop_idx);
-
-    //     model.addAttribute("shop", shop);
-    //     model.addAttribute("menu", menu);
-    //     model.addAttribute("shop_dfee", shop_dfee);
-
-    //     // 장바구니 화면
-
-    //     MemberVo user = (MemberVo) session.getAttribute("user");
-    //     int mem_idx = user.getMem_idx();
-
-    //     // 회원별 장바구니 목록
-    //     List<CartVo> cart_list = cartService.selectList(mem_idx);
-    //     Integer total_amount = cartService.selectTotalAmount(mem_idx);
-
-    //     model.addAttribute("cart_list", cart_list);
-    //     model.addAttribute("total_amount", total_amount);
-
-    //     return "main/shop_detail_info";
-    // }
 
     // detail_info ajax 테스트
     @GetMapping("detail_info.do")

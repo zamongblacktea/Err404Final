@@ -28,6 +28,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      select * from mem_review WHERE shop_idx = #{shop_idx}
   </select>
 
+  <!-- 해당 가게 리뷰 cnt 조회 -->
+   <select id="selectCountReview" resultType="int">
+      select count(*) from mem_review where shop_idx = #{shop_idx}
+   </select>
+
   <select id="selectShopRating" parameterType="int" resultType="MemReviewVo">
       select review_rating from mem_review where shop_idx = #{shop_idx}
   </select>

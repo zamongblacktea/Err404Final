@@ -141,7 +141,7 @@ public class ReviewController {
 		try {
 			insert_review_no = memReviewMapper.insert(vo);
 			int update_rate = shopService.rateUpdate(vo.getShop_idx());
-			System.out.println(update_rate);
+			int update_reviewcnt = shopService.reviewCntUpdate(vo.getShop_idx());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

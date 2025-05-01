@@ -29,6 +29,9 @@ public interface MemReviewMapper {
 
     public List<MemReviewVo> selectReviewReply(int shop_idx);
 
+    // 해당 가게 리뷰 카운트
+    public int selectCountReview(int shop_idx);
+
 
     
 }

@@ -403,5 +403,10 @@ public class ShopServiceImpl implements ShopService {
         return shopInfoMapper.rateUpdate(shop_idx);
     }
 
+    @Override
+    public int reviewCntUpdate(int shop_idx) {
+        return shopInfoMapper.reviewCntUpdate(shop_idx);
+    }
+
 
 }
