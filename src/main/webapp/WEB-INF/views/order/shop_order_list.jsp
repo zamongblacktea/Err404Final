@@ -98,9 +98,9 @@
           </div>
         <div class="order_text">
           주문일자: ${ vo.order_regdate }<br />
-          <c:forEach var="cart" items="${cart}">
+          <!-- <c:forEach var="cart" items="${cart}">
           ${cart.menu_name}
-          </c:forEach>
+          </c:forEach> -->
           주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
           고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
           주문요청사항: ${ vo.order_request } <br />

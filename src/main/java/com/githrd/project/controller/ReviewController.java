@@ -17,13 +17,12 @@ import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.OrderStatusMapper;
-import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.MemReviewVo;
+import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OrderStatusVo;
-import com.githrd.project.vo.PaymentVo;
 import com.githrd.project.vo.ShopInfoVo;
 
 import jakarta.servlet.ServletContext;
@@ -63,9 +62,9 @@ public class ReviewController {
 	// 회원 내 주문 내역 리스트 폼 띄우기
 	@RequestMapping("/member/order_list.do")
 	public String reviewList(@RequestParam int mem_idx, Model model) {
-
 		// 주문내역 전체 selectList
 		List<DeliveryVo> list = deliveryMapper.selectListReview(mem_idx);
+		System.out.println(list);
 
 		// 리뷰 상세보기
 		OrderStatusVo vo = orderStatusMapper.selectDetail(mem_idx);
