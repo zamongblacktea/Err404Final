@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                            #{ imp_uid },
                            #{ merchant_uid },
                            #{ amount },
-                           '맛있게 만들어주세요',
-                           '조심히 와주세요',
+                           #{order_request},
+                           #{rider_request},
                            null,
                            #{ mem_addr1 },
                            #{ mem_addr2 },
@@ -42,4 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </insert>
 
 
+  <!-- 거래번호 얻어오기 -->
+  <select id="selectOrderNo" resultType="int">
+     select  ifnull(max(order_num),0) + 1 from payment
+  </select>
 </mapper>

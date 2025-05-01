@@ -49,8 +49,7 @@ public class PaymentController {
 
     // 결제 페이지 폼 불러오기
     @PostMapping("payment_form.do")
-    public String paymentForm(@RequestParam(name="cart_idx") int [] cart_idx_array,
-                                int mem_idx, Model model, int amount, int shop_idx) {
+    public String paymentForm(int mem_idx, Model model, int amount, int shop_idx) {
 
 
 		// 1. 로그인한 유저 정보 꺼내오기
@@ -73,7 +72,6 @@ public class PaymentController {
         // 결제 할 총 가격 조회
         // Integer total_amount = cartService.selectTotalAmount(mem_idx);
         model.addAttribute("cart_list", cart_list);
-        model.addAttribute("cart_idx_array", cart_idx_array);
         model.addAttribute("shop_idx", shop_idx);
         model.addAttribute("vo", vo);
         model.addAttribute("addr", addr);

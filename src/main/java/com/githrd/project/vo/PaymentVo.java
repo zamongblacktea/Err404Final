@@ -28,8 +28,6 @@ public class PaymentVo {
     String mem_addr1;
     String mem_addr2;
     int order_num;
-    int[] cart_idx_array;
-
-
+  
 
 }
