@@ -24,7 +24,9 @@ pageEncoding="UTF-8"%>
           <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
       </form>
   </div>
-    <div class="category">가게 카테고리</div>
+    <div class="category">
+      <%@ include file="catebar.jsp"%>
+    </div>
     <div id="main">
 
       <div class="list">

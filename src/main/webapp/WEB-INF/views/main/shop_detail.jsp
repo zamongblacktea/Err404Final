@@ -70,7 +70,7 @@
   </div>
 
   <div class="category">
-    가게 카테고리
+    <%@ include file="catebar.jsp"%>
   </div>
 
     <div class="content">

@@ -86,24 +86,57 @@
         width: 1320px;
         margin: 30px auto;
         padding-left: 50px;
-
       }
     </style>
-<!-- 챗봇 AI -->
-<script>
-  (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+    <!-- 챗봇 AI -->
+    <script>
+      (function () {
+        var w = window;
+        if (w.ChannelIO) {
+          return w.console.error("ChannelIO script included twice.");
+        }
+        var ch = function () {
+          ch.c(arguments);
+        };
+        ch.q = [];
+        ch.c = function (args) {
+          ch.q.push(args);
+        };
+        w.ChannelIO = ch;
+        function l() {
+          if (w.ChannelIOInitialized) {
+            return;
+          }
+          w.ChannelIOInitialized = true;
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.async = true;
+          s.src = "https://cdn.channel.io/plugin/ch-plugin-web.js";
+          var x = document.getElementsByTagName("script")[0];
+          if (x.parentNode) {
+            x.parentNode.insertBefore(s, x);
+          }
+        }
+        if (document.readyState === "complete") {
+          l();
+        } else {
+          w.addEventListener("DOMContentLoaded", l);
+          w.addEventListener("load", l);
+        }
+      })();
 
-  ChannelIO('boot', {
-    "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
-    "memberId": "${ owner.owner_id }", // fill user's member id
-    "profile": { // fill user's profile
-      "name": "${owner.owner_name}", // fill user's name
-      "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
-      "CUSTOM_VALUE_1": "VALUE_1", // custom property
-      "CUSTOM_VALUE_2": "VALUE_2" // custom property
-    }
-  });
-</script>
+      ChannelIO("boot", {
+        pluginKey: "6f7a9234-fd72-433f-b10a-7aeef84a830c",
+        memberId: "${ owner.owner_id }", // fill user's member id
+        profile: {
+          // fill user's profile
+          name: "${owner.owner_name}", // fill user's name
+          landlineNumber: "USER_LANDLINE_NUMBER", // fill user's landline number
+          CUSTOM_VALUE_1: "VALUE_1", // custom property
+          CUSTOM_VALUE_2: "VALUE_2", // custom property
+        },
+      });
+    </script>
 
     <script>
       function loadContent(url) {
@@ -111,25 +144,23 @@
         const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
-          data: { shop_idx: shop_idx,
-                  owner_idx: owner_idx,
-           },
-          success: function(res_data) {
+          data: { shop_idx: shop_idx, owner_idx: owner_idx },
+          success: function (res_data) {
             $("#disp").html(res_data);
           },
-          error: function(err) {
+          error: function (err) {
             alert("에러 발생: " + err.responseText);
-          }
+          },
         });
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      if("${menu}" == "null"){
-        $(document).ready(function() {
-        loadContent("menu_insert_form.do");
-      });
-      }else{
-        $(document).ready(function() {
+      if ("${menu}" == "null") {
+        $(document).ready(function () {
+          loadContent("menu_insert_form.do");
+        });
+      } else {
+        $(document).ready(function () {
           loadContent("../order/order_list.do");
         });
       }
@@ -169,10 +200,9 @@
   </head>
 
   <body>
-
     <!-- 상단 nav -->
     <div id="nav">
-      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />
+      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" onclick="location.href='/main/main.do'" />
       <div class="user-info">
         <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
       </div>

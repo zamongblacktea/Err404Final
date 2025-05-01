@@ -38,4 +38,7 @@ public class ShopInfoVo {
     String shop_update;
     String shop_status;
 
+    int cate_idx;
+    String shop_cate_name;
+
 }
