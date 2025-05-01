@@ -43,6 +43,9 @@ public interface ShopInfoMapper {
     // 별점 업데이트
     int rateUpdate(int shop_idx);
 
+    // 리뷰 수 업데이트
+    int reviewCntUpdate(int shop_idx);
+
 
 
 }

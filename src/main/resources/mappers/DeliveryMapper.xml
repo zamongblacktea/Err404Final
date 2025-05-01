@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           where rider_idx=#{rider_idx} and delivery_status='배달완료'
   </select>
 
-<!-- 정산내역 날짜필터링 조회 -->
+  <!-- 정산내역 날짜필터링 조회 -->
   <select id="selectDeliveryFeeFilterList" parameterType="Map" resultType="DeliveryVo">
           select 
             d.*,
@@ -129,11 +129,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <!-- 회원 리뷰 리스트 조회-->
   <select id="selectListReview" resultType="DeliveryVo">
-      SELECT d.mem_idx,d.order_idx,d.delivery_idx,d.shop_idx,d.menu_idx,m.menu_name,d.order_status,s.shop_name,d.pay_regdate,d.delivery_status
+    SELECT d.mem_idx,d.order_idx,d.delivery_idx,d.shop_idx,d.menu_idx,m.menu_name,d.order_status,s.shop_name,
+           d.pay_regdate,d.delivery_status,o.order_regdate,o.amount, o.order_request, o.rider_request,
+           o.mem_addr1,o.mem_addr2, r.review_available
       FROM delivery d
       INNER JOIN menu_info m ON d.menu_idx = m.menu_idx
       INNER JOIN shop_info s ON d.shop_idx = s.shop_idx
-      WHERE mem_idx = #{mem_idx}
+      INNER JOIN order_status o ON d.order_idx = o.order_idx
+      LEFT OUTER JOIN mem_review r ON d.order_idx = r.order_idx
+      WHERE d.mem_idx = #{mem_idx}
   </select>
 
 </mapper>
