@@ -407,6 +407,11 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
+    public int reviewCntUpdate(int shop_idx) {
+        return shopInfoMapper.reviewCntUpdate(shop_idx);
+    }
+
+    @Override
     public int selectOrderCount(int shop_idx) {
          return orderStatusMapper.selectOrderCount(shop_idx);
     }

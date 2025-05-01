@@ -60,5 +60,8 @@ public interface ShopService {
         // 가게 별점 수정
         int rateUpdate(int shop_idx);
 
+        // 가게 리뷰 cnt 수정
+        int reviewCntUpdate(int shop_idx);
+
         int selectOrderCount(int shop_idx);
 }

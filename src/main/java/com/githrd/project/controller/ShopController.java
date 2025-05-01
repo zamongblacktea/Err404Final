@@ -92,6 +92,13 @@ public class ShopController {
         System.out.println("---------------[end    shop:main]------------------");
 
 
+        // 가게 메뉴가 있는지 없는지 확인
+        List<ShopMenuVo> menu = shopService.selectMenuAll(shop.getShop_idx());
+
+        if(menu.size() == 0 || menu.isEmpty()){
+            model.addAttribute("menu", "null");
+        }
+
         // 4. 세션에 shop_idx 저장 (필요 시)
         session.setAttribute("shop_idx", shop.getShop_idx());
 
@@ -275,7 +282,8 @@ public class ShopController {
 
         // model.addAttribute("shop_idx", vo.getShop_idx());
 
-        return "redirect:menu_insert_form.do";
+        // return "redirect:menu_insert_form.do";
+        return "redirect:main.do";
     }
 
     // 가게 정보 수정 폼

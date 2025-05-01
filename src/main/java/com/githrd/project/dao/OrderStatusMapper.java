@@ -15,6 +15,8 @@ public interface OrderStatusMapper {
     
 	
     public List<OrderStatusVo> selectList(int shop_idx);
+
+    public List<OrderStatusVo> selectListComp(int shop_idx);
     
     public OrderStatusVo        selectOrderOne(int order_idx);
 

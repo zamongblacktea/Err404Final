@@ -14,6 +14,12 @@
   </head>
 
   <body>
+    <c:if test="${empty menu}">
+      <div class="review-box" style="text-align: center; padding-top: 35px;">
+          <span style="color: red;">해당 가게의 메뉴가 없습니다.</span>
+      </div>
+    </c:if>
+
     <!-- <div>메뉴카테고리</div> -->
     <c:forEach var="menu" items="${menu}">
       <form onsubmit="insert_cart(this); return false;">

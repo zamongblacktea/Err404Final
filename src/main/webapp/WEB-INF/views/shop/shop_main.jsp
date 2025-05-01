@@ -53,7 +53,8 @@
         border-right: 1px solid #ddd;
         padding: 20px;
         font-size: 18px;
-        height: 100%;
+        min-height: 92.2vh;
+        height: auto;
       }
 
       #sidebar .menu-group {
@@ -123,9 +124,15 @@
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      $(document).ready(function() {
-        loadContent("../order/order_list.do");
+      if("${menu}" == "null"){
+        $(document).ready(function() {
+        loadContent("menu_insert_form.do");
       });
+      }else{
+        $(document).ready(function() {
+          loadContent("../order/order_list.do");
+        });
+      }
 
       
     //웹소캣구독

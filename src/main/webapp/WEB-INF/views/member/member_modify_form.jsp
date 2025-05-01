@@ -128,13 +128,9 @@
 	</head>
 
 	<body>
-		<nav>
-			<%@include file="../main/navbar.jsp" %>
-		</nav>
 
 		<form class="form-inline">
 			<div id="box">
-				<%@ include file="member_bar.jsp" %>
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h4>회원수정</h4>

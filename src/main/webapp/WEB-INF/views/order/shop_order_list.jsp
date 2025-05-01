@@ -1,23 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     <!DOCTYPE html>
     <html>
 
     <head>
       <meta charset="UTF-8" />
       <title>Insert title here</title>
+      <!-- bootstrap 사용설정 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <!-- 웹소캣 -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
-      <style>
-        #box {
-          border: 1px solid black;
-          width: 800px;
-          border-radius: 20px;
-          padding-left: 30px;
-        }
-      </style>
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_order_list.css">
 
       <script>
 
@@ -101,35 +100,42 @@
       주문내역조회
       <c:forEach var="vo" items="${ status }">
         <div id="box">
-          주문번호:${ vo.order_idx } <br />
+          <div class="order_idx">
+            ${ vo.order_idx }
+          </div>
+        <div class="order_text">
           주문일자: ${ vo.order_regdate }<br />
-          주문가격: ${ vo.amount }<br />
+          <!-- <c:forEach var="cart" items="${cart}">
+          ${cart.menu_name}
+          </c:forEach> -->
+          주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
           고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />
-<div>
-  <c:if test="${vo.order_status eq 'NONE'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="조리대기">주문 수락</button>
-  </c:if>
-  
-  <c:if test="${vo.order_status eq '조리대기'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="조리중">조리 시작</button>
-  </c:if>
+        </div>
+          <div>
+            <c:if test="${vo.order_status eq 'NONE'}">
+              <button class="btn status-btn"
+                      data-order-idx="${vo.order_idx}"
+                      data-next-status="조리대기">주문 수락</button>
+            </c:if>
+            
+            <c:if test="${vo.order_status eq '조리대기'}">
+              <button class="btn status-btn"
+                      data-order-idx="${vo.order_idx}"
+                      data-next-status="조리중">조리 시작</button>
+            </c:if>
 
-  <c:if test="${vo.order_status eq '조리중'}">
-    <button class="status-btn"
-            data-order-idx="${vo.order_idx}"
-            data-next-status="픽업대기">조리 완료</button>
-  </c:if>
-  <!-- 픽업완료/배달중/배달완료 -->
-  
-</div>
-</div>
+            <c:if test="${vo.order_status eq '조리중'}">
+              <button class="btn status-btn"
+                      data-order-idx="${vo.order_idx}"
+                      data-next-status="픽업대기">조리 완료</button>
+            </c:if>
+            <!-- 픽업완료/배달중/배달완료 -->
+            
+          </div>
+        </div>
       </c:forEach>
     </body>
 

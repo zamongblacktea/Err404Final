@@ -62,6 +62,14 @@
 		(select ifnull(ROUND(SUM(review_rating)/count(*), 1), 0) from mem_review where shop_idx = #{shop_idx}) where shop_idx = #{shop_idx}
 	</update>
 
+	<!-- 가게 리뷰 개수 수정 -->
+	<update id="reviewCntUpdate" parameterType="int">
+		update shop_info set shop_reviewcnt = 
+		(select ifnull(count(*), 0) from mem_review where shop_idx = #{shop_idx}) where shop_idx = #{shop_idx}
+	</update>
+
+
+
 	<!-- 가게 등록 여부 -->
 	<select id="countShopByOwnerIdx" parameterType="int" resultType="int"> 
 	    select IFNULL(COUNT(*),0) from shop_info where owner_idx = #{owner_idx} 

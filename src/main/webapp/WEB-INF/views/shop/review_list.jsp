@@ -6,15 +6,11 @@
 
       <head>
         <meta charset="UTF-8">
-        <title>리뷰 페이지 테스트</title>
+        <title>가게 리뷰 목록</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <style>
-          body {
-            background-color: #f9f9f9;
-            padding: 2rem;
-          }
 
           .review-card {
             background: white;

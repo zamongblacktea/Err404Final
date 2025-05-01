@@ -31,6 +31,11 @@ public class DeliveryVo {
     int mem_idx;
     int totalDistance;
     String rider_status;
+    String order_regdate;
+    int amount;
+
+    String order_request;
+    int review_available;
     
     
 }

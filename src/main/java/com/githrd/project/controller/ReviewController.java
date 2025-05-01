@@ -156,6 +156,18 @@ public class ReviewController {
 		return "redirect:/member/review_list.do?";
 	}// end: member_review_form
 
+	// 회원 내 주문 내역 리스트 폼 띄우기
+	@RequestMapping("/member/my_review.do")
+	public String myReview(@RequestParam int mem_idx, Model model) {
+
+
+		List<MemReviewVo> list = memReviewMapper.selectMemberReviewReply(mem_idx);
+
+		model.addAttribute("list", list);
+		return "/member/member_my_review";
+	}// end: member_review
+
+
 	//////////////////////////////////////////////////////// 가게//////////////////////////////////////////////////////////////
 
 

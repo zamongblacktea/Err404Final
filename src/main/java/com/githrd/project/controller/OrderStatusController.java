@@ -9,21 +9,23 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.OrderStatusMapper;
+import com.githrd.project.service.CartService;
 import com.githrd.project.service.OrderSatausSerivce;
 import com.githrd.project.service.ShopService;
+import com.githrd.project.vo.CartVo;
 import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RequestMapping("/order")
@@ -33,6 +35,9 @@ public class OrderStatusController {
 
     @Autowired
     ShopService shopService;
+
+    @Autowired
+    CartService cartService;
 
     @Autowired
     OrderStatusMapper orderStatusMapper;
@@ -58,8 +63,7 @@ public class OrderStatusController {
         ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
 
         List<OrderStatusVo> list = orderStatusMapper.selectList(shop_idx);
-
-        
+ 
         if (shop == null) {
             return "redirect:../shop/insert_form.do?owner_idx=" + owner_idx;
         }
@@ -68,6 +72,25 @@ public class OrderStatusController {
         model.addAttribute("shop", shop);
         model.addAttribute("status", list);
         return "order/shop_order_list";
+    }
+
+    //주문완료 페이지 폼 열기
+    @GetMapping("/order_list_complete.do")
+    public String order_list_complete(Model model,int shop_idx) {
+        OwnerVo owner = (OwnerVo) session.getAttribute("user");
+        int owner_idx = owner.getOwner_idx();
+        ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
+
+        List<OrderStatusVo> list = orderStatusMapper.selectListComp(shop_idx);
+ 
+        if (shop == null) {
+            return "redirect:../shop/insert_form.do?owner_idx=" + owner_idx;
+        }
+
+        session.setAttribute("shop_idx", shop.getShop_idx());
+        model.addAttribute("shop", shop);
+        model.addAttribute("status", list);
+        return "order/shop_order_list_complete";
     }
 
 

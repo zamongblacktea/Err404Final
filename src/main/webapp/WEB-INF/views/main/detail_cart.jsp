@@ -24,7 +24,6 @@
           장바구니가 비어있습니다.
         </div>
       </c:when>
-
       <c:otherwise>      
       <c:forEach var="cart" items="${cart_list}">
         <!-- <input type="hidden" name="shop_idx" id="shop_idx" value="${cart.shop_idx}"> -->

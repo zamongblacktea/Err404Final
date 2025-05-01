@@ -37,7 +37,7 @@ public class MemAddrController {
         return "member/member_address_insert";
     }// end : address_form.do
 
-    // 주소록 수정
+    // 주소록 등록
     @PostMapping("/member/address_insert.do")
     @ResponseBody
     public int addressInsert(MemberAddrVo vo) {

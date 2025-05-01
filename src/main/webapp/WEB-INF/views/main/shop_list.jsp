@@ -37,7 +37,7 @@ pageEncoding="UTF-8"%>
               </div>
               <div id="shop_content">
                 <div class="shop_info">${vo.shop_name}</div>
-                <div class="shop_info">별점 ${vo.shop_rating}|리뷰 ${vo.shop_reviewcnt}</div>
+                <div class="shop_info">별점 ${vo.shop_rating} | 리뷰 ${vo.shop_reviewcnt}</div>
                 <div class="shop_info">
                   <fmt:formatNumber value="${vo.shop_minprice}" pattern="#,#00" />원 이상 주문</div>
               </div>    

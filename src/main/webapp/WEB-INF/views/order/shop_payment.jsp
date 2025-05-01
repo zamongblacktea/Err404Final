@@ -421,17 +421,17 @@ textarea{
 			<!-- 테스트 후 변경해야 함 -->
 			<input type="hidden" name="shop_idx" id="shop_idx" value="${ shop_idx }"> 
 			<input type="hidden" name="menu_idx" id="menu_idx" value="${ param.menu_idx }">
-			<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx">
+			<input type="hidden" name="mcuraddr_idx" id="mcuraddr_idx" value="${addr.mcuraddr_idx}">
 			<div class="mb-3">
 				<label for="addr" class="form-label">주소</label> <input type="text"
 						class="form-control" id="mem_addr1" name="mem_addr1"
-						value="${ vo.mem_zipcode } " required>
+						value="${ addr.mem_addr1 } " required>
 			</div>
 			<div class="mb-3">
 				<div>
 				<label for="addr" class="form-label" >상세주소</label> <br> <input type="text"
 						class="form-control" id="mem_addr2" name="mem_addr2"
-						value="${ vo.mem_addr } " style="width: 80%; display: inline-block;" required>
+						value="${ addr.mem_addr2 } " style="width: 80%; display: inline-block;" required>
 				<!-- 모달 트리거 버튼 -->
 				<button type="button" class="btn btn-primary" id="openAddrModalBtn" style="display: inline-block; margin-bottom: 2px;">
 					주소록 열기

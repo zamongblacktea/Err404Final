@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.githrd.project.vo.MemberAddrVo;
+import com.githrd.project.vo.MemberVo;
 
 
 
@@ -25,5 +26,9 @@ public interface MemberAddrMapper {
 		
 	// mem주소 얻기
 	String getMemberAddr(int mem_idx);
+
+    public int memberInsert(MemberVo vo);
+
+    public MemberAddrVo selectAddr(int mem_idx);
 
 }
