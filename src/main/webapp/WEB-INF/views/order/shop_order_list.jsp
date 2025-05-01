@@ -96,8 +96,6 @@
     <c:if test="${empty status}">
       <p>현재 진행 중인 주문이 없습니다.</p>
     </c:if>
-
-      주문내역조회
       <c:forEach var="vo" items="${ status }">
         <div id="box">
           <div class="order_idx">
@@ -114,7 +112,7 @@
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />
         </div>
-          <div>
+          <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">
               <button class="btn status-btn"
                       data-order-idx="${vo.order_idx}"

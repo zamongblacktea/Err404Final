@@ -278,7 +278,6 @@ uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
     </script>
   </head>
   <body>
-    <h2>가게정보수정</h2>
     <!-- 가게 로고 선택/폼 -->
     <form method="POST" enctype="multipart/form-data" id="ajaxFormLogo" style="display: none">
       <input type="file" id="ajaxFileLogo" onchange="ajaxFileLogoChange();" />

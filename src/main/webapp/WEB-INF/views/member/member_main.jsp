@@ -18,9 +18,9 @@
         box-sizing: border-box;
       }
 
-      body {
+      /* body {
         background-color: #f6f8fc;
-      }
+      } */
 
       /* 상단 nav */
       /* #nav {
@@ -74,6 +74,12 @@
       #sidebar a:hover {
         background-color: #ffbeb1;
         color: white;
+      }
+
+      #sidebar a.active {
+        background-color: #ff694a;
+        color: white;
+        font-weight: bold;
       }
 
       /* 본문 영역 */
@@ -143,6 +149,20 @@
   $(document).ready(function() {
     loadContent("modify_form.do?mem_idx=${ user.mem_idx }"); //내 주문 내역 페이지 메인되도록 설정
   });
+
+  // 사이드바 버튼 active
+  $(document).ready(function () {
+        const navButtons = $("#sidebar a");
+
+        // 5번째 버튼 미리 active 부여 (인덱스 4)
+        if (navButtons[0]) $(navButtons[0]).addClass("active");
+
+        // sidebar a 클릭 시 active 클래스 제어
+        navButtons.on("click", function () {
+          navButtons.removeClass("active");
+          $(this).addClass("active");
+        });
+      });
 
 
 </script>

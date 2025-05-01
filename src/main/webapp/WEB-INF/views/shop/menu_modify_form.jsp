@@ -149,7 +149,6 @@
     </script>
   </head>
   <body>
-    <h2>메뉴 수정</h2>
     <!-- 이미지 선택/폼 -->
     <form method="POST" enctype="multipart/form-data" id="ajaxForm" style="display: none">
       <input type="file" id="ajaxFile" onchange="ajaxFileChange();" />

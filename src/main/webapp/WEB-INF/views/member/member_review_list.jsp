@@ -14,10 +14,8 @@
 
      <!-- 주문 목록이 없을 때 메시지 표시 -->
      <c:if test="${empty list}">
-        <p>주문목록이 없습니다.</p>
+        <p style="color: red; font-size: 30px;">주문목록이 없습니다.</p>
       </c:if>
-  
-        주문내역조회
         <c:forEach var="vo" items="${ list }">
           <div id="box">
             <div class="order_idx">

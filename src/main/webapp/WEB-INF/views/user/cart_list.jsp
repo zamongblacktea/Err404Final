@@ -24,7 +24,7 @@
 
 
         <br>
-        <h4 style="text-align: center;">::::장바구니 목록::::</h4>
+        <!-- <h4 style="text-align: center;">::::장바구니 목록::::</h4> -->
 
         <form class="form-inline" method="POST">
             <input type="hidden" name="mem_idx" value="${user.mem_idx}">
