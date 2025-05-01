@@ -106,6 +106,8 @@
         let mem_name = f.mem_name.value.trim();
         let mem_nickname = f.mem_nickname.value.trim();
         let mem_phone = f.mem_phone.value.trim();
+        let mem_addr1 = f.mem_zipcode.value;
+        let mem_addr2  = f.mem_addr.value;
 
 
 
@@ -135,11 +137,11 @@
           return;
         }
 
-        if (mem_curaddr == "") {
+        if (mem_addr == "") {
 
           alert("주소를 입력하세요!");
-          f.mem_curaddr.value = "";
-          f.mem_curaddr.focus();
+          f.mem_addr.value = "";
+          f.mem_addr.focus();
           return;
         }
 
@@ -168,7 +170,7 @@
              //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
              //console.log(data);
              $("#mem_zipcode").val(data.zonecode);
-             $("#mem_curaddr").val(data.address);
+             $("#mem_addr").val(data.address);
           
            }
          }).open(); */
@@ -184,7 +186,7 @@
             //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
             //console.log(data);
             $("#mem_zipcode").val(data.zonecode);
-            $("#mem_curaddr").val(data.address);
+            $("#mem_addr").val(data.address);
 
           }
         }).open({
@@ -244,7 +246,7 @@
           <!-- 주소 -->
           <tr>
             <th>주소</th>
-            <td><input class="form-control" required="required" name="mem_curaddr" id="mem_curaddr"
+            <td><input class="form-control" required="required" name="mem_addr" id="mem_addr"
                 style="width: 100%;">
             </td>
           </tr>

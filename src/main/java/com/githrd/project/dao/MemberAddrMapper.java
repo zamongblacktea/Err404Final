@@ -27,7 +27,7 @@ public interface MemberAddrMapper {
 	// mem주소 얻기
 	String getMemberAddr(int mem_idx);
 
-    public int memberInsert(MemberVo vo);
+    public int memberInsert(MemberAddrVo addr);
 
     public MemberAddrVo selectAddr(int mem_idx);
 

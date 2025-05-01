@@ -22,6 +22,7 @@ import com.githrd.project.dao.RiderMapper;
 import com.githrd.project.service.KakaoServiceImpl;
 import com.githrd.project.service.NaverServiceImpl;
 import com.githrd.project.service.ShopService;
+import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.RiderVo;
@@ -203,7 +204,24 @@ public class MemberController {
 		int res = memberMapper.insert(vo);
 
 		//3.회원 현재주소 DB insert
-		res = memberAddrMapper.memberInsert(vo);
+		int mem_idx = vo.getMem_idx();
+		String mem_addr1 = vo.getMem_zipcode();
+		String mem_addr2 = vo.getMem_addr();
+		double mem_longitude = vo.getMem_longitude();
+		double mem_latitude = vo.getMem_latitude();
+		String addr_name = vo.getAddr_name();
+
+
+		MemberAddrVo addr = new MemberAddrVo();
+
+		addr.setMem_idx(mem_idx);
+		addr.setMem_addr1(mem_addr1);
+		addr.setMem_addr2(mem_addr2);
+		addr.setMem_longitude(mem_longitude);
+		addr.setMem_latitude(mem_latitude);
+		addr.setAddr_name(addr_name);
+		res = memberAddrMapper.memberInsert(addr);
+
 
 		return "redirect:../main/main.do";
 	}
