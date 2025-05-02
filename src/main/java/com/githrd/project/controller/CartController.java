@@ -141,17 +141,22 @@ public class CartController {
         // model.addAttribute("cart_list", new ArrayList<CartVo>());
         // }
 
-        if (cart_list.size() == 0)
+        if (cart_list.size() == 0 || cart_list.isEmpty())
             model.addAttribute("null", "null");
+        else{
+            int shop_idx = cart_list.get(0).getShop_idx();
+            System.out.println("shop_idx:" + shop_idx);
+            model.addAttribute("shop_idx", shop_idx);
+        }
 
         Integer total_amount = cartService.selectTotalAmount(mem_idx);
-        int shop_idx = cart_list.get(0).getShop_idx();
+        
         // int shop_dfee = shopService.selectShopDfee(shop_idx);
-        System.out.println("shop_idx:" + shop_idx);
+      
 
         session.getAttribute("shop_dfee");
         model.addAttribute("cart_list", cart_list);
-        model.addAttribute("shop_idx", shop_idx);
+        
         model.addAttribute("total_amount", total_amount);
         model.addAttribute("user", user);
         // model.addAttribute("dfee", shop_dfee);
@@ -172,6 +177,7 @@ public class CartController {
     @ResponseBody
     public Map<String, Object> delete_one(@RequestParam int cart_idx) {
 
+        MemberVo user = (MemberVo) session.getAttribute("user");
         CartVo vo = cartService.selectOne(cart_idx);
         cartService.menuDelete(cart_idx);
         Integer total_amount = cartService.selectTotalAmount(vo.getMem_idx());
@@ -181,12 +187,13 @@ public class CartController {
 
         Map<String, Object> map = new HashMap<>();
 
-        if (list.size() == 0)
+        if (list.size() == 0 || list.isEmpty())
             map.put("null", "null");
 
         map.put("total_amount", total_amount);
         map.put("total", total_amount + shop_dfee);
         map.put("shop_dfee", shop_dfee);
+        map.put("user", user);
         // map.put("is_empty", list == null || list.isEmpty());
 
         return map;

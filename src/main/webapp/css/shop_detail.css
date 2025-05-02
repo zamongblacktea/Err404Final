@@ -219,6 +219,7 @@ li {
 #cart_area {
   width: 300px;
   margin: 0 auto;
+  background-color: white;
 }
 
 .cart-title {
