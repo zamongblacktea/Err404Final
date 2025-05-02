@@ -24,7 +24,7 @@ public interface OrderStatusMapper {
     //라이더 배차상태 업데이트
     int riderStatusUpdate(DeliveryVo vo);
 
-    public int insert(OrderStatusVo OrderStatus);
+    public int insert(Map<String,Object> order_status);
 
     public int updateStatus(OrderStatusVo vo);
 

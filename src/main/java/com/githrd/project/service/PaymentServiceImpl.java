@@ -78,6 +78,8 @@ public class PaymentServiceImpl implements PaymentService {
 
                 List<CartVo> cart_list = cartService.selectList(mem_idx);
 
+                System.out.println("cart_list : " + cart_list);
+
 
 
                 System.out.println("insert 넣기전 vo:" + vo);
@@ -102,11 +104,32 @@ public class PaymentServiceImpl implements PaymentService {
                 int res = paymentMapper.insert(map); 
                 
 
-                System.out.println("insert 결과: " + res);
+
+                System.out.println("merchant : " + merchant_uid);
 
                 
-                String pay_type         = vo.getPay_type();
+                //해당 회원 결제내역 api merchant_uid로 조회
+                List<PaymentVo> payment_list = paymentMapper.selectListOrderNum(merchant_uid);
+
                 //주문 현황 insert (OrderStatus)
+                
+                System.out.println("payment_list" + payment_list);
+                
+                Map<String,Object> order_status = new HashMap<String,Object>();
+                
+                order_status.put("payment_list", payment_list);
+
+                
+
+                System.out.println("입력값 : " + order_status);
+                //DB insert
+                int res2 = orderStatusMapper.insert(order_status);
+
+
+                int del = cartService.deleteAll(mem_idx);
+
+
+                
                 //OrderStatusVo orderStatus = new OrderStatusVo(shop_idx,menu_idx,mem_idx,pay_idx,mcuraddr_idx,mem_phone,order_request,rider_request,amount,pay_type,coupon_use,mem_addr1,mem_addr2);
 
                 // for(CartVo cartVo :cart_list){
@@ -130,11 +153,8 @@ public class PaymentServiceImpl implements PaymentService {
                 //     System.out.println("입력값:"+ orderStatus);
         
         
-                //     int res2 = orderStatusMapper.insert(orderStatus);
-                // }
-
-                int del = cartService.deleteAll(mem_idx);
-
+                //     
+                //    }
 
             } catch (Exception e) {
                 System.out.println("insert 중 예외 발생");

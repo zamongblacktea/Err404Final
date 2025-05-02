@@ -1,5 +1,6 @@
 package com.githrd.project.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -16,6 +17,8 @@ public interface PaymentMapper {
     int insert(Map<String,Object> map);
 
     int selectOrderNo();
+
+    List<PaymentVo> selectListOrderNum(String merchant_uid);
 
 
 
