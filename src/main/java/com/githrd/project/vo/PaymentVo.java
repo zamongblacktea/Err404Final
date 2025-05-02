@@ -28,6 +28,7 @@ public class PaymentVo {
     String mem_addr1;
     String mem_addr2;
     int order_num;
-  
+    int menu_price;
+    int menu_cnt;
 
 }

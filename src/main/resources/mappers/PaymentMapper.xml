@@ -14,33 +14,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 결제 정보 추가 -->
      <!--                      #{ menu_name },      #{ shop_request },
-                           #{ rider_request }, 연동시 추가해야 함 -->
-                           <!-- max값으로 최신값을 가져와도 됨 -->
-    <insert id="insert" parameterType="PaymentVo" useGeneratedKeys="true" keyProperty="pay_idx">
-      insert into payment values(
-                           null,
-                           #{ mem_idx },
-                           #{ mcuraddr_idx },
-                           #{ menu_idx },
-                           #{ shop_idx },
-                           #{ mem_name },
-                           #{ mem_phone },
-                           '테스트 메뉴',
-                           '카카오',
-                           '결제완료',
-                           now(),
-                           #{ imp_uid },
-                           #{ merchant_uid },
-                           #{ amount },
-                           #{order_request},
-                           #{rider_request},
-                           null,
-                           #{ mem_addr1 },
-                           #{ mem_addr2 },
-                           #{ order_num }
-                           )
-  </insert>
-
+            #{ rider_request }, 연동시 추가해야 함 -->
+            <!-- max값으로 최신값을 가져와도 됨 -->
+            <insert id="insert" parameterType="map">
+            INSERT INTO payment (
+                pay_idx,
+                mem_idx,
+                mcuraddr_idx,
+                menu_idx,
+                shop_idx,
+                mem_phone,
+                menu_name,
+                pay_type,
+                pay_status,
+                pay_regdate,
+                imp_uid,
+                merchant_uid,
+                amount,
+                order_request,
+                rider_request,
+                mem_addr1,
+                mem_addr2,
+                order_num,
+                menu_price,
+                menu_cnt
+            )
+            VALUES
+            <foreach collection="cart_list" item="item" separator=",">
+                (
+                    null,
+                    #{item.mem_idx},
+                    #{mcuraddr_idx},
+                    #{item.menu_idx},
+                    #{item.shop_idx},
+                    #{mem_phone},
+                    #{item.menu_name},
+                    '카카오',
+                    '결제완료',
+                    now(),
+                    #{imp_uid},
+                    #{merchant_uid},
+                    #{amount},
+                    #{order_request},
+                    #{rider_request},
+                    #{mem_addr1},
+                    #{mem_addr2},
+                    #{order_num},
+                    #{item.menu_price},
+                    #{item.cart_cnt}
+                )
+            </foreach>
+        </insert>
+                        
 
   <!-- 거래번호 얻어오기 -->
   <select id="selectOrderNo" resultType="int">

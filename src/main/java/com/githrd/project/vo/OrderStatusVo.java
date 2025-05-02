@@ -51,12 +51,13 @@ public class OrderStatusVo {
     String shop_phone;
     String menu_name;
     int    menu_price;
+    int    menu_cnt;
     //delivery 테이블 칼럼
     String pay_regdate;
     int totalDistance;
     int delivery_fee;
     int order_num;
-    int[] cart_idx_array;
+
     
 
 
