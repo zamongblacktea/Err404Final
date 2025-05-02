@@ -99,35 +99,38 @@
       <c:forEach var="vo" items="${ status }">
         <div id="box">
           <div class="order_idx">
-            ${ vo.order_idx }
+            ${ vo.order_num }
           </div>
         <div class="order_text">
           주문일자: ${ vo.order_regdate }<br />
           <!-- <c:forEach var="cart" items="${cart}">
           ${cart.menu_name}
           </c:forEach> -->
-          주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
-          고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
+          메뉴 <br /> 
+          ${ vo.menu_list } <br />
+          결제 : ${ vo.pay_type } <br />
+          고객 주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />
+          주문 가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
         </div>
           <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">
               <button class="btn status-btn"
-                      data-order-idx="${vo.order_idx}"
+                      data-order-idx="${vo.order_num}"
                       data-next-status="조리대기">주문 수락</button>
             </c:if>
             
             <c:if test="${vo.order_status eq '조리대기'}">
               <button class="btn status-btn"
-                      data-order-idx="${vo.order_idx}"
+                      data-order-idx="${vo.order_num}"
                       data-next-status="조리중">조리 시작</button>
             </c:if>
 
             <c:if test="${vo.order_status eq '조리중'}">
               <button class="btn status-btn"
-                      data-order-idx="${vo.order_idx}"
+                      data-order-idx="${vo.order_num}"
                       data-next-status="픽업대기">조리 완료</button>
             </c:if>
             <!-- 픽업완료/배달중/배달완료 -->

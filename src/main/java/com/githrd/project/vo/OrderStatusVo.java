@@ -56,6 +56,7 @@ public class OrderStatusVo {
     int totalDistance;
     int delivery_fee;
     int order_num;
+    String menu_list;
 
     
 
