@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.service.CartService;
 import com.githrd.project.service.ShopService;
@@ -37,6 +38,9 @@ public class MainController {
     MemReviewMapper memReviewMapper;
 
     @Autowired
+    OrderStatusMapper orderStatusMapper;
+
+    @Autowired
     HttpSession session;
 
     @Autowired
@@ -52,6 +56,8 @@ public class MainController {
 			return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
 		}
 
+        //주문접수상태 가져오기
+        //int order_count = shopService.selectOrderCount(shop.getShop_idx());
 
         return "main/main";
     }

@@ -102,6 +102,7 @@ public class RiderController {
     @ResponseBody
     // public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
     public Map<String,Object> riderPrograss(int order_idx,int rider_idx,Model model) throws Exception{
+        
         int res = 0;
 
         //order_idx 해당되는 vo얻어오기
@@ -200,20 +201,24 @@ public class RiderController {
         paramMap.put("mem_idx", mem_idx);
 
          int res = deliveryMapper.deliveryPickupUpdate(paramMap);
-
-        
          deliveryMapper.orderStatusUpdate(paramMap);
          paramMap.put("order_status","픽업완료");
+
+         //order_status를 배달중으로 수정
+         Map<String,Object>map = new HashMap<>();
+         map.put("order_idx", order_idx);
+         map.put("order_status","배달중");
+         orderStatusMapper.updateOrderStatus(map);
 
          //웹소켓으로 전송
          paramMap.put("tab_state", "progress");
          messagingTemplate.convertAndSend("/topic/orders", paramMap);
  
-         Map<String,Object>map = new HashMap<>();
+
+         Map<String,Object> resultMap = new HashMap<>();
+         resultMap.put("result", res==1);
  
-         map.put("result", res==1);
- 
-         return map;
+         return resultMap;
      }
 
     
@@ -233,16 +238,21 @@ public class RiderController {
         paramMap.put("order_status","배달완료");
         deliveryMapper.orderStatusUpdate(paramMap);
 
+        //order_status를 배달완료으로 수정
+        Map<String,Object>map = new HashMap<>();
+        map.put("order_idx", order_idx);
+        map.put("order_status","배달완료");
+        orderStatusMapper.updateOrderStatus(map);
+
 
         //웹소켓으로 전송
         paramMap.put("tab_state", "complete");
         messagingTemplate.convertAndSend("/topic/orders", paramMap);
 
-        Map<String,Object> map = new HashMap<>();
-
-        map.put("result", res==1);
-
-        return map;
+        Map<String,Object> resultMap = new HashMap<>();
+         resultMap.put("result", res==1);
+ 
+         return resultMap;
     }
 
     @RequestMapping("/rider/complete.do")
