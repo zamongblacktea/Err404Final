@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.githrd.project.dao.CategoryMapper;
 import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.service.CartService;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.CartVo;
+import com.githrd.project.vo.CategoryVo;
 import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.ShopInfoVo;
@@ -33,6 +35,9 @@ public class MainController {
 
     @Autowired
     ShopInfoMapper shopInfoMapper;
+
+    @Autowired
+    CategoryMapper categoryMapper;
 
     @Autowired
     MemReviewMapper memReviewMapper;
@@ -63,15 +68,36 @@ public class MainController {
     }
 
     // 가게 전체 조회
+    //main/list.do
+    //main/list.do?shop_cate_idx=1
     @GetMapping("/list.do")
-    public String shop_list(Model model) {
+    public String shop_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,Model model) {
 
         List<ShopInfoVo> list = shopService.selectListAll();
 
+        List<ShopInfoVo> cate_list = shopService.selectCate();
+
         model.addAttribute("shop_list", list);
+        model.addAttribute("cate_list", cate_list);
         // System.out.println(list);
 
         return "main/shop_list";
+    }
+
+    @GetMapping("/shop_cate_list.do")
+    public String shop_cate_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,Model model) {
+
+        List<ShopInfoVo> list = null;
+        if(shop_cate_idx==0){
+             list = shopService.selectListAll();
+        }else{
+            list = shopService.selectListFromCate(shop_cate_idx);
+        }
+        model.addAttribute("shop_list", list);
+
+        // System.out.println(list);
+
+        return "main/category_list";
     }
 
     // 가게 상세보기 폼
@@ -83,6 +109,8 @@ public class MainController {
         List<ShopMenuVo> menu = shopService.selectMenuAll(shop_idx);
 
         int shop_dfee = shopService.selectShopDfee(shop_idx);
+
+        List<ShopInfoVo> cate_list = shopService.selectCate();
 
         // List<MemReviewVo> rate_list = memReviewMapper.selectShopRating(shop_idx);
      

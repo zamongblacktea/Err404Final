@@ -42,31 +42,32 @@
           <div class="category" onclick="location.href='../main/list.do'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/전체보기.png" alt="카테고리-전체보기">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=1'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/치킨.png" alt="카테고리-치킨">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=2'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/피자.png" alt="카테고리-피자/양식">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=3'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/짜장면.png" alt="카테고리-중국집">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=4'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/한식.png" alt="카테고리-한식">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=5'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/일식.png" alt="카테고리-일식/돈까스">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=6'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/족발.png" alt="카테고리-족발/보쌈">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=7'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/야식.png" alt="카테고리-야식">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=8'">
+            <div class="category" >
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/떡볶이.png" alt="카테고리-분식">
           </div>
-          <div class="category">
+          <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=9'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/카페.png" alt="카테고리-카페/디저트">
           </div>
         </div>

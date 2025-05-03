@@ -416,5 +416,11 @@ public class ShopServiceImpl implements ShopService {
          return orderStatusMapper.selectOrderCount(shop_idx);
     }
 
+    // 카테고리 조회
+    @Override
+    public List<ShopInfoVo> selectListFromCate(int shop_cate_idx) {
+        
+        return shopInfoMapper.selectListFromCate(shop_cate_idx);
+    }
 
 }
