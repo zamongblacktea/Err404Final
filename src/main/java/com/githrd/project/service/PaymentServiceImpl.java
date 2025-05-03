@@ -8,11 +8,11 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.vo.CartVo;
-import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.PaymentVo;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     CartService cartService;
 
-
+    //트랜잭션 처리
+    @Transactional(rollbackFor = Exception.class)
 	@Override
     public JSONObject verifyPayment(PaymentVo vo) throws Exception {
 

@@ -35,7 +35,7 @@ public interface OrderStatusMapper {
 
     public int deleteOrder(int order_idx);
 
-    public OrderStatusVo selectDetail(int mem_idx);
+    public List<OrderStatusVo> selectDetail(int mem_idx);
 
     public int selectOrderCount(int shop_idx);
 

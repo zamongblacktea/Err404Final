@@ -163,7 +163,6 @@
         select ifnull(count(*),0) from order_status_view 
 		    where shop_idx=#{ shop_idx } and  order_status='NONE'
   </select>
-  
   <!-- order_idx 존재 확인 select (fk 대용) -->
     <select id="selectCheckOrderIdx" parameterType="int" resultType="int">
       SELECT COUNT(*)

@@ -64,13 +64,11 @@ public class ReviewController {
 	@RequestMapping("/member/order_list.do")
 	public String reviewList(@RequestParam int mem_idx, Model model) {
 
-		// 주문내역 전체 selectList
+		// 주문내역 전체 리뷰 selectList
 		List<DeliveryVo> list = deliveryMapper.selectListReview(mem_idx);
 
-		// 리뷰 상세보기
-		OrderStatusVo vo = orderStatusMapper.selectDetail(mem_idx);
 
-		model.addAttribute("detail", vo);
+
 		model.addAttribute("list", list);
 
 		return "/member/member_review_list";
@@ -153,10 +151,10 @@ public class ReviewController {
 		
 
 		ra.addAttribute("mem_idx", mem_idx);
-		return "redirect:/member/review_list.do?";
+		return "redirect:/member/my_review.do?";
 	}// end: member_review_form
 
-	// 회원 내 주문 내역 리스트 폼 띄우기
+	// 회원 내가 쓴 리뷰 리스트 폼 띄우기
 	@RequestMapping("/member/my_review.do")
 	public String myReview(@RequestParam int mem_idx, Model model) {
 
