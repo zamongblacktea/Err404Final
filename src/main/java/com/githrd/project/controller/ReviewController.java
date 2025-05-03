@@ -8,22 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.githrd.project.dao.DeliveryMapper;
 import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.OrderStatusMapper;
-import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.MemReviewVo;
-import com.githrd.project.vo.OrderStatusVo;
-import com.githrd.project.vo.PaymentVo;
 import com.githrd.project.vo.ShopInfoVo;
 
 import jakarta.servlet.ServletContext;
@@ -92,14 +90,25 @@ public class ReviewController {
 		return "/member/member_review_form";
 	}// end: member_review_form
 
+
+
+
+
 	// 회원 리뷰 작성
-	@RequestMapping("/member/insert_review.do")
-	public String insert_review(MemReviewVo vo, int mem_idx, RedirectAttributes ra,
+	@ResponseBody
+	@PostMapping("/member/insert_review.do")
+	public int insert_review(MemReviewVo vo,
 			@RequestParam(name = "photo") MultipartFile[] photo_array)
 			throws IllegalStateException, IOException {
+		
+		// \n -> <br>
+		String review_content = vo.getReview_content().replaceAll("\n", "<br>");
+		vo.setReview_content(review_content);
+
 
 		// 리뷰 사진 등록
-		int insert_review_no = 0;
+		int res = 0;
+
 
 		// 파일 처리
 		// 웹경로 -> 절대경로 구하기
@@ -137,22 +146,23 @@ public class ReviewController {
 		vo.setReview_ip(review_ip);
 
 		try {
-			insert_review_no = memReviewMapper.insert(vo);
-			int update_rate = shopService.rateUpdate(vo.getShop_idx());
-			System.out.println(update_rate);
+			res = memReviewMapper.insert(vo);
+			res = shopService.rateUpdate(vo.getShop_idx());
+			System.out.println(res);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// 입력값 확인용
-		System.out.println(vo);
 
 		
 
-		ra.addAttribute("mem_idx", mem_idx);
-		return "redirect:/member/my_review.do?";
-	}// end: member_review_form
+
+		return res;
+	}// end: member_insert_review
+
+
+
 
 	// 회원 내가 쓴 리뷰 리스트 폼 띄우기
 	@RequestMapping("/member/my_review.do")

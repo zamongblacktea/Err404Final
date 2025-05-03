@@ -421,6 +421,10 @@ public class ShopController {
 
         System.out.println("-----------------------------입력전 Vo:" + vo);
 
+        // \n -> <br>
+		String reply_content = vo.getReply_content().replaceAll("\n", "<br>");
+		vo.setReply_content(reply_content);
+
         //사장님 답글 DB에 insert
         int res = ownerReplyMapper.insert(vo);
 

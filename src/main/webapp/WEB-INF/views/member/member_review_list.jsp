@@ -19,10 +19,14 @@
 <!-- modal -->
 <script>
   $(document).ready(function () {
+    $(document).off('click', '.openReviewModalBtn').on('click', '.openReviewModalBtn', function () {
+  // AJAX 요청 처리
+});
+
     // 주소록 열기
     $(document).on('click', '.openReviewModalBtn', function () {
       const mem_idx = $(this).data('mem-idx');
-      const order_idx = $("#order_idx").val();
+      const order_idx =  $(this).data("order-idx");
       const shop_idx = $("#shop_idx").val();
       const menu_idx = $("#menu_idx").val();
       const delivery_idx = $("#delivery_idx").val();
@@ -46,31 +50,10 @@
         }
       });
     });
-    // 주소 등록 Ajax
-    $('#insertReview').on('click', function () {
-      const mem_idx = $('#mem_idx').val();
-      const addr_name = $('#addr_name').val();
-      const mem_zipcode = $('#mem_zipcode').val();
-      const mem_addr = $('#mem_addr').val();
 
-      $.ajax({
-        url: '/member/address_insert.do',
-        type: 'POST',
-        data: {
-          mem_idx: mem_idx,
-          addr_name: addr_name,
-          mem_addr1: mem_zipcode,
-          mem_addr2: mem_addr
-        },
-        success: function (response) {
-          alert('주소 등록 완료');
-          reloadAddressList(mem_idx);
-        },
-        error: function (xhr, status, error) {
-          alert('등록 실패: ' + error);
-        }
-      });
-    });
+
+
+
 
         // 모달 닫기
         $(document).on('click', '.close-modal-btn', function () {
@@ -88,8 +71,8 @@
      <c:if test="${empty list}">
         <p style="color: red; font-size: 30px;">주문목록이 없습니다.</p>
       </c:if>
+
         <c:forEach var="vo" items="${ list }">
-          <input type="hidden" value="${ vo.order_idx }" id="order_idx">
           <input type="hidden" value="${ vo.shop_idx }" id="shop_idx">
           <input type="hidden" value="${ vo.menu_idx }" id="menu_idx">
           <input type="hidden" value="${ vo.delivery_idx }" id="delivery_idx">
@@ -110,7 +93,7 @@
           </div>
             <div>  
               <c:if test="${vo.delivery_status eq '배달완료' && vo.review_available == 0 }">            
-              <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}">리뷰쓰기</button>
+              <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}" data-order-idx="${vo.order_idx}">리뷰쓰기</button>
               </c:if>
         
               
@@ -134,7 +117,7 @@
               </div>
         
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="insertReview">등록</button>
+                <!-- <button type="button" class="btn btn-primary" id="insertReview">등록</button> -->
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
               </div>
         

@@ -32,9 +32,14 @@
   </style>
 
 <script>
+
+
+
   function send(f) {
-    var rating = document.getElementById("ratingValue").value;
-    var content = f.review_content.value.trim();
+    let rating = document.getElementById("ratingValue").value;
+    let content = f.review_content.value.trim();
+    let photo = f.photo.value;
+
     if (!content) {
       alert("리뷰 내용을 입력해주세요.");
       f.review_content.focus();
@@ -58,6 +63,8 @@
       $(this).css('color', $(this).data('value') <= value ? 'gold' : 'gray');
     });
   });
+
+
 </script>
 </head>
 
@@ -66,7 +73,7 @@
     <div class="panel panel-default">
       <div class="panel-heading"><h3 class="panel-title">리뷰 작성</h3></div>
       <div class="panel-body">
-        <form method="POST" enctype="multipart/form-data">
+        <form id="reviewForm" enctype="multipart/form-data">
 
           <input type="hidden" name="mem_idx" value="${param.mem_idx}">
           <input type="hidden" name="shop_idx" value="${param.shop_idx}">
@@ -112,14 +119,46 @@
 
           <!-- 버튼 -->
           <div class="form-group text-right" style="margin-top: 30px;">
-            <button type="button" class="btn btn-default" onclick="location.href='review_list.do?mem_idx=${param.mem_idx}'">취소</button>
-            <button type="button" class="btn btn-primary" onclick="send(this.form)">등록</button>
+            <!-- <button type="button" class="btn btn-default" onclick="location.href='review_list.do?mem_idx=${param.mem_idx}'">취소</button> -->
+            <button type="button" class="btn btn-primary" onclick="submitForm();">등록</button>
           </div>
 
         </form>
       </div>
     </div>
   </div>
+
+  <script>
+    function submitForm() {
+      const formData = new FormData($("#reviewForm")[0]);
+      const mem_idx = "${param.mem_idx}";
+
+      $.ajax({
+        url: "insert_review.do",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          alert("리뷰가 성공적으로 등록되었습니다.");
+          $('#myModal').modal('hide');
+
+        // 강제 오버레이 제거
+        setTimeout(function () {
+          $('body').removeClass('modal-open');
+          $('.modal-backdrop').remove();
+          $('#myModal').hide(); // 혹시 남아 있으면 강제로 숨김
+        }, 300);
+
+          //내 리뷰 페이지로 이동
+          loadContent("my_review.do");
+        },
+        error: function (xhr, status, error) {
+          alert("등록 오류가 발생했습니다: " + error);
+        },
+      });
+    }
+  </script>
 
 </body>
 </html>
