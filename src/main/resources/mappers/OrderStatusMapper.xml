@@ -13,18 +13,18 @@
   </select>
   <!-- 배달 완료 조회 -->
   <select id="selectListComp" resultType="OrderStatusVo">
-    select * from order_status where shop_idx = #{shop_idx} and order_status='배달완료'
+    select * from order_status_view where shop_idx = #{shop_idx} and order_status='배달완료'
   </select>
 
   <!-- 회원 리뷰 상세내역 검색 -->
   <select id="selectDetail" resultType="OrderStatusVo">
     SELECT d.mem_idx,d.order_idx,d.delivery_idx,m.menu_name,o.order_status,s.shop_name,o.amount,o.order_request,o.rider_request
-    FROM order_status o
+    FROM order_status_view o
     INNER JOIN menu_info m 	ON o.menu_idx 	= m.menu_idx
     INNER JOIN shop_info s 	ON o.shop_idx 	= s.shop_idx
-    INNER JOIN delivery d		ON d.mem_idx 	  = o.mem_idx	and d.delivery_idx = o.delivery_idx
+    INNER JOIN delivery d		ON d.mem_idx 	  = o.mem_idx	and d.order_idx = o.order_idx
     INNER JOIN payment p		ON p.pay_idx 	  = o.pay_idx
-    WHERE d.mem_idx = #{ mem_idx }
+    WHERE d.mem_idx = #{ mem_idx } and d.delivery_status = '배달완료'
   </select>
 
   <select id="selectOrderOne" parameterType="int" resultType="OrderStatusVo">
@@ -32,7 +32,7 @@
       os.*,
       si.shop_name,si.shop_addr1,si.shop_addr2,
       mi.menu_name,mi.menu_price
-      FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
+      FROM  order_status_view  os inner join shop_info si on os.shop_idx=si.shop_idx
                           inner join menu_info mi on os.menu_idx=mi.menu_idx
       where os.order_idx=#{order_idx}
   </select>
@@ -43,7 +43,7 @@
       os.*,
       si.shop_name,si.shop_addr1,si.shop_addr2,
       mi.menu_name,mi.menu_price
-    FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
+    FROM  order_status_view  os inner join shop_info si on os.shop_idx=si.shop_idx
                           inner join menu_info mi on os.menu_idx=mi.menu_idx
     where  order_status != 'NONE'  and rider_status='NONE' 
   </select>
@@ -60,13 +60,14 @@
             <!-- max값으로 최신값을 가져와도 됨 -->
             <insert id="insert" parameterType="map">
               INSERT INTO order_status (
-                  order_idx,
+                  order_status_idx,
                   shop_idx,
                   menu_idx,
                   mem_idx,
                   pay_idx,
                   delivery_idx,
                   mcuraddr_idx,
+                  order_idx,
                   order_regdate,
                   order_status,
                   order_reason,
@@ -79,7 +80,6 @@
                   coupon_use,     
                   mem_addr1,
                   mem_addr2,
-                  order_num,
                   menu_price,
                   menu_cnt,
                   menu_name
@@ -95,6 +95,7 @@
                       #{item.pay_idx}, 
                       null,
                       #{item.mcuraddr_idx}, 
+                      #{item.order_idx,}, 
                       NOW(),
                       'NONE',
                       null,
@@ -107,7 +108,6 @@
                       null,
                       #{item.mem_addr1}, 
                       #{item.mem_addr2}, 
-                      #{item.order_num}, 
                       #{item.menu_price}, 
                       #{item.menu_cnt}, 
                       #{item.menu_name} 
@@ -143,7 +143,7 @@
                           #{ coupon_use },
                           #{ mem_addr1 },
                           #{ mem_addr2 },
-                          #{ order_num }
+                          #{ order_idx }
                           )
   </insert> -->
 
@@ -160,7 +160,15 @@
 
   <!-- 주문상태 체크(갯수) -->
   <select id="selectOrderCount" parameterType="int" resultType="int">
-        select ifnull(count(*),0) from order_status 
+        select ifnull(count(*),0) from order_status_view 
 		    where shop_idx=#{ shop_idx } and  order_status='NONE'
   </select>
+  
+  <!-- order_idx 존재 확인 select (fk 대용) -->
+    <select id="selectCheckOrderIdx" parameterType="int" resultType="int">
+      SELECT COUNT(*)
+      FROM order_status_view
+      WHERE order_idx = #{order_idx}
+  </select>
+
 </mapper>

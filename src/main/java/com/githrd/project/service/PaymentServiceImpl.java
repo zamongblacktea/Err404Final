@@ -41,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         //imp_uid 가져오기
         String imp_uid          = vo.getImp_uid();
-        String merchant_uid          = vo.getMerchant_uid();
+        String merchant_uid     = vo.getMerchant_uid();
         int shop_idx            = vo.getShop_idx();
         int menu_idx            = vo.getMenu_idx();
         int mem_idx             = vo.getMem_idx();
@@ -54,7 +54,7 @@ public class PaymentServiceImpl implements PaymentService {
         String mem_addr1        = vo.getMem_addr1();
         String mem_addr2        = vo.getMem_addr2();
         int mcuraddr_idx        = vo.getMcuraddr_idx();
-        int order_num           = paymentMapper.selectOrderNo();
+        int order_idx           = paymentMapper.selectOrderNo();
 
 
         
@@ -97,7 +97,7 @@ public class PaymentServiceImpl implements PaymentService {
                 map.put("rider_request", rider_request);
                 map.put("mem_addr1", mem_addr1);
                 map.put("mem_addr2", mem_addr2);
-                map.put("order_num", order_num);
+                map.put("order_idx", order_idx);
 
 
                 

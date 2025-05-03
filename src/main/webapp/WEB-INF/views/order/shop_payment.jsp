@@ -131,12 +131,8 @@ textarea{
 		const mem_addr2 = $("#mem_addr2").val();
 		const order_request = $("#order_request").val();
 		const rider_request = $("#rider_request").val();
-		const cart_idx_array = [];
-		$("input[name='cart_idx']").each(function() {
-			cart_idx_array.push(parseInt($(this).val()));
-		});
-		//콘솔 출력 체크
-		console.log(cart_idx_array);  
+
+
 
 
 
@@ -171,7 +167,6 @@ textarea{
 								mem_addr2,
 								order_request,
 								rider_request,
-								cart_idx_array
 							);
 				console.log("mem_idx:", mem_idx);
 
@@ -185,7 +180,7 @@ textarea{
 	}
 
 	// AJAX를 사용한 결제 검증 요청
-	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_name, mem_phone,cart_price, mem_addr1 , mem_addr2, order_request, rider_request,cart_idx_array) {
+	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_name, mem_phone,cart_price, mem_addr1 , mem_addr2, order_request, rider_request) {
 		//form에 설정한 변수 선언
 		
 
@@ -209,7 +204,6 @@ textarea{
 				"mem_addr2" : mem_addr2,
 				"order_request" : order_request,
 				"rider_request" : rider_request,
-				"cart_idx_array":cart_idx_array,
 
 			}),
 			dataType : "json",

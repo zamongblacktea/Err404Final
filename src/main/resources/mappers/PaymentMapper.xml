@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 rider_request,
                 mem_addr1,
                 mem_addr2,
-                order_num,
+                order_idx,
                 menu_price,
                 menu_cnt
             )
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     #{rider_request},
                     #{mem_addr1},
                     #{mem_addr2},
-                    #{order_num},
+                    #{order_idx},
                     #{item.menu_price},
                     #{item.cart_cnt}
                 )
@@ -72,6 +72,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
   <!-- 거래번호 얻어오기 -->
   <select id="selectOrderNo" resultType="int">
-     select  ifnull(max(order_num),0) + 1 from payment
+     select  ifnull(max(order_idx),0) + 1 from payment
   </select>
 </mapper>

@@ -30,7 +30,7 @@
               type: 'POST',
               contentType: 'application/json',
               data: JSON.stringify({
-              orderIdx: orderIdx,
+                orderIdx: orderIdx,
               orderStatus: nextStatus
             }),
             success: function (res) {
@@ -99,7 +99,7 @@
       <c:forEach var="vo" items="${ status }">
         <div id="box">
           <div class="order_idx">
-            ${ vo.order_num }
+            ${ vo.order_idx }
           </div>
         <div class="order_text">
           주문일자: ${ vo.order_regdate }<br />
@@ -118,19 +118,19 @@
           <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">
               <button class="btn status-btn"
-                      data-order-idx="${vo.order_num}"
+                      data-order-idx="${vo.order_idx}"
                       data-next-status="조리대기">주문 수락</button>
             </c:if>
             
             <c:if test="${vo.order_status eq '조리대기'}">
               <button class="btn status-btn"
-                      data-order-idx="${vo.order_num}"
+                      data-order-idx="${vo.order_idx}"
                       data-next-status="조리중">조리 시작</button>
             </c:if>
 
             <c:if test="${vo.order_status eq '조리중'}">
               <button class="btn status-btn"
-                      data-order-idx="${vo.order_num}"
+                      data-order-idx="${vo.order_idx}"
                       data-next-status="픽업대기">조리 완료</button>
             </c:if>
             <!-- 픽업완료/배달중/배달완료 -->

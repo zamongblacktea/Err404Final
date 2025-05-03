@@ -27,7 +27,7 @@ public class PaymentVo {
     String coupon_use;
     String mem_addr1;
     String mem_addr2;
-    int order_num;
+    int order_idx;
     int menu_price;
     int menu_cnt;
 

@@ -23,14 +23,17 @@
             </div>
           <div class="order_text">
             주문일자: ${ vo.order_regdate }<br />
+            결제: ${vo.pay_type}<br />
             <!-- <c:forEach var="cart" items="${cart}">
             ${cart.menu_name}
             </c:forEach> -->
-            주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
+            메뉴<br />
+            ${ vo.menu_list} <br />
             고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
             주문요청사항: ${ vo.order_request } <br />
             배달요청사항: ${ vo.rider_request }<br />
             주문 상태: ${ vo.order_status }<br />
+            주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
           </div>
             <div>  
               <c:if test="${vo.delivery_status eq '배달완료' && vo.review_available == 0 }">

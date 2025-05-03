@@ -21,8 +21,8 @@ public class OrderStatusVo {
     //         String mem_addr1, String mem_addr2) {
     //     //TODO Auto-generated constructor stub
     // }
-    @JsonProperty("orderIdx")
-    Integer order_idx;
+
+    Integer order_status_idx;
     Integer shop_idx;
     Integer menu_idx;
     Integer mem_idx;
@@ -55,7 +55,8 @@ public class OrderStatusVo {
     String pay_regdate;
     int totalDistance;
     int delivery_fee;
-    int order_num;
+    @JsonProperty("orderIdx")
+    int order_idx;
     String menu_list;
 
     

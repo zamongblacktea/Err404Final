@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             os.mem_addr1,os.mem_addr2,os.rider_request,
             m.mem_phone
             FROM delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
-                inner join order_status os on d.order_idx=os.order_idx 
+                inner join order_status_view os on d.order_idx=os.order_idx 
                 inner join member m on d.mem_idx= m.mem_idx 
             WHERE rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
   </select>
@@ -140,14 +140,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 회원 리뷰 리스트 조회-->
   <select id="selectListReview" resultType="DeliveryVo">
     SELECT d.mem_idx,d.order_idx,d.delivery_idx,d.shop_idx,d.menu_idx,m.menu_name,d.order_status,s.shop_name,
-           d.pay_regdate,d.delivery_status,o.order_regdate,o.amount, o.order_request, o.rider_request,
-           o.mem_addr1,o.mem_addr2, r.review_available
+           d.pay_regdate,d.delivery_status,o.order_regdate,o.amount, o.order_request, o.rider_request,o.pay_type,
+           o.mem_addr1,o.mem_addr2, r.review_available,o.menu_list
       FROM delivery d
       INNER JOIN menu_info m ON d.menu_idx = m.menu_idx
       INNER JOIN shop_info s ON d.shop_idx = s.shop_idx
-      INNER JOIN order_status o ON d.order_idx = o.order_idx
+      INNER JOIN order_status_view o ON d.order_idx = o.order_idx
       LEFT OUTER JOIN mem_review r ON d.order_idx = r.order_idx
-      WHERE d.mem_idx = #{mem_idx}
+      WHERE d.mem_idx = #{mem_idx} and d.delivery_status = '배달완료'
   </select>
 
 

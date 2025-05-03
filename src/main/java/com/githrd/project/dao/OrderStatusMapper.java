@@ -39,6 +39,8 @@ public interface OrderStatusMapper {
 
     public int selectOrderCount(int shop_idx);
 
+    public int selectCheckOrderIdx(int order_idx);
+
     
 
 
