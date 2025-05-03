@@ -135,7 +135,6 @@
 
                 <c:when test="${vo.review_available == 1}">
                   <form>
-                     리뷰 번호: ${vo.review_idx}
                     <input type="hidden" id="order_idx_${vo.review_idx}" value="${vo.order_idx}">
                     <input type="hidden" id="mem_idx_${vo.review_idx}" value="${vo.mem_idx}">
                     <input type="hidden" id="shop_idx_${vo.review_idx}" value="${vo.shop_idx}">
