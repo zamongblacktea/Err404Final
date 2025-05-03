@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,6 +99,7 @@ public class RiderController {
 
 
     //parameter map으로 받기 : rider_accept.do?order_idx=1&rider_idx=5
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping("/rider/rider_accept.do")
     @ResponseBody
     // public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
@@ -127,7 +129,7 @@ public class RiderController {
         vo.setMem_idx(orderStatusVo.getMem_idx());
         vo.setRider_idx(rider_idx);
         vo.setMenu_idx(orderStatusVo.getMenu_idx());
-        vo.setMcuraddr_idx(orderStatusVo.getMenu_idx());
+        vo.setMcuraddr_idx(orderStatusVo.getMcuraddr_idx());
         vo.setRider_request(orderStatusVo.getRider_request());
         vo.setOrder_status(orderStatusVo.getOrder_status());
         vo.setDelivery_status(orderStatusVo.getDelivery_status());
@@ -136,26 +138,40 @@ public class RiderController {
         vo.setTotalDistance(totalDistance);
         vo.setDelivery_fee(deliveryFee);
 
+        //fk 대용 무결성 검사용 select
+        int count = orderStatusMapper.selectCheckOrderIdx(order_idx);
+
+        //참조 무결성 검사
+        if(count > 0){
+
         //delivery insert용 vo생성->insert
         res = deliveryMapper.insert(vo);
         
+        //status update
         res = res * orderStatusMapper.riderStatusUpdate(vo);
-       // int res = deliveryMapper.riderStatusUpdate(paramMap);
-       Map<String,Object>map = new HashMap<>();
-       map.put("result", res==1);
+        // int res = deliveryMapper.riderStatusUpdate(paramMap);
+        Map<String,Object>map = new HashMap<>();
+        map.put("result", res==1);
+ 
+         //배차받기 알림을 위한 웹소캣 전송
+         Map<String,Object> paramMap = new HashMap<>();
+         paramMap.put("order_idx", order_idx);
+         paramMap.put("shop_idx", orderStatusVo.getShop_idx());
+ 
+         paramMap.put("rider_status","배차완료");
+ 
+          //웹소켓으로 전송
+          paramMap.put("tab_state", "rider_accept");
+          messagingTemplate.convertAndSend("/topic/orders", paramMap);
+    
+         return map;
 
-        //배차받기 알림을 위한 웹소캣 전송
-        Map<String,Object> paramMap = new HashMap<>();
-        paramMap.put("order_idx", order_idx);
-        paramMap.put("shop_idx", orderStatusVo.getShop_idx());
+        }else {
 
-        paramMap.put("rider_status","배차완료");
+            throw new IllegalArgumentException("존재하지 않는 주문번호입니다.");
 
-         //웹소켓으로 전송
-         paramMap.put("tab_state", "rider_accept");
-         messagingTemplate.convertAndSend("/topic/orders", paramMap);
-   
-        return map;
+        }
+
     }
 
     

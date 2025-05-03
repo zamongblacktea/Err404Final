@@ -51,4 +51,14 @@
 	<delete id="menuDelete" parameterType="int"> delete from cart where cart_idx = #{cart_idx} </delete>
 
 
+	<!-- 장바구니 배열로 받기 -->
+	<select id="selectPaymentList" resultType="CartVo">
+      select * from cart_view
+      where mem_idx = #{mem_idx} and cart_idx in
+      <foreach collection="array" item="c_idx" open="(" separator="," close=")">
+            #{ c_idx }
+      </foreach> 
+  	</select>
+
+
 </mapper>

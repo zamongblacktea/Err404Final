@@ -36,6 +36,8 @@ public class DeliveryVo {
 
     String order_request;
     int review_available;
+    String menu_list;
+    String pay_type;
     
     
 }

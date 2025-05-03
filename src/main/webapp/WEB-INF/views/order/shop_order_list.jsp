@@ -30,7 +30,7 @@
               type: 'POST',
               contentType: 'application/json',
               data: JSON.stringify({
-              orderIdx: orderIdx,
+                orderIdx: orderIdx,
               orderStatus: nextStatus
             }),
             success: function (res) {
