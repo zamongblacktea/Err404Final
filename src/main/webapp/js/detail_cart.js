@@ -1,6 +1,7 @@
 // 결제하기
 function cart_payment(f) {
   let shop_idx = f.shop_idx.value.trim();
+  let cart_idx = f.cart_idx.value.trim();
   let menu_idx = f.menu_idx.value.trim();
   let amount = f.amount.value.trim();
   let dfee = $("#shop_dfee").val();

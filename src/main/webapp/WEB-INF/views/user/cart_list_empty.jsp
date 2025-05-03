@@ -24,7 +24,7 @@
 
 
         <br>
-        <h4 style="text-align: center;">::::장바구니 목록::::</h4>
+        <!-- <h4 style="text-align: center;">::::장바구니 목록::::</h4> -->
 
 
             <!-- 장바구니정보 출력 -->

@@ -113,13 +113,13 @@ public class MainController {
         List<ShopInfoVo> cate_list = shopService.selectCate();
 
         // List<MemReviewVo> rate_list = memReviewMapper.selectShopRating(shop_idx);
-     
 
         session.setAttribute("shop_dfee", shop_dfee);
 
         model.addAttribute("shop", shop);
         model.addAttribute("menu", menu);
         model.addAttribute("shop_dfee", shop_dfee);
+        model.addAttribute("cate_list", cate_list);
         // model.addAttribute("rate", rating);
         // 임시 push
 

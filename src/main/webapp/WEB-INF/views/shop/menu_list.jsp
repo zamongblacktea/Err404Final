@@ -25,7 +25,6 @@
     </style>
   </head>
   <body>
-    <h2>메뉴 목록</h2>
     <c:forEach var="list" items="${list}">
       <div class="menu-item">
         <img src="${pageContext.request.contextPath}/images/${list.menu_img}" alt="메뉴사진" />
@@ -43,31 +42,31 @@
     <script>
       function loadModifyForm(menu_idx) {
         $.ajax({
-          url: 'menu_modify_form.do',
-          type: 'GET',
+          url: "menu_modify_form.do",
+          type: "GET",
           data: { menu_idx: menu_idx },
-          success: function(response) {
+          success: function (response) {
             $("#disp").html(response);
           },
-          error: function(xhr, status, error) {
-            alert('수정 폼을 불러오는 중 오류가 발생했습니다: ' + error);
-          }
+          error: function (xhr, status, error) {
+            alert("수정 폼을 불러오는 중 오류가 발생했습니다: " + error);
+          },
         });
       }
 
       function deleteMenu(menu_idx) {
-        if (confirm('정말로 이 메뉴를 삭제하시겠습니까?')) {
+        if (confirm("정말로 이 메뉴를 삭제하시겠습니까?")) {
           $.ajax({
-            url: 'menu_delete.do',
-            type: 'POST',
+            url: "menu_delete.do",
+            type: "POST",
             data: { menu_idx: menu_idx },
-            success: function() {
-              alert('메뉴가 삭제되었습니다.');
-              loadContent('menu_list.do');
+            success: function () {
+              alert("메뉴가 삭제되었습니다.");
+              loadContent("menu_list.do");
             },
-            error: function(xhr, status, error) {
-              alert('메뉴 삭제 중 오류가 발생했습니다: ' + error);
-            }
+            error: function (xhr, status, error) {
+              alert("메뉴 삭제 중 오류가 발생했습니다: " + error);
+            },
           });
         }
       }

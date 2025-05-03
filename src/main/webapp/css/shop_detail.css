@@ -72,7 +72,7 @@ body {
   display: inline-block;
 }
 
-.category{
+.category {
   height: 60px;
   border: 1px solid #d9d9d9;
   background-color: white;
@@ -159,7 +159,8 @@ li {
 }
 
 .nav-a {
-  background-color: #ff694a;
+  /* background-color: #ff694a; */
+  background-color: #fcb2a4;
   border: 1px solid #d9d9d9;
   display: flex;
   justify-content: center;
@@ -173,18 +174,19 @@ li {
   font-weight: bold;
 }
 
-.nav-a.active{
+.nav-a.active {
+  /* background-color: #fcb2a4; */
   background-color: #ff694a;
   font-weight: bold;
   font-size: large;
-  box-shadow: 0 0 5px #be4831;
+  /* box-shadow: 0 0 5px #be4831; */
 }
 
 .detail-content {
   width: 100%;
 }
 
-#disp{
+#disp {
   width: 100%;
   box-sizing: border-box;
   background-color: white;
@@ -217,6 +219,7 @@ li {
 #cart_area {
   width: 300px;
   margin: 0 auto;
+  background-color: white;
 }
 
 .cart-title {
@@ -288,9 +291,6 @@ li {
   font-weight: bold;
 }
 
-
-
-
 /* ===========================detail_menu========================== */
 
 .menu_row {
@@ -318,14 +318,13 @@ li {
   color: #999;
 
   display: -webkit-box;
-  -webkit-line-clamp: 1;       /* 줄 수 제한 */
+  -webkit-line-clamp: 1; /* 줄 수 제한 */
   -webkit-box-orient: vertical;
-  width: 300px;         /* 원하는 너비 설정 */
-  white-space: nowrap;  /* 줄바꿈 방지 */
-  overflow: hidden;     /* 넘치는 텍스트 숨김 */
+  width: 300px; /* 원하는 너비 설정 */
+  white-space: nowrap; /* 줄바꿈 방지 */
+  overflow: hidden; /* 넘치는 텍스트 숨김 */
   text-overflow: ellipsis; /* 말줄임표 표시 */
 }
-
 
 .menu-price {
   font-size: 16px;
@@ -341,9 +340,6 @@ li {
   margin-top: 10px;
 }
 
-
-
-
 /* ============================detail_review=========================== */
 .review-box {
   /* width: 500px; */
@@ -357,7 +353,7 @@ li {
 .review-card {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -366,7 +362,8 @@ li {
   align-items: center;
   margin-bottom: 1rem;
 }
-.user-icon, .owner-icon {
+.user-icon,
+.owner-icon {
   width: 50px;
   height: 50px;
   background-color: #ddd;
@@ -402,7 +399,7 @@ li {
 .review-card {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
 }
@@ -411,7 +408,8 @@ li {
   align-items: center;
   margin-bottom: 1rem;
 }
-.user-icon, .owner-icon {
+.user-icon,
+.owner-icon {
   width: 50px;
   height: 50px;
   background-color: #ddd;
@@ -445,7 +443,7 @@ li {
 }
 
 /* ============================detail_info============================= */
-.detail-info{
+.detail-info {
   width: 100%;
   border: 1px solid #d9d9d9;
   padding-left: 20px;
@@ -453,9 +451,9 @@ li {
   padding-right: 20px;
 }
 
-hr{
-  border: 0;                      
-  border-top: 1px solid #333;  /* 두께 1px, 색 #333 */
+hr {
+  border: 0;
+  border-top: 1px solid #333; /* 두께 1px, 색 #333 */
   width: 665px;
 }
 
@@ -469,48 +467,47 @@ table.table-borderless tr {
 .intro,
 .info,
 .pay_info,
-.owner_info{
+.owner_info {
   padding-left: 10px;
   padding-top: 10px;
 }
 
 .notice > span,
 .intro > span,
-.info > span, 
+.info > span,
 .pay_info > span,
-.owner_info > span{
+.owner_info > span {
   font-size: 17px;
   font-weight: bold;
 }
 
 .notice_content,
-.intro_content{
+.intro_content {
   padding-left: 20px;
   padding-bottom: 10px;
   font-size: 14px;
-
 }
 
 .owner_content,
 .pay_info_content,
-.info_content{
+.info_content {
   width: 100%;
 }
 
-tbody{
+tbody {
   width: 100%;
 }
 
-table{
+table {
   /* display: flex; */
   width: 100%;
 }
 
-th{
+th {
   width: 30%;
   padding-left: 10px;
 }
-td{
+td {
   width: 70%;
   padding-left: 50px;
 }

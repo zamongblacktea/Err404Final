@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
     <!-- 웹소캣 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
@@ -22,9 +21,10 @@
         box-sizing: border-box;
       }
 
-      body {
+      /* body {
+        다른 것들이 order_list_complete 빼고 적용이 안됨 
         background-color: #f6f8fc;
-      }
+      } */
 
       /* 상단 nav */
       #nav {
@@ -53,7 +53,8 @@
         border-right: 1px solid #ddd;
         padding: 20px;
         font-size: 18px;
-        min-height: 92.2vh;
+        /* min-height: 92.2vh; */
+        min-height: calc(100vh - 60px);
         height: auto;
       }
 
@@ -80,30 +81,69 @@
         color: white;
       }
 
+      #sidebar a.active {
+        background-color: #ff694a;
+        color: white;
+        font-weight: bold;
+      }
+
       /* 본문 영역 */
       .contents {
         /* border: 1px solid red; */
         width: 1320px;
         margin: 30px auto;
         padding-left: 50px;
-
       }
     </style>
-<!-- 챗봇 AI -->
-<script>
-  (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+    <!-- 챗봇 AI -->
+    <script>
+      (function () {
+        var w = window;
+        if (w.ChannelIO) {
+          return w.console.error("ChannelIO script included twice.");
+        }
+        var ch = function () {
+          ch.c(arguments);
+        };
+        ch.q = [];
+        ch.c = function (args) {
+          ch.q.push(args);
+        };
+        w.ChannelIO = ch;
+        function l() {
+          if (w.ChannelIOInitialized) {
+            return;
+          }
+          w.ChannelIOInitialized = true;
+          var s = document.createElement("script");
+          s.type = "text/javascript";
+          s.async = true;
+          s.src = "https://cdn.channel.io/plugin/ch-plugin-web.js";
+          var x = document.getElementsByTagName("script")[0];
+          if (x.parentNode) {
+            x.parentNode.insertBefore(s, x);
+          }
+        }
+        if (document.readyState === "complete") {
+          l();
+        } else {
+          w.addEventListener("DOMContentLoaded", l);
+          w.addEventListener("load", l);
+        }
+      })();
 
-  ChannelIO('boot', {
-    "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
-    "memberId": "${ owner.owner_id }", // fill user's member id
-    "profile": { // fill user's profile
-      "name": "${owner.owner_name}", // fill user's name
-      "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
-      "CUSTOM_VALUE_1": "VALUE_1", // custom property
-      "CUSTOM_VALUE_2": "VALUE_2" // custom property
-    }
-  });
-</script>
+      ChannelIO("boot", {
+        pluginKey: "6f7a9234-fd72-433f-b10a-7aeef84a830c",
+        memberId: "${ owner.owner_id }", // fill user's member id
+        profile: {
+          // fill user's profile
+          name: "${owner.owner_name}", // fill user's name
+          landlineNumber: "USER_LANDLINE_NUMBER", // fill user's landline number
+          CUSTOM_VALUE_1: "VALUE_1", // custom property
+          CUSTOM_VALUE_2: "VALUE_2", // custom property
+        },
+      });
+    </script>
 
     <script>
       function loadContent(url) {
@@ -111,68 +151,73 @@
         const owner_idx = "${user.owner_idx}"; //세션에서 owner_idx 가져오기
         $.ajax({
           url: url,
-          data: { shop_idx: shop_idx,
-                  owner_idx: owner_idx,
-           },
-          success: function(res_data) {
+          data: { shop_idx: shop_idx, owner_idx: owner_idx },
+          success: function (res_data) {
             $("#disp").html(res_data);
           },
-          error: function(err) {
+          error: function (err) {
             alert("에러 발생: " + err.responseText);
-          }
+          },
         });
       }
 
       // 페이지 로드 시 기본으로 메뉴 목록 표시
-      if("${menu}" == "null"){
-        $(document).ready(function() {
-        loadContent("menu_insert_form.do");
-      });
-      }else{
-        $(document).ready(function() {
+      if ("${menu}" == "null") {
+        $(document).ready(function () {
+          loadContent("menu_insert_form.do");
+        });
+      } else {
+        $(document).ready(function () {
           loadContent("../order/order_list.do");
         });
       }
 
-      
-    //웹소캣구독
-    var currentShopIdx = '<%= session.getAttribute("shop_idx") %>';
-    var socket = new SockJS('${pageContext.request.contextPath}/ws-orders');
-    var stompClient = Stomp.over(socket);
+      // 사이드바 버튼 active
+      $(document).ready(function () {
+        const navButtons = $("#sidebar a");
 
-    // WebSocket 연결 설정
-    stompClient.connect({}, function (frame) {
-    console.log('Connected: ' + frame);
+        // 5번째 버튼 미리 active 부여 (인덱스 4)
+        if (navButtons[4]) $(navButtons[4]).addClass("active");
 
-  // 주문 상태 업데이트 메시지 구독
-    stompClient.subscribe('/topic/orders', function (message) {
+        // sidebar a 클릭 시 active 클래스 제어
+        navButtons.on("click", function () {
+          navButtons.removeClass("active");
+          $(this).addClass("active");
+        });
+      });
 
-    // JSON.stringify() : JSON->String
-    // JSON.parse()     : String->JSON
+      //웹소캣구독
+      var currentShopIdx = '<%= session.getAttribute("shop_idx") %>';
+      var socket = new SockJS("${pageContext.request.contextPath}/ws-orders");
+      var stompClient = Stomp.over(socket);
 
-    var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱      
-    //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"픽업완료"}
-    //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"배달완료"}
-    // 메시지에 있는 shopIdx와 현재 가게의 idx가 일치하는지 확인
-    if (receivedMessage.shop_idx == currentShopIdx) {
-          
-         // alert("주문이 접수되었습니다.: 주문 번호 - ");
-        
-        location.reload(); // 페이지 새로고침
-    
-    }
-  });
-});
+      // WebSocket 연결 설정
+      stompClient.connect({}, function (frame) {
+        console.log("Connected: " + frame);
 
+        // 주문 상태 업데이트 메시지 구독
+        stompClient.subscribe("/topic/orders", function (message) {
+          // JSON.stringify() : JSON->String
+          // JSON.parse()     : String->JSON
 
+          var receivedMessage = JSON.parse(message.body); // JSON 형식으로 메시지 파싱
+          //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"픽업완료"}
+          //receivedMessage= {"shop_idx":1,"shop_idx":2,"order_status":"배달완료"}
+          // 메시지에 있는 shopIdx와 현재 가게의 idx가 일치하는지 확인
+          if (receivedMessage.shop_idx == currentShopIdx) {
+            // alert("주문이 접수되었습니다.: 주문 번호 - ");
+
+            location.reload(); // 페이지 새로고침
+          }
+        });
+      });
     </script>
   </head>
 
   <body>
-
     <!-- 상단 nav -->
     <div id="nav">
-      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" />
+      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" onclick="location.href='/shop/main.do'" />
       <div class="user-info">
         <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
       </div>
@@ -197,13 +242,13 @@
         </div>
         <div class="menu-group">
           <div class="menu-title">주문관리</div>
-          
-          <a onclick="loadContent('../order/order_list.do')">주문 내역
+
+          <a onclick="loadContent('../order/order_list.do')"
+            >주문 내역
             <c:if test="${ order_count gt 0 }">
-                <span class="badge" style="color: red;">주문</span>
+              <span class="badge" style="color: red">주문</span>
             </c:if>
           </a>
-
 
           <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a>
         </div>

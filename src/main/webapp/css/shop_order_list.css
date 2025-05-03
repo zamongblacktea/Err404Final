@@ -1,6 +1,6 @@
 #box {
   border: 1px solid black;
-  /* background-color: white; */
+  background-color: white;
   width: 600px;
   height: auto;
   border-radius: 5px;
@@ -21,11 +21,15 @@
     margin: 10px 0;
 }
 
+.btn-div{
+    flex: 1;
+}
+
 .status-btn {
     flex: 1;
     width: 100px;
     height: 120px;
-    margin: 10px 0;
+    margin: 45px 0;
     background-color: #ff694a;
     color: white;
     font-size: 18px;

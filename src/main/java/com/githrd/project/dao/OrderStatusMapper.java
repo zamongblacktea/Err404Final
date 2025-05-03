@@ -26,7 +26,7 @@ public interface OrderStatusMapper {
     //라이더 배차상태 업데이트
     int riderStatusUpdate(DeliveryVo vo);
 
-    public int insert(OrderStatusVo OrderStatus);
+    public int insert(Map<String,Object> order_status);
 
     public int updateStatus(Map<String,Object> map);
 
@@ -35,9 +35,11 @@ public interface OrderStatusMapper {
 
     public int deleteOrder(int order_idx);
 
-    public OrderStatusVo selectDetail(int mem_idx);
+    public List<OrderStatusVo> selectDetail(int mem_idx);
 
     public int selectOrderCount(int shop_idx);
+
+    public int selectCheckOrderIdx(int order_idx);
 
     
 

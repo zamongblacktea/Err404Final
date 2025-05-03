@@ -11,6 +11,7 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
 
 
@@ -25,7 +26,9 @@ pageEncoding="UTF-8"%>
           <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
       </form>
   </div>
-    <div class="category">가게 카테고리</div>
+    <div class="category">
+      <%@ include file="catebar.jsp"%>
+    </div>
     <div id="main">
 
       <div class="list">

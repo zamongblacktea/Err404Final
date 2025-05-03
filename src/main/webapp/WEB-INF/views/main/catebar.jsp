@@ -32,6 +32,7 @@
       }
 
       .category-nav li + li::before {
+        content: "|";
         position: absolute;
         left: 0;
         color: #ccc;
@@ -94,6 +95,22 @@
             shop_cate_list(0);
 
         });
+        
+          
+        $(document).ready(function () {
+        $(".cate-btn").on("click", function () {
+            // 기존 active 제거
+            $(".cate-btn").removeClass("active");
+    
+            // 현재 클릭한 버튼만 active 추가
+            $(this).addClass("active");
+    
+            // cate_idx 값 가져오기 (임시)
+            let cate_idx = $(this).find(".cate_idx").val();
+            console.log("선택된 cate_idx:", cate_idx);
+        });
+        });
+      
     </script>
   
   </head>

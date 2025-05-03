@@ -70,4 +70,6 @@ public interface ShopService {
         int selectOrderCount(int shop_idx);
 
         
+        // 가게 카테고리 조회
+        List<ShopInfoVo> selectCate();
 }

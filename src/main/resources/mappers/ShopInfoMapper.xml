@@ -3,11 +3,8 @@
 <mapper namespace="com.githrd.project.dao.ShopInfoMapper">
 
 	<!-- 주소가져오기 -->
-	<select id="getShopAddr" resultType="String" parameterType="int">
-    SELECT shop_addr1
-    FROM shop_info
-    WHERE shop_idx = #{shop_idx}
-	</select>
+	<select id="getShopAddr" resultType="String" parameterType="int"> SELECT shop_addr1 FROM
+		shop_info WHERE shop_idx = #{shop_idx} </select>
 
 	<!-- 가게전체조회 -->
 	<select id="selectListAll" resultType="ShopInfoVo"> select * from shop_info </select>
@@ -25,9 +22,11 @@
 		shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx </select>
 
 	<!-- 가게 배달비 조회 -->
-	 <select id="selectShopDfee" parameterType="int" resultType="Integer">
-		select shop_dfee from shop_info where shop_idx = #{shop_idx}
-	 </select>
+	<select id="selectShopDfee" parameterType="int" resultType="Integer"> select shop_dfee from
+		shop_info where shop_idx = #{shop_idx} </select>
+
+	<!-- 카테고리 조회 -->
+	<select id="selectCate" resultType="ShopInfoVo"> select * from shop_category </select>
 
 	<!-- 가게추가 -->
 	<insert id="shopInsert" parameterType="ShopInfoVo" useGeneratedKeys="true"
@@ -57,17 +56,14 @@
 		where shop_idx = #{shop_idx} </update>
 
 	<!-- 가게 별점 수정 -->
-	<update id="rateUpdate" parameterType="int">
-		update shop_info set shop_rating = 
-		(select ifnull(ROUND(SUM(review_rating)/count(*), 1), 0) from mem_review where shop_idx = #{shop_idx}) where shop_idx = #{shop_idx}
-	</update>
+	<update id="rateUpdate" parameterType="int"> update shop_info set shop_rating = (select
+		ifnull(ROUND(SUM(review_rating)/count(*), 1), 0) from mem_review where shop_idx =
+		#{shop_idx}) where shop_idx = #{shop_idx} </update>
 
 	<!-- 가게 리뷰 개수 수정 -->
-	<update id="reviewCntUpdate" parameterType="int">
-		update shop_info set shop_reviewcnt = 
-		(select ifnull(count(*), 0) from mem_review where shop_idx = #{shop_idx}) where shop_idx = #{shop_idx}
-	</update>
-
+	<update id="reviewCntUpdate" parameterType="int"> update shop_info set shop_reviewcnt = (select
+		ifnull(count(*), 0) from mem_review where shop_idx = #{shop_idx}) where shop_idx =
+		#{shop_idx} </update>
 
 
 	<!-- 가게 등록 여부 -->
