@@ -8,6 +8,7 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
   </head>
   <body>
         <c:forEach var="vo" items="${shop_list}">
@@ -29,3 +30,4 @@ pageEncoding="UTF-8"%>
 
   </body>
 </html>
+
