@@ -58,6 +58,10 @@ public class OrderStatusVo {
     @JsonProperty("orderIdx")
     int order_idx;
     String menu_list;
+    //정산 조회 칼럼
+    String start_date;
+    String end_date;
+    int total_amount;
 
     
 

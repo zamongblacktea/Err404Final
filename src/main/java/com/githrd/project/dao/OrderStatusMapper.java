@@ -41,7 +41,23 @@ public interface OrderStatusMapper {
 
     public int selectCheckOrderIdx(int order_idx);
 
-    
+    public int selectSaleOneDay(int shop_idx);
+
+    public int selectSaleWeeks(int shop_idx);
+
+    public int selectSaleMonth(int shop_idx);
+
+    public List<OrderStatusVo> selectListOneDay(int shop_idx);
+
+    public List<OrderStatusVo> selectListWeeks(int shop_idx);
+
+    public List<OrderStatusVo> selectListMonths(int shop_idx);
+
+    public int selectSaleMonths(int shop_idx);
+
+    public List<OrderStatusVo> selectListDate(Map<String,Object> map);
+
+    public int selectSaleDate(Map<String,Object> map);
 
 
 
