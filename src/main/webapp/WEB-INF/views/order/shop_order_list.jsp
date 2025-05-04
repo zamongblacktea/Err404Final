@@ -125,6 +125,18 @@
         <label style="color: rgb(226, 122, 43); font-size: large;">주문상태 배달중...</label>
         </c:if>
 
+          <!-- <c:forEach var="cart" items="${cart}">
+          ${cart.menu_name}
+          </c:forEach> -->
+          메뉴 <br /> 
+          ${ vo.menu_list } <br />
+          결제 : ${ vo.pay_type } <br />
+          고객 주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
+          전화번호 : ${ vo.mem_phone } <br />
+          주문요청사항: ${ vo.order_request } <br />
+          배달요청사항: ${ vo.rider_request }<br />
+          주문 상태: ${ vo.order_status }<br />
+          주문 가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
         </div>
           <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">
