@@ -14,6 +14,7 @@ pageEncoding="UTF-8"%>
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
 
+
   </head>
   <body>
     <div class="navbar">
@@ -31,25 +32,10 @@ pageEncoding="UTF-8"%>
     <div id="main">
 
       <div class="list">
-
-        <c:forEach var="vo" items="${shop_list}">
-          <div class="container" onclick="location.href='../main/detail.do?shop_idx=${vo.shop_idx}'">
-            <div class="shop-list">
-              <div id="shop_logo">
-                <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고">
-                <!-- <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}"> -->
-              </div>
-              <div id="shop_content">
-                <div class="shop_info">${vo.shop_name}</div>
-                <div class="shop_info">별점 ${vo.shop_rating} | 리뷰 ${vo.shop_reviewcnt}</div>
-                <div class="shop_info">
-                  <fmt:formatNumber value="${vo.shop_minprice}" pattern="#,#00" />원 이상 주문</div>
-              </div>    
-            </div>        
-          </div>
-
-        </c:forEach>
-        </div>
+           
+         <div id="category_display"></div>
+        
+      </div>
       </div>
     </div>
     <footer>풋터</footer>
