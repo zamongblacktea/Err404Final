@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -192,6 +193,7 @@ public class MemberController {
 	}
 
 	// 일반회원 가입
+	@Transactional
 	@RequestMapping("insert.do")
 	public String insert(MemberVo vo) {
 
@@ -211,7 +213,7 @@ public class MemberController {
 		double mem_latitude = vo.getMem_latitude();
 		String addr_name = vo.getAddr_name();
 
-
+		//3.회원 주소록 DB에 기본주소로 삽입
 		MemberAddrVo addr = new MemberAddrVo();
 
 		addr.setMem_idx(mem_idx);
@@ -241,6 +243,7 @@ public class MemberController {
 	}
 
 	// 수정하기
+	@Transactional
 	@RequestMapping("modify.do")
 	public String modify(MemberVo vo) {
 
@@ -251,6 +254,13 @@ public class MemberController {
 		// 수정
 		int res = memberMapper.update(vo);
 
+		//주소록 기본주소 수정
+		MemberAddrVo addr = new MemberAddrVo();
+
+		addr.setMem_idx(vo.getMem_idx());
+		addr.setMem_addr1(vo.getMem_zipcode());
+		addr.setMem_addr2(vo.getMem_addr());
+		res = memberAddrMapper.modifyUpdate(addr);
 
 		System.out.println(vo);
 
@@ -265,7 +275,8 @@ public class MemberController {
 		}
 
 		return "redirect:../main/main.do";
-	}
+
+	}//end: modify.do
 
 	// 회원 탈퇴
 	@RequestMapping("delete.do")

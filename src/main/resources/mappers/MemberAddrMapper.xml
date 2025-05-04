@@ -47,10 +47,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE mem_idx = #{mem_idx} and mcuraddr_idx = #{mcuraddr_idx}
       </select>
    
-          <!-- mem_idx,mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
+          <!-- mem_idx,가장 오래된 mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
       <select id="selectAddr" parameterType="int" resultType="MemberAddrVo">
-        SELECT * FROM mem_addr
-        WHERE mem_idx = #{mem_idx} and addr_name = '기본주소'
+        SELECT *
+        FROM mem_addr
+        WHERE mcuraddr_idx = (
+          SELECT MIN(mcuraddr_idx)
+          FROM mem_addr
+          WHERE mem_idx = #{mem_idx}
+        )
       </select>
 
     <!-- 주소록수정 -->
@@ -60,6 +65,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                          addr_name   = #{ addr_name }
      WHERE mcuraddr_idx = #{ mcuraddr_idx }
    </update>
+
+    <!-- 마이페이지 주소록 수정 (회원의 가장 오래된 주소 idx값 수정)-->
+    <update id="modifyUpdate" parameterType="MemberVo">
+      UPDATE mem_addr
+      JOIN (
+        SELECT MIN(mcuraddr_idx) AS target_idx
+        FROM mem_addr
+        WHERE mem_idx = #{mem_idx}
+      ) AS t ON mem_addr.mcuraddr_idx = t.target_idx
+      SET mem_addr.mem_addr1 = #{mem_addr1},
+          mem_addr.mem_addr2 = #{mem_addr2}
+    </update>
 
    <!-- 주소 삭제 -->
    <delete id="delete" parameterType="int">
