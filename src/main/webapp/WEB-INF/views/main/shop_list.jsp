@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
             <div class="shop-list">
               <div id="shop_logo">
                 <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고">
+                <!-- <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}"> -->
               </div>
               <div id="shop_content">
                 <div class="shop_info">${vo.shop_name}</div>
