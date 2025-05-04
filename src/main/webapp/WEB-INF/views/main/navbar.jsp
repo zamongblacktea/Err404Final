@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- bootstrap 사용설정 -->
+<!-- 기존 3.7.1 제거하고 ↓ 이렇게 교체 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 
 .navbar{
@@ -56,7 +61,7 @@
             <c:if test="${ not empty sessionScope.user }">
             <input class="btn login-btn" type="button" value="로그아웃" onclick="location.href='../member/logout.do'">
             <input class="btn login-btn" type="button" value="내 정보" onclick="location.href='../member/member_main.do?mem_idx=${sessionScope.user.mem_idx}'">
-            <input class="btn login-btn" type="button" value="내 주문" onclick="location.href='../member/modify_form.do?mem_idx=${sessionScope.user.mem_idx}'">
+            <input class="btn login-btn" type="button" value="내 주문" onclick="location.href='../member/my_order.do?mem_idx=${sessionScope.user.mem_idx}'">
             
             </c:if>
 

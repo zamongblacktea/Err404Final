@@ -81,8 +81,6 @@ public class ShopController {
             return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
         }
 
-        
-
         //order_status의 상태가 NONE인 갯수 구하기
         int order_count = shopService.selectOrderCount(shop.getShop_idx());
 
@@ -320,7 +318,8 @@ public class ShopController {
 
         ra.addAttribute("shop_idx", vo.getShop_idx());
 
-        return "redirect:order_list.do";
+        return "shop/shop_main";
+        //return "redirect:order_list.do";
         // return "redirect:main.do";
     }
 
@@ -420,6 +419,10 @@ public class ShopController {
         //TODO: process POST request
 
         System.out.println("-----------------------------입력전 Vo:" + vo);
+
+        // \n -> <br>
+		String reply_content = vo.getReply_content().replaceAll("\n", "<br>");
+		vo.setReply_content(reply_content);
 
         //사장님 답글 DB에 insert
         int res = ownerReplyMapper.insert(vo);

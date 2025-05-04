@@ -418,6 +418,13 @@ public class ShopServiceImpl implements ShopService {
 
     // 카테고리 조회
     @Override
+    public List<ShopInfoVo> selectListFromCate(int shop_cate_idx) {
+        return shopInfoMapper.selectListFromCate(shop_cate_idx);
+
+    }
+        
+     
+
     public List<ShopInfoVo> selectCate() {
         return shopInfoMapper.selectCate();
     }

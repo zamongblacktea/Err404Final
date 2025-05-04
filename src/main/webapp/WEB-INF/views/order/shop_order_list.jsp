@@ -30,11 +30,11 @@
               type: 'POST',
               contentType: 'application/json',
               data: JSON.stringify({
-              orderIdx: orderIdx,
+                orderIdx: orderIdx,
               orderStatus: nextStatus
             }),
             success: function (res) {
-              confirm("주문 상태를 변경 하시겠습니까 ? " + res.updatedStatus);
+              //confirm("주문 상태를 변경 하시겠습니까 ? " + res.updatedStatus);
               // TODO: 화면 갱신 로직 추가
               loadContent('../order/order_list.do');
             },
@@ -68,15 +68,15 @@
 
           if(receivedMessage.rider_status == "배차완료"){
 
-            alert("배차완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
+           // alert("배차완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
             
           }else if(receivedMessage.order_status == "픽업완료"){
               
-              alert("픽업완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
+             // alert("픽업완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
 
             }else if(receivedMessage.order_status == "배달완료"){
 
-              alert("배달완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
+             // alert("배달완료 되었습니다.: 주문 번호 - " + receivedMessage.order_idx);
             }
       
           location.reload(); // 페이지 새로고침
@@ -103,14 +103,40 @@
           </div>
         <div class="order_text">
           주문일자: ${ vo.order_regdate }<br />
-          <!-- <c:forEach var="cart" items="${cart}">
-          ${cart.menu_name}
-          </c:forEach> -->
+          
           주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
           고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
+          <%-- 주문 상태: ${ vo.order_status }<br /> --%>
+          <c:if test="${ vo.rider_status eq '배차완료'}">
+            <label style="color: rgba(43, 226, 107, 0.805);">배차상태: 배차완료</label>
+          </c:if> <br/> 
+          <c:if test="${ vo.order_status eq '조리중'}">
+             <label style="color: rgb(226, 122, 43); font-size: large;">주문상태: 조리중</label>
+           </c:if> 
+           <c:if test="${ vo.order_status eq '조리완료'}">
+             <label style="color: rgb(226, 122, 43); font-size: large;">주문상태: 조리완료</label>
+           </c:if> 
+          <c:if test="${ vo.order_status eq '픽업완료'}">
+             <label style="color: rgb(226, 122, 43); font-size: large;">주문상태: 픽업완료</label>
+           </c:if>    
+        <c:if test="${ vo.order_status eq '배달중'}">
+        <label style="color: rgb(226, 122, 43); font-size: large;">주문상태 배달중...</label>
+        </c:if>
+
+          <!-- <c:forEach var="cart" items="${cart}">
+          ${cart.menu_name}
+          </c:forEach> -->
+          메뉴 <br /> 
+          ${ vo.menu_list } <br />
+          결제 : ${ vo.pay_type } <br />
+          고객 주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
+          전화번호 : ${ vo.mem_phone } <br />
+          주문요청사항: ${ vo.order_request } <br />
+          배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />
+          주문 가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
         </div>
           <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">
@@ -130,7 +156,7 @@
                       data-order-idx="${vo.order_idx}"
                       data-next-status="픽업대기">조리 완료</button>
             </c:if>
-            <!-- 픽업완료/배달중/배달완료 -->
+        
             
           </div>
         </div>

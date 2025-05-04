@@ -28,6 +28,7 @@
       <c:forEach var="cart" items="${cart_list}">
         <!-- <input type="hidden" name="shop_idx" id="shop_idx" value="${cart.shop_idx}"> -->
         <input type="hidden" name="menu_idx" id="menu_idx" value="${cart.menu_idx}">
+        <input type="hidden" name="cart_idx" id="cart_idx" value="${cart.cart_idx}">
         <!-- <input type="hidden" name="mem_idx" id="mem_idx" value="${cart.mem_idx}"> -->
         <li class="cart_li" id="row_${cart.cart_idx}">
           <div id="cart-name">${cart.menu_name}</div>

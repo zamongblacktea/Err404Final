@@ -222,7 +222,7 @@
   <body>
     <!-- 상단 nav -->
     <div id="nav">
-      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" onclick="location.href='/shop/main.do'" />
+      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" onclick="location.href='/main/main.do'" />
       <div class="user-info">
         <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
       </div>

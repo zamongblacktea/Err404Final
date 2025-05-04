@@ -15,9 +15,14 @@ public interface ShopInfoMapper {
     // 가게 전체 출력
     List<ShopInfoVo> selectListAll();
 
+    //가게 카테고리 별로 출력
+    List<ShopInfoVo> selectListFromCate(int shop_cate_idx);
+
+    
     // 가게 하나만 출력
     ShopInfoVo selectShopOne(int shop_idx);
 
+    
     // 가게 입력
     int shopInsert(ShopInfoVo vo);
 
@@ -50,4 +55,5 @@ public interface ShopInfoMapper {
     // 카테고리 조회
     List<ShopInfoVo> selectCate();
 
+   
 }

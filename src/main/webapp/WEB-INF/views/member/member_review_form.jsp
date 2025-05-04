@@ -7,8 +7,16 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>배달 리뷰 작성</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- 기존 3.7.1 제거하고 ↓ 이렇게 교체 -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <style>
+        .container{
+          width: 500px;
+
+        }
+
         .star-rating {
           font-size: 2rem;
           color: #ddd;
@@ -31,75 +39,71 @@
 
       </style>
 
-      <script>
-        function send(f) {
-          let mem_idx = f.mem_idx.value;
-          let review_content = f.review_content.value;
-          let shop_idx = f.shop_idx.value;
-          let menu_idx = f.menu_idx.value;
-          let menu_name = f.menu_name.value;
-          let photo = f.photo.value.trim();
-          let mem_nickname = f.mem_nickname.value;
-          let delivery_idx = f.delivery_idx.value;
-          let order_idx = f.order_idx.value;
-          let shop_name = f.shop_name.value;
-          const review_rating = f.querySelector('#ratingValue').value;
-          //콘솔 출력
-          console.log('선택한 별점:', review_rating);
-
-
-          if (review_content == "") {
-
-            alert("리뷰 내용을 입력해주세요.");
-            f.review_content.value = "";
-            f.review_content.focus();
-            return;
-
-          }
-
-          if (review_rating === "0" || review_rating === "") {
-            alert("별점을 선택해주세요.");
-
-          }
-
-          f.action = "insert_review.do";
-          f.method = "POST";
-          f.submit();
-
-        }
+<script>
 
 
 
+  function send(f) {
+    let rating = document.getElementById("ratingValue").value;
+    let content = f.review_content.value.trim();
+    let photo = f.photo.value;
 
-      </script>
-    </head>
+    if (!content) {
+      alert("리뷰 내용을 입력해주세요.");
+      f.review_content.focus();
+      return;
+    }
+    if (rating === "0" || rating === "") {
+      alert("별점을 선택해주세요.");
+      return;
+    }
+    f.action = "insert_review.do";
+    f.method = "POST";
+    f.submit();
+  }
 
-    <body class="bg-light py-5">
-      <div class="container">
-        <div class="card shadow rounded-4 p-4">
-          <form method="POST" enctype="multipart/form-data">
-            <h2 class="mb-4">리뷰 작성</h2>
-            <input type="hidden" value="${param.mem_idx}" name="mem_idx">
-            <input type="hidden" value="${param.shop_idx}" name="shop_idx">
-            <input type="hidden" value="${param.menu_idx}" name="menu_idx">
-            <input type="hidden" value="${param.order_idx}" name="order_idx">
-            <input type="hidden" value="${order.menu_name}" name="menu_name">
-            <input type="hidden" value="${param.delivery_idx}" name="delivery_idx">
-            <input type="hidden" value="${user.mem_nickname}" name="mem_nickname">
-            <input type="hidden" value="${shop.shop_name}" name="shop_name">
-            <!-- 별점 -->
-            <div class="mb-3">
-              <label class="form-label">별점</label>
-              <div id="starRating" class="star-rating">
-                <span data-value="1">★</span>
-                <span data-value="2">★</span>
-                <span data-value="3">★</span>
-                <span data-value="4">★</span>
-                <span data-value="5">★</span>
-              </div>
+  // 별점 처리
+  $('#starRating span').click(function () {
+    var value = $(this).data('value');
+    $('#ratingValue').val(value);
+
+    $('#starRating span').each(function () {
+      $(this).css('color', $(this).data('value') <= value ? 'gold' : 'gray');
+    });
+  });
+
+
+</script>
+</head>
+
+<body>
+  <div class="container" style="margin-top: 40px;">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title">리뷰 작성</h3></div>
+      <div class="panel-body">
+        <form id="reviewForm" enctype="multipart/form-data">
+
+          <input type="hidden" name="mem_idx" value="${param.mem_idx}">
+          <input type="hidden" name="shop_idx" value="${param.shop_idx}">
+          <input type="hidden" name="menu_idx" value="${param.menu_idx}">
+          <input type="hidden" name="order_idx" value="${order.order_idx}">
+          <input type="hidden" name="menu_name" value="${order.menu_name}">
+          <input type="hidden" name="delivery_idx" value="${param.delivery_idx}">
+          <input type="hidden" name="mem_nickname" value="${user.mem_nickname}">
+          <input type="hidden" name="shop_name" value="${shop.shop_name}">
+
+          <!-- 별점 -->
+          <div class="form-group">
+            <label>별점</label>
+            <div id="starRating" class="star-rating">
+              <span data-value="1">★</span>
+              <span data-value="2">★</span>
+              <span data-value="3">★</span>
+              <span data-value="4">★</span>
+              <span data-value="5">★</span>
             </div>
-            <!-- 별점 value 저장용 input -->
-            <input type="hidden" id="ratingValue" name="review_rating" value="0">
+          </div>
+          <input type="hidden" id="ratingValue" name="review_rating" value="0">
 
             <!-- 닉네임 -->
             <div class="menu-nickname">
@@ -126,35 +130,48 @@
               <input type="file" id="reviewImage" class="form-control mt-2" accept="image/*" name="photo">
             </div>
 
-            <!-- 버튼 -->
-            <div class="d-flex justify-content-end gap-2">
-              <button class="btn btn-secondary"
-                onclick="location.href='review_list.do?mem_idx=${ param.mem_idx }'">취소</button>
-              <button class="btn btn-primary" onclick="send(this.form);">등록</button>
-            </div>
+          <!-- 버튼 -->
+          <div class="form-group text-right" style="margin-top: 30px;">
+            <button type="button" class="btn btn-default" onclick="location.href='review_list.do?mem_idx=${param.mem_idx}'">취소</button>
+            <button type="button" class="btn btn-primary" onclick="send(this.form)">등록</button>
+          </div>
 
-          </form>
-        </div>
+        </form>
       </div>
+    </div>
+  </div>
 
   <script>
-    //별점 선택 함수
-  document.querySelectorAll('#starRating span').forEach(star => {
-  star.addEventListener('click', function () {
-    const value = this.dataset.value;
-    document.getElementById('ratingValue').value = value;
+    function submitForm() {
+      const formData = new FormData($("#reviewForm")[0]);
+      const mem_idx = "${param.mem_idx}";
 
-    // 선택한 별점 콘솔 확인
-    console.log('선택한 별점:', value);
+      $.ajax({
+        url: "insert_review.do",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          alert("리뷰가 성공적으로 등록되었습니다.");
+          $('#myModal').modal('hide');
 
-    // 별 색칠 효과 (선택사항)
-    document.querySelectorAll('#starRating span').forEach(s => {
-      s.style.color = s.dataset.value <= value ? 'gold' : 'gray';
-    });
-  });
-});
+        // 강제 오버레이 제거
+        setTimeout(function () {
+          $('body').removeClass('modal-open');
+          $('.modal-backdrop').remove();
+          $('#myModal').hide(); // 혹시 남아 있으면 강제로 숨김
+        }, 300);
 
+          //내 리뷰 페이지로 이동
+          loadContent("my_review.do");
+        },
+        error: function (xhr, status, error) {
+          alert("등록 오류가 발생했습니다: " + error);
+        },
+      });
+    }
   </script>
-    </body>
 
-    </html>
+</body>
+</html>
