@@ -1,5 +1,8 @@
 package com.githrd.project.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,6 +103,25 @@ public class CalculateService {
             return 3000;
         }
     }
+
+
+    //리뷰 업로드기준 시간 계산
+    public static String getTimeAgo(Date regDate) {
+    long now = System.currentTimeMillis();
+    long diffMillis = now - regDate.getTime();
+    long seconds = diffMillis / 1000;
+
+    if(diffMillis < 0) return "방금 전"; 
+    if (seconds < 60) return seconds + "초 전";
+    long minutes = seconds / 60;
+    if (minutes < 60) return minutes + "분 전";
+    long hours = minutes / 60;
+    if (hours < 24) return hours + "시간 전";
+    long days = hours / 24;
+    if (days < 7) return days + "일 전";
+    
+    return new SimpleDateFormat("yyyy-MM-dd").format(regDate);  // 오래된 건 날짜 출력
+}
 
 
 }

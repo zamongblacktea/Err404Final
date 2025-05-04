@@ -1,5 +1,9 @@
 package com.githrd.project.vo;
 
+
+
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -15,7 +19,7 @@ public class MemReviewVo {
     int delivery_idx;
     String mem_nickname;
     String review_content;
-    String review_regdate;
+    Date review_regdate;
     String review_update;
     double review_rating;
     String review_img;
@@ -24,6 +28,9 @@ public class MemReviewVo {
     String menu_name;
     String shop_name;
     String reply_content;
+
+    //시간 기준 업로드 계산
+    String timeAgo;
 
     OwnerReplyVo owner_reply;
     
