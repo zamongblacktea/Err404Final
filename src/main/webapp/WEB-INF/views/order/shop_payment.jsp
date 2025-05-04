@@ -113,8 +113,6 @@ textarea{
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
 <script>
-
-
 	IMP.init("imp23446565"); // 아임포트 가맹점 고객사 식별 코드 입력
 
 	//임시로 보낼 변수값 1 설정을 위해 앞에 Number 형변환 
@@ -131,10 +129,6 @@ textarea{
 		const mem_addr2 = $("#mem_addr2").val();
 		const order_request = $("#order_request").val();
 		const rider_request = $("#rider_request").val();
-
-
-
-
 
 
 		IMP.request_pay({
@@ -166,7 +160,7 @@ textarea{
 								mem_addr1,
 								mem_addr2,
 								order_request,
-								rider_request,
+								rider_request
 							);
 				console.log("mem_idx:", mem_idx);
 
@@ -203,7 +197,7 @@ textarea{
 				"mem_addr1" : mem_addr1,
 				"mem_addr2" : mem_addr2,
 				"order_request" : order_request,
-				"rider_request" : rider_request,
+				"rider_request" : rider_request
 
 			}),
 			dataType : "json",
@@ -234,7 +228,6 @@ textarea{
 	$(document).ready(function () {
 	  // 모달 인스턴스 초기화
 	  myModal = new bootstrap.Modal(document.getElementById('myModal'));
-
   
 	  // 주소록 열기
 	  $('#openAddrModalBtn').on('click', function () {
@@ -501,11 +494,7 @@ textarea{
 	<br>
 	<h4 style="text-align: center;">주문 내역</h4>
 	<div class="acom-img">
-
-	
-
 		<c:forEach var="cartVo" items="${cart_list}">
-			<input type="hidden" name="cart_idx" id="cart_idx" value="${cartVo.cart_idx}">
 			<br><br>
 			<div style="margin-left: 20px; border: 1px solid black; border-radius: 5px; padding-left: 15px;padding-top: 10px; padding-bottom: 10px;">
 				<span style="font-weight: bold;">메뉴 이름 :</span><span> ${cartVo.menu_name}</span><br><br>

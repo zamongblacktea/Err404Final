@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -49,6 +51,52 @@
     </style>
 
     <script>
+
+        function shop_cate_list(shop_cate_idx){
+
+           $.ajax({
+            url : "shop_cate_list.do",
+            data: {"shop_cate_idx": shop_cate_idx},
+            success:function(res_data){
+                     
+                $("#category_display").html(res_data);
+
+            },
+            error:function(err){
+              alert(err.responseText)
+            }
+
+           });
+
+
+
+        }
+
+
+
+
+        $(document).ready(function () {
+            $(".cate-btn").on("click", function () {
+                // 기존 active 제거
+                $(".cate-btn").removeClass("active");
+        
+                // 현재 클릭한 버튼만 active 추가
+                $(this).addClass("active");
+        
+                // cate_idx 값 가져오기 (임시)
+                let cate_idx = $(this).find(".cate_idx").val();
+                console.log("선택된 cate_idx:", cate_idx);
+
+                shop_cate_list(cate_idx);
+            });
+
+
+            //첫번째 화면
+            shop_cate_list(0);
+
+        });
+        
+          
         $(document).ready(function () {
         $(".cate-btn").on("click", function () {
             // 기존 active 제거
@@ -62,6 +110,7 @@
             console.log("선택된 cate_idx:", cate_idx);
         });
         });
+      
     </script>
   
   </head>

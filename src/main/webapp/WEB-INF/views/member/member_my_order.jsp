@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
 
     <style>
@@ -147,7 +148,7 @@
 
   // 페이지 로드 시 기본으로 메뉴 목록 표시
   $(document).ready(function() {
-    loadContent("modify_form.do?mem_idx=${ user.mem_idx }"); //내 주문 내역 페이지 메인되도록 설정
+    loadContent("order_list.do?mem_idx=${ user.mem_idx }"); //내 주문 내역 페이지 메인되도록 설정
   });
 
   // 사이드바 버튼 active
@@ -155,7 +156,7 @@
         const navButtons = $("#sidebar a");
 
         // 5번째 버튼 미리 active 부여 (인덱스 4)
-        if (navButtons[0]) $(navButtons[0]).addClass("active");
+        if (navButtons[1]) $(navButtons[1]).addClass("active");
 
         // sidebar a 클릭 시 active 클래스 제어
         navButtons.on("click", function () {

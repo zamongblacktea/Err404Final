@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
     <!-- 웹소캣 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
@@ -217,7 +216,7 @@
   <body>
     <!-- 상단 nav -->
     <div id="nav">
-      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" onclick="location.href='/shop/main.do'" />
+      <img src="${pageContext.request.contextPath}/images/로고.png" alt="로고" onclick="location.href='/main/main.do'" />
       <div class="user-info">
         <button class="btn" onclick="location.href='../member/logout.do'">로그아웃</button>
       </div>

@@ -123,8 +123,8 @@
                     배달상태: ${vo.delivery_status}
                 </c:if>    
                 <c:if test="${ vo.delivery_status eq '배달중'}">
-                <label>배달상태: 배달중...</label>
-            </c:if>
+                <label style="color: rgb(226, 122, 43);">배달상태: 배달중...</label>
+                </c:if>
             </div>  
     
             <input type="button" value="경로보기" onclick="location.href='../route/route.do'">

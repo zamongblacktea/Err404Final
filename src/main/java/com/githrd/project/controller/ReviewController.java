@@ -60,7 +60,7 @@ public class ReviewController {
 
 	// 회원 내 주문 내역 리스트 폼 띄우기
 	@RequestMapping("/member/order_list.do")
-	public String reviewList(@RequestParam int mem_idx, Model model) {
+	public String orderList(@RequestParam int mem_idx, Model model) {
 
 		// 주문내역 전체 리뷰 selectList
 		List<DeliveryVo> list = deliveryMapper.selectListReview(mem_idx);
@@ -69,8 +69,23 @@ public class ReviewController {
 
 		model.addAttribute("list", list);
 
-		return "/member/member_review_list";
-	}// end: member_review
+		return "/member/member_order_list";
+	}// end: member_order_list
+
+
+	// 회원 내 주문 페이지
+	@RequestMapping("/member/my_order.do")
+	public String myOrderList(@RequestParam int mem_idx, Model model) {
+
+		// 주문내역 전체 리뷰 selectList
+		List<DeliveryVo> list = deliveryMapper.selectListReview(mem_idx);
+
+
+
+		model.addAttribute("list", list);
+
+		return "/member/member_my_order";
+	}// end: my_order
 
 	// 회원 리뷰 작성 폼 띄우기
 	@RequestMapping("/member/review_form.do")
