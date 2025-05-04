@@ -132,6 +132,7 @@
           ${ vo.menu_list } <br />
           결제 : ${ vo.pay_type } <br />
           고객 주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
+          전화번호 : ${ vo.mem_phone } <br />
           주문요청사항: ${ vo.order_request } <br />
           배달요청사항: ${ vo.rider_request }<br />
           주문 상태: ${ vo.order_status }<br />

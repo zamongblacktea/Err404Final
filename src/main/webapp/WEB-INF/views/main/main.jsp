@@ -41,6 +41,7 @@
       <div class="content">
         <div id="mybox">
           <div class="category" onclick="location.href='../main/list.do'">
+            <span style="z-index: 2;">전체보기</span>
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/전체보기.png" alt="카테고리-전체보기">
           </div>
           <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=1'">
@@ -65,7 +66,6 @@
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/야식.png" alt="카테고리-야식">
           </div>
           <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=8'">
-            <div class="category" >
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/떡볶이.png" alt="카테고리-분식">
           </div>
           <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=9'">

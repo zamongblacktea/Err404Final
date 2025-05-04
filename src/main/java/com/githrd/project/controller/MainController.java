@@ -73,12 +73,17 @@ public class MainController {
     @GetMapping("/list.do")
     public String shop_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,Model model) {
 
-        List<ShopInfoVo> list = shopService.selectListAll();
+        // List<ShopInfoVo> list = null;
+        List<CategoryVo> cate_list = categoryMapper.selectCategoryList();
+        // if(shop_cate_idx==0){
+        //      list = shopService.selectListAll();
+        // }else{
+        //     list = shopService.selectListFromCate(shop_cate_idx);
+        // }
 
-        List<ShopInfoVo> cate_list = shopService.selectCate();
-
-        model.addAttribute("shop_list", list);
+        // model.addAttribute("shop_list", list);
         model.addAttribute("cate_list", cate_list);
+
         // System.out.println(list);
 
         return "main/shop_list";
@@ -110,7 +115,7 @@ public class MainController {
 
         int shop_dfee = shopService.selectShopDfee(shop_idx);
 
-        List<ShopInfoVo> cate_list = shopService.selectCate();
+        List<ShopInfoVo> cate_list = shopService.selectListFromCate(shop.getCate_idx());
 
         // List<MemReviewVo> rate_list = memReviewMapper.selectShopRating(shop_idx);
 
