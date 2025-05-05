@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
 
     <!-- 웹소캣 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
@@ -47,14 +48,18 @@
 
       /* 사이드바 */
       #sidebar {
-        width: 220px;
+        width: 420px;
+        min-width: 280px;
         background-color: white;
         border-right: 1px solid #ddd;
         padding: 20px;
-        font-size: 18px;
+        font-size: 25px;
         /* min-height: 92.2vh; */
         min-height: calc(100vh - 60px);
         height: auto;
+
+        padding-left: 50px;
+        padding-right: 50px;
       }
 
       #sidebar .menu-group {
@@ -73,6 +78,7 @@
         padding: 8px 12px;
         border-radius: 8px;
         transition: background-color 0.2s;
+        text-align: left;
       }
 
       #sidebar a:hover {
@@ -91,7 +97,7 @@
         /* border: 1px solid red; */
         width: 1320px;
         margin: 30px auto;
-        padding-left: 50px;
+        /* padding-left: 50px; */
       }
     </style>
     <!-- 챗봇 AI -->

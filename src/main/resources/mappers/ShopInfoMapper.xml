@@ -28,6 +28,15 @@
 	<!-- 카테고리 조회 -->
 	<select id="selectCate" resultType="ShopInfoVo"> select * from shop_category </select>
 
+	<!-- 가게 검색 -->
+	<select id="searchShopList" resultType="shopInfoVo">
+		SELECT DISTINCT s.*
+		FROM shop_info s
+		JOIN menu_info m ON s.shop_idx = m.shop_idx
+		WHERE (s.shop_name LIKE CONCAT('%', #{keyword}, '%')
+			   OR m.menu_name LIKE CONCAT('%', #{keyword}, '%'))
+	  </select>
+
 	<!-- 가게추가 -->
 	<insert id="shopInsert" parameterType="ShopInfoVo" useGeneratedKeys="true"
 		keyProperty="shop_idx"> insert into shop_info values( null, #{ owner_idx }, #{ shop_cate_idx
