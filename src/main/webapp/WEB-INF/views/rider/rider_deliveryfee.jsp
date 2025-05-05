@@ -87,18 +87,23 @@
         display: flex;
         justify-content: center;
       }
-      
+      .delivery-content{
+        margin-left: 20px;
+
+      }
     </style>
 </head>
 <body>
     <div class="header">
-        <h2>배달 완료 목록</h2>
 
+        <h2 style="margin-top: 30px; font-size: x-large; color: #0b6019;" >배달 완료 목록</h2>
+        
         <form action="deliveryfeefilter.do" method="get" class="form-inline">
           <input type="hidden" name="rider_idx" value="${param.rider_idx}" />
-  
+         
           <!-- html5에서 지원하는 달력 태그 형식 -->
           <div class="form-group">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label for="startDate">시작 날짜:</label>
             <input
               type="date"
@@ -107,9 +112,9 @@
               value="${param.startDate}"
               class="form-control"
             />
-          </div>
+          
   
-          <div class="form-group">
+          
             <label for="endDate">종료 날짜:</label>
             <input
               type="date"
@@ -118,21 +123,26 @@
               value="${param.endDate}"
               class="form-control"
             />
-          </div>
+          &nbsp;&nbsp;
   
-          <button type="submit" class="button_style">필터 적용</button>
+          <button type="submit" class="button_style" style="background-color: #ed796e !important;">  필터 적용</button>
+        </div>
           <input
+          style="margin-right: 50px;"
             type="button"
             class="button_style"
             id="btn_popup_update"
             value="마이페이지"
             onclick="location.href ='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'"
           />
+        
         </form>
 
-    </div>
-
-    <table id="delivery-table" class="table table-striped">
+    </div> <!--div header-->
+    <div class="content">
+    
+      <div id="delivery-content" style="margin-left: 50px !important; margin-right: 50px !important;">
+      <table id="delivery-table" class="table table-striped">
         <thead>
           <tr>
             <th>가게 이름</th>
@@ -144,7 +154,7 @@
           </tr>
         </thead>
         <tbody>
-          
+        
 
           <c:forEach var="vo" items="${riderdelivery_list}">
               <tr>
@@ -158,7 +168,7 @@
           </c:forEach>
 
           <tr>
-            <td colspan="6" style="text-align: right;">
+            <td colspan="6" style="text-align: right; color: #00126d; font-weight: bold; font-size: large;">
                 <c:if test="${ empty param.startDate }">
                    전체 배달내역                   
                 </c:if>
@@ -170,8 +180,8 @@
           </tr>
         </tbody>
       </table>
-      
- 
+    </div> <!--div deliver-content-->
+  </div> <!--content-->
     
 </body>
 </html>

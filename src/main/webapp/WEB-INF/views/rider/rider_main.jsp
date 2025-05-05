@@ -78,6 +78,7 @@ pageEncoding="UTF-8"%>
   .nav {
    text-align: right;
    padding-right: 3%;
+  
   }
 
   .nav input[type="button"] {
@@ -96,6 +97,24 @@ pageEncoding="UTF-8"%>
     font-size: large;
     padding-right: 3%;
   }      
+
+  .btn1{
+   
+    /* background-color: #ff694a; */
+    background-color: #d86fbb;
+    color: white;
+    border: 1px solid white;
+
+}
+
+.btn2{
+   
+   /* background-color: #ff694a; */
+   background-color: #e18747;
+   color: white;
+   border: 1px solid white;
+
+}
 
  
 </style>
@@ -276,8 +295,8 @@ pageEncoding="UTF-8"%>
       ${sessionScope.user.rider_name}님 환영합니다.
         <input type="hidden" value="${user.rider_idx}" name="rider_idx" id="rider_idx">
         <!-- <input type="button" value="로그아웃" onclick="location.href='../main/main.do'"/> -->
-        <input type="button" value="로그아웃" onclick="location.href='../member/logout.do'"/>
-        <input type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
+        <input class="btn1" type="button" value="로그아웃" onclick="location.href='../member/logout.do'"/>
+        <input class="btn2" type="button" value="마이페이지" onclick="location.href='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'" />
       </div> 
       <!--div nav-->
   
