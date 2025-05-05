@@ -31,4 +31,6 @@ public interface MemberAddrMapper {
 
     public MemberAddrVo selectAddr(int mem_idx);
 
+    public int modifyUpdate(MemberAddrVo addr);
+
 }

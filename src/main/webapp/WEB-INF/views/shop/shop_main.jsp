@@ -249,7 +249,7 @@
             </c:if>
           </a>
 
-          <a onclick="loadContent('../order/order_list_complete.do')">완료 주문 내역</a>
+          <a onclick="loadContent('../order/order_list_complete.do')">정산 내역</a>
         </div>
         <div class="menu-group">
           <div class="menu-title">리뷰관리</div>
