@@ -19,74 +19,10 @@
     <!-- 다음 주소검색 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-  <style>
-    :root {
-      
-	  --primary-color: #ff694a;
-	  /* --primary-color: #4EA685; */
-      --white: #ffffff;
-      --gray: #efefef;
-      --gray-2: #757575;
-    }
+    <!-- css -->
+    <link rel="stylesheet" href="/css/myPage.css">
 
 
-	.form-wrapper {
-		max-width: 500px;
-		width: 100%;
-		margin: 0 auto;  /* 중앙 정렬 핵심 */
-		background-color: #fff;
-		padding: 2rem;
-		border-radius: 1.5rem;
-		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
-		}
-
-    .input-group {
-      position: relative;
-      width: 100%;
-    }
-
-    .input-group i {
-      position: absolute;
-      top: 50%;
-      left: 1rem;
-      transform: translateY(-50%);
-      font-size: 1.4rem;
-      color: var(--gray-2);
-    }
-
-    .input-group input {
-      width: 70%;
-      margin-top: 20px;
-      padding: 1rem 3rem;
-      background-color: var(--gray);
-      border-radius: .5rem;
-      border: 0.125rem solid var(--white);
-      outline: none;
-    }
-
-    .input-group input:focus {
-      border: 0.125rem solid var(--primary-color);
-    }
-
-    button {
-      cursor: pointer;
-      width: 100%;
-      padding: .8rem 0;
-      border-radius: .5rem;
-      border: none;
-      background-color: var(--primary-color);
-      color: var(--white);
-      font-size: 1.1rem;
-      outline: none;
-    }
-
-
-    .pointer {
-      cursor: pointer;
-      font-weight: bold;
-      color: var(--primary-color);
-    }
-  </style>
   <script type="text/javascript">
 
     const regular_email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -187,51 +123,53 @@
           <input type="hidden" name="mem_idx" value="${vo.mem_idx}">
       
           <!-- 이름 -->
+
           <div class="input-group">
-            <i class='bx bxs-user' style="margin-top: 1px;"></i>
-        	<input type="text" style="margin: auto;" name="mem_name" value="${vo.mem_name}" readonly placeholder="이름" />
+            <i class='bx bxs-user' style="margin-top: 16px;"></i>
+        	<input type="text" style="margin: auto; width: 35%; margin-top: 30px;" name="mem_name" value="${vo.mem_name}" readonly placeholder="이름" />
           </div>
           <!-- 아이디 -->
           <div class="input-group">
             <i class='bx bx-id-card' style="margin-top: 10px;"></i>
-            <input type="text" name="mem_id" value="${vo.mem_id}" readonly placeholder="아이디" />
+            <input type="text" name="mem_id" value="${vo.mem_id}" readonly placeholder="아이디" style="width: 35%;"/>
           </div>
       
           <!-- 닉네임 -->
           <div class="input-group">
             <i class='bx bx-user' style="margin-top: 10px;"></i>
-            <input type="text" name="mem_nickname" value="${vo.mem_nickname}" placeholder="닉네임" required />
+            <input type="text" name="mem_nickname" value="${vo.mem_nickname}" placeholder="닉네임" required style="width: 35%;"/>
           </div>
       
           <!-- 전화번호 -->
           <div class="input-group">
             <i class='bx bx-phone' style="margin-top: 10px;"></i>
-            <input type="text" name="mem_phone" value="${vo.mem_phone}" placeholder="휴대전화 번호 입력" required />
+            <input type="text" name="mem_phone" value="${vo.mem_phone}" placeholder="휴대전화 번호 입력" required style="width: 35%;" />
+          </div>
+
+          <!-- 연동 SNS -->
+          <div class="input-group">
+            <i class='bx bx-link' style="margin-top: 10px;"></i>
+            <input type="text" name="mem_type" value="${vo.mem_type}" readonly placeholder="연동 SNS" style="width: 25%;" />
           </div>
       
           <!-- 우편번호 -->
           <div class="input-group">
             <i class='bx bx-map' style="margin-top: 10px;"></i>
-            <input type="text" name="mem_zipcode" id="mem_zipcode" value="${vo.mem_zipcode}" placeholder="우편번호" required style="display: inline-block;">
-            <button type="button" class="btn btn-sm btn-info" onclick="find_curaddr();" style="width: 20%;margin-top: 23px; float: right;">주소검색</button>
+            <input type="text" name="mem_zipcode" id="mem_zipcode" value="${vo.mem_zipcode}" placeholder="우편번호" required style="display: inline-block; width: 23%;">
           </div>
-      
           <!-- 주소 -->
           <div class="input-group">
             <i class='bx bx-home' style="margin-top: 10px;"></i>
             <input type="text" name="mem_addr" id="mem_addr" value="${vo.mem_addr}" placeholder="주소" required />
           </div>
-      
-          <!-- 연동 SNS -->
-          <div class="input-group">
-            <i class='bx bx-link' style="margin-top: 10px;"></i>
-            <input type="text" name="mem_type" value="${vo.mem_type}" readonly placeholder="연동 SNS" />
+          <div>
+            <button type="button" class="btn btn-sm btn-info" onclick="find_curaddr();" style="width: 20%; margin-top: 15px; margin-left: 260px;">주소검색</button>
           </div>
       
           <!-- 버튼 -->
           <div class="input-group" style="display: flex; ">
             <!-- <button type="button" class="btn btn-secondary" onclick="location.href='../main/main.do'" style="width: 20%; margin-right: 50px; margin-top: 20px;">목록보기</button> -->
-            <button type="button" class="btn btn-primary" onclick="send(this.form);" style="width: 20%; margin: auto; margin-top: 40px;">수정하기</button>
+            <button type="button" class="btn btn-primary" onclick="send(this.form);" style="width: 20%; margin: auto; margin-top: 30px;">수정하기</button>
           </div>
           <div style="clear: both;"></div>
         </form>
