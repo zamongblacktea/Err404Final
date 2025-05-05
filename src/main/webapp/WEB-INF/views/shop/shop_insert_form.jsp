@@ -4,21 +4,34 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <title>가게 정보 입력</title>
 
     <!-- bootstrap 사용설정 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+
     <!-- 다음 주소검색 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <style type="text/css">
       #box {
+        
         width: 800px;
         margin: auto;
         margin-top: 80px;
+      }
+      .container{
+        /* border: 1px solid black; */
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        width: 700px;
+      }
+
+      h4{
+        margin-left: 60px;
       }
 
       th {
@@ -191,9 +204,9 @@
         <form method="post" class="form-inline" enctype="multipart/form-data">
           <input type="hidden" name="owner_idx" value="${user.owner_idx}" />
           <div id="box">
-            <div class="panel panel-primary">
-              <div class="panel-heading"><h4>가게정보입력</h4></div>
-              <div class="panel-body">
+            
+              <!-- <h4>가게정보입력</h4> -->
+              <div class="container">
                 <table class="table">
                   <!-- 이름 -->
                   <tr>
@@ -341,7 +354,6 @@
                   </tr>
                 </table>
               </div>
-            </div>
           </div>
         </form>
       </c:if>
