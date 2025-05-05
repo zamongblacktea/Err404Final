@@ -72,4 +72,7 @@ public interface ShopService {
         
         // 가게 카테고리 조회
         List<ShopInfoVo> selectCate();
+
+        // 가게 검색
+        List<ShopInfoVo> searchShopList(String keyword);
 }

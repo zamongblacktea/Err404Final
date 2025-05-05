@@ -14,6 +14,23 @@ pageEncoding="UTF-8"%>
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
 
+    <script>
+    function find(){
+    let keyword = document.getElementById("search").value;
+    $.ajax({
+      url   : "../main/search_list.do",
+      data  : {"search": keyword},
+      success :   function(res_data){     
+                  $("#category_display").html(res_data);
+
+      },
+        error   :   function(err){
+        alert(err.responseText)
+      }
+    });
+  }
+    </script>
+
 
   </head>
   <body>
@@ -22,8 +39,8 @@ pageEncoding="UTF-8"%>
     </div>
     <div class="header">
       <form id="search_form" action="">
-          <input type="text" id="search" class="form-control">
-          <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
+          <input type="text" id="search" class="form-control" value="${param.search}" placeholder="메뉴를 검색해주세요.">
+          <input type="button" class="btn btn-outline-success btn_search" value="검색" onclick="find();">
       </form>
   </div>
     <div class="category">
@@ -33,7 +50,12 @@ pageEncoding="UTF-8"%>
 
       <div class="list">
            
-         <div id="category_display"></div>
+         <div id="category_display">
+          <c:if test="${empty shop_list}">
+            <p>검색 결과가 없습니다.</p>
+          </c:if>
+          <%@ include file="category_list.jsp" %>
+         </div>
         
       </div>
       </div>

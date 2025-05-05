@@ -19,7 +19,6 @@ import com.githrd.project.service.CartService;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.CartVo;
 import com.githrd.project.vo.CategoryVo;
-import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.ShopInfoVo;
 import com.githrd.project.vo.ShopMenuVo;
@@ -71,7 +70,7 @@ public class MainController {
     //main/list.do
     //main/list.do?shop_cate_idx=1
     @GetMapping("/list.do")
-    public String shop_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,Model model) {
+    public String shop_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,@RequestParam(name="search", required = false) String keyword,Model model) {
 
         // List<ShopInfoVo> list = null;
         List<CategoryVo> cate_list = categoryMapper.selectCategoryList();
@@ -82,6 +81,17 @@ public class MainController {
         // }
 
         // model.addAttribute("shop_list", list);
+
+        List<ShopInfoVo> list;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            list = shopService.searchShopList(keyword);  // <-- 검색 서비스
+        } else if (shop_cate_idx == 0) {
+            list = shopService.selectListAll(); // 전체 조회
+        } else {
+            list = shopService.selectListFromCate(shop_cate_idx); // 카테고리 필터
+        }
+        model.addAttribute("shop_list", list);
         model.addAttribute("cate_list", cate_list);
 
         // System.out.println(list);
@@ -101,6 +111,17 @@ public class MainController {
         model.addAttribute("shop_list", list);
 
         // System.out.println(list);
+
+        return "main/category_list";
+    }
+
+    // 검색 바
+    @GetMapping("/search_list.do")
+    public String search_list(@RequestParam(name="search", required = false) String keyword,Model model){
+
+        List<ShopInfoVo> list = shopService.searchShopList(keyword);
+
+        model.addAttribute("shop_list", list);
 
         return "main/category_list";
     }

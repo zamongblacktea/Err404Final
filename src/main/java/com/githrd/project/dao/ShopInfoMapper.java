@@ -55,5 +55,7 @@ public interface ShopInfoMapper {
     // 카테고리 조회
     List<ShopInfoVo> selectCate();
 
-   
+    // 가게 리스트 검색
+    List<ShopInfoVo> searchShopList(String keyword);
+
 }
