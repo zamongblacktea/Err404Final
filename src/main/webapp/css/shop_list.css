@@ -74,6 +74,9 @@ body {
 #shop_logo {
   width: 90px;
   height: 90px;
+  object-fit: cover;
+  background-color: #f0f0f0; /* 이미지 없을 때 백업용 배경 */
+  display: inline-block;
   flex-shrink: 0;
   flex: 1;
 }

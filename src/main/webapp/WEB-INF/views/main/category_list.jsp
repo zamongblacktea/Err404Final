@@ -8,13 +8,14 @@ pageEncoding="UTF-8"%>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
   </head>
   <body>
         <c:forEach var="vo" items="${shop_list}">
           <div class="container" onclick="location.href='../main/detail.do?shop_idx=${vo.shop_idx}'">
             <div class="shop-list">
               <div id="shop_logo">
-                <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고">
+                <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}">
               </div>
               <div id="shop_content">
                 <div class="shop_info">${vo.shop_name}</div>
@@ -29,3 +30,4 @@ pageEncoding="UTF-8"%>
 
   </body>
 </html>
+
