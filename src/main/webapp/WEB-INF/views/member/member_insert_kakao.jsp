@@ -97,110 +97,109 @@
       }
     </style>
 
-    <script>
-      const regular_email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+<script>
+  const regular_email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
-      function send(f) {
+  function send(f) {
 
-        //입력값 체크
-        let mem_name = f.mem_name.value.trim();
-        let mem_nickname = f.mem_nickname.value.trim();
-        let mem_phone = f.mem_phone.value.trim();
-        let mem_addr1 = f.mem_zipcode.value;
-        let mem_addr2  = f.mem_addr.value;
-
-
-
-
-        if (mem_name == "") {
-
-          alert("이름을 입력하세요!");
-          f.mem_name.value = "";
-          f.mem_name.focus();
-          return;
-        }
-
-
-        if (mem_nickname == "") {
-
-          alert("닉네임을 입력하세요!");
-          f.mem_nickname.value = "";
-          f.mem_nickname.focus();
-          return;
-        }
-
-        if (mem_zipcode == "") {
-
-          alert("우편번호 입력하세요!");
-          f.mem_zipcode.value = "";
-          f.mem_zipcode.focus();
-          return;
-        }
-
-        if (mem_addr == "") {
-
-          alert("주소를 입력하세요!");
-          f.mem_addr.value = "";
-          f.mem_addr.focus();
-          return;
-        }
-
-        if (mem_phone == "") {
-
-        alert("전화번호를 입력하세요!");
-        f.mem_phone.value = "";
-        f.mem_phone.focus();
-        return;
-        }
+    //입력값 체크
+    let mem_name = f.mem_name.value.trim();
+    let mem_nickname = f.mem_nickname.value.trim();
+    let mem_phone = f.mem_phone.value.trim();
+    //member DB
+    let mem_zipcode = f.mem_addr.value.trim();
+    let mem_addr = f.mem_addr2.value;
+    //mem_addr  DB
+    let mem_addr1 = f.mem_addr.value;
+    let mem_addr2  = f.mem_addr2.value;
 
 
 
-        f.action = "insert.do"// MemberInsertAction
-        f.submit();
 
-      }//end:send()
+    if (mem_name == "") {
 
-      //주소검색
-      function find_curaddr() {
-
-        /* new daum.Postcode({
-           oncomplete: function(data) {
-             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-             // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-             //data : JOSN형식
-             //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
-             //console.log(data);
-             $("#mem_zipcode").val(data.zonecode);
-             $("#mem_addr").val(data.address);
-          
-           }
-         }).open(); */
+      alert("이름을 입력하세요!");
+      f.mem_name.value = "";
+      f.mem_name.focus();
+      return;
+    }
 
 
-        const width = 500; //팝업의 너비
-        const height = 600; //팝업의 높이
-        new daum.Postcode({
-          width: width, //생성자에 크기 값을 명시적으로 지정해야 합니다.
-          height: height,
-          oncomplete: function (data) {
-            //data : JOSN형식
-            //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
-            //console.log(data);
-            $("#mem_zipcode").val(data.zonecode);
-            $("#mem_addr").val(data.address);
+    if (mem_nickname == "") {
 
-          }
-        }).open({
-          left: (window.screen.width / 2) - (width / 2),
-          top: (window.screen.height / 2) - (height / 2)
-        });
+      alert("닉네임을 입력하세요!");
+      f.mem_nickname.value = "";
+      f.mem_nickname.focus();
+      return;
+    }
 
+    if (mem_zipcode == "") {
+
+      alert("우편번호 입력하세요!");
+      f.mem_zipcode.value = "";
+      f.mem_zipcode.focus();
+      return;
+    }
+
+    if (mem_addr == "") {
+
+      alert("주소를 입력하세요!");
+      f.mem_addr.value = "";
+      f.mem_addr.focus();
+      return;
+    }
+
+    if (mem_addr2 == "") {
+
+    alert("주소를 입력하세요!");
+    f.mem_addr2.value = "";
+    f.mem_addr2.focus();
+    return;
+    }
+
+    if (mem_phone == "") {
+
+    alert("전화번호를 입력하세요!");
+    f.mem_phone.value = "";
+    f.mem_phone.focus();
+    return;
+    }
+
+
+    f.action = "insert.do"// MemberInsertAction
+    f.submit();
+
+  }//end:send()
+
+  //주소검색
+  function find_curaddr() {
+
+
+
+    const width = 500; //팝업의 너비
+    const height = 600; //팝업의 높이
+    new daum.Postcode({
+      width: width, //생성자에 크기 값을 명시적으로 지정해야 합니다.
+      height: height,
+      oncomplete: function (data) {
+        //data : JOSN형식
+        //  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
+        //console.log(data);
+        $("#mem_zipcode").val(data.zonecode);
+        $("#mem_addr").val(data.address);
 
       }
+    }).open({
+      left: (window.screen.width / 2) - (width / 2),
+      top: (window.screen.height / 2) - (height / 2)
+    });
+
+
+  }
 
 
 
-    </script>
+</script>
   </head>
 
   <body>
@@ -237,7 +236,7 @@
           <tr>
             <th>우편번호</th>
             <td>
-              <input class="form-control" required="required" id="mem_zipcode" name="mem_zipcode" style="width: 30%;">
+              <input class="form-control" required="required" style="width: 30%;" >
               <input class="btn btn-info" type="button" value="주소검색" onclick="find_curaddr();">
             </td>
           </tr>
@@ -246,6 +245,13 @@
           <tr>
             <th>주소</th>
             <td><input class="form-control" required="required" name="mem_addr" id="mem_addr"
+                style="width: 100%;">
+            </td>
+          </tr>
+
+          <tr>
+            <th>상세 주소</th>
+            <td><input class="form-control" required="required" name="mem_addr2" id="mem_addr2"
                 style="width: 100%;">
             </td>
           </tr>

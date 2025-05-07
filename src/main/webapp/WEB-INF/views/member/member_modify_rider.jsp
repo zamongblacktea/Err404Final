@@ -107,8 +107,10 @@
 		<!-- 버튼 -->
 		<tr>
 			<td colspan="2" align="center">
-				<input id="btn" type="button" value="수정하기" style="width: 20%;" onclick="send(this.form);">
-				<input id="delBtn" class="btn btn-danger" type="button" value="탈퇴하기" style="width: 20%;" onclick="location.href='delete_owner.do?rider_idx=${user.rider_idx}';">
+				<input id="main" class="btn btn-success" type="button" value="메인으로" onclick="location.href='../rider/main.do'">				
+				<input id="accounts" class="btn btn-warning" type="button" value="정산내역" onclick="location.href='../rider/deliveryfee.do?rider_idx=${user.rider_idx}'">
+				<input id="btn" type="button" value="수정하기" onclick="send(this.form);">
+				<input id="delBtn" class="btn btn-danger" type="button" value="탈퇴하기" onclick="location.href='delete_owner.do?rider_idx=${user.rider_idx}';">
 			</td>
 		</tr>
       </div>

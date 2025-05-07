@@ -18,12 +18,13 @@
 
 <style type="text/css">
   #box{
-     float: right;
-     width: 1200px;
-     margin: auto;
+     width: 1400px;
+     margin: auto ;
      margin-top: 50px;
-     margin-right: 40px;
+     margin-right: 140px;
+     text-align: center;
   }
+  
   
   #title{
      text-align: center;
@@ -33,10 +34,16 @@
      
      text-shadow: 1px 1px 2px black;
   }
+
+  th{
+          text-align: center;
+        }
+
   
   td{
     vertical-align: middle !important;
   }
+
   
   .bar{
       float: left;
@@ -95,24 +102,31 @@
   
   <!-- 로그인/회원가입  -->
   
-  <div class="row"  style="margin-top: 30px; margin-bottom: 5px;">
-    <div class="col-sm-3 col-md-3" >
+  <div class="row"  style="margin-top: 50px; margin-bottom: 20px;">
+    <div class="col-sm-4 col-md-4" >
 			<!-- 검색메뉴 -->
-
-                <form class="form-inline"> 
-                    <select id="search" class="form-control">
-                       <option value="all">전체</option>
-                       <option value="owner">사장님</option>
-                       <option value="rider">라이더</option>
-                    </select>
-                    
-                    <input class="form-control" id="search_text"  value="${ param.search_text }">
-                    <input class="btn btn-primary" type="button"  value="검색"
-                           onclick="find();">
-                </form>
+          
+         <form class="form-inline">
+            <div class="form-group">
+              <select id="search" class="form-control">
+                <option value="all">전체</option>
+                <option value="owner">사장님</option>
+                <option value="rider">라이더</option>
+              </select>
+            </div>
+          
+            <div class="form-group" style="margin-left: 10px;">
+              <input class="form-control" id="search_text" value="${param.search_text}">
+            </div>
+          
+            <div class="form-group" style="margin-left: 10px;">
+              <input class="btn btn-primary" type="button" value="검색" onclick="find();">
+            </div>
+          </form>
+          
         
     </div>
-    <div class="col-sm-9 col-md-9" style="text-align: right">
+    <div class="col-sm-8 col-md-8" style="text-align: right">
      
 	  
 	  <!-- 로그인이 되어있을 경우(session에 user가 있냐?) -->
@@ -174,9 +188,7 @@
 	           <td>
 	               <input class="btn btn-success" type="button"  value="승인"
 	                      onclick="location.href='owner_approval.do?owner_idx=${ vo.owner_idx }'" >
-	                      
-	               <input class="btn btn-danger"  type="button"  value="거부"
-	                      onclick="del('${ vo.owner_idx }');">
+	                  
 	           </td>
            </c:if>
            

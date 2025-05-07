@@ -201,14 +201,16 @@ public class MemberController {
 		// 1.회원가입자의 IP구하기
 		String mem_ip = request.getRemoteAddr();
 		vo.setMem_ip(mem_ip);
-
+		String mem_zipcode = vo.getMem_addr();
+		vo.setMem_zipcode(mem_zipcode);
+		String mem_addr = vo.getMem_addr2();
+		vo.setMem_addr(mem_addr);
+		
 		// 2.회원 DB insert
 		int res = memberMapper.insert(vo);
 
 		//3.회원 현재주소 DB insert
 		int mem_idx = vo.getMem_idx();
-		String mem_addr1 = vo.getMem_zipcode();
-		String mem_addr2 = vo.getMem_addr();
 		double mem_longitude = vo.getMem_longitude();
 		double mem_latitude = vo.getMem_latitude();
 		String addr_name = vo.getAddr_name();
@@ -217,8 +219,8 @@ public class MemberController {
 		MemberAddrVo addr = new MemberAddrVo();
 
 		addr.setMem_idx(mem_idx);
-		addr.setMem_addr1(mem_addr1);
-		addr.setMem_addr2(mem_addr2);
+		addr.setMem_addr1(mem_zipcode);
+		addr.setMem_addr2(mem_addr);
 		addr.setMem_longitude(mem_longitude);
 		addr.setMem_latitude(mem_latitude);
 		addr.setAddr_name(addr_name);
