@@ -136,12 +136,12 @@ body {
     cursor: pointer;
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
-    box-shadow: 0 15px 30px rgba(233, 30, 99, 0.36);
+    /* box-shadow: 0 15px 30px rgba(233, 30, 99, 0.36); */
     transition: 0.2s linear;
   }
   
   form .signin__btn:hover {
-    box-shadow: 0 0 0 rgba(233, 30, 99, 0);
+    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
   }
   
   .separator {
@@ -197,33 +197,37 @@ body {
   .google__btn {
     background: #5b90f0;
     color: white;
-    box-shadow: 0 15px 30px rgba(91, 144, 240, 0.36);
+    /* box-shadow: 0 15px 30px rgba(91, 144, 240, 0.36); */
     transition: 0.2s linear;
   }
   
   .google__btn:hover {
-    box-shadow: 0 0 0 rgba(91, 144, 240, 0);
+    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
   }
   
   .kakao__btn {
     background: #FEE500;
     color: white;
-    box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36);
+    /* box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36); */
     transition: 0.2s linear;
   }
   
   .rider__btn {
     background: #708090;
     color: white;
-    box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36);
+    /* box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36); */
     transition: 0.2s linear;
+  }
+
+  .rider__btn:hover {
+    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
   }
   
   
   .naver__btn{
     background: #03C75A;
     color: white;
-    box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36);
+    /* box-shadow: 0 15px 30px rgba(37, 40, 45, 0.36); */
     transition: 0.2s linear;
     align-content: center;
     clear: both;
@@ -241,11 +245,11 @@ body {
   
   
   .naver__btn:hover {
-    box-shadow: 0 0 0 rgba(37, 40, 45, 0);
+    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
   }
   
   .kakao__btn:hover {
-    box-shadow: 0 0 0 rgba(37, 40, 45, 0);
+    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
   }
   
   .google__btn .fa,

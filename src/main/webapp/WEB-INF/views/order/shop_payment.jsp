@@ -389,8 +389,8 @@ textarea{
 				//data : JOSN형식
 				//  data = { "zonecode":"06789", "address":"서울시 관악구 남부순환로 111", .... }
 				//console.log(data);
-				$("#mem_zipcode").val(data.zonecode);
-				$("#mem_addr").val(data.address);
+				//$("#mem_zipcode").val(data.zonecode);
+				$("#mem_zipcode").val(data.address);
 
 			}
 		}).open({

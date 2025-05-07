@@ -37,7 +37,7 @@
     
                   <!-- 우편번호 -->
                   <tr>
-                    <th>우편번호</th>
+                    <th>주소</th>
                     <td>
                       <input class="form-control" required="required" id="mem_zipcode" name="mem_zipcode" style="width: 90%;">
                       <input class="btn btn-info" type="button" value="주소검색" onclick="find_curaddr();">
@@ -46,7 +46,7 @@
     
                   <!-- 주소 -->
                   <tr>
-                    <th>주소</th>
+                    <th>상세주소</th>
                     <td><input class="form-control" required="required" name="mem_addr" id="mem_addr" style="width: 90%;"></td>
                   </tr>
                       
