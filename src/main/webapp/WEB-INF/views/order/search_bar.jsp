@@ -15,9 +15,9 @@
 
 	.search-container {
 		display: flex;
-		width: 400px;
+		width: 600px;
 		float: right;
-		margin-right: 50px;
+		padding-left: 50px;
 		margin-bottom: 20px;
 		background: white;
 		border-radius: 20px;
@@ -40,7 +40,7 @@
 	}
 	
 	
-	.search-box {
+	/* .search-box {
 		width: 200px;
 		display: flex;
 		background: #f6f4f2;
@@ -52,7 +52,7 @@
 		font-size: 20px;
 	
 	
-	}
+	} */
 	
 	.search-box input, .date-box input, .people-box input {
 		border: none;
@@ -69,10 +69,10 @@
 		text-align: center;
 		color: white;
 		border: none;
-		width: 120px;
+		width: 80px;
 		padding: 12px 20px;
 		border-radius: 25px;
-		font-size: 15px;
+		font-size: 18px;
 		cursor: pointer;
 		transition: background 0.3s ease;
 	}

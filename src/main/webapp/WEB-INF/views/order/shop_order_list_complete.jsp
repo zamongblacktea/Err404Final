@@ -27,7 +27,8 @@
 table {
   border-collapse: separate;
   border-spacing: 0;
-  width: 100%;
+  width: 90% !important;
+  margin: auto;
 }
 
 th,td {
@@ -85,7 +86,7 @@ tr:last-child td:last-child {
 
         <hr style="margin-top: 30px; margin-bottom: 30px;">
 
-      <div class="button-box" style="float: left;">
+      <div class="button-box" style="float: left; margin-left: 70px;">
         <input type="button" class="btn btn-success active" id="oneDay" value="일간" onclick="selectSales('oneDay','${shop_idx}');">
         <input type="button" class="btn btn-success"  id="weekly" value="주간(최근 7일)" onclick="selectSales('weekly','${shop_idx}');">
         <input type="button" class="btn btn-success"  id="monthly" value="월간" onclick="selectSales('monthly','${shop_idx}');">

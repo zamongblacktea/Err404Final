@@ -73,7 +73,7 @@
 		<th>아이디</th>
 		<td>
 			<input class="form-control" name="owner_id" value="${ vo.owner_id }"
-				style="width: 30%;" readonly="readonly">
+				style="width: 30%; padding-right: 80px !important;" readonly="readonly">
 		</td>
 	</tr>
 
@@ -81,7 +81,7 @@
 		<th>비밀번호</th>
 		<td>
 			<input class="form-control" type="password" name="owner_pwd"
-				value="${ vo.owner_pwd }" style="width: 30%;">
+				value="${ vo.owner_pwd }" style="width: 30%; padding-left: 20px; text-align: left;">
 		</td>
 	</tr>
 

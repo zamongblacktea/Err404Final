@@ -128,8 +128,8 @@
           <!-- <c:forEach var="cart" items="${cart}">
           ${cart.menu_name}
           </c:forEach> -->
-          메뉴 : <br /> 
-          <span style="margin-left: 55px;"><b>${ vo.menu_list }</b></span> <br />
+          메뉴 <br /> 
+          <div style="margin-left: 55px;"><b>${ vo.menu_list }</b></div> <br />
           결제 : <b>${ vo.pay_type }</b> <br />
           전화번호 : <b>${ vo.mem_phone }</b> <br />
           
