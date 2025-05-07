@@ -106,8 +106,12 @@
         let mem_name = f.mem_name.value.trim();
         let mem_nickname = f.mem_nickname.value.trim();
         let mem_phone = f.mem_phone.value.trim();
-        let mem_addr1 = f.mem_zipcode.value;
-        let mem_addr2  = f.mem_addr.value;
+        //member DB
+        let mem_zipcode = f.mem_addr.value.trim();
+        let mem_addr = f.mem_addr2.value;
+        //mem_addr  DB
+        let mem_addr1 = f.mem_addr.value;
+        let mem_addr2  = f.mem_addr2.value;
 
 
 
@@ -143,6 +147,14 @@
           f.mem_addr.value = "";
           f.mem_addr.focus();
           return;
+        }
+
+        if (mem_addr2 == "") {
+
+        alert("주소를 입력하세요!");
+        f.mem_addr2.value = "";
+        f.mem_addr2.focus();
+        return;
         }
 
         if (mem_phone == "") {
@@ -238,7 +250,7 @@
           <tr>
             <th>우편번호</th>
             <td>
-              <input class="form-control" required="required" id="mem_zipcode" name="mem_zipcode" style="width: 30%;">
+              <input class="form-control" required="required" style="width: 30%;" >
               <input class="btn btn-info" type="button" value="주소검색" onclick="find_curaddr();">
             </td>
           </tr>
@@ -251,6 +263,12 @@
             </td>
           </tr>
 
+          <tr>
+            <th>상세 주소</th>
+            <td><input class="form-control" required="required" name="mem_addr2" id="mem_addr2"
+                style="width: 100%;">
+            </td>
+          </tr>
 
 
           <!-- 버튼 -->

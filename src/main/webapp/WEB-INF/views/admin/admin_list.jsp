@@ -18,11 +18,11 @@
 
 <style type="text/css">
   #box{
-     float: right;
-     width: 1200px;
-     margin: auto;
+     width: 1500px;
+     margin: auto ;
      margin-top: 50px;
-     margin-right: 40px;
+     margin-right: 140px;
+     text-align: center;
   }
   
   #title{
@@ -36,6 +36,11 @@
   
   td{
     vertical-align: middle !important;
+  }
+
+  th{
+   background-color: #0e6d74;
+   text-align: center;
   }
   
   .bar{
@@ -100,11 +105,34 @@
   
   <!-- 로그인/회원가입  -->
   
-  <div class="row"  style="margin-top: 30px; margin-bottom: 5px;">
-    <div class="col-sm-3 col-md-3" >
-    </div>
-    <div class="col-sm-9 col-md-9" style="text-align: right">
-     
+
+   <div class="row"  style="margin-top: 50px; margin-bottom: 20px;">
+      <div class="col-sm-4 col-md-4" >
+           <!-- 검색메뉴 -->
+            
+           <form class="form-inline">
+              <div class="form-group">
+                <select id="search" class="form-control">
+                  <option value="all">전체</option>
+                  <option value="owner">사장님</option>
+                  <option value="rider">라이더</option>
+                </select>
+              </div>
+            
+              <div class="form-group" style="margin-left: 10px;">
+                <input class="form-control" id="search_text" value="${param.search_text}">
+              </div>
+            
+              <div class="form-group" style="margin-left: 10px;">
+                <input class="btn btn-primary" type="button" value="검색" onclick="find();">
+              </div>
+            </form>
+            
+          
+      </div>
+      <div class="col-sm-8 col-md-8" style="text-align: right">
+       
+       
       <!-- 로그인이 안되었을 경우(session에 user가 없냐?) -->
       <c:if test="${ empty sessionScope.user }">
 	      <input class="btn btn-primary"  type="button" value="로그인" 
@@ -117,10 +145,12 @@
 	      <input class="btn btn-primary"  type="button" value="로그아웃" 
 		         onclick="location.href='logout.do'">
 	  </c:if>             
-	            
-	            
+                 
+      </div>
     </div>
-  </div>
+     
+
+
    
   
   
@@ -128,16 +158,16 @@
   <table class="table table-hover">
      <!-- title -->
      <tr class="info">
-        <th>번호</th>
-        <th>이름</th>
-        <th id="mem_id">아이디</th>
-        <th>비밀번호</th>
-        <th>닉네임</th>
+        <th style="width: 5%;">번호</th>
+        <th style="width: 5%;">이름</th>
+        <th id="mem_id" style="width: 25%;">아이디</th>
+        <th style="width: 10%;">비밀번호</th>
+        <th style="width: 5%;">닉네임</th>
         <th>이메일</th>
         <th>주소</th>
         <th>아이피</th>
         <th>가입일자</th>
-        <th>등급</th>
+        <th style="width: 5%;">등급</th>
         <th>SNS</th>
         
         <!-- 로그인 유저가 관리자면 -->

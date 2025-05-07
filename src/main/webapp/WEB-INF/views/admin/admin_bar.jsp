@@ -144,7 +144,6 @@
               <li><a href="list.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">회원 목록</a></li>
               <li><a href="owner_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">사업자 승인</a></li>
               <li><a href="rider_approve.do?mem_idx=${ user.mem_idx }&mem_grade=${ user.mem_grade }">라이더 승인</a></li>
-              <li><a href="#">Blog</a></li>
             </ul>
           </nav>
         </div>
