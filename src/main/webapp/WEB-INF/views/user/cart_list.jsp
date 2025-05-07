@@ -62,7 +62,7 @@
                         </td>
                         <td>
                             <span onclick="minus('${cart.cart_idx}');" style="cursor: pointer;">➖</span>
-                            <input size="5" id="cnt_${cart.cart_idx}" value="${cart.cart_cnt}" style="text-align: center;">
+                            <input size="5" id="cnt_${cart.cart_idx}" value="${cart.cart_cnt}" style="text-align: center;" disabled>
                             <span onclick="plus('${cart.cart_idx}');" style="cursor: pointer;">➕</span>
                         </td>
                         <td><fmt:formatNumber value="${cart.menu_price}" type="currency" /></td>
