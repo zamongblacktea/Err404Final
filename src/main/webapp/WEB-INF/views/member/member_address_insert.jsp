@@ -53,7 +53,7 @@
                     <!-- 버튼 -->
                     <tr>
                       <td colspan="2" align="center">
-                        <input class="btn btn-primary" type="button" value="등록하기" onclick="insertAddress()">
+                        <input class="btn btn-success" type="button" value="등록하기" onclick="insertAddress()">
                       </td>
                     </tr>
 

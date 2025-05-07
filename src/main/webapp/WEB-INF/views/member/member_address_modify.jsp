@@ -57,7 +57,7 @@
                     <!-- 버튼 -->
                     <tr>
                       <td colspan="2" align="center">
-                        <input class="btn btn-primary" type="button" value="수정하기" onclick="updateAddress()">
+                        <input class="btn btn-success" type="button" value="수정하기" onclick="updateAddress()">
                       </td>
                     </tr>
 
