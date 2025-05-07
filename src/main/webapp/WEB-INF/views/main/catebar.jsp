@@ -48,7 +48,7 @@
         align-items: center;
       }
     </style>
-    <!-- jquer로드 -->
+    <!-- jquery로드 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJ+Y2eAR3f6s5M9V74P04eB3vFQ5cDr5f5QcA="
     crossorigin="anonymous"></script>
