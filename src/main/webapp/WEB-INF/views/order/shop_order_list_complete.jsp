@@ -122,31 +122,19 @@ tr:last-child td:last-child {
               $('#salesTable').html(res);
           }
       });
-  }
-  // //검색 날짜별 정산 조회
-  // function searchDate() {
-  //   const day_type = date;
-  //   const shop_idx = $("#shop_idx").val();
-  //   const start_date = $("#start_date").val();
-  //   const end_date = $("#end_date").val();
-  //     $.ajax({
-  //         url: '/order/order_sales.do',
-  //         type: 'GET',
-  //         data: { day_type : day_type,
-  //                 start_date: start_date,
-  //                 end_date: end_date,
-  //                 shop_idx: shop_idx,
-  //          }, 
-  //         success: function(res) {
 
-  //             $('#salesTable').html(res);
-  //         }
-  //     });
-  // }
+  }
 
   $(document).ready(function(){
   
-  
+    const shop_idx = $("#shop_idx").val();
+
+    // 버튼 상태 조정
+    $(".button-box input").removeClass("active");
+    $("#oneDay").addClass("active");
+
+    // 기본 일일 정산 페이지 호출
+    selectSales("oneDay", shop_idx);
   });
   
   
