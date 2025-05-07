@@ -95,7 +95,9 @@
 
 
             //첫번째 화면
-            shop_cate_list(0);
+            if('${empty param.search}'=='true'){
+              shop_cate_list(0);
+            }
 
         });
     </script>

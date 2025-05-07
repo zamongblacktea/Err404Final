@@ -102,12 +102,12 @@
             ${ vo.order_idx }
           </div>
         <div class="order_text">
-          주문일자: ${ vo.order_regdate }<br />
+          주문일자: <b>${ vo.order_regdate }</b><br />
           
-          주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
-          고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
-          주문요청사항: ${ vo.order_request } <br />
-          배달요청사항: ${ vo.rider_request }<br />
+          주문가격: <b><fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원</b><br />
+          고객주소: <b>${ vo.mem_addr1 } ${ vo.mem_addr2 }</b><br />
+          주문요청사항: <b>${ vo.order_request }</b> <br />
+          배달요청사항: <b>${ vo.rider_request }</b><br />
           <%-- 주문 상태: ${ vo.order_status }<br /> --%>
           <c:if test="${ vo.rider_status eq '배차완료'}">
             <label style="color: rgba(43, 226, 107, 0.805);">배차상태: 배차완료</label>
@@ -128,15 +128,11 @@
           <!-- <c:forEach var="cart" items="${cart}">
           ${cart.menu_name}
           </c:forEach> -->
-          메뉴 <br /> 
-          ${ vo.menu_list } <br />
-          결제 : ${ vo.pay_type } <br />
-          고객 주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
-          전화번호 : ${ vo.mem_phone } <br />
-          주문요청사항: ${ vo.order_request } <br />
-          배달요청사항: ${ vo.rider_request }<br />
-          주문 상태: ${ vo.order_status }<br />
-          주문 가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
+          메뉴 : <br /> 
+          <span style="margin-left: 55px;"><b>${ vo.menu_list }</b></span> <br />
+          결제 : <b>${ vo.pay_type }</b> <br />
+          전화번호 : <b>${ vo.mem_phone }</b> <br />
+          
         </div>
           <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">

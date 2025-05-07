@@ -37,10 +37,9 @@
 </head>
 <body>
     <div class="header">
-        <div id="search_form">
-        <form action="">
-            <input type="text" id="search" class="form-control">
-            <input type="button" class="btn btn-info btn_search" value="검색" onclick="">
+        <form id="search_form" action="${pageContext.request.contextPath}/main/list.do" method="get">
+            <input type="text" name="search" id="search" class="form-control" placeholder="메뉴를 검색해주세요.">
+            <input type="submit" class="btn btn-outline-success btn_search" value="검색">
         </form>
     </div>
 
