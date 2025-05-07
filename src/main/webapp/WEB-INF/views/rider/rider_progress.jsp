@@ -15,21 +15,21 @@
     <!-- bootstrap 3.x 사용설정 -->
 
     <style>
-           .content-items{
-        width: 90%;
+        .content-items{
+        width: 78%;
         margin: auto;
         padding-top: 3%;
-        text-align: left;
+        /* text-align: left; */
         border: 1px solid black;
         background-color: white;
         /* width: 600px; */
         height: auto;
         border-radius: 5px;
         padding-left: 30px;
-        /* margin-bottom: 10px; */
-        margin: 10px auto;
+        margin-bottom: 10px;
         display: flex;
         font-size: medium;
+        box-shadow: 1px 1px 3px black;
       }
 
      #routebt{
@@ -179,7 +179,7 @@
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
      <!-- 하나의 div넣고 경로보기랑 픽업완료도 div로 넣고 그리드로 넣어야 할듯 -->
     <!-- 배차 받기를 누르면 아래에 나오는것에 고객 전화번호도 추가시켜야함 포린키로 설정해야할듯 -->
-    <div style="text-align: left; margin-bottom: 20px; margin-left: 0;">
+    <div style="text-align: center; margin-bottom: 20px; margin-left: 0; font-size: large;">
         <c:if  test="${empty rider_list}">
             현재 배달 진행 중인 건이 없습니다.
         </c:if>

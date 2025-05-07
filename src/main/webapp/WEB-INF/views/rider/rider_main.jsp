@@ -60,7 +60,7 @@ pageEncoding="UTF-8"%>
         padding: 10px 15px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        margin-right: 20px;
+        /* margin-right: 20px; */
         box-sizing: border-box;
       }
 
@@ -74,6 +74,11 @@ pageEncoding="UTF-8"%>
     box-shadow: 0 0 5px #d36caa;
   }
 
+
+  .gap{
+    display: inline-block;
+    width: 20px;
+  }
 
   .nav {
    text-align: right;
@@ -314,7 +319,9 @@ pageEncoding="UTF-8"%>
                 <input class="buttons" type="button" value="배달현황" onclick="progress()" />
                 <input class="buttons" type="button" value="배달완료" onclick="complete()"/> -->
                 <input class="buttons" id="btn-standby" type="button" value="배차대기" onclick="standby();" />
+                <span class="gap"></span>
                 <input class="buttons" id="btn-progress" type="button" value="배달현황" onclick="progress()" />
+                <span class="gap"></span>
                 <input class="buttons" id="btn-complete" type="button" value="배달완료" onclick="complete()"/>
               </div> <!--버튼 div-->
               </div>

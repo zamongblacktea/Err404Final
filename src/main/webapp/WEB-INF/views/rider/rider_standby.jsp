@@ -15,7 +15,7 @@
     <style type="text/css">
 
       .content-items{
-        width: 90%;
+        width: 78%;
         margin: auto;
         padding-top: 3%;
         text-align: left;
@@ -128,7 +128,7 @@
     <!-- 아래 내용을 하나의 패널이나 네모안에 넣고 오른쪽에 경로보기 버튼누르기 -->
     <!-- forEach문으로 출력 여기서 주문대기 할때 거리가 짧은순으로 orderby해서 출력되도록 하기  -->
      <!-- for(DeliveryVo vo : standby_list) -->
-     <div style="width: 100%; text-align: left; margin-bottom: 20px; margin-left: 0;">
+     <div style="width: 100%; text-align: center; margin-bottom: 20px; margin-left: 0; font-size:large;">
      <c:if test="${ empty standby_list }">
       현재 배차대기목록이 없습니다.
      </c:if>

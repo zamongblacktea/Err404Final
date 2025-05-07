@@ -17,7 +17,7 @@
 <style>
     
    .content-items{
-        width: 90%;
+        width: 78%;
         margin: auto;
         padding-top: 3%;
         text-align: left;
@@ -41,7 +41,7 @@
     <!-- 배달완료를 누르면 가게/관리자페이지/라이더의 정산페이지에 영향 -->
     <!-- <p> 주문번호 ${order_idx}의 배달이 완료되었습니다 </p> -->
     <!-- 오른쪽에 정산내역확인하기 버튼-->
-    <div style="width: 100%; text-align: left; margin-bottom: 20px; margin-left: 0;"></div>
+    <div style="width: 100%; text-align: center; margin-bottom: 20px; margin-left: 0; font-size: large;"></div>
         <c:if test="${empty deliverycomplete_list}">
          현재 배달 완료한 건이 없습니다.
         </c:if>

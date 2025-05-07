@@ -84,9 +84,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </delete>
 
   <!-- 고객주소 얻기 -->
-  <select id="getMemberAddr" resultType="String" parameterType="int">
+  <select id="getMemberAddr" resultType="String" parameterType="OrderStatusVo">
       SELECT mem_addr1
       FROM mem_addr
-      WHERE mem_idx = #{mem_idx}
+      WHERE mem_idx = #{mem_idx} and mcuraddr_idx = #{mcuraddr_idx}
   </select>
 </mapper>

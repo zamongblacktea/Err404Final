@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.MemberVo;
+import com.githrd.project.vo.OrderStatusVo;
 
 
 
@@ -25,7 +27,7 @@ public interface MemberAddrMapper {
     public int insert(MemberAddrVo vo);
 		
 	// mem주소 얻기
-	String getMemberAddr(int mem_idx);
+	String getMemberAddr(OrderStatusVo vo);
 
     public int memberInsert(MemberAddrVo addr);
 
