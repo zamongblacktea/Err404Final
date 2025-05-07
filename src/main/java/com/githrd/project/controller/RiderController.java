@@ -9,9 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
@@ -21,12 +19,10 @@ import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.RiderDeliveryFeeMapper;
 import com.githrd.project.dao.RiderMapper;
 import com.githrd.project.dao.ShopInfoMapper;
-import com.githrd.project.service.CalculateSerive;
+import com.githrd.project.service.CalculateService;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
 import com.githrd.project.vo.OrderStatusVo;
-import com.githrd.project.vo.OwnerVo;
-import com.githrd.project.vo.RiderDeliveryFeeVo;
 import com.githrd.project.vo.RiderVo;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,7 +31,7 @@ import jakarta.servlet.http.HttpSession;
 public class RiderController {
     
     @Autowired
-    CalculateSerive calculateSerive;
+    CalculateService calculateService;
       
     @Autowired
     MemberAddrMapper memberAddrMapper;
@@ -117,8 +113,8 @@ public class RiderController {
 
         // 거리와 수수료 계산
         //DeliveryCalcResult calcResult = calculateService.calculate(shopAddr, memAddr, riderAddr);
-        int totalDistance = calculateSerive.getTotalDistance(shopAddr, memAddr, riderAddr);
-        int deliveryFee   = calculateSerive.getFee(totalDistance);
+        int totalDistance = calculateService.getTotalDistance(shopAddr, memAddr, riderAddr);
+        int deliveryFee   = calculateService.getFee(totalDistance);
 
         //ordersatus테이블 상태정보 업데이트
 
@@ -359,6 +355,15 @@ public class RiderController {
             String shopAddress = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
             String memAddress = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
             String riderAddress = riderMapper.getRiderAddr(rider_idx);
+
+            System.out.println("--[orderStatusVo]-------------------------");
+            System.out.println(orderStatusVo);
+            System.out.println("------------------------------------------");
+            System.out.printf("shopAddress : %s%n",shopAddress);
+            System.out.printf("memAddress : %s%n",memAddress);
+            System.out.printf("riderAddress : %s%n",riderAddress);
+            System.out.println("------------------------------------------");
+
 
             //위도경도 얻기 
             double[] storeCoords = kakaoMapService.getCoordinates(shopAddress);

@@ -21,6 +21,7 @@ import com.githrd.project.service.CartService;
 import com.githrd.project.service.OrderSatausSerivce;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.CartVo;
+import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
@@ -73,6 +74,34 @@ public class OrderStatusController {
         model.addAttribute("status", list);
         return "order/shop_order_list";
     }
+
+    
+    //회원주문현황 페이지 폼 열기
+    // @GetMapping("/member_order_status.do")
+    // public String member_order_list(Model model,int mem_idx,int shop_idx) {
+    //     MemberVo member = (MemberVo)session.getAttribute("user");
+    //     OwnerVo owner = (OwnerVo) session.getAttribute("user");
+    //     int owner_idx = owner.getOwner_idx();
+      
+    //     int member_idx = member.getMem_idx();
+    //     ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
+
+    //     List<OrderStatusVo> list = orderStatusMapper.selectList(shop_idx);
+ 
+    //     if (shop == null) {
+    //         return "redirect:../shop/insert_form.do?owner_idx=" + owner_idx;
+    //     }
+
+    //     session.setAttribute("shop_idx", shop.getShop_idx());
+    //     model.addAttribute("shop", shop);
+    //     model.addAttribute("status", list);
+
+    //     session.setAttribute("member_id", member.getMem_id());
+       
+    //     return "order/member_order_status";
+    // }
+
+
 
     //가게 정산 페이지 폼 열기
     @GetMapping("/order_list_complete.do")
