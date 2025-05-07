@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -79,7 +80,7 @@
           <div>
             <h5 class="mb-0">${vo.mem_nickname}</h5>
             <div class="review-meta">${vo.menu_name}</div>
-            <div class="review-meta">어제, 테스트 업로드</div>
+            <div class="review-meta">${vo.timeAgo}</div>
           </div>
         </div>
 
