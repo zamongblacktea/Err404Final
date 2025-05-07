@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -35,6 +34,7 @@
         position: absolute;
         left: 0;
         color: #ccc;
+      
       }
 
       .category-nav .active {
@@ -54,7 +54,7 @@
     crossorigin="anonymous"></script>
 
     <script>
-
+       
         function shop_cate_list(shop_cate_idx){
 
            $.ajax({
@@ -70,11 +70,7 @@
             }
 
            });
-
-
-
         }
-
 
 
 
@@ -92,10 +88,24 @@
 
                 shop_cate_list(cate_idx);
             });
-
+            
+            //검색을 위한 
+            if('${empty param.search}'=='true'){
+              shop_cate_list(0);
+            }
 
             //첫번째 화면
-            shop_cate_list(0);
+            if('${ empty param.shop_cate_idx}'=='true'){
+              shop_cate_list(0)  ;
+            }else{
+              const cate_idx =  '${param.shop_cate_idx}';
+              shop_cate_list(cate_idx);
+            
+              $(".cate-btn").removeClass("active");
+                     // 현재 클릭한 버튼만 active 추가
+              $("#cate-btn-" + cate_idx).addClass("active");
+            
+            }
 
         });
     </script>
@@ -105,11 +115,11 @@
   <body>
     <ul class="category-nav">
       <li class="cate-btn active">전체보기
-      <input type="hidden" class="cate_idx" value="">
+       <input type="hidden" class="cate_idx" value=""> 
       </li>
       <c:forEach var="cate" items="${cate_list}">
-        <li class="cate-btn">${cate.shop_cate_name}
-        <input type="hidden" class="cate_idx" value="${cate.shop_cate_idx}">
+        <li class="cate-btn" id="cate-btn-${cate.shop_cate_idx}">${cate.shop_cate_name}
+           <input type="hidden" class="cate_idx" value="${cate.shop_cate_idx}">
         </li>
       </c:forEach>
     </ul>

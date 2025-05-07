@@ -245,7 +245,7 @@
           <a onclick="loadContent('../order/order_list.do')"
             >주문 내역
             <c:if test="${ order_count gt 0 }">
-              <span class="badge" style="color: red">주문</span>
+              <span class="badge" style="color: red; background-color: rgb(226, 235, 67);">주문</span>
             </c:if>
           </a>
 

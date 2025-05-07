@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Service
-public class CalculateSerive {
+public class CalculateService {
 
     @Autowired
     HttpServletRequest request;

@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -40,8 +42,7 @@
       </header>
       <div class="content">
         <div id="mybox">
-          <div class="category" onclick="location.href='../main/list.do'">
-            <span style="z-index: 2;">전체보기</span>
+          <div class="category"onclick="location.href='../main/list.do'">
             <img src="${pageContext.request.contextPath}/images/카테고리 사진/전체보기.png" alt="카테고리-전체보기">
           </div>
           <div class="category" onclick="location.href='../main/list.do?shop_cate_idx=1'">
@@ -73,7 +74,7 @@
           </div>
         </div>
       </div>
-    </div>
+  
 
     <footer class="footer">푸터</footer>
   </body>

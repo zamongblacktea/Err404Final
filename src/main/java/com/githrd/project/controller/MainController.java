@@ -89,8 +89,13 @@ public class MainController {
         return "main/shop_list";
     }
 
+
+    
+
     @GetMapping("/shop_cate_list.do")
     public String shop_cate_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,Model model) {
+      
+       // List<CategoryVo> cate_list = categoryMapper.selectCategoryList();
 
         List<ShopInfoVo> list = null;
         if(shop_cate_idx==0){
@@ -99,7 +104,7 @@ public class MainController {
             list = shopService.selectListFromCate(shop_cate_idx);
         }
         model.addAttribute("shop_list", list);
-
+        //model.addAttribute("cate_list", cate_list);
         // System.out.println(list);
 
         return "main/category_list";
@@ -115,9 +120,11 @@ public class MainController {
 
         int shop_dfee = shopService.selectShopDfee(shop_idx);
 
-        List<ShopInfoVo> cate_list = shopService.selectListFromCate(shop.getCate_idx());
+        //샵리스트니까 필요없는 내용
+        //List<ShopInfoVo> cate_list = shopService.selectListFromCate(shop.getCate_idx());
 
         // List<MemReviewVo> rate_list = memReviewMapper.selectShopRating(shop_idx);
+        List<CategoryVo> cate_list = categoryMapper.selectCategoryList();
 
         session.setAttribute("shop_dfee", shop_dfee);
 
@@ -125,6 +132,8 @@ public class MainController {
         model.addAttribute("menu", menu);
         model.addAttribute("shop_dfee", shop_dfee);
         model.addAttribute("cate_list", cate_list);
+      
+       
         // model.addAttribute("rate", rating);
         // 임시 push
 
