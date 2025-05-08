@@ -108,7 +108,7 @@ public class RiderController {
 
         //주소가져오기
         String shopAddr = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
-        String memAddr = memberAddrMapper.getMemberAddr(orderStatusVo);
+        String memAddr = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
         String riderAddr = riderMapper.getRiderAddr(rider_idx);
 
         // 거리와 수수료 계산
@@ -353,7 +353,7 @@ public class RiderController {
             OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
             
             String shopAddress = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
-            String memAddress = memberAddrMapper.getMemberAddr(orderStatusVo);
+            String memAddress = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
             String riderAddress = riderMapper.getRiderAddr(rider_idx);
 
             System.out.println("--[orderStatusVo]-------------------------");
