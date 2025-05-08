@@ -4,10 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
-
-
-
-
+<!-- ss -->
 
 
           <div id="salesTable">
