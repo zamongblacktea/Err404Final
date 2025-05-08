@@ -22,23 +22,58 @@
 
     <!-- <div>메뉴카테고리</div> -->
     <c:forEach var="menu" items="${menu}">
+
+        <!-- <form onsubmit="insert_cart(this); return false;">
+          <input type="hidden" id="menu_idx" name="menu_idx" value="${menu.menu_idx}">
+          <input type="hidden" id="shop_idx" name="shop_idx" value="${param.shop_idx}">
+          <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}">
+          
+          <div class="menu_row" onclick="this.closest('form').requestSubmit();">
+            <div class="menu-text">
+              <div class="menu-name">${menu.menu_name}</div>
+              <div class="menu-explain">${menu.menu_explain}</div>
+              <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00"/>원</div>
+              <input type="hidden" name="menu_price" value="${menu.menu_price}">
+            </div>
+            <div class="menu-img">
+              <img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" />
+            </div>
+          </div>
+      </form> -->
+
+      <c:choose>
+    <c:when test="${menu.menu_status == '품절'}">
+      <div class="menu_row" onclick="alert('현재 메뉴는 품절입니다'); return false;" style="cursor: not-allowed; opacity: 0.5;">
+        <div class="menu-text">
+          <div class="menu-name">${menu.menu_name}</div>
+          <div class="menu-explain">${menu.menu_explain}</div>
+          <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00"/>원</div>
+        </div>
+        <div class="menu-img">
+          <img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" />
+        </div>
+      </div>
+    </c:when>
+    <c:otherwise>
       <form onsubmit="insert_cart(this); return false;">
-        <input type="hidden" id="menu_idx" name="menu_idx" value="${menu.menu_idx}">
-        <input type="hidden" id="shop_idx" name="shop_idx" value="${param.shop_idx}">
-        <input type="hidden" id="mem_idx" name="mem_idx" value="${user.mem_idx}">
-        
+        <input type="hidden" name="menu_idx" value="${menu.menu_idx}">
+        <input type="hidden" name="shop_idx" value="${shop.shop_idx}">
+        <input type="hidden" name="mem_idx" value="${user.mem_idx}">
+        <input type="hidden" name="menu_price" value="${menu.menu_price}">
+
         <div class="menu_row" onclick="this.closest('form').requestSubmit();">
           <div class="menu-text">
             <div class="menu-name">${menu.menu_name}</div>
             <div class="menu-explain">${menu.menu_explain}</div>
             <div class="menu-price" id="menu_price"><fmt:formatNumber value="${menu.menu_price}" pattern="#,#00"/>원</div>
-            <input type="hidden" name="menu_price" value="${menu.menu_price}">
           </div>
           <div class="menu-img">
             <img src="${pageContext.request.contextPath}/images/${menu.menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" />
           </div>
         </div>
-    </form>
+      </form>
+    </c:otherwise>
+  </c:choose>
     </c:forEach>
  
   </body>

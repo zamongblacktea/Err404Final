@@ -79,6 +79,7 @@
         <div id="mybox">
           <div class="shop-title">${shop.shop_name}</div>
           <input type="hidden" name="shop_dfee" id="shop_dfee" value="${shop.shop_dfee}">
+          <input type="hidden" name="shop_idx" id="shop_idx" value="${shop.shop_idx}">
           <div class="shop-content">
             <div id="shop_logo">
               <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 80px; height: 100%" />
