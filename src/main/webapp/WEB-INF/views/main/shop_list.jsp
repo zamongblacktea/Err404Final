@@ -29,6 +29,14 @@ pageEncoding="UTF-8"%>
       }
     });
   }
+
+    // 영업시간 비교
+    const today = new Date();
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const todayDay = dayNames[today.getDay()]; // 오늘 요일 (영어)
+
+    const now = new Date();
+    const nowStr = now.toTimeString().slice(0, 5); // 예: "14:05"
     </script>
 
 

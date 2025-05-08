@@ -8,6 +8,7 @@
     <style>
       .category-nav {
         display: flex;
+        /* display: inline-block; */
         align-items: center;
         justify-content: center;
         height: 100%;

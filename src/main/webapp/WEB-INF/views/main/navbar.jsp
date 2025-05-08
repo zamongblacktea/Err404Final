@@ -25,7 +25,7 @@
     margin-bottom: 0 !important; 
     border-radius: 0 !important;
     clear: both;
-    position: fixed;
+    /* position: fixed; */
 }
 
 
