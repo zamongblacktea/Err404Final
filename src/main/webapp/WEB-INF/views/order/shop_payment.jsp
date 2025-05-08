@@ -31,7 +31,7 @@ img {
 	margin-left: 8px;
 }
 
-h {
+th {
 	text-align: center;
 }
 

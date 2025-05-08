@@ -32,7 +32,7 @@
 
         <!-- 공통 리뷰 표시 -->
         <div class="review-header">
-          <div class="user-icon">U</div>
+          <div class="user-icon"><img src="/images/user.png"></div>
           <div>
             <h5 class="mb-0">${vo.mem_nickname}</h5>
             <div class="review-meta">${vo.menu_name}</div>
@@ -60,7 +60,7 @@
 
           <c:when test="${vo.review_available == 2}">
             <div class="owner-reply">
-              <div class="owner-icon">O</div>
+              <div class="owner-icon"><img src="/images/owner.png"></div>
               <div class="ms-3" style="flex: 1;">
                 <strong>사장님 답글</strong><br>
                 <div>${vo.reply_content}</div>

@@ -82,18 +82,44 @@
             <div class="order_idx">
               ${ vo.order_idx }
             </div>
-          <div class="order_text">
-            주문일자: ${ vo.order_regdate }<br />
-            결제: ${vo.pay_type}<br />
-            메뉴<br />
-            ${ vo.menu_list} <br />
-            고객주소: ${ vo.mem_addr1 } ${ vo.mem_addr2 }<br />
-            주문요청사항: ${ vo.order_request } <br />
-            배달요청사항: ${ vo.rider_request }<br />
-            주문 상태: ${ vo.order_status }<br />
-            주문가격: <fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원<br />
-          </div>
-            <div>  
+            <table class="table table-borderless order_text">
+              <tr>
+                <th>주문일자</th>
+                <td>${ vo.order_regdate }</td>
+              </tr>
+              <tr>
+                <th>주문가격</th>
+                <td><fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원</td>
+              </tr>
+              <tr>
+                <th>고객 주소</th>
+                <td>${ vo.mem_addr1 } ${ vo.mem_addr2 }</td>
+              </tr>
+              <tr>
+                <th>주문요청사항</th>
+                <td>${ vo.order_request }</td>
+              </tr>
+              <tr>
+                <th>배달요청사항</th>
+                <td>${ vo.rider_request }</td>
+              </tr>
+              <tr>
+                <th>배달상태</th>
+                <td>
+                  ${vo.order_status}
+                </td>
+              </tr>
+              <tr>
+                <th>메뉴</th>
+                <td>${ vo.menu_list }</td>
+              </tr>
+              <tr>
+                <th>결제</th>
+                <td>${ vo.pay_type }</td>
+              </tr>
+  
+            </table>
+            <div class="btn-div">  
               <c:if test="${vo.delivery_status eq '배달완료' && vo.review_available == 0 }">            
               <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}" data-order-idx="${vo.order_idx}">리뷰쓰기</button>
               </c:if>

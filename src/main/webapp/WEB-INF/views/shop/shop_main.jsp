@@ -34,6 +34,9 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 20px;
+        width: 100%;
+        position: fixed;
+        /* margin-bottom: 60px; */
       }
 
       #nav img {
@@ -48,7 +51,7 @@
 
       /* 사이드바 */
       #sidebar {
-        width: 420px;
+        width: 320px;
         min-width: 280px;
         background-color: white;
         border-right: 1px solid #ddd;
@@ -60,6 +63,7 @@
 
         padding-left: 50px;
         padding-right: 50px;
+        margin-top: 60px;
       }
 
       #sidebar .menu-group {
@@ -97,6 +101,7 @@
         /* border: 1px solid red; */
         width: 1320px;
         margin: 30px auto;
+        margin-top: 60px;
         /* padding-left: 50px; */
       }
     </style>

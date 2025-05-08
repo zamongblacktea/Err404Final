@@ -101,39 +101,65 @@
           <div class="order_idx">
             ${ vo.order_idx }
           </div>
-        <div class="order_text">
-          주문일자: <b>${ vo.order_regdate }</b><br />
-          
-          주문가격: <b><fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원</b><br />
-          고객주소: <b>${ vo.mem_addr1 } ${ vo.mem_addr2 }</b><br />
-          주문요청사항: <b>${ vo.order_request }</b> <br />
-          배달요청사항: <b>${ vo.rider_request }</b><br />
-          <%-- 주문 상태: ${ vo.order_status }<br /> --%>
-          <c:if test="${ vo.rider_status eq '배차완료'}">
-            <label style="color: rgba(43, 226, 107, 0.805);">배차상태: 배차완료</label>
-          </c:if> <br/> 
-          <c:if test="${ vo.order_status eq '조리중'}">
-             <label style="color: rgb(226, 122, 43); font-size: large;">주문상태: 조리중</label>
-           </c:if> 
-           <c:if test="${ vo.order_status eq '조리완료'}">
-             <label style="color: rgb(226, 122, 43); font-size: large;">주문상태: 조리완료</label>
-           </c:if> 
-          <c:if test="${ vo.order_status eq '픽업완료'}">
-             <label style="color: rgb(226, 122, 43); font-size: large;">주문상태: 픽업완료</label>
-           </c:if>    
-        <c:if test="${ vo.order_status eq '배달중'}">
-        <label style="color: rgb(226, 122, 43); font-size: large;">주문상태 배달중...</label>
-        </c:if>
+          <table class="table table-borderless order_text">
+            <tr>
+              <th>주문일자</th>
+              <td>${ vo.order_regdate }</td>
+            </tr>
+            <tr>
+              <th>주문가격</th>
+              <td><fmt:formatNumber value="${vo.amount}" pattern="#,#00" />원</td>
+            </tr>
+            <tr>
+              <th>고객 주소</th>
+              <td>${ vo.mem_addr1 } ${ vo.mem_addr2 }</td>
+            </tr>
+            <tr>
+              <th>주문요청사항</th>
+              <td>${ vo.order_request }</td>
+            </tr>
+            <tr>
+              <th>배달요청사항</th>
+              <td>${ vo.rider_request }</td>
+            </tr>
+            <tr>
+              <th>배차상태</th>
+              <td>
+                <c:if test="${ vo.rider_status eq '배차완료'}">
+                <label style="color: rgba(43, 226, 107, 0.805);">배차완료</label>
+              </c:if>
+            </td>
+            </tr>
+            <tr>
+              <th>주문상태</th>
+              <td> 
+                <c:if test="${ vo.order_status eq '조리중'}">
+                   <label style="color: rgb(226, 122, 43); font-size: large;">조리중</label>
+                 </c:if> 
+                 <c:if test="${ vo.order_status eq '조리완료'}">
+                   <label style="color: rgb(226, 122, 43); font-size: large;">조리완료</label>
+                 </c:if> 
+                <c:if test="${ vo.order_status eq '픽업완료'}">
+                   <label style="color: rgb(226, 122, 43); font-size: large;">픽업완료</label>
+                 </c:if>    
+              <c:if test="${ vo.order_status eq '배달중'}">
+              <label style="color: rgb(226, 122, 43); font-size: large;">배달중...</label>
+              </c:if>
+              </td>
+            </tr>
+            <tr>
+              <th>메뉴</th>
+              <td>${ vo.menu_list }</td>
+            </tr>
+            <tr>
+              <th>결제</th>
+              <td>${ vo.pay_type }</td>
+            </tr>
 
-          <!-- <c:forEach var="cart" items="${cart}">
-          ${cart.menu_name}
-          </c:forEach> -->
-          메뉴 <br /> 
-          <div style="margin-left: 55px;"><b>${ vo.menu_list }</b></div> <br />
-          결제 : <b>${ vo.pay_type }</b> <br />
-          전화번호 : <b>${ vo.mem_phone }</b> <br />
+          </table>
+          <%-- 주문 상태: ${ vo.order_status }<br /> --%>
           
-        </div>
+          
           <div class="btn-div">
             <c:if test="${vo.order_status eq 'NONE'}">
               <button class="btn status-btn"
@@ -156,6 +182,7 @@
             
           </div>
         </div>
+
       </c:forEach>
     </body>
 
