@@ -217,4 +217,12 @@
       AND DATE(order_regdate) BETWEEN #{start_date} and #{end_date}
   </select>
 
+
+    <!-- 고객주소 얻기 -->
+    <select id="getMemberAddr" resultType="String" parameterType="OrderStatusVo">
+      SELECT mem_addr1
+      FROM order_status_view
+      WHERE order_idx = #{order_idx}
+  </select>
+
 </mapper>

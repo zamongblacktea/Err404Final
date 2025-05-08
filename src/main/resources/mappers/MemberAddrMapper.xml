@@ -83,10 +83,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      delete from mem_addr where mcuraddr_idx = #{ mcuraddr_idx }
    </delete>
 
-  <!-- 고객주소 얻기 -->
-  <select id="getMemberAddr" resultType="String" parameterType="int">
-      SELECT mem_addr1
-      FROM mem_addr
-      WHERE mem_idx = #{mem_idx} 
-  </select>
 </mapper>
