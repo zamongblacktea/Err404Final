@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.RiderDeliveryFeeMapper">
+
+
+  <!-- delivery 완료된 테이블 전체조회 -->
+   <!-- select * from rider_deliveryfee where delivery_status='Y' -->
+  <select id="selectList" parameterType="int" resultType="RiderDeliveryFeeVo">
+    SELECT df.*, d.delivery_idx,d.delivery_fee
+    FROM rider_deliveryfee df
+    JOIN delivery d ON df.delivery_idx = d.delivery_idx
+    JOIN shop_info s ON s.shop_idx = d.shop_idx
+    JOIN order_info o ON o.order_idx = d.order_idx
+    WHERE d.rider_idx = #{rider_idx}
+  </select> 
+
+
+  <insert id="insert" parameterType="RiderDeliveryFeeVo">
+    insert into rider_deliveryfee values(null,
+                                #{rider_idx},
+                                #{rider_name},
+                                #{order_idx},
+							                  #{rider_idx},
+                                #{order_check},
+                                #{shop_idx},
+                                #{shop_name},
+                                #{mem_idx},
+                                #{mem_name},
+                                #{delivery_idx},
+                                now()
+                                )
+    
+    </insert>
+  
+  
+
+  </mapper>   

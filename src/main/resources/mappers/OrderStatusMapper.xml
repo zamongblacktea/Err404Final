@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.OrderStatusMapper">
+
+  <!-- delivery 테이블 전체조회 -->
+  <!-- <select id="selectList" resultType="OrderStatusVo">
+    select * from order_status where shop_idx = #{shop_idx} and order_status != '배달완료'
+                                 
+  </select> -->
+  <!--  where shop_idx = #{shop_idx} and order_status in('주문수락','조리대기','조리시작','조리중','조리완료','배달중','NONE','픽업완료','픽업대기') -->
+
+  <!-- <select id="selectList" resultType="OrderStatusVo">
+    select * from order_status where shop_idx = #{shop_idx} and order_status in('주문수락','조리대기','조리시작','조리중','조리완료','배달중','NONE','픽업완료','픽업대기')
+  </select> -->
+
+  <!--상점 주문현황 전체조회 -->
+  <select id="selectList" resultType="OrderStatusVo">
+    select * from order_status_view where shop_idx = #{shop_idx} and order_status != '배달완료'
+    ORDER BY order_idx DESC
+  </select>
+  <!-- 배달 완료 조회(일간) -->
+  <select id="selectListComp" resultType="OrderStatusVo">
+    select * from order_status_view where shop_idx = #{shop_idx} and order_status='배달완료' 
+    ORDER BY order_idx DESC
+  </select>
+
+  <!-- 회원 리뷰 상세내역 검색 -->
+  <select id="selectDetail" resultType="OrderStatusVo">
+    SELECT d.mem_idx,d.order_idx,d.delivery_idx,m.menu_name,o.order_status,s.shop_name,o.amount,o.order_request,o.rider_request
+    FROM order_status_view o
+    INNER JOIN menu_info m 	ON o.menu_idx 	= m.menu_idx
+    INNER JOIN shop_info s 	ON o.shop_idx 	= s.shop_idx
+    INNER JOIN delivery d		ON d.mem_idx 	  = o.mem_idx	and d.order_idx = o.order_idx
+    INNER JOIN payment p		ON p.pay_idx 	  = o.pay_idx
+    WHERE d.mem_idx = #{ mem_idx } and d.delivery_status = '배달완료'
+  </select>
+
+  <select id="selectOrderOne" parameterType="int" resultType="OrderStatusVo">
+      SELECT 
+      os.*,
+      si.shop_name,si.shop_addr1,si.shop_addr2,
+      mi.menu_name,mi.menu_price
+      FROM  order_status_view  os inner join shop_info si on os.shop_idx=si.shop_idx
+                          inner join menu_info mi on os.menu_idx=mi.menu_idx
+      where os.order_idx=#{order_idx}
+  </select>
+
+  <!-- standby_list항목들 조인 -->
+  <select id="selectAcceptList" resultType="OrderStatusVo">
+    SELECT 
+      os.*,
+      si.shop_name,si.shop_addr1,si.shop_addr2,
+      mi.menu_name,mi.menu_price
+    FROM  order_status_view  os inner join shop_info si on os.shop_idx=si.shop_idx
+                          inner join menu_info mi on os.menu_idx=mi.menu_idx
+    where  order_status != 'NONE'  and rider_status='NONE' 
+  </select>
+
+   <!--  아래 정보가 업데이트된 정보를 새로담는 리스트가 있어야 한다 여기서는 rider_list-->
+    <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
+    <update id="riderStatusUpdate" parameterType="DeliveryVo">
+     update order_status set rider_status ='배차완료'
+       where order_idx=#{order_idx}
+    </update> 
+
+
+    <!-- 결제 정보 추가 -->
+            <!-- max값으로 최신값을 가져와도 됨 -->
+            <insert id="insert" parameterType="map">
+              INSERT INTO order_status (
+                  order_status_idx,
+                  shop_idx,
+                  menu_idx,
+                  mem_idx,
+                  pay_idx,
+                  delivery_idx,
+                  mcuraddr_idx,
+                  order_idx,
+                  order_regdate,
+                  order_status,
+                  order_reason,
+                  mem_phone,
+                  order_request,
+                  rider_request,
+                  rider_status,
+                  amount,
+                  pay_type,
+                  coupon_use,     
+                  mem_addr1,
+                  mem_addr2,
+                  menu_price,
+                  menu_cnt,
+                  menu_name
+
+              )
+              VALUES
+              <foreach collection="payment_list" item="item" separator=",">
+                  (
+                      null,
+                      #{item.shop_idx}, 
+                      #{item.menu_idx}, 
+                      #{item.mem_idx}, 
+                      #{item.pay_idx}, 
+                      null,
+                      #{item.mcuraddr_idx}, 
+                      #{item.order_idx,}, 
+                      NOW(),
+                      'NONE',
+                      null,
+                      #{item.mem_phone}, 
+                      #{item.order_request}, 
+                      #{item.rider_request}, 
+                      'NONE',
+                      #{item.amount}, 
+                      #{item.pay_type}, 
+                      null,
+                      #{item.mem_addr1}, 
+                      #{item.mem_addr2}, 
+                      #{item.menu_price}, 
+                      #{item.menu_cnt}, 
+                      #{item.menu_name} 
+
+                  )
+              </foreach>
+          </insert>
+
+
+
+  <!-- 주문 배달 현황 실시간 업데이트 -->
+  <update id="updateStatus" parameterType="Map">
+        UPDATE order_status SET order_status = #{ order_status }
+        WHERE order_idx = #{ order_idx }
+  </update>
+
+   <update id="updateOrderStatus" parameterType="Map">
+        UPDATE order_status SET order_status = #{ order_status }            
+        WHERE order_idx = #{ order_idx }
+  </update>
+
+  <!-- 주문상태 체크(갯수) -->
+  <select id="selectOrderCount" parameterType="int" resultType="int">
+        select ifnull(count(*),0) from order_status_view 
+		    where shop_idx=#{ shop_idx } and  order_status='NONE'
+  </select>
+
+
+  <!-- order_idx 존재 확인 select (fk 대용) -->
+    <select id="selectCheckOrderIdx" parameterType="int" resultType="int">
+      SELECT COUNT(*)
+      FROM order_status_view
+      WHERE order_idx = #{order_idx}
+  </select>
+
+
+  <!-- 일간 매출 조회 -->
+  <select id="selectSaleOneDay" parameterType="int" resultType="int">
+    SELECT IFNULL(SUM(amount), 0) AS total_amount
+    FROM order_status_view
+    WHERE shop_idx = #{shop_idx} AND DATE(order_regdate) = CURDATE()
+  </select>
+  
+
+    <!-- 배달 완료 조회(일간) -->
+    <select id="selectListOneDay" resultType="OrderStatusVo">
+      select * from order_status_view 
+      where shop_idx = #{shop_idx} and order_status='배달완료' and DATE(order_regdate) = CURDATE()
+      ORDER BY order_idx DESC
+    </select>
+
+  <!-- 주간 매출 조회 -->
+
+  <select id="selectSaleWeeks" parameterType="int" resultType="int">
+    SELECT IFNULL(SUM(amount), 0) AS total_amount
+    FROM order_status_view
+    <![CDATA[
+    WHERE shop_idx = #{shop_idx} AND order_status='배달완료' AND order_regdate >= CURDATE() - INTERVAL 6 DAY
+    ]]>
+  </select>
+
+    <!-- 배달 완료 조회(주간) -->
+    <select id="selectListWeeks" resultType="OrderStatusVo">
+      select * from order_status_view 
+      <![CDATA[
+      WHERE shop_idx = #{shop_idx} AND order_status='배달완료' AND order_regdate >= CURDATE() - INTERVAL 6 DAY
+      ]]>
+      ORDER BY order_idx DESC
+    </select>
+
+
+  <!-- 월간 매출 조회 -->
+  <select id="selectListMonths" resultType="OrderStatusVo">
+    select * from order_status_view 
+    WHERE shop_idx = #{shop_idx} AND order_status='배달완료' AND DATE_FORMAT(order_regdate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+    ORDER BY order_idx DESC
+  </select>
+
+  <select id="selectSaleMonths" parameterType="int" resultType="int">
+    SELECT IFNULL(SUM(amount), 0) AS total_amount
+    FROM order_status_view
+    WHERE shop_idx = #{shop_idx}
+      AND order_status = '배달완료'
+      AND DATE_FORMAT(order_regdate, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m')
+  </select>
+
+  <!-- 날짜 지정 매출 조회 -->
+  <select id="selectListDate" resultType="map">
+    select * from order_status_view 
+    where shop_idx = #{shop_idx} and order_status='배달완료' AND DATE(order_regdate) BETWEEN #{start_date} and #{end_date}
+    ORDER BY order_idx DESC
+  </select>
+
+  <select id="selectSaleDate" parameterType="map" resultType="int">
+    SELECT IFNULL(SUM(amount), 0) AS total_amount
+    FROM order_status_view
+    WHERE shop_idx = #{shop_idx}
+      AND order_status = '배달완료'
+      AND DATE(order_regdate) BETWEEN #{start_date} and #{end_date}
+  </select>
+
+</mapper>

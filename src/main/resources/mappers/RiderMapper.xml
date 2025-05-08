@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.RiderMapper">
+
+  <!-- 회원전체조회 -->
+  <select id="selectList" resultType="RiderVo">
+     select * from rider order by rider_idx
+  </select>
+  
+  <!-- rider_idx에 해당되는 회원정보 1건  -->
+  <select id="selectOneFromIdx"  parameterType="int"  resultType="RiderVo">
+     select * from rider where rider_idx=#{ rider_idx }
+  </select>
+  
+  <!-- rider_id에 해당되는 회원정보 1건  -->
+  <select id="selectOneFromId"  parameterType="String"  resultType="RiderVo">
+     select * from rider where rider_id=#{ rider_id }
+  </select>
+
+
+  <!-- 이메일 api 인증 -->
+   <!-- rider_id에 해당되는 회원정보 1건  -->
+   <select id="selectOneFromEmail"  parameterType="String"  resultType="int">
+   SELECT COUNT(*)
+   FROM rider
+   WHERE rider_email = #{ email }
+   </select>
+
+   <!-- rider_email 인증으로 아이디 / 비밀번호 찾기 변경 검증  -->
+  <select id="selectOneFindInfo"  parameterType="String"  resultType="RiderVo">
+   select rider_id from rider where rider_email=#{ email }
+   </select>
+
+  <!-- 라이더 비밀번호 수정 -->
+  <update id="pwdUpdate"  parameterType="String">
+     update rider set  rider_pwd=#{ rider_pwd },
+                       rider_ip=#{ rider_ip },
+                       rider_update = now()  
+     where rider_email=#{ rider_email }
+  </update>
+
+  
+  <!-- 회원추가 -->
+  <insert id="insert"  parameterType="RiderVo">
+     insert into rider values(
+                          null,
+                          #{ rider_id },
+                          #{ rider_pwd },
+                          #{ rider_name },
+                          #{ rider_email },
+                          #{ rider_ip }, 
+                           now(),
+                           null,
+                          #{ rider_account }, 
+                          #{ rider_loc }, 
+                          #{ rider_type }, 
+                          '대기',
+                          #{ rider_img },
+                          #{ rider_phone }
+                          )
+  </insert>
+  
+  <!-- 회원수정 -->
+  <update id="update"  parameterType="RiderVo">
+     update rider set rider_name=#{ rider_name },
+                       rider_pwd=#{ rider_pwd },
+                       rider_ip=#{ rider_ip },
+                       rider_update = now(),  
+                       rider_phone=#{ rider_phone }
+     where rider_idx=#{ rider_idx }
+  </update>
+
+   <!-- 라이더 회원 승인 -->
+  <update id="updateApproval"  parameterType="RiderVo">
+     update rider set rider_approve='승인'
+     where rider_idx=#{ rider_idx }
+  </update>
+  
+  <!-- 회원삭제 -->
+  <delete id="delete"  parameterType="int">
+     delete from rider where rider_idx=#{ rider_idx }
+  </delete>
+
+<!-- 라이더주소얻기 -->
+<select id="getRiderAddr" resultType="String" parameterType="int">
+    SELECT rider_addr
+    FROM rider_addr
+    WHERE rider_idx = #{rider_idx}
+</select>
+</mapper>

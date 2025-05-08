@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.PaymentMapper">
+
+  <!-- 결제 조회 -->
+  <select id="selectList" resultType="PaymentVo">
+    select * from payment where mem_idx = #{ mem_idx }
+  </select>
+
+
+  <!-- 거래번호 조회 -->
+  <select id="selectListOrderNum" resultType="PaymentVo">
+    SELECT * FROM payment WHERE merchant_uid = #{ merchant_uid }
+  </select>
+
+    <!-- 결제 정보 추가 -->
+     <!--                      #{ menu_name },      #{ shop_request },
+            #{ rider_request }, 연동시 추가해야 함 -->
+            <!-- max값으로 최신값을 가져와도 됨 -->
+            <insert id="insert" parameterType="map">
+            INSERT INTO payment (
+                pay_idx,
+                mem_idx,
+                mcuraddr_idx,
+                menu_idx,
+                shop_idx,
+                mem_phone,
+                menu_name,
+                pay_type,
+                pay_status,
+                pay_regdate,
+                imp_uid,
+                merchant_uid,
+                amount,
+                order_request,
+                rider_request,
+                mem_addr1,
+                mem_addr2,
+                order_idx,
+                menu_price,
+                menu_cnt
+            )
+            VALUES
+            <foreach collection="cart_list" item="item" separator=",">
+                (
+                    null,
+                    #{item.mem_idx},
+                    #{mcuraddr_idx},
+                    #{item.menu_idx},
+                    #{item.shop_idx},
+                    #{mem_phone},
+                    #{item.menu_name},
+                    '카카오',
+                    '결제완료',
+                    now(),
+                    #{imp_uid},
+                    #{merchant_uid},
+                    #{amount},
+                    #{order_request},
+                    #{rider_request},
+                    #{mem_addr1},
+                    #{mem_addr2},
+                    #{order_idx},
+                    #{item.menu_price},
+                    #{item.cart_cnt}
+                )
+            </foreach>
+        </insert>
+                        
+
+  <!-- 거래번호 얻어오기 -->
+  <select id="selectOrderNo" resultType="int">
+     select  ifnull(max(order_idx),0) + 1 from payment
+  </select>
+</mapper>
