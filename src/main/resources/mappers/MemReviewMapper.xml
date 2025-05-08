@@ -141,6 +141,7 @@ SELECT
     o.reply_available AS reply_available
 FROM mem_review m LEFT JOIN owner_reply o ON m.order_idx = o.order_idx
 WHERE m.shop_idx = #{shop_idx}
+ORDER BY m.review_idx DESC
 
 </select>
 
@@ -167,7 +168,7 @@ SELECT
     o.reply_available AS reply_available
 FROM mem_review m LEFT JOIN owner_reply o ON m.order_idx = o.order_idx
 WHERE m.mem_idx = #{mem_idx}
-
+ORDER BY m.review_idx DESC
 </select>
 
 </mapper>

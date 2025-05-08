@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,7 +36,7 @@
     .user-icon, .owner-icon {
       width: 50px;
       height: 50px;
-      background-color: #ddd;
+
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -43,7 +44,6 @@
       font-size: 24px;
       font-weight: bold;
       margin-right: 1rem;
-      color: #555;
     }
     .review-meta {
       font-size: 0.9rem;
@@ -64,6 +64,20 @@
     .review-content {
       margin-bottom: 1rem;
     }
+    .owner-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 비율 무시하고 div에 딱 맞게 채우기 */
+      overflow: hidden;  
+      display: block;
+    }
+    .user-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 비율 무시하고 div에 딱 맞게 채우기 */
+      overflow: hidden;  
+      display: block;
+    }
   </style>
 </head>
 
@@ -75,11 +89,11 @@
 
         <!-- 공통 리뷰 표시 -->
         <div class="review-header">
-          <div class="user-icon">U</div>
+          <div class="user-icon"><img src="/images/user.png"></div>
           <div>
             <h5 class="mb-0">${vo.mem_nickname}</h5>
             <div class="review-meta">${vo.menu_name}</div>
-            <div class="review-meta">어제, 테스트 업로드</div>
+            <div class="review-meta">${vo.timeAgo}</div>
           </div>
         </div>
 
@@ -103,7 +117,7 @@
 
           <c:when test="${vo.review_available == 2}">
             <div class="owner-reply">
-              <div class="owner-icon">O</div>
+              <div class="owner-icon"><img src="/images/owner.png"></div>
               <div class="ms-3" style="flex: 1;">
                 <strong>사장님 답글</strong><br>
                 <div>${vo.reply_content}</div>

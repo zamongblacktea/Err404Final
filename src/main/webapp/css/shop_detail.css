@@ -362,20 +362,6 @@ li {
   align-items: center;
   margin-bottom: 1rem;
 }
-.user-icon,
-.owner-icon {
-  width: 50px;
-  height: 50px;
-  background-color: #ddd;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-right: 1rem;
-  color: #555;
-}
 .review-meta {
   font-size: 0.9rem;
   color: gray;
@@ -408,11 +394,10 @@ li {
   align-items: center;
   margin-bottom: 1rem;
 }
-.user-icon,
-.owner-icon {
+.user-icon, .owner-icon {
   width: 50px;
   height: 50px;
-  background-color: #ddd;
+
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -420,7 +405,6 @@ li {
   font-size: 24px;
   font-weight: bold;
   margin-right: 1rem;
-  color: #555;
 }
 .review-meta {
   font-size: 0.9rem;
@@ -440,6 +424,21 @@ li {
 }
 .review-content {
   margin-bottom: 1rem;
+}
+
+.owner-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 무시하고 div에 딱 맞게 채우기 */
+  overflow: hidden;  
+  display: block;
+}
+.user-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 비율 무시하고 div에 딱 맞게 채우기 */
+  overflow: hidden;  
+  display: block;
 }
 
 /* ============================detail_info============================= */

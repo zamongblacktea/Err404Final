@@ -20,6 +20,7 @@ import com.githrd.project.dao.MemReviewMapper;
 import com.githrd.project.dao.OwnerReplyMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
+import com.githrd.project.service.CalculateService;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.MemReviewVo;
 import com.githrd.project.vo.OwnerReplyVo;
@@ -51,6 +52,9 @@ public class ShopController {
 
     @Autowired
     OwnerReplyMapper ownerReplyMapper;
+
+    @Autowired
+    CalculateService calculateService;
 
     @Autowired
     HttpSession session;
@@ -404,6 +408,11 @@ public class ShopController {
         //회원 + 사장 리뷰 리스트
         List<MemReviewVo> list = memReviewMapper.selectReviewReply(shop_idx);
 
+        		//작성 기준 시간 댓글 업로드 로직
+		for( MemReviewVo vo : list){
+			vo.setTimeAgo(calculateService.getTimeAgo(vo.getReview_regdate()));
+
+		}
 
 
         model.addAttribute("list", list);
