@@ -132,7 +132,7 @@
 
           <!-- 버튼 -->
           <div class="form-group text-right" style="margin-top: 30px;">
-            <button type="button" class="btn btn-default" onclick="location.href='review_list.do?mem_idx=${param.mem_idx}'">취소</button>
+            <!-- <button type="button" class="btn btn-default" onclick="location.href='review_list.do?mem_idx=${param.mem_idx}'">취소</button> -->
             <button type="button" class="btn btn-primary" onclick="send(this.form)">등록</button>
           </div>
 

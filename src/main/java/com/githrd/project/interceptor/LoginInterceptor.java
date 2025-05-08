@@ -43,7 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(session.getAttribute("user")==null){
 
             // response.sendRedirect("../member/login_form.do?reason=session_timeout");
-            response.sendRedirect(host + "member/login_form.do?");
+            response.sendRedirect(host + "member/login_form.do");
 
             return false;
         } 
