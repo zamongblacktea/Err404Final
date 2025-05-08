@@ -80,9 +80,9 @@ public class MemberController {
 		// 1. 로그인한 유저 정보 꺼내오기
 		MemberVo user = (MemberVo) session.getAttribute("user");
 
-		if (user == null) {
-			return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
-		}
+		// if (user == null) {
+		// 	return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+		// }
 
 		int mem_idx = user.getMem_idx();
 

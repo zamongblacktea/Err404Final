@@ -72,9 +72,9 @@ public class RiderController {
         // 1. 로그인한 사장님 정보 꺼내오기
         RiderVo rider = (RiderVo) session.getAttribute("user");
 
-        if (rider == null) {
-            return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
-        }
+        // if (rider == null) {
+        //     return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+        // }
 
         return "rider/rider_main";
     }

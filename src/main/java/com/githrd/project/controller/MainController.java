@@ -54,11 +54,11 @@ public class MainController {
     public String main() {
 
         // 1. 로그인한 유저 정보 꺼내오기
-		MemberVo user = (MemberVo) session.getAttribute("user");
+		//MemberVo user = (MemberVo) session.getAttribute("user");
 
-		if (user == null) {
-			return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
-		}
+		//if (user == null) {
+		//	return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+		//}
 
         //주문접수상태 가져오기
         //int order_count = shopService.selectOrderCount(shop.getShop_idx());
@@ -161,11 +161,11 @@ public class MainController {
         // 장바구니 화면
         MemberVo user = (MemberVo) session.getAttribute("user");
 
-        if (user == null) {
-            return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
-        }
+        // if (user == null) {
+        //     return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+        // }
 
-        int mem_idx = user.getMem_idx();
+         int mem_idx = user.getMem_idx();
 
         // 회원별 장바구니 목록
         List<CartVo> cart_list = cartService.selectList(mem_idx);
