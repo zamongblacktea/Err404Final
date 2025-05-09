@@ -59,8 +59,8 @@ body {
 }
 
 .list {
-  /* width: 1050px; */
-  width: 100%;
+  width: 1050px;
+  /* width: 100%; */
   margin: 10px auto;
 }
 
@@ -71,8 +71,8 @@ body {
   width: 490px;
   /* width: 450px; */
   height: 110px;
-  /* margin: 5px 7px; */
-  margin: 15px; 
+  margin: 5px 7px;
+  /* margin: 15px;  */
   text-align: left;
 }
 
