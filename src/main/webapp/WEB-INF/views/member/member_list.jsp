@@ -18,9 +18,11 @@
 
 <style type="text/css">
   #box{
+     float: right;
      width: 1200px;
      margin: auto;
      margin-top: 50px;
+     margin-right: 40px;
   }
   
   #title{
@@ -36,7 +38,11 @@
     vertical-align: middle !important;
   }
   
-  
+  .bar{
+      float: left;
+
+
+  }
 </style>
 
 <!-- SweetAlert2 설정 -->
@@ -78,10 +84,14 @@
 
 </head>
 <body>
+   <div class="bar">
+      <%@ include file="member_bar.jsp" %>
 
+   </div>
 <div id="box">
+
   
-  <h1 id="title">::::회원목록::::</h1>
+  <h1 id="title">::::회원 목록::::</h1>
   
   <!-- 로그인/회원가입  -->
   
@@ -154,7 +164,7 @@
            <td>${ vo.mem_pwd }</td>
            <td>${ vo.mem_nickname }</td>
            <td>${ vo.mem_email }</td>
-           <td>${ vo.mem_curaddr }</td>
+           <td>${ vo.mem_zipcode } ${ vo.mem_curaddr }</td>
            <td>${ vo.mem_ip }</td>
            <td>${ vo.mem_regdate }</td>
            <td>${ vo.mem_grade }</td>

@@ -4,53 +4,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.githrd.project.dao.MemberMapper">
 
-  <!-- 회원전체조회 -->
-  <select id="selectList" resultType="MemberVo">
+   <!-- 회원전체조회 -->
+   <select id="selectList" resultType="MemberVo">
      select * from member order by mem_idx
-  </select>
-  
-  <!-- mem_idx에 해당되는 회원정보 1건  -->
-  <select id="selectOneFromIdx"  parameterType="int"  resultType="MemberVo">
+   </select>
+
+   <!-- mem_idx에 해당되는 회원정보 1건  -->
+   <select id="selectOneFromIdx" parameterType="int" resultType="MemberVo">
      select * from member where mem_idx=#{ mem_idx }
-  </select>
-  
-  <!-- mem_id에 해당되는 회원정보 1건  -->
-  <select id="selectOneFromId"  parameterType="String"  resultType="MemberVo">
-     select * from member where mem_id=#{ mem_id }
-  </select>
-  
-  <!-- 회원추가 -->
-  <insert id="insert"  parameterType="MemberVo">
+   </select>
+
+   <!-- 아이디로 조회 -->
+   <select id="selectOneFromId" parameterType="String" resultType="MemberVo">
+      SELECT * from member where mem_id = #{mem_id}
+   </select>
+
+
+   <!-- sns 연동 회원 로그인 조회 -->
+   <select id="selectSns" parameterType="String" resultType="MemberVo">
+      SELECT * from member where mem_id = #{mem_id}
+   </select>
+
+   <!-- 회원추가 -->
+   <insert id="insert" parameterType="MemberVo">
      insert into member values(
                           null,
                           #{ mem_id },
-                          #{ mem_pwd },
+                          null,
                           #{ mem_name },
-                          #{ mem_niclname },
+                          #{ mem_nickname },
                           #{ mem_email },
+                          #{ mem_zipcode },
                           #{ mem_curaddr },
                           #{ mem_ip }, 
-                           DATETIME,
-                          '일반')
-  </insert>
-  
-  <!-- 회원수정 -->
-  <update id="update"  parameterType="MemberVo">
-     update member set mem_name=#{ mem_name },
-                       mem_nickname=#{ mem_nickname },
-                       mem_pwd=#{ mem_pwd },
-                       mem_email=#{ mem_email },
-                       mem_curaddr=#{ mem_curaddr },
-                       mem_grade=#{ mem_grade },
+                           now(),
+                           null,
+                          '일반',
+                          #{mem_type},
+                          #{mem_phone}
+                          )
+   </insert>
+
+   <!-- 회원수정 -->
+   <update id="update" parameterType="MemberVo">
+     update member set mem_name=#{ mem_name }, 
+                       mem_nickname=#{ mem_nickname }, 
+                       mem_zipcode=#{ mem_zipcode }, 
+                       mem_curaddr=#{ mem_curaddr }, 
                        mem_ip=#{ mem_ip },
-                       mem_update = DATETIME  
+                       mem_update = now(),
+                      mem_phone=#{ mem_phone } 
      where mem_idx=#{ mem_idx }
-  </update>
-  
-  <!-- 회원삭제 -->
-  <delete id="delete"  parameterType="int">
+   </update>
+
+   <!-- 회원삭제 -->
+   <delete id="delete" parameterType="int">
      delete from member where mem_idx=#{ mem_idx }
-  </delete>
+   </delete>
 
 
 </mapper>

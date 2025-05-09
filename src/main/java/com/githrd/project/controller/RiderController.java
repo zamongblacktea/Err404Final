@@ -1,0 +1,231 @@
+package com.githrd.project.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.githrd.project.dao.DeliveryMapper;
+import com.githrd.project.dao.MemberMapper;
+import com.githrd.project.dao.RiderDeliveryFeeMapper;
+import com.githrd.project.service.KakaoMapService;
+import com.githrd.project.vo.DeliveryVo;
+import com.githrd.project.vo.RiderDeliveryFeeVo;
+import com.githrd.project.vo.RiderVo;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+@Controller
+public class RiderController {
+	@Autowired
+	MemberMapper memberMapper;
+
+    @Autowired
+    DeliveryMapper deliveryMapper;
+	
+	@Autowired
+	HttpServletRequest request;
+	
+	@Autowired
+	HttpSession session;
+
+    
+    @Autowired
+    RiderDeliveryFeeMapper riderDeliveryFeeMapper;
+
+    @Autowired
+    private KakaoMapService kakaoMapService; 
+
+
+    @RequestMapping("/rider/main.do")
+    public String main(){
+
+        return "rider/rider_main";
+    }
+
+    @RequestMapping("/rider/standby.do")
+    public String riderStandby(Model model){
+
+        List<DeliveryVo> standby_list = deliveryMapper.selectList();
+        System.out.println(standby_list.size());
+
+		// 결과적으로 request binding
+		model.addAttribute("standby_list", standby_list);
+
+
+        return "rider/rider_standby";
+    }
+
+
+    //parameter map으로 받기 : rider_accept.do?order_idx=1&rider_idx=5
+    @RequestMapping("/rider/rider_accept.do")
+    @ResponseBody
+    public Map<String,Object> riderPrograss(@RequestParam Map<String,Object> paramMap,Model model){
+        
+        int res = deliveryMapper.riderStatusUpdate(paramMap);
+
+        Map<String,Object>map = new HashMap<>();
+
+        map.put("result", res==1);
+
+        return map;
+    }
+
+    
+    @RequestMapping("/rider/progress.do")
+   // public String riderProgress(Model model,int rider_idx){
+    public String riderProgress(Model model,HttpSession session){
+        
+        //로그인이 되면 로그인된 라이더의 idx를 세션에서 가져와야한다.
+        // 로그인된 라이더 정보에서 rider_idx 가져오기
+       // Integer rider_idx = (Integer) session.getAttribute("rider_idx");
+        RiderVo 	user 	= (RiderVo) session.getAttribute("user");
+        int rider_idx = user.getRider_idx();
+        
+        
+        //로그인된 라이더 정보가 없을 경우 
+        if (user == null) {
+            return "redirect:/login_form.do";
+        }
+
+        //아래코드는 임의로 rider_idx가 1인 사람것을 가져오도록 한다.
+        //List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(1);
+        List<DeliveryVo> rider_list = deliveryMapper.selectRiderList(rider_idx);
+
+        //rider_list는 배차완료한 라이더의 현황을 볼수 있는 리스트이다.
+        // System.out.println("---------------------------");
+        // System.out.println(rider_list.size());
+        // System.out.println("---------------------------");
+        
+		// 결과적으로 request binding
+		model.addAttribute("rider_list", rider_list);
+        
+        return "rider/rider_progress";
+    }
+    
+    //parameter map으로 받기 :deliverycomplete.do? order_idx=1
+    @RequestMapping("/rider/deliverycomplete.do")
+    @ResponseBody
+    public Map<String,Object> deliveryComplete(@RequestParam Map<String,Object> paramMap,Model model){
+        
+        int res = deliveryMapper.deliveryStatusUpdate(paramMap);
+
+        Map<String,Object>map = new HashMap<>();
+
+        map.put("result", res==1);
+
+        return map;
+    }
+
+    @RequestMapping("/rider/complete.do")
+    //public String riderComplete(int rider_idx,Model model){
+    public String riderComplete(Model model,HttpSession session){
+        //로그인이 되면 로그인된 라이더의 idx를 세션에서 가져와야한다.
+       // 로그인된 라이더 정보에서 rider_idx 가져오기
+       // Integer rider_idx = (Integer) session.getAttribute("rider_idx");
+       RiderVo 	user 	= (RiderVo) session.getAttribute("user");
+       int rider_idx = user.getRider_idx();
+       
+       //로그인된 라이더 정보가 없을 경우 
+       if (user == null) {
+           return "redirect:/login_form.do";
+       }
+
+        List<DeliveryVo> deliverycomplete_list = deliveryMapper.selectDeliveryCompleteList(rider_idx);
+
+		// 결과적으로 request binding
+		model.addAttribute("deliverycomplete_list", deliverycomplete_list);
+
+        return "rider/rider_complete";
+    }
+
+    //전체 내역 정산조회
+    @RequestMapping("/rider/deliveryfee.do")
+    public String riderTotalDeliveryFee(int rider_idx,Model model){
+
+        List<RiderDeliveryFeeVo> riderdelivery_list =riderDeliveryFeeMapper.selectList(rider_idx);
+        
+        //request binding
+        model.addAttribute("riderdelivery_list", riderdelivery_list);
+
+        
+        return "rider/rider_deliveryfee";
+    }
+
+
+    //당일내역 정산
+    @RequestMapping("/rider/todayfee.do")
+    public String riderTodayDeliveryFee(){
+
+        return "rider/rider_todayfee";
+    }
+
+    
+
+
+    @RequestMapping("/route/route.do")
+    public String showDeliveryMap(Model model) {
+        try {
+            // 예시 주소들 (DB나 폼 입력 등에서 받아오기)
+            String shopAddress = "관악로 165 롯데리아 서울대입구역점";
+            String memberAddress = "서울 관악구 관악로14나길 10 1층";
+            String riderAddress = "서울 관악구 낙성대역길 8";
+            //String riderAddress = "동작대로 129 1층";
+
+            //위도경도 얻기 
+            double[] storeCoords = kakaoMapService.getCoordinates(shopAddress);
+            double[] customerCoords = kakaoMapService.getCoordinates(memberAddress);
+            double[] riderCoords = kakaoMapService.getCoordinates(riderAddress);
+
+            //거리계산하기(미터단위)
+            double calculateDistance =  kakaoMapService.calculateDistance( storeCoords[0], storeCoords[1], customerCoords[0], customerCoords[1]);
+            double calculateDistance1 =  kakaoMapService.calculateDistance( customerCoords[0], customerCoords[1],riderCoords[0], riderCoords[1]);
+            //double rescal = calculateDistance + calculateDistance1;
+            double totalDistance = calculateDistance + calculateDistance1;
+           
+            
+            //수수료 계산
+            //1km보다 이하는 3,000원(일단 테스트용)
+            //초과분부터 1001m부터 1m당 1원 
+            double delivery_fee = 0;
+            if(totalDistance>1000){
+                //fee = 3000 +  (rescal-1000);
+                 // 소수점 셋째 자리에서 절사 (버림)
+                 delivery_fee = 3000 + Math.round((totalDistance-1000)*1000/1000.0);
+            }else delivery_fee = 3000;
+
+            // 위도경도 requstbinding
+            model.addAttribute("shop_longitude", storeCoords[1]);
+            model.addAttribute("shop_latitude", storeCoords[0]);
+            model.addAttribute("mem_longitude", customerCoords[1]);
+            model.addAttribute("mem_latitude", customerCoords[0]);
+            model.addAttribute("rider_longitude", riderCoords[1]);
+            model.addAttribute("rider_latitude", riderCoords[0]);
+
+            // 거리 및 수수료 requstbinding
+            model.addAttribute("totalDistance", totalDistance);
+            model.addAttribute("delivery_fee", delivery_fee);
+
+            // 주소도 전달 (경로보기 버튼용) 가게와 배달지 경로보기 카카오맵
+            model.addAttribute("shop_addr", shopAddress);
+            model.addAttribute("mem_curaddr", memberAddress);
+
+        } catch (Exception e) {
+            model.addAttribute("error", "위도/경도 변환 중 오류 발생: " + e.getMessage());
+        }
+
+        return "route/distanceRoute";  // /WEB-INF/views/route/distanceRoute.jsp
+    }
+
+   
+
+
+    }
+
+

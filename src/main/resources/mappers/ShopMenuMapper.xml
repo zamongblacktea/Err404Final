@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.ShopMenuMapper">
+
+   <!-- 가게 메뉴 조회 -->
+   <select id="selectMenuAll" parameterType="int" resultType="ShopMenuVo"> 
+      select * from menu where shop_idx=#{shop_idx} 
+   </select>
+
+   <!-- 가게 메뉴 하나 조회 -->
+   <select id="selectMenuOne" parameterType="int" resultType="ShopMenuVo">
+      select * from menu where menu_idx = #{menu_idx}
+
+   </select>
+
+   <!-- 메뉴추가 -->
+   <insert id="menuInsert" parameterType="ShopMenuVo"> 
+      insert into menu values( null,
+                              #{ shop_idx },
+                              #{ menu_cate },
+                              #{ menu_name },
+                              #{ menu_explain}, 
+                              #{ menu_img },
+                              #{ menu_price },
+                              now(), 
+                              null,
+                              '판매' ) 
+   </insert>
+
+   <!-- 메뉴 수정 -->
+   <update id="menuModify" parameterType="ShopMenuVo">
+      update menu set menu_name=#{menu_name}, menu_price=#{menu_price}, menu_explain=#{menu_explain},
+                      menu_status = #{menu_status},
+                      menu_update = now()
+      where menu_idx = #{menu_idx}
+   </update>
+
+   <!-- 메뉴 사진 수정 -->
+    <update id="menuPhotoUpload" parameterType="ShopMenuVo">
+      update menu set menu_img = #{menu_img} where menu_idx = #{menu_idx}
+    </update>
+
+    <!-- 메뉴 삭제 -->
+    <delete id="menuDelete" parameterType="int">
+      delete from menu where menu_idx = #{menu_idx}
+    </delete>  
+
+</mapper>
