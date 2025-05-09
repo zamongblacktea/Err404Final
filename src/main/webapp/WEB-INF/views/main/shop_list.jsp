@@ -13,8 +13,9 @@ pageEncoding="UTF-8"%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
-
+    
     <script>
+      
     function find(){
     let keyword = document.getElementById("search").value;
     $.ajax({
@@ -52,6 +53,7 @@ pageEncoding="UTF-8"%>
       </form>
   </div>
     <div class="category">
+     
       <%@ include file="catebar.jsp"%>
     </div>
     <div id="main">

@@ -71,7 +71,16 @@
     </div>
 
   <div class="category">
-    <%@ include file="catebar.jsp"%>
+    <ul class="category-nav">
+      <li class="cate-btn active" onclick="location.href='../main/list.do'">전체보기
+       <input type="hidden" class="cate_idx" value=""> 
+      </li>
+      <c:forEach var="cate" items="${cate_list}">
+        <li class="cate-btn" onclick="location.href='../main/list.do?shop_cate_idx=${cate.shop_cate_idx}'" id="cate-btn-${cate.shop_cate_idx}">${cate.shop_cate_name}
+           <input type="hidden" class="cate_idx" value="${cate.shop_cate_idx}">
+        </li>
+      </c:forEach>
+    </ul>
   </div>
 
     <div class="content">
