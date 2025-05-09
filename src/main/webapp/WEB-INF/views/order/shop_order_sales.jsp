@@ -6,10 +6,6 @@
 
 
 
-
-
-
-
           <div id="salesTable">
             <table class="table">
                 <tr class="success">
