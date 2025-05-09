@@ -42,6 +42,7 @@
   
   td{
     vertical-align: middle !important;
+    height: 50px;
   }
 
   
@@ -105,7 +106,7 @@
   <div class="row"  style="margin-top: 50px; margin-bottom: 20px;">
     <div class="col-sm-4 col-md-4" >
 			<!-- 검색메뉴 -->
-          
+<!--           
          <form class="form-inline">
             <div class="form-group">
               <select id="search" class="form-control">
@@ -122,7 +123,7 @@
             <div class="form-group" style="margin-left: 10px;">
               <input class="btn btn-primary" type="button" value="검색" onclick="find();">
             </div>
-          </form>
+          </form> -->
           
         
     </div>
@@ -151,7 +152,7 @@
         <th>아이디</th>
         <th>이메일</th>
         <th>사업자 번호</th>
-        <th>승인</th>
+        <th>승인 여부</th>
         <th></th>
         
         <!-- 로그인 유저가 관리자면 -->
@@ -180,11 +181,12 @@
            <td>${ vo.owner_name }</td>
            <td>${ vo.owner_id }</td>
            <td>${ vo.owner_email }</td>
-           <td>${ vo.owner_num }</td>
+           <td><img src="../images/${vo.owner_num}" alt="사업자 이미지" style="width: 100px; cursor: pointer;" data-toggle="modal" data-target="#riderImageModal"></td>
+            
            <td>${ vo.owner_approve }</td>
            
            <!-- 로그인 유저가 관리자면 -->
-           <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
+           <c:if test="${ sessionScope.user.mem_grade eq '관리자' && vo.owner_approve eq '대기'}">
 	           <td>
 	               <input class="btn btn-success" type="button"  value="승인"
 	                      onclick="location.href='owner_approval.do?owner_idx=${ vo.owner_idx }'" >
@@ -200,6 +202,34 @@
   </table>
 
 </div>
+<!-- modal -->
+      <div class="modal fade" id="riderImageModal" tabindex="-1" role="dialog" aria-labelledby="riderImageModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
 
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="riderImageModalLabel">라이더 이미지</h4>
+            </div>
+
+            <div class="modal-body text-center">
+              <img id="modalImage" src="" class="img-responsive center-block" alt="라이더 이미지">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- 이미지 변경 스크립트 -->
+      <script>
+        $(document).ready(function () {
+          $('img[data-toggle="modal"]').on('click', function () {
+            $('#modalImage').attr('src', $(this).attr('src'));
+          });
+        });
+      </script>
 </body>
 </html>

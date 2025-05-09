@@ -141,7 +141,7 @@ body {
   }
   
   form .signin__btn:hover {
-    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.36);
   }
   
   .separator {
@@ -202,7 +202,7 @@ body {
   }
   
   .google__btn:hover {
-    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.36);
   }
   
   .kakao__btn {
@@ -220,7 +220,7 @@ body {
   }
 
   .rider__btn:hover {
-    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.36);
   }
   
   
@@ -245,11 +245,11 @@ body {
   
   
   .naver__btn:hover {
-    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.36);
   }
   
   .kakao__btn:hover {
-    box-shadow: 0 0px 15px rgba(233, 30, 99, 0.36);
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.36);
   }
   
   .google__btn .fa,

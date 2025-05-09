@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.githrd.project.dao.OrderMenuMapper;
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.PaymentMapper;
 import com.githrd.project.vo.CartVo;
@@ -28,6 +29,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Autowired
     PaymentMapper paymentMapper;
+
+    @Autowired
+    OrderMenuMapper orderMenuMapper;
 
     @Autowired
     OrderStatusMapper orderStatusMapper;
@@ -84,28 +88,26 @@ public class PaymentServiceImpl implements PaymentService {
 
 
 
-                System.out.println("insert 넣기전 vo:" + vo);
-                Map<String,Object> map = new HashMap<String,Object>();
-                
-                map.put("cart_list", cart_list);
-                map.put("mcuraddr_idx", mcuraddr_idx);
-                map.put("mem_name", mem_name);
-                map.put("mem_phone", mem_phone);
-                map.put("imp_uid", imp_uid);
-                map.put("merchant_uid", merchant_uid);
-                map.put("amount", amount);
-                map.put("order_request", order_request);
-                map.put("rider_request", rider_request);
-                map.put("mem_addr1", mem_addr1);
-                map.put("mem_addr2", mem_addr2);
-                map.put("order_idx", order_idx);
+
 
 
                 
                 //Payment DB insert
-                int res = paymentMapper.insert(map); 
-                
+                vo.setOrder_idx(order_idx);
 
+                System.out.println("insert 넣기전 vo:" + vo);
+                int res = paymentMapper.insert(vo); 
+                
+                System.out.println("insert 넣은 후 order_idx :" + vo.getOrder_idx());
+                Map<String,Object> map = new HashMap<String,Object>();
+                
+                map.put("cart_list", cart_list);
+                map.put("order_idx", vo.getOrder_idx());
+
+
+
+                //OrderMenu DB insert
+                res = orderMenuMapper.insert(map);
 
                 System.out.println("merchant : " + merchant_uid);
 
@@ -124,7 +126,7 @@ public class PaymentServiceImpl implements PaymentService {
                 
 
                 System.out.println("입력값 : " + order_status);
-                //DB insert
+                //order_status DB insert
                 int res2 = orderStatusMapper.insert(order_status);
 
 

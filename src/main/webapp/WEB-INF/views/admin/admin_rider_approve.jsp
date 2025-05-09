@@ -124,7 +124,7 @@
         <div class="row" style="margin-top: 30px; margin-bottom: 20px;">
           <div class="col-sm-4 col-md-4">
             <!-- 검색메뉴 -->
-
+<!-- 
             <form class="form-inline">
               <select id="search" class="form-control">
                 <option value="all">전체</option>
@@ -134,7 +134,7 @@
 
               <input class="form-control" id="search_text" value="${ param.search_text }">
               <input class="btn btn-primary" type="button" value="검색" onclick="find();">
-            </form>
+            </form> -->
 
           </div>
           <div class="col-sm-8 col-md-8" style="text-align: right">
@@ -201,15 +201,14 @@
               <td>${ vo.rider_account }</td>
               <td>${ vo.rider_approve }</td>
 
-              <!-- 로그인 유저가 관리자면 -->
-              <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
-                <td>
-                  <input class="btn btn-success" type="button" value="승인"
-                    onclick="location.href='rider_approval.do?rider_idx=${ vo.rider_idx }'">
-
-
-                </td>
-              </c:if>
+           <!-- 로그인 유저가 관리자면 -->
+           <c:if test="${ sessionScope.user.mem_grade eq '관리자' && vo.rider_approve eq '대기'}">
+	           <td>
+	               <input class="btn btn-success" type="button"  value="승인"
+	                      onclick="location.href='rider_approval.do?rider_idx=${ vo.rider_idx }'" >
+	                  
+	           </td>
+           </c:if>
 
 
 

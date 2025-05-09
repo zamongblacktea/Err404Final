@@ -25,7 +25,7 @@
 
   <body>
     <div class="signup-container">
-      <h2>간편 회원 가입</h2>
+      <h2>간편 회원가입</h2>
       <form>
         <input type="hidden" name="mem_id" value="${param.mem_id}">
         <input type="hidden" name="mem_type" value="${param.mem_type}">
@@ -57,7 +57,7 @@
           <tr>
             <th>우편번호</th>
             <td>
-              <input class="form-control" required="required" style="width: 30%;" >
+              <input class="form-control" required="required" style="width: 30%;" id="mem_zipcode">
               <input class="btn btn-info" type="button" value="주소검색" onclick="find_curaddr();">
             </td>
           </tr>

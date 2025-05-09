@@ -83,4 +83,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      delete from mem_addr where mcuraddr_idx = #{ mcuraddr_idx }
    </delete>
 
+
 </mapper>
