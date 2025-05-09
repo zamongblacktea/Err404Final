@@ -79,6 +79,7 @@
         <div id="mybox">
           <div class="shop-title">${shop.shop_name}</div>
           <input type="hidden" name="shop_dfee" id="shop_dfee" value="${shop.shop_dfee}">
+          <input type="hidden" name="shop_idx" id="shop_idx" value="${shop.shop_idx}">
           <div class="shop-content">
             <div id="shop_logo">
               <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 80px; height: 100%" />
@@ -89,7 +90,7 @@
               <li>최소주문금액 <fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</li>
             </ul>
           </div>
-          <div class="shop-notice">가게 공지사항 | ${shop.shop_notice}</div>
+          <div class="shop-notice"><span id="span-notice">📢가게 공지사항 | ${shop.shop_notice}</span></div>         
 
           <ul class="content_nav">
             <li><input type="button" onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="메뉴"></input></li>

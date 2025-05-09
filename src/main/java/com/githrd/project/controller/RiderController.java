@@ -22,6 +22,7 @@ import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.service.CalculateService;
 import com.githrd.project.service.KakaoMapService;
 import com.githrd.project.vo.DeliveryVo;
+import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.RiderVo;
 
@@ -108,7 +109,7 @@ public class RiderController {
 
         //주소가져오기
         String shopAddr = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
-        String memAddr = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
+        String memAddr = orderStatusMapper.getMemberAddr(orderStatusVo.getOrder_idx());
         String riderAddr = riderMapper.getRiderAddr(rider_idx);
 
         // 거리와 수수료 계산
@@ -146,7 +147,7 @@ public class RiderController {
         //status update
         res = res * orderStatusMapper.riderStatusUpdate(vo);
         // int res = deliveryMapper.riderStatusUpdate(paramMap);
-        Map<String,Object>map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         map.put("result", res==1);
  
          //배차받기 알림을 위한 웹소캣 전송
@@ -351,9 +352,11 @@ public class RiderController {
             // String memberAddress = "서울 관악구 관악로14나길 10 1층";
             // String riderAddress = "서울 관악구 낙성대역길 8";
             OrderStatusVo orderStatusVo = orderStatusMapper.selectOrderOne(order_idx);
-            
+
+
+
+            String memAddress = orderStatusMapper.getMemberAddr(orderStatusVo.getOrder_idx());
             String shopAddress = shopInfoMapper.getShopAddr(orderStatusVo.getShop_idx()); 
-            String memAddress = memberAddrMapper.getMemberAddr(orderStatusVo.getMem_idx());
             String riderAddress = riderMapper.getRiderAddr(rider_idx);
 
             System.out.println("--[orderStatusVo]-------------------------");

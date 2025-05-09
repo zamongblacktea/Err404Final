@@ -59,6 +59,9 @@ public interface OrderStatusMapper {
 
     public int selectSaleDate(Map<String,Object> map);
 
+    // mem주소 얻기
+	public String getMemberAddr(int order_idx);
+
 
 
 

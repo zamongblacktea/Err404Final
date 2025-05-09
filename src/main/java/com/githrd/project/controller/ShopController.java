@@ -294,6 +294,13 @@ public class ShopController {
 
         ShopInfoVo shop = shopService.selectShopOne(shop_idx);
 
+        // <br> -> \n 
+        String shop_notice = shop.getShop_notice().replaceAll("<br>", "\n");
+        String shop_intro = shop.getShop_intro().replaceAll("<br>", "\n");
+
+        shop.setShop_notice(shop_notice);
+        shop.setShop_intro(shop_intro);
+
         model.addAttribute("shop", shop);
         model.addAttribute("shop_cate_idx", shop.getShop_cate_idx());
 
