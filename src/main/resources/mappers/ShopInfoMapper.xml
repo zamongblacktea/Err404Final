@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.ShopInfoMapper">
+
+	<!-- 주소가져오기 -->
+	<select id="getShopAddr" resultType="String" parameterType="int">
+		SELECT shop_addr1 FROM
+		shop_info WHERE shop_idx = #{shop_idx} 
+	</select>
+
+	<!-- 가게전체조회 -->
+	<select id="selectListAll" resultType="ShopInfoVo"> select * from shop_info </select>
+
+	<!-- 가게 하나만 조회 -->
+	<select id="selectShopOne" parameterType="int" resultType="ShopInfoVo"> select * from shop_info
+		where shop_idx=#{shop_idx} </select>
+
+	<!-- owner_idx로 가게 조회 -->
+	<select id="selectByOwnerIdx" parameterType="int" resultType="ShopInfoVo"> select * from
+		shop_info where owner_idx = #{owner_idx} </select>
+
+	<!-- 카테고리별 가게조회 -->
+	<select id="selectListFromCate" parameterType="int" resultType="ShopInfoVo"> select * from
+		shop_info where shop_cate_idx=#{shop_cate_idx} order by shop_idx </select>
+
+	<!-- 가게 배달비 조회 -->
+	<select id="selectShopDfee" parameterType="int" resultType="Integer"> select shop_dfee from
+		shop_info where shop_idx = #{shop_idx} </select>
+
+	<!-- 카테고리 조회 -->
+	<select id="selectCate" resultType="ShopInfoVo"> select * from shop_category </select>
+
+	<!-- 가게 검색 -->
+	<select id="searchShopList" resultType="shopInfoVo">
+		SELECT DISTINCT s.*
+		FROM shop_info s
+		LEFT OUTER JOIN menu_info m ON s.shop_idx = m.shop_idx
+			AND m.is_delete = 0
+		LEFT OUTER JOIN shop_category c ON s.shop_cate_idx = c.shop_cate_idx
+		WHERE (s.shop_name LIKE CONCAT('%', #{keyword}, '%')
+			   OR m.menu_name LIKE CONCAT('%', #{keyword}, '%')
+			   OR c.shop_cate_name LIKE CONCAT('%',#{keyword},'%'))
+			   
+	  </select>
+
+	<!-- 가게추가 -->
+	<insert id="shopInsert" parameterType="ShopInfoVo" useGeneratedKeys="true"
+		keyProperty="shop_idx"> insert into shop_info values( null, #{ owner_idx }, #{ shop_cate_idx
+		}, #{ shop_name }, #{ shop_company }, #{ shop_bnumber }, #{ shop_addr1 }, #{ shop_addr2 },
+		#{ shop_longitude }, #{ shop_latitude }, #{ shop_phone }, #{ shop_dfee }, #{ shop_logo }, #{
+		shop_img }, #{ shop_notice }, #{ shop_intro }, #{ shop_minprice }, #{ shop_mintime }, #{
+		shop_maxtime }, #{ shop_rating}, #{ shop_favor}, #{ shop_reviewcnt }, #{ shop_optime }, #{
+		shop_cltime}, #{ shop_closeday}, #{ shop_loc }, NOW(), null, '영업중') </insert>
+
+	<!-- 가게 수정하기 -->
+	<update id="shopModify" parameterType="ShopInfoVo"> update shop_info set shop_name =
+		#{shop_name}, shop_company = #{shop_company}, shop_bnumber = #{shop_bnumber}, shop_addr1 =
+		#{shop_addr1}, shop_addr2 = #{shop_addr2}, shop_phone = #{shop_phone}, shop_cate_idx =
+		#{shop_cate_idx}, shop_dfee = #{shop_dfee}, shop_logo = #{shop_logo}, shop_notice =
+		#{shop_notice}, shop_intro = #{shop_intro}, shop_minprice = #{shop_minprice}, shop_mintime =
+		#{shop_mintime}, shop_maxtime = #{shop_maxtime}, shop_optime = #{shop_optime}, shop_cltime =
+		#{shop_cltime}, shop_closeday = #{shop_closeday}, shop_loc = #{shop_loc}, shop_update =
+		now() where shop_idx = #{shop_idx} </update>
+
+	<!-- 가게 로고 수정 -->
+	<update id="LogoUpload" parameterType="ShopInfoVo"> update shop_info set shop_logo =
+		#{shop_logo} where shop_idx = #{shop_idx} </update>
+
+	<!-- 가게 사진 수정 -->
+	<update id="PhotoUpload" parameterType="ShopInfoVo"> update shop_info set shop_img = #{shop_img}
+		where shop_idx = #{shop_idx} </update>
+
+	<!-- 가게 별점 수정 -->
+	<update id="rateUpdate" parameterType="int"> update shop_info set shop_rating = (select
+		ifnull(ROUND(SUM(review_rating)/count(*), 1), 0) from mem_review where shop_idx =
+		#{shop_idx}) where shop_idx = #{shop_idx} </update>
+
+	<!-- 가게 리뷰 개수 수정 -->
+	<update id="reviewCntUpdate" parameterType="int"> update shop_info set shop_reviewcnt = (select
+		ifnull(count(*), 0) from mem_review where shop_idx = #{shop_idx}) where shop_idx =
+		#{shop_idx} </update>
+
+
+	<!-- 가게 등록 여부 -->
+	<select id="countShopByOwnerIdx" parameterType="int" resultType="int"> 
+	    select IFNULL(COUNT(*),0) from shop_info where owner_idx = #{owner_idx} 
+	</select>
+
+    
+ 
+</mapper>
