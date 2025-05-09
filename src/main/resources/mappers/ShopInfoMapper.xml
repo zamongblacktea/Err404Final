@@ -34,7 +34,7 @@
 	<select id="searchShopList" resultType="shopInfoVo">
 		SELECT DISTINCT s.*
 		FROM shop_info s
-		JOIN menu_info m ON s.shop_idx = m.shop_idx
+		LEFT OUTER JOIN menu_info m ON s.shop_idx = m.shop_idx
 		WHERE (s.shop_name LIKE CONCAT('%', #{keyword}, '%')
 			   OR m.menu_name LIKE CONCAT('%', #{keyword}, '%'))
 	  </select>
