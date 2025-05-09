@@ -93,16 +93,16 @@
             //첫번째 화면
             if('${empty param.search}'=='true'){
               if('${ empty param.shop_cate_idx}'=='true'){
-              shop_cate_list(0)  ;
-            }else{
-              const cate_idx =  '${param.shop_cate_idx}';
-              shop_cate_list(cate_idx);
-            
-              $(".cate-btn").removeClass("active");
-                     // 현재 클릭한 버튼만 active 추가
-              $("#cate-btn-" + cate_idx).addClass("active");
-            
-            }
+                shop_cate_list(0)  ;
+              }else{
+                const cate_idx =  '${param.shop_cate_idx}';
+                //shop_cate_list(cate_idx);
+              
+                $(".cate-btn").removeClass("active");
+                      // 현재 클릭한 버튼만 active 추가
+                $("#cate-btn-" + cate_idx).addClass("active");
+              
+              }
             }
 
         });
@@ -112,11 +112,12 @@
 
   <body>
     <ul class="category-nav">
-      <li class="cate-btn active" onclick="location.href='../main/list.do'">전체보기
+      <!-- <li class="cate-btn active" onclick="location.href='../main/list.do'">전체보기 -->
+      <li class="cate-btn active" onclick="shop_cate_list('')">전체보기
        <input type="hidden" class="cate_idx" value=""> 
       </li>
       <c:forEach var="cate" items="${cate_list}">
-        <li class="cate-btn" onclick="location.href='../main/list.do?shop_cate_idx=${cate.shop_cate_idx}'" id="cate-btn-${cate.shop_cate_idx}">${cate.shop_cate_name}
+        <li class="cate-btn" onclick="shop_cate_list('${cate.shop_cate_idx}')" id="cate-btn-${cate.shop_cate_idx}">${cate.shop_cate_name}
            <input type="hidden" class="cate_idx" value="${cate.shop_cate_idx}">
         </li>
       </c:forEach>
