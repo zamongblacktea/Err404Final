@@ -72,6 +72,48 @@ body {
   display: inline-block;
 }
 
+.category-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 14px;
+  white-space: nowrap;
+  padding: 0 10px;
+  box-sizing: border-box;
+  margin-bottom: 0;
+}
+
+.category-nav li {
+  list-style: none;
+  cursor: pointer;
+  color: #333;
+  padding: 0 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.category-nav li + li::before {
+  position: absolute;
+  left: 0;
+  color: #ccc;
+
+}
+
+.category-nav .active {
+  background-color: #333;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 0 12px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 .category {
   height: 60px;
   border: 1px solid #d9d9d9;

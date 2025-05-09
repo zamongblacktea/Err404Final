@@ -62,7 +62,9 @@ body {
   display: inline-block;
   width: 490px;
   height: 110px;
-  margin: 5px 7px;
+  /* margin: 5px 7px; */
+  margin: 15px; 
+  text-align: left;
 }
 
 .shop-list {
