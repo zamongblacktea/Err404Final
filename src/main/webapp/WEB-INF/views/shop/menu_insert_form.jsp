@@ -130,6 +130,8 @@
           success: function (response) {
             alert("메뉴가 성공적으로 등록되었습니다.");
             loadContent("menu_list.do");
+            $("#sidebar a").removeClass("active");
+            $("#sidebar a").eq(1).addClass("active");
           },
           error: function (xhr, status, error) {
             alert("메뉴 등록 중 오류가 발생했습니다: " + error);

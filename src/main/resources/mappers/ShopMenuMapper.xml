@@ -4,12 +4,12 @@
 
    <!-- 가게 메뉴 조회 -->
    <select id="selectMenuAll" parameterType="int" resultType="ShopMenuVo"> 
-      select * from menu_info where shop_idx=#{shop_idx} 
+      select * from menu_info where shop_idx=#{shop_idx} and is_delete = 0
    </select>
 
    <!-- 가게 메뉴 하나 조회 -->
    <select id="selectMenuOne" parameterType="int" resultType="ShopMenuVo">
-      select * from menu_info where menu_idx = #{menu_idx}
+      select * from menu_info where menu_idx = #{menu_idx} and is_delete = 0
 
    </select>
 
@@ -17,7 +17,7 @@
    <insert id="menuInsert" parameterType="ShopMenuVo"> 
       insert into menu_info values( null,
                               #{ shop_idx },
-                              #{ menu_cate },
+                              0,
                               #{ menu_name },
                               #{ menu_explain}, 
                               #{ menu_img },
@@ -41,8 +41,11 @@
     </update>
 
     <!-- 메뉴 삭제 -->
-    <delete id="menuDelete" parameterType="int">
+    <!-- <delete id="menuDelete" parameterType="int">
       delete from menu_info where menu_idx = #{menu_idx}
-    </delete>  
+    </delete>   -->
+    <update id="menuDelete" parameterType="int">
+      update menu_info set is_delete = 1 where menu_idx = #{menu_idx}
+    </update>
 
 </mapper>

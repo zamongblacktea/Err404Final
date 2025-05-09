@@ -90,7 +90,7 @@
               <li>최소주문금액 <fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</li>
             </ul>
           </div>
-          <div class="shop-notice">가게 공지사항 | ${shop.shop_notice}</div>
+          <div class="shop-notice"><span id="span-notice">📢가게 공지사항 | ${shop.shop_notice}</span></div>         
 
           <ul class="content_nav">
             <li><input type="button" onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="메뉴"></input></li>
