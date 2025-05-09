@@ -100,8 +100,6 @@ public class MainController {
     }
 
 
-    
-
     @GetMapping("/shop_cate_list.do")
     public String shop_cate_list(@RequestParam(name="shop_cate_idx",defaultValue = "0") int shop_cate_idx,Model model) {
       
