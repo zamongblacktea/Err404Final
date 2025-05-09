@@ -35,8 +35,12 @@
 		SELECT DISTINCT s.*
 		FROM shop_info s
 		LEFT OUTER JOIN menu_info m ON s.shop_idx = m.shop_idx
+			AND m.is_delete = 0
+		LEFT OUTER JOIN shop_category c ON s.shop_cate_idx = c.shop_cate_idx
 		WHERE (s.shop_name LIKE CONCAT('%', #{keyword}, '%')
-			   OR m.menu_name LIKE CONCAT('%', #{keyword}, '%'))
+			   OR m.menu_name LIKE CONCAT('%', #{keyword}, '%')
+			   OR c.shop_cate_name LIKE CONCAT('%',#{keyword},'%'))
+			   
 	  </select>
 
 	<!-- 가게추가 -->
