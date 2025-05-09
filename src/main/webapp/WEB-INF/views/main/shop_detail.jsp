@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> <%@ taglib
-uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -9,150 +11,106 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%@ taglib uri="http://ja
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_detail.css">
+
+     <script>
+      // detail_content 출력
+      function loadContent(url) {
+        const shop_idx = "${shop.shop_idx}"; // 세션에서 shop_idx 꺼냄
+        $.ajax({
+          url: url,
+          data: { shop_idx: shop_idx },
+          success: function (res_data) {
+            $("#disp").html(res_data);
+          },
+          error: function (err) {
+            alert("에러 발생: " + err.responseText);
+          },
+        });
+      }
+
+      // 페이지 로드 시 기본으로 메뉴 목록 표시
+      $(document).ready(function () {
+        loadContent("/main/detail_menu.do");
+      });
+
+      $(document).ready(function () {
+        checkShop(); // 페이지 로드 시 한 번 실행
+      });
+     </script>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const navButtons = document.querySelectorAll('.content_nav .nav-a');
+          navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              navButtons.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+            });
+          });
+          
+          // 첫 번째 버튼 미리 활성화
+          if (navButtons[0]) navButtons[0].classList.add('active');
+        });
+      </script>
+
   </head>
-  <style>
-    * {
-      border: 1px solid black;
-      margin: 0;
-      padding: 0;
-    }
-
-    #mybox {
-      margin: 0 auto;
-      /* width: 1150px; */
-      width: 800px;
-      padding-left: 10px;
-      display: inline-block;
-    }
-
-    .navbar {
-      width: 100%;
-      height: 80px;
-    }
-    .header {
-      width: 100%;
-      height: 160px;
-    }
-
-    .shop-detail {
-      width: 1150px;
-      /* display: block; */
-      display: flex;
-      margin: 0 auto;
-    }
-
-    .row {
-      margin: auto;
-      /* margin-top: 8px; */
-    }
-
-    .shop-title {
-      margin-bottom: 0;
-      height: 43px;
-    }
-
-    .shop-content {
-      height: 100px;
-    }
-
-    .shop-notice {
-      margin-bottom: 10px;
-      height: 44px;
-    }
-
-    #shop_logo {
-      width: 80px;
-      height: 80px;
-      display: inline-block;
-      margin-left: 10px;
-      margin-top: 10px;
-    }
-    .list {
-      display: inline-block;
-      margin-left: 15px;
-      margin-top: 10px;
-    }
-
-    .list > li {
-      list-style: none;
-    }
-
-    .nav {
-      height: 47px;
-    }
-
-    .nav > li {
-      list-style: none;
-      display: inline-block;
-    }
-
-    .menu-text {
-      width: 520px;
-      margin-top: 10px;
-    }
-
-    .menu-img {
-      width: 112px;
-      height: 80px;
-      margin-left: 140px;
-    }
-
-    .cart {
-      display: inline-block;
-      width: 300px;
-    }
-    .footer {
-      width: 100%;
-      height: 150px;
-    }
-  </style>
 
   <body>
-    <nav class="navbar">네비바 로그인/로그아웃</nav>
-    <header class="header">헤더</header>
+    <div class="page">
+      <div class="navbar">
+        <%@ include file="navbar.jsp" %>
+      </div>
+      <div class="header">
+        <form id="search_form" action="${pageContext.request.contextPath}/main/list.do" method="get">
+            <input type="text" name="search" id="search" class="form-control" placeholder="메뉴를 검색해주세요.">
+            <input type="submit" class="btn btn-outline-success btn_search" value="검색">
+        </form>
+    </div>
+
+  <div class="category">
+    <%@ include file="catebar.jsp"%>
+  </div>
+
     <div class="content">
       <div class="shop-detail">
         <div id="mybox">
-          <div class="shop-title">가게 이름</div>
-          <div class="row shop-content">
-            <div id="shop_logo" class="col-sm-4">
-              <img src="${pageContext.request.contextPath}/images/${shop_logo}" alt="가게로고" style="width: 100%; height: 100%" />
+          <div class="shop-title">${shop.shop_name}</div>
+          <input type="hidden" name="shop_dfee" id="shop_dfee" value="${shop.shop_dfee}">
+          <input type="hidden" name="shop_idx" id="shop_idx" value="${shop.shop_idx}">
+          <div class="shop-content">
+            <div id="shop_logo">
+              <img src="${pageContext.request.contextPath}/images/${shop.shop_logo}" alt="가게로고" style="width: 80px; height: 100%" />
             </div>
 
             <ul class="list">
-              <li>별점 ${shop_rating}</li>
-              <li><fmt:formatNumber value="${shop_minprice}" pattern="#,#00" />원 이상 주문</li>
-              <li>결제 카카오결제</li>
+              <li>별점 | ⭐${shop.shop_rating}</li>
+              <li>최소주문금액 <fmt:formatNumber value="${shop.shop_minprice}" pattern="#,#00" />원</li>
             </ul>
           </div>
-          <div class="shop-notice">가게 공지사항</div>
+          <div class="shop-notice"><span id="span-notice">📢가게 공지사항 | ${shop.shop_notice}</span></div>         
 
-          <ul class="nav row">
-            <li class="col-sm-4"><a class="nav-a">메뉴</a></li>
-            <li class="col-sm-4"><a href="" class="nav-a">리뷰</a></li>
-            <li class="col-sm-4"><a href="" class="nav-a">정보</a></li>
+          <ul class="content_nav">
+            <li><input type="button" onclick="loadContent('../main/detail_menu.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="메뉴"></input></li>
+            <li><input type="button" onclick="loadContent('../main/detail_review.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="리뷰"></input></li>
+            <li><input type="button" onclick="loadContent('../main/detail_info.do?shop_idx=${shop.shop_idx}');" class="nav-a" value="정보"></input></li>
           </ul>
-          <div>
-            <div>메뉴카테고리</div>
-            <div class="row">
-              <div class="menu-text col-sm-8">
-                <div class="menu-name">메뉴이름</div>
-                <div class="menu-price">메뉴가격</div>
-              </div>
-              <div class="menu-img col-sm-4"><img src="${pageContext.request.contextPath}/images/${menu_img}" alt="메뉴사진" style="width: 100%; height: 100%" /></div>
-            </div>
-          </div>
+          <div class="detail-content" id="disp"></div>
         </div>
         <div class="cart">
-          <div>주문표/취소</div>
-          <div>메뉴/가격/수량</div>
-          <div>최소주문금액 얼마</div>
-          <div>합계 얼마</div>
-          <div>주문하기 버튼</div>
+            <%@ include file="./detail_cart.jsp" %>
         </div>
       </div>
     </div>
+    </div>
 
+  </div>
     <footer class="footer">푸터</footer>
+    </div>
+    <script src="${pageContext.request.contextPath}/js/detail_cart.js"></script>
+    <script src="${pageContext.request.contextPath}/js/detail_menu.js"></script>
+    
   </body>
 </html>

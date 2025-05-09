@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.OwnerReplyMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
+import com.githrd.project.service.CalculateService;
 import com.githrd.project.service.ShopService;
+import com.githrd.project.vo.MemReviewVo;
+import com.githrd.project.vo.OwnerReplyVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
 import com.githrd.project.vo.ShopMenuVo;
@@ -26,6 +31,8 @@ import com.githrd.project.vo.ShopMenuVo;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/shop")
@@ -39,6 +46,15 @@ public class ShopController {
 
     @Autowired
     ShopMenuMapper shopMenuMapper;
+
+    @Autowired
+    MemReviewMapper memReviewMapper;
+
+    @Autowired
+    OwnerReplyMapper ownerReplyMapper;
+
+    @Autowired
+    CalculateService calculateService;
 
     @Autowired
     HttpSession session;
@@ -69,12 +85,29 @@ public class ShopController {
             return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
         }
 
+        //order_status의 상태가 NONE인 갯수 구하기
+        int order_count = shopService.selectOrderCount(shop.getShop_idx());
+
+        System.out.println("---------------[begin  shop:main]------------------");
+        System.out.println("shop_idx    : " + shop.getShop_idx());
+        System.out.println("order_count : " + order_count);
+        System.out.println("---------------[end    shop:main]------------------");
+
+
+        // 가게 메뉴가 있는지 없는지 확인
+        List<ShopMenuVo> menu = shopService.selectMenuAll(shop.getShop_idx());
+
+        if(menu.size() == 0 || menu.isEmpty()){
+            model.addAttribute("menu", "null");
+        }
+
         // 4. 세션에 shop_idx 저장 (필요 시)
         session.setAttribute("shop_idx", shop.getShop_idx());
 
         // 5. 모델에 담기
         model.addAttribute("owner_idx", owner.getOwner_idx());
         model.addAttribute("shop_idx", shop.getShop_idx());
+        model.addAttribute("order_count",order_count);
 
         return "shop/shop_main";
     }
@@ -251,7 +284,8 @@ public class ShopController {
 
         // model.addAttribute("shop_idx", vo.getShop_idx());
 
-        return "redirect:menu_insert_form.do";
+        // return "redirect:menu_insert_form.do";
+        return "redirect:main.do";
     }
 
     // 가게 정보 수정 폼
@@ -259,6 +293,13 @@ public class ShopController {
     public String shop_modify_form(@RequestParam int shop_idx, Model model) {
 
         ShopInfoVo shop = shopService.selectShopOne(shop_idx);
+
+        // <br> -> \n 
+        String shop_notice = shop.getShop_notice().replaceAll("<br>", "\n");
+        String shop_intro = shop.getShop_intro().replaceAll("<br>", "\n");
+
+        shop.setShop_notice(shop_notice);
+        shop.setShop_intro(shop_intro);
 
         model.addAttribute("shop", shop);
         model.addAttribute("shop_cate_idx", shop.getShop_cate_idx());
@@ -288,7 +329,8 @@ public class ShopController {
 
         ra.addAttribute("shop_idx", vo.getShop_idx());
 
-        return "redirect:order_list.do";
+        return "shop/shop_main";
+        //return "redirect:order_list.do";
         // return "redirect:main.do";
     }
 
@@ -347,21 +389,6 @@ public class ShopController {
         return map;
     }
 
-    // 주문현황리스트
-    @GetMapping("/order_list.do")
-    public String order_list(Model model) {
-        OwnerVo owner = (OwnerVo) session.getAttribute("user");
-        int owner_idx = owner.getOwner_idx();
-        ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
-        
-        if (shop == null) {
-            return "redirect:/shop/insert_form.do?owner_idx=" + owner_idx;
-        }
-
-        session.setAttribute("shop_idx", shop.getShop_idx());
-        model.addAttribute("shop", shop);
-        return "shop/shop_order_list";
-    }
 
     // 주문완료리스트
     @GetMapping("/order_list_complete.do")
@@ -381,10 +408,46 @@ public class ShopController {
         return "shop/shop_info";
     }
 
-    // 리뷰 목록
+    //가게 리뷰 목록
     @GetMapping("/review_list.do")
-    public String review_list() {
+    public String review_list(int shop_idx,Model model) {
+
+        //회원 + 사장 리뷰 리스트
+        List<MemReviewVo> list = memReviewMapper.selectReviewReply(shop_idx);
+
+        		//작성 기준 시간 댓글 업로드 로직
+		for( MemReviewVo vo : list){
+			vo.setTimeAgo(calculateService.getTimeAgo(vo.getReview_regdate()));
+
+		}
+
+
+        model.addAttribute("list", list);
+
         return "shop/review_list";
+    }//end: review_list.do
+
+
+    //사장 리뷰 답글 등록
+    @ResponseBody
+    @PostMapping("/reply_insert.do")
+    public int replyInsert(@RequestBody OwnerReplyVo vo) {
+        //TODO: process POST request
+
+        System.out.println("-----------------------------입력전 Vo:" + vo);
+
+        // \n -> <br>
+		String reply_content = vo.getReply_content().replaceAll("\n", "<br>");
+		vo.setReply_content(reply_content);
+
+        //사장님 답글 DB에 insert
+        int res = ownerReplyMapper.insert(vo);
+
+        System.out.println("-----------------------------입력후 :" + vo);
+        //리뷰 상태 (답변됨 == 2 로 업데이트)
+        res = memReviewMapper.updateReply(vo.getReview_idx());
+        
+        return res;
     }
 
 }

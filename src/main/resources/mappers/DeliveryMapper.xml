@@ -8,32 +8,149 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="selectList" resultType="DeliveryVo">
     select * from delivery where rider_status='N'
   </select>
-  
+
   <!--  아래 정보가 업데이트된 정보를 새로담는 리스트가 있어야 한다 여기서는 rider_list-->
-    <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
-    <update id="riderStatusUpdate" parameterType="Map">
-     update delivery set rider_status ='Y',rider_idx=#{rider_idx}
-       where order_idx=#{order_idx}
-    </update>
+  <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
+  <!-- <update id="riderStatusUpdate" parameterType="Map">
+        update delivery set rider_status ='Y',rider_idx=#{rider_idx}
+        where order_idx=#{order_idx}
+        </update> -->
 
-       <!-- 배차완료한 배달중 배달현황조회 -->
+  <!-- 배차완료한 배달중 배달현황조회 -->
+  <!-- <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
+        select * from delivery
+        where rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
+    </select> -->
+
+  <!-- 배차완료한 배달현황조회 rider_list-->
     <select id="selectRiderList" parameterType="int" resultType="DeliveryVo">
-        select * from delivery
-        where rider_idx=#{rider_idx} and rider_status='Y' and  delivery_status='N'
-    </select>
+            SELECT 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,
+            si.shop_addr1,si.shop_addr2,si.shop_phone,
+            os.mem_addr1,os.mem_addr2,os.rider_request,
+            m.mem_phone
+            FROM delivery d  inner join shop_info si on d.shop_idx=si.shop_idx
+                inner join order_status_view os on d.order_idx=os.order_idx 
+                inner join member m on d.mem_idx= m.mem_idx 
+            WHERE rider_idx=#{rider_idx}  and  delivery_status in('픽업대기','배달중')
+  </select>
 
-    <!-- 배달중인 상태에서 배달완료를 누르면 delivery_status가 y로 바뀌도록하기  -->
-    <update id="deliveryStatusUpdate" parameterType="Map">
-        update delivery set delivery_status ='Y'
+
+  <!-- 픽업대기상태에서 픽업완료를 누르면 delivery_status가 배달중으로 바뀌도록하기 -->
+  <update id="deliveryPickupUpdate" parameterType="Map">
+          update delivery set delivery_status ='배달중'
           where order_idx=#{order_idx}
-       </update>
+  </update>
 
-       <!-- 배달완료한 배달현황조회 -->
-       <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
+
+  <!-- 배달중인 상태에서 배달완료를 누르면 delivery_status가 배달완료로 바뀌도록하기  -->
+  <update id="deliveryStatusUpdate" parameterType="Map">
+          update delivery set delivery_status ='배달완료'
+          where order_idx=#{order_idx}
+  </update>
+
+  <!-- delivery_satust 상태값이 바뀜에 따라 order_status 상태값 바뀌도록하기 -->
+  <update id="orderStatusUpdate" parameterType="Map">
+        update delivery set order_status = #{order_status}
+          where order_idx=#{order_idx}
+  </update>
+
+  <!-- 배달완료한 배달현황조회 -->
+  <!-- <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
         select * from delivery
-        where rider_idx=#{rider_idx} and delivery_status='Y'
-      </select>
-       
+        where rider_idx=#{rider_idx} and delivery_status='배달완료'
+      </select> -->
+  
+  <!-- 배달완료한 배달현황조회   -->
+  <select id="selectDeliveryCompleteList" parameterType="int" resultType="DeliveryVo">
+        	select 
+		      d.*,
+		      si.shop_name,si.shop_addr1,si.shop_addr2,
+          os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+					inner join order_status_view os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+  </select>
+
+
+  <!-- 정산내역보기 -->
+  <select id="selectDeliveryFeeList" parameterType="int" resultType="DeliveryVo">
+          select 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status_view os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+  </select>
+
+
+
+
+    <!-- 정산내역 날짜필터링 조회 총배달료 합계 조회 -->
+  <select id="selectTotalDeliveryFeeFilterList"  parameterType="Map" resultType="int">
+          select 
+            ifnull(sum(d.delivery_fee),0)
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status_view os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+
+          <if test="startDate!=null and endDate!=null">
+            and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          </if>
+          
+          order by d.pay_regdate 
+  </select>
+
+
+  <select id="selectDeliveryFeeFilterList" parameterType="Map" resultType="DeliveryVo">
+          select 
+            d.*,
+            si.shop_name,si.shop_addr1,si.shop_addr2,os.mem_addr1,os.mem_addr2
+          from delivery d inner join shop_info si on d.shop_idx=si.shop_idx
+          inner join order_status_view os on d.order_idx=os.order_idx 
+          where rider_idx=#{rider_idx} and delivery_status='배달완료'
+          <if test="startDate!=null and endDate!=null">
+            and date_format(pay_regdate,'%Y-%m-%d') between #{startDate} and #{endDate}
+          </if>
+          order by d.pay_regdate 
+  </select>
+
+  
+
+  <!-- delivery 정보를 추가 -->
+  <insert id="insert" parameterType="DeliveryVo">
+    insert into delivery values(null,
+                                #{order_idx},
+                                #{shop_idx},
+                                #{mem_idx},
+							                  #{rider_idx},
+                                #{menu_idx},
+                                #{mcuraddr_idx},
+                                #{rider_request},
+                                #{order_status},
+                                '픽업대기',
+                                now(),
+                                #{totalDistance},
+                                #{delivery_fee}
+                                )
+    
+  </insert>
+
+  <!-- 회원 리뷰 리스트 조회-->
+  <select id="selectListReview" resultType="DeliveryVo">
+    SELECT d.mem_idx,d.order_idx,d.delivery_idx,d.shop_idx,d.menu_idx,m.menu_name,d.order_status,s.shop_name,
+           d.pay_regdate,d.delivery_status,o.order_regdate,o.amount, o.order_request, o.rider_request,o.pay_type,
+           o.mem_addr1,o.mem_addr2, r.review_available,o.menu_list
+      FROM delivery d
+      INNER JOIN menu_info m ON d.menu_idx = m.menu_idx
+      INNER JOIN shop_info s ON d.shop_idx = s.shop_idx
+      INNER JOIN order_status_view o ON d.order_idx = o.order_idx
+      LEFT OUTER JOIN mem_review r ON d.order_idx = r.order_idx
+      WHERE d.mem_idx = #{mem_idx} and d.delivery_status = '배달완료'
+      ORDER BY d.order_idx DESC
+  </select>
+
 
     
 </mapper>

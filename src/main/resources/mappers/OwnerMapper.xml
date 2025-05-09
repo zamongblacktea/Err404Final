@@ -20,11 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
    <!-- 사장님 이메일 인증 api -->
-  <select id="selectOneFromEmail" parameterType="String"  resultType="OwnerVo">
-
-   SELECT owner_id FROM owner WHERE owner_email = #{ email }
-
-  </select>
+   <select id="selectOneFromEmail"  parameterType="String"  resultType="int">
+      SELECT COUNT(*)
+      FROM owner
+      WHERE owner_email = #{ email }
+      </select>
 
    <!-- 사장님 아이디 비밀번호 찾기 -->
    <select id="selectOneFindInfo"  parameterType="String"  resultType="OwnerVo">
@@ -49,12 +49,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 회원수정 -->
   <update id="update"  parameterType="OwnerVo">
      update owner set owner_name=#{ owner_name },
-                       owner_nickname=#{ owner_nickname },
                        owner_pwd=#{ owner_pwd },
                        owner_email=#{ owner_email },
-                       owner_zipcode=#{ owner_zipcode },
-                       owner_curaddr=#{ owner_curaddr },
-                       owner_grade=#{ owner_grade },
                        owner_ip=#{ owner_ip },
                        owner_update = now()  
      where owner_idx=#{ owner_idx }

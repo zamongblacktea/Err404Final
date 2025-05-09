@@ -3,17 +3,19 @@ package com.githrd.project.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.MemberAddrMapper;
 import com.githrd.project.dao.MemberMapper;
 import com.githrd.project.dao.NaverMapper;
 import com.githrd.project.dao.OwnerMapper;
@@ -21,15 +23,15 @@ import com.githrd.project.dao.RiderMapper;
 import com.githrd.project.service.KakaoServiceImpl;
 import com.githrd.project.service.NaverServiceImpl;
 import com.githrd.project.service.ShopService;
+import com.githrd.project.vo.MemberAddrVo;
 import com.githrd.project.vo.MemberVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.RiderVo;
-import com.githrd.project.vo.ShopInfoVo;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.ServletContext;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -53,6 +55,12 @@ public class MemberController {
 	NaverMapper naverMapper;
 
 	@Autowired
+	MemReviewMapper memReviewMapper;
+
+	@Autowired
+	MemberAddrMapper memberAddrMapper;
+
+	@Autowired
 	HttpServletRequest request;
 
 	@Autowired
@@ -63,6 +71,29 @@ public class MemberController {
 
 	private final NaverServiceImpl naverService;
 	private final KakaoServiceImpl kakaoService;
+
+	//회원 페이지
+
+	@RequestMapping("member_main.do")
+	public String memberMain(Model model) {
+
+		// 1. 로그인한 유저 정보 꺼내오기
+		MemberVo user = (MemberVo) session.getAttribute("user");
+
+		// if (user == null) {
+		// 	return "redirect:/member/login_form.do"; // 로그인 안 했으면 로그인 폼으로
+		// }
+
+		int mem_idx = user.getMem_idx();
+
+		model.addAttribute("mem_idx", mem_idx);
+
+		return "member/member_main";
+	}
+
+
+
+
 
 	// 로그인 폼 띄우기(SNS 로그인 연동)
 	@RequestMapping("login_form.do")
@@ -131,14 +162,14 @@ public class MemberController {
 			return "redirect:" + url; // 원래있던 페이지로 이동시켜라
 	}
 
-	// 로그아웃
+	//회원 로그아웃
 	@RequestMapping("logout.do")
 	public String logout() {
 
 		// 해당세션에 있는 user정보 삭제
 		session.removeAttribute("user");
 
-		return "redirect:../main/main.do";
+		return "redirect:../member/login_form.do";
 	}
 
 	// 네이버 간편회원가입폼 띄우기
@@ -162,6 +193,7 @@ public class MemberController {
 	}
 
 	// 일반회원 가입
+	@Transactional
 	@RequestMapping("insert.do")
 	public String insert(MemberVo vo) {
 
@@ -169,9 +201,31 @@ public class MemberController {
 		// 1.회원가입자의 IP구하기
 		String mem_ip = request.getRemoteAddr();
 		vo.setMem_ip(mem_ip);
-
-		// 2.DB insert
+		String mem_zipcode = vo.getMem_addr();
+		vo.setMem_zipcode(mem_zipcode);
+		String mem_addr = vo.getMem_addr2();
+		vo.setMem_addr(mem_addr);
+		
+		// 2.회원 DB insert
 		int res = memberMapper.insert(vo);
+
+		//3.회원 현재주소 DB insert
+		int mem_idx = vo.getMem_idx();
+		double mem_longitude = vo.getMem_longitude();
+		double mem_latitude = vo.getMem_latitude();
+		String addr_name = vo.getAddr_name();
+
+		//3.회원 주소록 DB에 기본주소로 삽입
+		MemberAddrVo addr = new MemberAddrVo();
+
+		addr.setMem_idx(mem_idx);
+		addr.setMem_addr1(mem_zipcode);
+		addr.setMem_addr2(mem_addr);
+		addr.setMem_longitude(mem_longitude);
+		addr.setMem_latitude(mem_latitude);
+		addr.setAddr_name(addr_name);
+		res = memberAddrMapper.memberInsert(addr);
+
 
 		return "redirect:../main/main.do";
 	}
@@ -191,6 +245,7 @@ public class MemberController {
 	}
 
 	// 수정하기
+	@Transactional
 	@RequestMapping("modify.do")
 	public String modify(MemberVo vo) {
 
@@ -200,6 +255,14 @@ public class MemberController {
 
 		// 수정
 		int res = memberMapper.update(vo);
+
+		//주소록 기본주소 수정
+		MemberAddrVo addr = new MemberAddrVo();
+
+		addr.setMem_idx(vo.getMem_idx());
+		addr.setMem_addr1(vo.getMem_zipcode());
+		addr.setMem_addr2(vo.getMem_addr());
+		res = memberAddrMapper.modifyUpdate(addr);
 
 		System.out.println(vo);
 
@@ -214,7 +277,8 @@ public class MemberController {
 		}
 
 		return "redirect:../main/main.do";
-	}
+
+	}//end: modify.do
 
 	// 회원 탈퇴
 	@RequestMapping("delete.do")
@@ -223,25 +287,12 @@ public class MemberController {
 		int res = memberMapper.delete(mem_idx);
 
 		return "redirect:list.do";
-	}
+	}// end: member_delete
+
 
 	////////////////////////////////////////////////////////////////// 사장님//////////////////////////////////////////////
 
-	// 사장님 회원 가입
-	@RequestMapping("insert_owner.do")
-	public String insert_owner(OwnerVo vo) {
 
-		// 1.회원가입자의 IP구하기
-		String owner_ip = request.getRemoteAddr();
-		vo.setOwner_ip(owner_ip);
-
-		// 입력값 확인용 sysprint
-		System.out.println(vo);
-		// 2.DB insert
-		int res = ownerMapper.insert(vo);
-
-		return "redirect:login_form.do";
-	}
 
 	// 사장님 회원가입 폼 띄우기
 	@RequestMapping("owner_form.do")
@@ -277,6 +328,65 @@ public class MemberController {
 		// 반환데이터(자바의 모든 데이터)를 JSON객체로 생성해서 반환해준다
 		return map;
 	}
+
+
+
+		// 사장님 회원 가입
+		@RequestMapping("insert_owner.do")
+		public String insert_owner(OwnerVo vo,
+				@RequestParam(name = "photo") MultipartFile[] photo_array)
+				throws IllegalStateException, IOException {
+	
+			// 사업자 등록증 사진 등록
+			int owner_insert_no = 0;
+	
+			// 파일 처리
+			// 웹경로 -> 절대경로 구하기
+			// import ServletContext 후 Autowired application 설정
+			String saveDir = application.getRealPath("/images/");
+			String owner_num = "no_file";
+	
+			for (int i = 0; i < photo_array.length; i++) {
+				MultipartFile photo = photo_array[i];
+				if (!photo.isEmpty()) {
+					// 업로드된 파일명 구하기
+					String filename = photo.getOriginalFilename();
+					File f = new File(saveDir, filename);
+	
+					// 중복파일 체크
+					if (f.exists()) {
+						long tm = System.currentTimeMillis();
+						filename = String.format("%d_%s", tm, filename);
+						f = new File(saveDir, filename);
+					}
+	
+					// 임시 공간에 저장된 파일 -> 내가 지정한 파일로 복사
+					photo.transferTo(f);
+	
+					if (i == 0) {
+						owner_num = filename;
+						vo.setOwner_num(owner_num);
+	
+					}
+				}
+			} // end : for
+	
+			// 1.회원가입자의 IP구하기
+			String owner_ip = request.getRemoteAddr();
+			vo.setOwner_ip(owner_ip);
+	
+			try {
+				owner_insert_no = ownerMapper.insert(vo);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+			// 입력값 확인용
+			System.out.println(vo);
+	
+			return "redirect:login_form.do";
+		}// end : insert_owner
 
 	// 사장님 로그인
 	@RequestMapping("owner_login.do")
@@ -386,7 +496,7 @@ public class MemberController {
 
 		int res = ownerMapper.delete(owner_idx);
 
-		return "redirect:list.do";
+		return "redirect:login_form.do";
 	}// end : delete_owner
 
 	////////////////////////////////////////////////////////////////////// 라이더//////////////////////////////////////////////////////

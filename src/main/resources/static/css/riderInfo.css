@@ -1,0 +1,111 @@
+:root {
+    --green: #ff694a;
+    --text-light: rgba(0, 0, 0, 0.5);
+  }
+
+
+  .signup-container {
+    margin-top: 100px !important ;
+    margin: auto;
+    width: 50%;
+    background: #fff;
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid var(--green);
+    padding: 40px 30px;
+    box-sizing: border-box;
+  }
+
+  .signup-container h2 {
+    color: var(--green);
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 30px;
+  }
+
+  .signup-container input {
+    margin: 10px;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.2s ease-out;
+  }
+
+  .signup-container input:valid {
+    border-bottom: 1px solid var(--green);
+  }
+
+  .signup-container input:focus:invalid {
+    border-bottom: 1px solid #ff694a;
+  }
+
+  .signup-container ::placeholder {
+    color: var(--text-light);
+  }
+
+  .signup-container #btn {
+    margin-top: 40px;
+    padding: 10px 25px;
+    background-color: var(--green);
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .signup-container #main {
+    margin-top: 10px;
+    padding: 10px 25px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .signup-container #accounts {
+    margin-top: 10px;
+    padding: 10px 25px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .signup-container #delBtn {
+    padding: 10px 25px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .signup-container button:hover {
+    background-color: #fff;
+    color: var(--green);
+    border: 2px solid var(--green);
+  }
+
+  th {
+              width: 120px !important;
+              vertical-align: middle !important;
+          }
+  
+  td{
+      width: 300px;
+
+  }

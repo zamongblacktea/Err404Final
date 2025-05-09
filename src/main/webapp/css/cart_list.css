@@ -1,0 +1,51 @@
+#box {
+  width: 1000px;
+  /* width: 100%; */
+
+  margin: auto;
+  margin-top: 30px;
+}
+
+#title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: rgb(51, 122, 183);
+  text-shadow: 1px 1px 1px black;
+  margin-bottom: 80px;
+}
+
+.my-menu {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+img {
+  width: 100px;
+  height: 80px;
+}
+
+th {
+  text-align: center !important;
+}
+
+td {
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+label {
+  display: inline-block;
+  width: 50px;
+  text-align: right;
+}
+
+.currency {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.content {
+  text-align: left;
+  padding-left: 10px;
+}

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,27 +12,23 @@
     <title>정산내역 확인페이지</title>
     <!-- 파비콘 -->
     <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+    <!-- 웹소캣 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <!-- Bootstrap 3.x -->
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
+
+   
+   <style>
       body {
         background-color: #f8f9fa;
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 50px auto;
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
       .header h2 {
@@ -90,36 +87,23 @@
         display: flex;
         justify-content: center;
       }
+      .delivery-content{
+        margin-left: 20px;
 
-      /* Responsive Styles */
-      @media (max-width: 768px) {
-        .form-inline {
-          flex-direction: column;
-        }
-
-        .form-group {
-          margin-bottom: 10px;
-        }
-
-        .button_style {
-          width: 100%;
-          margin-bottom: 10px;
-        }
-
-        .form-control {
-          width: 100%;
-        }
       }
     </style>
 </head>
 <body>
     <div class="header">
-        <h2>배달 완료 목록</h2>
-        <form action="list.do" method="get" class="form-inline">
+
+        <h2 style="margin-top: 30px; font-size: x-large; color: #0b6019;" >배달 완료 목록</h2>
+        
+        <form action="deliveryfeefilter.do" method="get" class="form-inline">
           <input type="hidden" name="rider_idx" value="${param.rider_idx}" />
-  
+         
           <!-- html5에서 지원하는 달력 태그 형식 -->
           <div class="form-group">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label for="startDate">시작 날짜:</label>
             <input
               type="date"
@@ -128,9 +112,9 @@
               value="${param.startDate}"
               class="form-control"
             />
-          </div>
+          
   
-          <div class="form-group">
+          
             <label for="endDate">종료 날짜:</label>
             <input
               type="date"
@@ -139,50 +123,65 @@
               value="${param.endDate}"
               class="form-control"
             />
-          </div>
+          &nbsp;&nbsp;
   
-          <button type="submit" class="button_style">필터 적용</button>
+          <button type="submit" class="button_style" style="background-color: #ed796e !important;">  필터 적용</button>
+        </div>
           <input
+          style="margin-right: 50px;"
             type="button"
             class="button_style"
             id="btn_popup_update"
             value="마이페이지"
-            onclick="location.href ='../modify_form_rider.do'"
+            onclick="location.href ='../member/modify_form_rider.do?rider_idx=${user.rider_idx}'"
           />
+        
         </form>
 
-    </div>
-    <!-- 가게 이름 주문금액 주문 날짜 배달주소 배달료 
-    표만들기
-    날짜 설정
-    전체 정산내역 ->동적쿼리사용
-    5개씩 출력 페이징처리 -->
-
-    <table id="delivery-table" class="table table-striped">
+    </div> <!--div header-->
+    <div class="content">
+    
+      <div id="delivery-content" style="margin-left: 50px !important; margin-right: 50px !important;">
+      <table id="delivery-table" class="table table-striped">
         <thead>
           <tr>
             <th>가게 이름</th>
-            <th>주문 번호</th>
+            <th>주문 번호</th> 
             <th>주문 날짜</th>
-            <!-- <th>배달 주소</th> -->
+            <th>배달 주소</th>
+            <th>총 거 리</th>
             <th>배 달 료</th>
           </tr>
         </thead>
         <tbody>
+        
+
           <c:forEach var="vo" items="${riderdelivery_list}">
               <tr>
               <td>${vo.shop_name}</td>
-              <td>${vo.order_check}</td>
+              <td>${vo.order_idx}</td> 
               <td>${vo.pay_regdate}</td>
-              <%-- <td>${vo.mem_addr1}, ${vo.mem_addr2}</td> --%>
-
+              <td>${vo.mem_addr1}, ${vo.mem_addr2}</td>
+              <td>${vo.totalDistance}m</td>
               <td>${vo.delivery_fee} 원</td>
             </tr>  
           </c:forEach>
+
+          <tr>
+            <td colspan="6" style="text-align: right; color: #00126d; font-weight: bold; font-size: large;">
+                <c:if test="${ empty param.startDate }">
+                   전체 배달내역                   
+                </c:if>
+                <c:if test="${ not empty param.startDate }">
+                   날짜 조회별                  
+                </c:if>
+                총수입 :   <fmt:formatNumber value="${ totalDeliveryFee }" />(원)  
+             </td>
+          </tr>
         </tbody>
       </table>
-
-      <!-- <h3>총 수입: ${총배달금액} 원</h3> -->
+    </div> <!--div deliver-content-->
+  </div> <!--content-->
     
 </body>
 </html>

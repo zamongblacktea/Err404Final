@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.MemberAddrMapper">
+
+
+
+   <!-- mem_idx에 해당되는 주소록 가져오기  -->
+   <select id="selectList" parameterType="int" resultType="MemberAddrVo">
+     select * from mem_addr where mem_idx=#{ mem_idx }
+   </select>
+
+
+   <!-- 주소록추가 -->
+   <insert id="insert" parameterType="MemberAddrVo">
+     insert into mem_addr values(
+                          null,
+                          #{ mem_idx },
+                          #{ mem_addr1 },
+                          #{ mem_addr2 },
+                          #{ mem_longitude },
+                          #{ mem_latitude },
+                          #{ addr_name }
+
+                          )
+   </insert>
+
+
+     <!-- 회원가입시 기본 주소록추가 -->
+   <insert id="memberInsert" parameterType="MemberAddrVo">
+     insert into mem_addr values(
+                          null,
+                          #{ mem_idx },
+                          #{ mem_addr1 },
+                          #{ mem_addr2 },
+                          #{ mem_longitude },
+                          #{ mem_latitude },
+                          '기본주소'
+
+                          )
+   </insert>
+
+      <!-- mem_idx,mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
+      <select id="selectOne" parameterType="int" resultType="MemberAddrVo">
+        SELECT * FROM mem_addr
+        WHERE mem_idx = #{mem_idx} and mcuraddr_idx = #{mcuraddr_idx}
+      </select>
+   
+          <!-- mem_idx,가장 오래된 mcraddr_idx 한 건에 해당되는 주소록 가져오기  -->
+      <select id="selectAddr" parameterType="int" resultType="MemberAddrVo">
+        SELECT *
+        FROM mem_addr
+        WHERE mcuraddr_idx = (
+          SELECT MIN(mcuraddr_idx)
+          FROM mem_addr
+          WHERE mem_idx = #{mem_idx}
+        )
+      </select>
+
+    <!-- 주소록수정 -->
+   <update id="update" parameterType="MemberAddrVo">
+     UPDATE mem_addr SET mem_addr1  = #{ mem_addr1 },
+                         mem_addr2  = #{ mem_addr2 },
+                         addr_name   = #{ addr_name }
+     WHERE mcuraddr_idx = #{ mcuraddr_idx }
+   </update>
+
+    <!-- 마이페이지 주소록 수정 (회원의 가장 오래된 주소 idx값 수정)-->
+    <update id="modifyUpdate" parameterType="MemberVo">
+      UPDATE mem_addr
+      JOIN (
+        SELECT MIN(mcuraddr_idx) AS target_idx
+        FROM mem_addr
+        WHERE mem_idx = #{mem_idx}
+      ) AS t ON mem_addr.mcuraddr_idx = t.target_idx
+      SET mem_addr.mem_addr1 = #{mem_addr1},
+          mem_addr.mem_addr2 = #{mem_addr2}
+    </update>
+
+   <!-- 주소 삭제 -->
+   <delete id="delete" parameterType="int">
+     delete from mem_addr where mcuraddr_idx = #{ mcuraddr_idx }
+   </delete>
+
+</mapper>

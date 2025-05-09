@@ -23,6 +23,13 @@ public class MemberVo {
 	String mem_grade;
 	String mem_type;
 	String mem_phone;
+	int mcuraddr_idx;
+	String mem_addr1;
+	String mem_addr2;
+	double mem_latitude;
+    double mem_longitude;
+	String addr_name; 
+	
 
 
 	

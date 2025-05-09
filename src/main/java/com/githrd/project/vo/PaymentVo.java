@@ -10,7 +10,6 @@ public class PaymentVo {
 
     int pay_idx;
     int mem_idx;
-    int cart_idx;
     int mcuraddr_idx;
     int menu_idx;
     int shop_idx;
@@ -23,8 +22,13 @@ public class PaymentVo {
     String imp_uid;
     String merchant_uid;
     int amount;
-    String shop_request;
+    String order_request;
     String rider_request;
     String coupon_use;
+    String mem_addr1;
+    String mem_addr2;
+    int order_idx;
+    int menu_price;
+    int menu_cnt;
 
 }

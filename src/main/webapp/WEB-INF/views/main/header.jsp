@@ -13,9 +13,37 @@
             background-position: center 50%;
         }
 
+        #search_form{
+            width: 550px;
+            margin: 0 auto;
+            /* margin-top: 165px; */
+            z-index: 5;
+        }
+
+        #search{
+            width: 450px;
+            height: 50px;
+            display: inline;
+            margin-top: 165px;
+        }
+
+        .btn_search{
+            width: 70px;
+            height: 50px;
+            display: inline-block;
+        }
+
     </style>
 </head>
 <body>
-    <div class="header"></div>
+    <div class="header">
+        <form id="search_form" action="${pageContext.request.contextPath}/main/list.do" method="get">
+            <input type="text" name="search" id="search" class="form-control" placeholder="메뉴를 검색해주세요.">
+            <input type="submit" class="btn btn-outline-success btn_search" value="검색">
+        </form>
+    </div>
+
+
+    </div>
 </body>
 </html>

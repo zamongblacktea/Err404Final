@@ -1,0 +1,68 @@
+:root {
+      
+    --primary-color: #ff694a;
+    /* --primary-color: #4EA685; */
+    --white: #ffffff;
+    --gray: #efefef;
+    --gray-2: #757575;
+  }
+
+
+  .form-wrapper {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;  /* 중앙 정렬 핵심 */
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
+      }
+
+  .input-group {
+    margin-top: 10px;
+    margin-left: 30px;
+    position: relative;
+    width: 100%;
+  }
+
+  .input-group i {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    color: var(--gray-2);
+  }
+
+  .input-group input {
+    width: 70%;
+    margin-top: 20px;
+    padding: 1rem 3rem;
+    background-color: var(--gray);
+    border-radius: .5rem;
+    border: 0.125rem solid var(--white);
+    outline: none;
+  }
+
+  .input-group input:focus {
+    border: 0.125rem solid var(--primary-color);
+  }
+
+  button {
+    cursor: pointer;
+    width: 100%;
+    padding: .8rem 0;
+    border-radius: .5rem;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1.1rem;
+    outline: none;
+  }
+
+
+  .pointer {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary-color);
+  }

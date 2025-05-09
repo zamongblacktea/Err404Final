@@ -1,23 +1,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Insert title here</title>
+    <title>가게 정보 입력</title>
 
     <!-- bootstrap 사용설정 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+
     <!-- 다음 주소검색 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <style type="text/css">
       #box {
+        
         width: 800px;
         margin: auto;
         margin-top: 80px;
+      }
+      .container{
+        /* border: 1px solid black; */
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        width: 700px;
+      }
+
+      h4{
+        margin-left: 60px;
       }
 
       th {
@@ -179,169 +193,177 @@
     </script>
   </head>
   <body>
-    <form method="post" class="form-inline" enctype="multipart/form-data">
-      <input type="hidden" name="owner_idx" value="${user.owner_idx}" />
-      <div id="box">
-        <div class="panel panel-primary">
-          <div class="panel-heading"><h4>가게정보입력</h4></div>
-          <div class="panel-body">
-            <table class="table">
-              <!-- 이름 -->
-              <tr>
-                <th>가게명</th>
-                <td><input class="form-control" required="required" name="shop_name" style="width: 30%" /></td>
-              </tr>
 
-              <!-- 아이디 -->
-              <tr>
-                <th>상호명</th>
-                <td>
-                  <input class="form-control" id="shop_company" name="shop_company" style="width: 30%" />
-                </td>
-              </tr>
-
-              <!-- 사업자번호 -->
-              <tr>
-                <th>사업자번호</th>
-                <td><input class="form-control" required="required" type="text" name="shop_bnumber" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 주소 -->
-              <tr>
-                <th>가게주소</th>
-                <td>
-                  <input class="form-control" required="required" name="shop_addr1" id="shop_addr1" style="width: 50%" />
-                  <input class="btn btn-info" type="button" value="주소검색" onclick="find_addr();" />
-                  <input class="form-control" name="shop_addr2" id="shop_addr2" style="width: 50%" placeholder="상세주소입력" />
-                </td>
-              </tr>
-
-              <!-- 가게전화번호 -->
-              <tr>
-                <th>가게전화번호</th>
-                <td><input class="form-control" required="required" type="tel" name="shop_phone" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 가게 카테고리 -->
-              <tr>
-                <th>가게 카테고리</th>
-                <td>
-                  <select name="shop_cate_idx" class="form-control" id="cate-select">
-                    <option value="1">치킨</option>
-                    <option value="2">피자/양식</option>
-                    <option value="3">중국집</option>
-                    <option value="4">한식</option>
-                    <option value="5">일식/돈까스</option>
-                    <option value="6">족발/보쌈</option>
-                    <option value="7">야식</option>
-                    <option value="8">분식</option>
-                    <option value="9">카페/디저트</option>
-                  </select>
-                </td>
-              </tr>
-
-              <!-- 배달료 -->
-              <tr>
-                <th>배달료</th>
-                <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 가게로고 -->
-              <tr>
-                <th>가게로고</th>
-                <td><input type="file" name="photo" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 가게내부사진 -->
-              <tr>
-                <th>가게내부사진</th>
-                <td><input type="file" name="photo" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 가게 공지 -->
-              <tr>
-                <th>가게공지</th>
-                <td><textarea class="form-control" required="required" name="shop_notice"></textarea></td>
-              </tr>
-
-              <!-- 소개글 -->
-              <tr>
-                <th>소개글</th>
-                <td><textarea class="form-control" required="required" name="shop_intro"></textarea></td>
-              </tr>
-
-              <!-- 최소주문금액 -->
-              <tr>
-                <th>최소주문금액</th>
-                <td><input class="form-control" required="required" name="shop_minprice" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 최소배달예상시간 -->
-              <tr>
-                <th>최소배달예상시간</th>
-                <td><input class="form-control" required="required" name="shop_mintime" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 최대배달예상시간 -->
-              <tr>
-                <th>최대배달예상시간</th>
-                <td><input class="form-control" required="required" name="shop_maxtime" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 오픈타임 -->
-              <tr>
-                <th>오픈타임</th>
-                <td><input class="form-control" required="required" type="time" name="shop_optime" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 클로즈타임 -->
-              <tr>
-                <th>클로즈타임</th>
-                <td><input class="form-control" required="required" type="time" name="shop_cltime" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 휴무일 -->
-              <tr>
-                <th>휴무일</th>
-                <td>
-                  <!-- <input type="checkbox" name="shop_closeday" id="" value="" /><label for="">연중무휴</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="monday" value="monday" /><label for="monday"> 월</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="tuesday" value="tuesday" /><label for="tuesday"> 화</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="wednesday" value="wednesday" /><label for="wednesday"> 수</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="thursday" value="thursday" /><label for="thursday"> 목</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="friday" value="friday" /><label for="friday"> 금</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="saturday" value="saturday" /><label for="saturday"> 토</label>&nbsp;
-                  <input type="checkbox" name="shop_closeday" id="sunday" value="sunday" /><label for="sunday"> 일</label> -->
-                  <select name="shop_closeday" class="form-control" id="close-select">
-                    <option value="">연중무휴</option>
-                    <option value="Monday">월요일</option>
-                    <option value="Tuesday">화요일</option>
-                    <option value="Wednesday">수요일</option>
-                    <option value="Thursday">목요일</option>
-                    <option value="friday">금요일</option>
-                    <option value="Saturday">토요일</option>
-                    <option value="Sunday">일요일</option>
-                  </select>
-                </td>
-              </tr>
-
-              <!-- 배달지역 -->
-              <tr>
-                <th>배달지역</th>
-                <td><input class="form-control" required="required" type="text" name="shop_loc" style="width: 30%" /></td>
-              </tr>
-
-              <!-- 버튼 -->
-              <tr>
-                <td colspan="2" align="center">
-                  <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='../main/list.do'" />
-                  <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
-                </td>
-              </tr>
-            </table>
+      <c:if test="${sessionScope.user.owner_approve eq '대기'}" >
+        <script>
+          alert("아직 승인받지 않은 유저입니다.");
+          history.back();
+        </script>
+      </c:if>
+      <c:if test="${sessionScope.user.owner_approve eq '승인'}">
+        <form method="post" class="form-inline" enctype="multipart/form-data">
+          <input type="hidden" name="owner_idx" value="${user.owner_idx}" />
+          <div id="box">
+            
+              <!-- <h4>가게정보입력</h4> -->
+              <div class="container">
+                <table class="table">
+                  <!-- 이름 -->
+                  <tr>
+                    <th>가게명</th>
+                    <td><input class="form-control" required="required" name="shop_name" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 아이디 -->
+                  <tr>
+                    <th>상호명</th>
+                    <td>
+                      <input class="form-control" id="shop_company" name="shop_company" style="width: 30%" />
+                    </td>
+                  </tr>
+    
+                  <!-- 사업자번호 -->
+                  <tr>
+                    <th>사업자번호</th>
+                    <td><input class="form-control" required="required" type="text" name="shop_bnumber" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 주소 -->
+                  <tr>
+                    <th>가게주소</th>
+                    <td>
+                      <input class="form-control" required="required" name="shop_addr1" id="shop_addr1" style="width: 50%" />
+                      <input class="btn btn-info" type="button" value="주소검색" onclick="find_addr();" />
+                      <input class="form-control" name="shop_addr2" id="shop_addr2" style="width: 50%" placeholder="상세주소입력" />
+                    </td>
+                  </tr>
+    
+                  <!-- 가게전화번호 -->
+                  <tr>
+                    <th>가게전화번호</th>
+                    <td><input class="form-control" required="required" type="tel" name="shop_phone" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 가게 카테고리 -->
+                  <tr>
+                    <th>가게 카테고리</th>
+                    <td>
+                      <select name="shop_cate_idx" class="form-control" id="cate-select">
+                        <option value="1">치킨</option>
+                        <option value="2">피자/양식</option>
+                        <option value="3">중국집</option>
+                        <option value="4">한식</option>
+                        <option value="5">일식/돈까스</option>
+                        <option value="6">족발/보쌈</option>
+                        <option value="7">야식</option>
+                        <option value="8">분식</option>
+                        <option value="9">카페/디저트</option>
+                      </select>
+                    </td>
+                  </tr>
+    
+                  <!-- 배달료 -->
+                  <tr>
+                    <th>배달료</th>
+                    <td><input class="form-control" required="required" name="shop_dfee" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 가게로고 -->
+                  <tr>
+                    <th>가게로고</th>
+                    <td><input type="file" name="photo" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 가게내부사진 -->
+                  <tr>
+                    <th>가게내부사진</th>
+                    <td><input type="file" name="photo" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 가게 공지 -->
+                  <tr>
+                    <th>가게공지</th>
+                    <td><textarea class="form-control" required="required" name="shop_notice"></textarea></td>
+                  </tr>
+    
+                  <!-- 소개글 -->
+                  <tr>
+                    <th>소개글</th>
+                    <td><textarea class="form-control" required="required" name="shop_intro"></textarea></td>
+                  </tr>
+    
+                  <!-- 최소주문금액 -->
+                  <tr>
+                    <th>최소주문금액</th>
+                    <td><input class="form-control" required="required" name="shop_minprice" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 최소배달예상시간 -->
+                  <tr>
+                    <th>최소배달예상시간</th>
+                    <td><input class="form-control" required="required" name="shop_mintime" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 최대배달예상시간 -->
+                  <tr>
+                    <th>최대배달예상시간</th>
+                    <td><input class="form-control" required="required" name="shop_maxtime" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 오픈타임 -->
+                  <tr>
+                    <th>오픈타임</th>
+                    <td><input class="form-control" required="required" type="time" name="shop_optime" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 클로즈타임 -->
+                  <tr>
+                    <th>클로즈타임</th>
+                    <td><input class="form-control" required="required" type="time" name="shop_cltime" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 휴무일 -->
+                  <tr>
+                    <th>휴무일</th>
+                    <td>
+                      <select name="shop_closeday" class="form-control" id="close-select">
+                        <option value="">연중무휴</option>
+                        <option value="Monday">월요일</option>
+                        <option value="Tuesday">화요일</option>
+                        <option value="Wednesday">수요일</option>
+                        <option value="Thursday">목요일</option>
+                        <option value="friday">금요일</option>
+                        <option value="Saturday">토요일</option>
+                        <option value="Sunday">일요일</option>
+                      </select>
+                    </td>
+                  </tr>
+    
+                  <!-- 배달지역 -->
+                  <tr>
+                    <th>배달지역</th>
+                    <td><input class="form-control" required="required" type="text" name="shop_loc" style="width: 30%" /></td>
+                  </tr>
+    
+                  <!-- 버튼 -->
+                  <tr>
+                    <td colspan="2" align="center">
+                      <!-- <input class="btn btn-success" type="button" value="목록보기" onclick="location.href='/main/list.do'" /> -->
+                      <input class="btn btn-primary" type="button" value="정보입력" onclick="send(this.form);" id="btn_register" />
+                    </td>
+                  </tr>
+                </table>
+              </div>
           </div>
-        </div>
-      </div>
-    </form>
+        </form>
+      </c:if>
+    <!-- <c:if test="${user.owner_approve eq '대기'}">
+      <script>
+        alert("아직 승인받지 않은 유저입니다.");
+        history.back();
+      </script>
+    </c:if> -->
+    
+
   </body>
 </html>

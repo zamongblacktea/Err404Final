@@ -20,9 +20,30 @@ pageEncoding="UTF-8"%>
 
       #kakaomap{
         text-align: center;
-        background-color: #e89b82;
-        margin: auto;
+        /* background-color: #e89b82;
+        margin: auto; */
         display: inline-block;
+        background-color: #eea251;
+        font-size: medium;
+        color: white;
+        border: none;
+      
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 20px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      .content{
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .mapcontent{
+        font-size: large;
       }
     </style>
     <script>
@@ -66,16 +87,17 @@ pageEncoding="UTF-8"%>
               });
           }
       
+          addMarker(rider1, '라이더');
           addMarker(shop1, '가게');
           addMarker(member1, '고객');
-          addMarker(rider1, '라이더');
+          
 
       
           // 선 그리기
           var linePath = [
-              new kakao.maps.LatLng(shop1.lat, shop1.lng),
-              new kakao.maps.LatLng(rider1.lat, rider1.lng),
-              new kakao.maps.LatLng(member1.lat, member1.lng)
+          new kakao.maps.LatLng(rider1.lat, rider1.lng),    
+          new kakao.maps.LatLng(shop1.lat, shop1.lng),
+          new kakao.maps.LatLng(member1.lat, member1.lng)
           ];
       
           var polyline = new kakao.maps.Polyline({
@@ -96,17 +118,24 @@ pageEncoding="UTF-8"%>
 
   </head>
   <body>
+
+    <div class="content">
+      <div class=" mapcontent">
     <div id="map" style="width:100%;height:500px;"></div><br>
     <div id ="text">
       총거리 : <fmt:formatNumber value="${totalDistance}" pattern="#,#00.00#"/>m<br>
-      배달수수료 :<fmt:formatNumber value="${delivery_fee}" pattern="#,#00.00#"/>원<br>
+      배달수수료 :<fmt:formatNumber value="${delivery_fee}" pattern="#,#00.00#"/>원<br><br>
       <!-- 1km 미만은 3000원(최솟값) 가게에서 측정한 배달값으로 하고 (마지막에 가게칼럼명 갖고오기) -->
     </div>
+  </div><!--mapcontent-->
     <!-- 카카오 경로 상세 보기  -->
-    <p style="text-align: center;">가게와 배달지 경로 확인</p>
-    <div style="margin: auto; width: 100px; height: 24px;">
+     <div>
+    <!-- <p style="text-align: center;">가게와 배달지 경로 확인</p> -->
+    <div style="margin: auto; height: 24px;">
     <input id="kakaomap"  type="button" value="카카오맵경로보기" onclick="location.href=kakaoMapUrl"> 
-    </div>   
+    </div>
+  </div>
+  </div>   
   </div>
 
   </div>

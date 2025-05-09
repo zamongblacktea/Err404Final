@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.githrd.project.dao.MemReviewMapper;
+import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.dao.ShopInfoMapper;
 import com.githrd.project.dao.ShopMenuMapper;
 import com.githrd.project.vo.OwnerVo;
@@ -26,6 +28,12 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     ShopMenuMapper shopMenuMapper;
+
+    @Autowired
+    OrderStatusMapper orderStatusMapper;
+
+    @Autowired
+    MemReviewMapper memReviewMapper;
 
     @Autowired
     HttpSession session;
@@ -145,74 +153,7 @@ public class ShopServiceImpl implements ShopService {
         return res;
     }
 
-    // 가게 정보 수정
-    // @Override
-    // public int shopModify(ShopInfoVo vo, MultipartFile[] photo_array) throws
-    // IllegalStateException, IOException {
-    // OwnerVo user = (OwnerVo) session.getAttribute("user");
-
-    // // \n -> <br> 변환
-    // String shop_notice = vo.getShop_notice().replaceAll("\n", "<br>");
-    // String shop_intro = vo.getShop_intro().replaceAll("\n", "<br>");
-    // vo.setShop_notice(shop_notice);
-    // vo.setShop_intro(shop_intro);
-
-    // // 저장 경로
-    // String saveDir = application.getRealPath("/images/");
-
-    // // 기존 이미지 가져오기 (DB에서 미리 채워둔다고 가정)
-    // String shop_logo = vo.getShop_logo() != null ? vo.getShop_logo() : "no_file";
-    // String shop_img = vo.getShop_img() != null ? vo.getShop_img() : "no_file";
-
-    // for (int i = 0; i < photo_array.length; i++) {
-    // MultipartFile photo = photo_array[i];
-    // if (!photo.isEmpty()) {
-    // String filename = photo.getOriginalFilename();
-    // File f = new File(saveDir, filename);
-
-    // // 기존 이미지 확인 및 삭제
-    // File oldFile = new File(saveDir, filename);
-
-    // if (i == 0 && !"no_file".equals(shop_logo)) {
-    // File oldLogo = new File(saveDir, shop_logo);
-    // if (oldLogo.exists()) oldLogo.delete();
-    // }
-    // if (i == 1 && !"no_file".equals(shop_img)) {
-    // File oldImg = new File(saveDir, shop_img);
-    // if (oldImg.exists()) oldImg.delete();
-    // }
-
-    // System.out.println("이미지 삭제 완료");
-
-    // // 중복 파일명 처리
-    // if (f.exists()) {
-    // long tm = System.currentTimeMillis();
-    // filename = tm + "_" + filename;
-    // f = new File(saveDir, filename);
-    // }
-
-    // // 파일 복사
-    // photo.transferTo(f);
-
-    // if (i == 0) {
-    // shop_logo = filename;
-    // } else if (i == 1) {
-    // shop_img = filename;
-    // }
-    // }
-    // }
-
-    // // 변경된 이미지명 세팅
-    // vo.setShop_logo(shop_logo);
-    // vo.setShop_img(shop_img);
-
-    // // DB update
-    // int res = shopInfoMapper.shopModify(vo);
-
-    // return res;
-
-    // }
-
+    
     // 가게 정보 수정
     @Override
     public int shopModify(ShopInfoVo vo) {
@@ -386,6 +327,44 @@ public class ShopServiceImpl implements ShopService {
         return shopMenuMapper.menuDelete(menu_idx);
     }
 
+    // 가게 배달비 조회
+    @Override
+    public int selectShopDfee(int shop_idx) {
+        return shopInfoMapper.selectShopDfee(shop_idx);
+    }
 
+    // 가게 별점 수정
+    @Override
+    public int rateUpdate(int shop_idx) {
+        return shopInfoMapper.rateUpdate(shop_idx);
+    }
+
+    @Override
+    public int reviewCntUpdate(int shop_idx) {
+        return shopInfoMapper.reviewCntUpdate(shop_idx);
+    }
+
+    @Override
+    public int selectOrderCount(int shop_idx) {
+        return orderStatusMapper.selectOrderCount(shop_idx);
+    }
+
+    // 카테고리 조회
+    @Override
+    public List<ShopInfoVo> selectListFromCate(int shop_cate_idx) {
+        return shopInfoMapper.selectListFromCate(shop_cate_idx);
+
+    }
+        
+     
+
+    public List<ShopInfoVo> selectCate() {
+        return shopInfoMapper.selectCate();
+    }
+
+    @Override
+    public List<ShopInfoVo> searchShopList(String keyword) {
+        return shopInfoMapper.searchShopList(keyword);
+    }
 
 }

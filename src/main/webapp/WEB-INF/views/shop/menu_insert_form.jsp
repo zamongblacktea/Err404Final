@@ -17,18 +17,18 @@
         margin-bottom: 15px;
       }
 
-      label{
+      label {
         font-size: 16px;
       }
 
       input[type="number"]::-webkit-outer-spin-button,
       input[type="number"]::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          -moz-appearance: none;
-          appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
       }
 
-      textarea{
+      textarea {
         resize: none;
       }
     </style>
@@ -87,7 +87,6 @@
     </script>
   </head>
   <body>
-    <h2>메뉴 등록</h2>
     <div class="form-container">
       <form id="menuForm" enctype="multipart/form-data">
         <div class="form-group">
@@ -119,22 +118,24 @@
 
     <script>
       function submitForm() {
-        const formData = new FormData($('#menuForm')[0]);
+        const formData = new FormData($("#menuForm")[0]);
         const shop_idx = "${sessionScope.shop_idx}";
-        
+
         $.ajax({
-          url: 'menu_insert.do',
-          type: 'POST',
+          url: "menu_insert.do",
+          type: "POST",
           data: formData,
           processData: false,
           contentType: false,
-          success: function(response) {
-            alert('메뉴가 성공적으로 등록되었습니다.');
-            loadContent('menu_list.do');
+          success: function (response) {
+            alert("메뉴가 성공적으로 등록되었습니다.");
+            loadContent("menu_list.do");
+            $("#sidebar a").removeClass("active");
+            $("#sidebar a").eq(1).addClass("active");
           },
-          error: function(xhr, status, error) {
-            alert('메뉴 등록 중 오류가 발생했습니다: ' + error);
-          }
+          error: function (xhr, status, error) {
+            alert("메뉴 등록 중 오류가 발생했습니다: " + error);
+          },
         });
       }
     </script>

@@ -71,11 +71,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                        rider_phone=#{ rider_phone }
      where rider_idx=#{ rider_idx }
   </update>
+
+   <!-- 라이더 회원 승인 -->
+  <update id="updateApproval"  parameterType="RiderVo">
+     update rider set rider_approve='승인'
+     where rider_idx=#{ rider_idx }
+  </update>
   
   <!-- 회원삭제 -->
   <delete id="delete"  parameterType="int">
      delete from rider where rider_idx=#{ rider_idx }
   </delete>
 
-
+<!-- 라이더주소얻기 -->
+<select id="getRiderAddr" resultType="String" parameterType="int">
+    SELECT rider_addr
+    FROM rider_addr
+    WHERE rider_idx = #{rider_idx}
+</select>
 </mapper>

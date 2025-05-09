@@ -11,85 +11,61 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
-    <style>
+    <link rel="icon" href="${pageContext.request.contextPath}/images/잇띵로고최종.png" type="image/x-icon">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop_list.css">
 
-      * {
-        margin: 0;
-        padding: 0;
-        border: 1px solid black;
-      }
-      nav {
-        height: 80px;
-      }
-      header {
-        height: 100px;
-      }
+    <script>
+    function find(){
+    let keyword = document.getElementById("search").value;
+    $.ajax({
+      url   : "../main/search_list.do",
+      data  : {"search": keyword},
+      success :   function(res_data){     
+                  $("#category_display").html(res_data);
 
-      .list {
-        width: 1050px;
-        margin: 10px auto;
+      },
+        error   :   function(err){
+        alert(err.responseText)
       }
+    });
+  }
 
-      .shop-list {
-        display: inline-block;
-        width: 490px;
-        height: 110px;
-        margin: 5px 7px;
-      }
+    // 영업시간 비교
+    const today = new Date();
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const todayDay = dayNames[today.getDay()]; // 오늘 요일 (영어)
 
-      .row{
-        margin: auto;
-        margin-top: 8px;
-      }
+    const now = new Date();
+    const nowStr = now.toTimeString().slice(0, 5); // 예: "14:05"
+    </script>
 
-      #shop_logo{
-        width: 90px;
-        height: 90px;
-        display: inline-block;
-      }
 
-      .shop_info{
-        display: inline-block;
-      }
-    </style>
   </head>
   <body>
-    <nav>네비게이션바</nav>
-    <header>헤더</header>
-    <div class="category">가게 카테고리</div>
+    <div class="navbar">
+      <%@ include file="navbar.jsp" %>
+    </div>
+    <div class="header">
+      <form id="search_form" action="">
+          <input type="text" id="search" class="form-control" value="${param.search}" placeholder="메뉴를 검색해주세요.">
+          <input type="button" class="btn btn-outline-success btn_search" value="검색" onclick="find();">
+      </form>
+  </div>
+    <div class="category">
+      <%@ include file="catebar.jsp"%>
+    </div>
     <div id="main">
 
       <div class="list">
-
-        <c:forEach var="vo" items="${shop_list}">
-          <div class="shop-list container" onclick="location.href='../main/detail.do'">
-            <div class="row">
-
-              <div id="shop_logo" class="col-sm-3">
-                <img src="${pageContext.request.contextPath}/images/${vo.shop_logo}" alt="가게로고" style="width: 100%; height: 100%;">
-              </div>
-              <div class="col-sm-9">
-                <div class="shop_info">${vo.shop_name}</div><br>
-                <div class="shop_info">별점 ${vo.shop_rating}|리뷰 ${vo.shop_reviewcnt}</div><br>
-                <div class="shop_info">
-                  <fmt:formatNumber value="${vo.shop_minprice}" pattern="#,#00" />원 이상 주문</div>
-              </div>
-            </div>
-            
-          </div>
-
-        </c:forEach>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-          <div class="shop-list">가게</div>
-        </div>
+           
+         <div id="category_display">
+          <c:if test="${empty shop_list}">
+            <p>검색 결과가 없습니다.</p>
+          </c:if>
+          <%@ include file="category_list.jsp" %>
+         </div>
+        
+      </div>
       </div>
     </div>
     <footer>풋터</footer>
