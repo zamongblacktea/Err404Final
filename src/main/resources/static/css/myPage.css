@@ -1,68 +1,88 @@
 :root {
-      
-    --primary-color: #ff694a;
-    /* --primary-color: #4EA685; */
-    --white: #ffffff;
-    --gray: #efefef;
-    --gray-2: #757575;
+    --green: #ff694a;
+    --text-light: rgba(0, 0, 0, 0.5);
   }
 
 
-  .form-wrapper {
-      max-width: 500px;
-      width: 100%;
-      margin: 0 auto;  /* 중앙 정렬 핵심 */
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 1.5rem;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;
-      }
-
-  .input-group {
-    margin-top: 10px;
-    margin-left: 30px;
-    position: relative;
-    width: 100%;
+  .signup-container {
+    margin-top: 50px !important ;
+    margin: auto;
+    width: 60%;
+    background: #fff;
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid var(--green);
+    padding: 40px 30px;
+    box-sizing: border-box;
   }
 
-  .input-group i {
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    transform: translateY(-50%);
-    font-size: 1.4rem;
-    color: var(--gray-2);
-  }
-
-  .input-group input {
-    width: 70%;
-    margin-top: 20px;
-    padding: 1rem 3rem;
-    background-color: var(--gray);
-    border-radius: .5rem;
-    border: 0.125rem solid var(--white);
-    outline: none;
-  }
-
-  .input-group input:focus {
-    border: 0.125rem solid var(--primary-color);
-  }
-
-  button {
-    cursor: pointer;
-    width: 100%;
-    padding: .8rem 0;
-    border-radius: .5rem;
-    border: none;
-    background-color: var(--primary-color);
-    color: var(--white);
-    font-size: 1.1rem;
-    outline: none;
-  }
-
-
-  .pointer {
-    cursor: pointer;
+  .signup-container h2 {
+    color: var(--green);
+    text-transform: uppercase;
+    font-size: 18px;
     font-weight: bold;
-    color: var(--primary-color);
+    margin: 0 0 30px;
+  }
+
+  .signup-container input {
+    margin: 10px;
+    padding: 10px 0;
+    padding-left: 5px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+    font-size: 14px;
+    color: #333;
+    transition: border-color 0.2s ease-out;
+  }
+
+  .signup-container input:valid {
+    border-bottom: 1px solid var(--green);
+  }
+
+  .signup-container input:focus:invalid {
+    border-bottom: 1px solid #ff694a;
+  }
+
+  .signup-container ::placeholder {
+    color: var(--text-light);
+  }
+
+  .signup-container #btn {
+    padding: 10px 25px;
+    background-color: var(--green);
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .signup-container #delBtn {
+    padding: 10px 25px;
+    margin-top: 7px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+  }
+
+  .signup-container button:hover {
+    background-color: #fff;
+    color: var(--green);
+    border: 2px solid var(--green);
+  }
+
+  th {
+              width: 120px !important;
+              vertical-align: middle !important;
+          }
+  
+  td{
+      width: 300px;
+
   }

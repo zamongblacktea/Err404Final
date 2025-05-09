@@ -148,9 +148,16 @@
               </td>
             </tr>
             <tr>
-              <th>메뉴</th>
-              <td>${ vo.menu_list }</td>
+                <th></th>
+                <td style="font-weight: bold; padding-left: 50px;">메뉴</td>
             </tr>
+              <tr>
+              <c:forEach var="menu" items="${vo.menuList}">
+                <td>${menu.menu_name}</td>
+                <td><fmt:formatNumber value='${menu.cart_price}' type='number' pattern='#,###' />원</td>
+                <td>${menu.cart_cnt}</td>
+              </tr>
+            </c:forEach>
             <tr>
               <th>결제</th>
               <td>${ vo.pay_type }</td>

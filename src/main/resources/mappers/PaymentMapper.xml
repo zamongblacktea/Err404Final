@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      <!--                      #{ menu_name },      #{ shop_request },
             #{ rider_request }, 연동시 추가해야 함 -->
             <!-- max값으로 최신값을 가져와도 됨 -->
-            <insert id="insert" parameterType="map">
+            <!-- <insert id="insert" parameterType="map">
             INSERT INTO payment (
                 pay_idx,
                 mem_idx,
@@ -67,7 +67,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     #{item.cart_cnt}
                 )
             </foreach>
-        </insert>
+        </insert> -->
+
+
+        
+        <insert id="insert" parameterType="PaymentVo">
+        INSERT INTO payment (
+            pay_idx,
+            mem_idx,
+            mcuraddr_idx,
+            menu_idx,
+            shop_idx,
+            mem_phone,
+            menu_name,
+            pay_type,
+            pay_status,
+            pay_regdate,
+            imp_uid,
+            merchant_uid,
+            amount,
+            order_request,
+            rider_request,
+            mem_addr1,
+            mem_addr2,
+            order_idx,
+            menu_price,
+            menu_cnt
+        )
+        VALUES
+            (
+                null,
+                #{mem_idx},
+                #{mcuraddr_idx},
+                #{menu_idx},
+                #{shop_idx},
+                #{mem_phone},
+                #{menu_name},
+                '카카오',
+                '결제완료',
+                now(),
+                #{imp_uid},
+                #{merchant_uid},
+                #{amount},
+                #{order_request},
+                #{rider_request},
+                #{mem_addr1},
+                #{mem_addr2},
+                #{order_idx},
+                null,
+                null
+            )
+    </insert>
                         
 
   <!-- 거래번호 얻어오기 -->

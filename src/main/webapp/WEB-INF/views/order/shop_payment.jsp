@@ -154,8 +154,8 @@ textarea{
 								mcuraddr_idx,
 								menu_idx,
 								shop_idx,
-								mem_name,
 								mem_phone,
+								menu_name,
 								cart_price,
 								mem_addr1,
 								mem_addr2,
@@ -174,7 +174,7 @@ textarea{
 	}
 
 	// AJAX를 사용한 결제 검증 요청
-	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_name, mem_phone,cart_price, mem_addr1 , mem_addr2, order_request, rider_request) {
+	function verifyPayment(imp_uid, merchant_uid, mem_idx, mcuraddr_idx, menu_idx, shop_idx, mem_phone, menu_name,cart_price, mem_addr1 , mem_addr2, order_request, rider_request) {
 		//form에 설정한 변수 선언
 		
 
@@ -191,8 +191,8 @@ textarea{
 				"mcuraddr_idx" : mcuraddr_idx,
 				"menu_idx" : menu_idx,
 				"shop_idx" : shop_idx,
-				"mem-name" : mem_name,
 				"mem_phone": mem_phone,
+				"menu_name" : menu_name,
 				"amount"   : cart_price,
 				"mem_addr1" : mem_addr1,
 				"mem_addr2" : mem_addr2,
@@ -495,6 +495,7 @@ textarea{
 	<h4 style="text-align: center;">주문 내역</h4>
 	<div class="acom-img">
 		<c:forEach var="cartVo" items="${cart_list}">
+			<input type="hidden" value="${cartVo.menu_name}" id="menu_name">
 			<br><br>
 			<div style="margin-left: 20px; border: 1px solid black; border-radius: 5px; padding-left: 15px;padding-top: 10px; padding-bottom: 10px;">
 				<span style="font-weight: bold;">메뉴 이름 :</span><span> ${cartVo.menu_name}</span><br><br>

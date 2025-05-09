@@ -1,5 +1,7 @@
 package com.githrd.project.vo;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -51,6 +53,8 @@ public class OrderStatusVo {
     String menu_name;
     int    menu_price;
     int    menu_cnt;
+    int    cart_price;
+    int    cart_cnt;
     //delivery 테이블 칼럼
     String pay_regdate;
     int totalDistance;
@@ -63,7 +67,7 @@ public class OrderStatusVo {
     String end_date;
     int total_amount;
 
-    
+    List<OrderMenuVo> menuList;
 
 
 }

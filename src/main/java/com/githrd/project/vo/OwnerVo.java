@@ -19,6 +19,7 @@ public class OwnerVo {
 	String owner_update;
 	String owner_num;
 	String owner_approve;
+	String mem_grade;
 	
 
 

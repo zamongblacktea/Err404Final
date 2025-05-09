@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +47,31 @@
 
 
 
+    function adminSend(f) {
+
+    //입력값 체크
+    let owner_idx = f.owner_idx.value;
+    let owner_pwd	= f.owner_pwd.value;
+
+
+
+
+    if (owner_pwd == "") {
+
+    alert("비밀번호를 입력하세요!");
+    f.owner_pwd.value = "";
+    f.owner_pwd.focus();
+    return;
+    }
+
+
+    f.method = "POST";
+    f.action = "../admin/admin_modify_owner.do?owner_idx="+ owner_idx;// MemberModifyAction
+    f.submit();
+
+  }//end:send()
+
+
 
 </script>
 
@@ -57,7 +85,7 @@
     <h2>사장님 마이 페이지</h2>
     <!-- 파일전송 method 설정 -->
     <form>
-	<input type="hidden" value="${vo.owner_idx}" name="owner_idx">
+	<input type="hidden" value="${param.owner_idx}" name="owner_idx">
       <table class="table">
 
 	<!-- 이름 -->
@@ -104,13 +132,29 @@
 
 
 
+
+	               <!-- 로그인 유저가 관리자면 -->
+           <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
+            <tr>
+	           <td colspan="2" align="center">
+                    <input id="btn" type="button" value="수정하기" style="width: 20%;"onclick="adminSend(this.form)">
+
+	               
+	               <input id="delBtn" class="btn btn-danger" type="button" value="탈퇴하기" style="width: 20%;" onclick="location.href='admin_delete.do?mem_idx=${user.mem_idx}';">
+	           </td>
+            </tr>
+           </c:if>
+
+
 		<!-- 버튼 -->
 		<tr>
 			<td colspan="2" align="center">
 				<input id="btn" type="button" value="수정하기" style="width: 20%;" onclick="send(this.form);">
 				<input id="delBtn" class="btn btn-danger" type="button" value="탈퇴하기" style="width: 20%;" onclick="location.href='delete_owner.do?owner_idx=${user.owner_idx}';">
-			</td>
+            </td>
 		</tr>
+
+
       </div>
       </table>
 

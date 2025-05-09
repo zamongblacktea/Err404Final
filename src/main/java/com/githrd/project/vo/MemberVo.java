@@ -29,6 +29,13 @@ public class MemberVo {
 	double mem_latitude;
     double mem_longitude;
 	String addr_name; 
+
+	//관리자용
+	int owner_idx;
+	int rider_idx;
+	String rider_id;
+	String rider_name;
+	String rider_phone;
 	
 
 

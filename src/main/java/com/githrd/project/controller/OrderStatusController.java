@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.githrd.project.dao.DeliveryMapper;
+import com.githrd.project.dao.OrderMenuMapper;
 import com.githrd.project.dao.OrderStatusMapper;
 import com.githrd.project.service.CartService;
 import com.githrd.project.service.OrderSatausSerivce;
 import com.githrd.project.service.ShopService;
 import com.githrd.project.vo.CartVo;
 import com.githrd.project.vo.MemberVo;
+import com.githrd.project.vo.OrderMenuVo;
 import com.githrd.project.vo.OrderStatusVo;
 import com.githrd.project.vo.OwnerVo;
 import com.githrd.project.vo.ShopInfoVo;
@@ -47,6 +49,9 @@ public class OrderStatusController {
     DeliveryMapper deliveryMapper;
 
     @Autowired
+    OrderMenuMapper orderMenuMapper;
+
+    @Autowired
 	SimpMessagingTemplate messagingTemplate;
 
     @Autowired
@@ -62,8 +67,19 @@ public class OrderStatusController {
         OwnerVo owner = (OwnerVo) session.getAttribute("user");
         int owner_idx = owner.getOwner_idx();
         ShopInfoVo shop = shopService.selectByOwnerIdx(owner_idx);
-
+        
+        //주문 리스트 가져오기
         List<OrderStatusVo> list = orderStatusMapper.selectList(shop_idx);
+        //각 주문 메뉴 가져오기
+        for (OrderStatusVo order : list) {
+            List<OrderMenuVo> menuList = orderMenuMapper.selectListMenu(order.getOrder_idx());
+            order.setMenuList(menuList);
+            //출력 확인
+            // System.out.println("order_idx = " + order.getOrder_idx());
+            // System.out.println("menuList = " + menuList);
+        } //end : for
+
+
  
         if (shop == null) {
             return "redirect:../shop/insert_form.do?owner_idx=" + owner_idx;
@@ -73,7 +89,7 @@ public class OrderStatusController {
         model.addAttribute("shop", shop);
         model.addAttribute("status", list);
         return "order/shop_order_list";
-    }
+    }//end: order_list
 
     
     //회원주문현황 페이지 폼 열기

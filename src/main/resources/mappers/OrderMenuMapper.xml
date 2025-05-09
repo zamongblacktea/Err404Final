@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.githrd.project.dao.OrderMenuMapper">
+	  <!-- order_menu 해당 가게 order_idx 기준 조회 -->
+	<select id="selectListMenu" resultType="OrderMenuVo">
+		select * from order_menu where order_idx = #{order_idx}
+	</select>
+
+
+
+
+		<!-- insert -->
+	<insert id="insert" parameterType="map"> 
+		
+		insert into order_menu (
+						order_menu_idx, 
+						order_idx,
+						mem_idx,
+						shop_idx,
+						menu_idx,
+						menu_name, 
+						cart_cnt,
+						cart_price
+						)               
+					VALUES
+	<foreach collection="cart_list" item="item" separator=",">
+ 				(
+                    null,
+					#{order_idx},
+                    #{item.mem_idx},
+					#{item.shop_idx},
+                    #{item.menu_idx},
+                    #{item.menu_name},
+                    #{item.cart_cnt},
+                    #{item.menu_price}
+                )
+            </foreach>
+		
+	</insert>
+
+
+</mapper>
