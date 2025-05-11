@@ -56,7 +56,7 @@
           <tr>
             <th>우편번호</th>
             <td>
-              <input class="form-control" required="required" style="width: 30%;" >
+              <input class="form-control" required="required" style="width: 30%;" id="mem_zipcode" >
               <input class="btn btn-info" type="button" value="주소검색" onclick="find_curaddr();">
             </td>
           </tr>

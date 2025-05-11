@@ -116,6 +116,30 @@ public class AdminController {
 		return "admin/admin_list";
 	}
 
+	// 사장 회원 리스트
+	@RequestMapping("owner_list.do")
+	public String ownerList(Model model) {
+
+		List<OwnerVo> list = ownerMapper.selectList();
+
+		// 결과적으로 request binding
+		model.addAttribute("list", list);
+
+		return "admin/admin_owner_list";
+	}
+
+	// 라이더 회원 리스트
+	@RequestMapping("rider_list.do")
+	public String riderList(Model model) {
+
+		List<RiderVo> list = riderMapper.selectList();
+
+		// 결과적으로 request binding
+		model.addAttribute("list", list);
+
+		return "admin/admin_rider_list";
+	}
+
 	// 로그아웃
 	@RequestMapping("logout.do")
 	public String logout() {
@@ -127,7 +151,7 @@ public class AdminController {
 	}
 
 	// 회원 수정하기
-	@RequestMapping("modify.do")
+	@RequestMapping("admin_modify.do")
 	public String modify(MemberVo vo) {
 
 		// IP구해서 vo에 넣기
@@ -149,6 +173,23 @@ public class AdminController {
 
 		return "redirect:list.do";
 	}
+
+
+		// 사장님 마이페이지 수정하기
+	@RequestMapping("admin_modify_owner.do")
+	public String modifyOwner(OwnerVo vo) {
+
+		// IP구해서 vo에 넣기
+		String owner_ip = request.getRemoteAddr();
+		vo.setOwner_ip(owner_ip);
+
+		// 수정
+		int res = ownerMapper.update(vo);
+
+
+		return "redirect:list.do"; // 메인 페이지로 리다이렉트
+
+	}// end : modify_owner
 
 	// 회원 삭제하기
 	@RequestMapping("delete.do")

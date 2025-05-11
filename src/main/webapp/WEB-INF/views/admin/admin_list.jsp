@@ -82,7 +82,40 @@
 		});
 	  
 	  
-	  
+	function find() {
+		let search = $("#search").val();
+		let search_text = $("#search_text").val().trim();
+
+
+		let mem_idx = $("#mem_idx").val();
+
+		location.href = "list.do?search=" + search + "&search_text="
+				+ encodeURIComponent(search_text, "utf-8") + "&rsv_in="
+				+ rsv_in + "&rsv_out=" + rsv_out + "&mem_idx=" + mem_idx
+				+ "&room_type=" + room_type + "&pet_type=" + pet_type;
+
+	}
+
+
+	$(document).ready(function() {
+		if ("${ not empty param.search }" == "true") {
+
+			$("#search").val("${ param.search}");
+
+		}
+
+		if ("${ param.search eq 'all'}" == "true") {
+
+			$("#search_text").val("");
+
+		}
+
+	});
+
+
+
+
+
 	  
 	  
 	  
@@ -110,23 +143,18 @@
       <div class="col-sm-4 col-md-4" >
            <!-- 검색메뉴 -->
             
-           <form class="form-inline">
-              <div class="form-group">
-                <select id="search" class="form-control">
-                  <option value="all">전체</option>
-                  <option value="owner">사장님</option>
-                  <option value="rider">라이더</option>
-                </select>
-              </div>
-            
-              <div class="form-group" style="margin-left: 10px;">
-                <input class="form-control" id="search_text" value="${param.search_text}">
-              </div>
+           <!-- <form class="form-inline">
+
+               <div class="form-group">
+                  <input type="hidden" value="${ sessionScope.user.mem_idx }"
+                     id="mem_idx"> <input type="text" class="search_text form-control w-300" id="search_text" value="${ param.search_text }" >
+               </div>
+
             
               <div class="form-group" style="margin-left: 10px;">
                 <input class="btn btn-primary" type="button" value="검색" onclick="find();">
               </div>
-            </form>
+            </form> -->
             
           
       </div>
@@ -208,7 +236,7 @@
            <c:if test="${ sessionScope.user.mem_grade eq '관리자' }">
 	           <td>
 	               <input class="btn btn-success" type="button"  value="수정"
-	                      onclick="location.href='modify_form.do?mem_idx=${ vo.mem_idx }'" >
+	                      onclick="location.href='../member/modify_form.do?mem_idx=${ vo.mem_idx }'" >
 	                      
 	               <input class="btn btn-danger"  type="button"  value="삭제"
 	                      onclick="del('${ vo.mem_idx }');">

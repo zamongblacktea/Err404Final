@@ -36,7 +36,7 @@
 
 
     f.method = "POST";
-    f.action = "../member/modify_rider.do";// MemberModifyAction
+    f.action = "../member/modify_rider.do?rider_idx="+ rider_idx;// MemberModifyAction
     f.submit();
 
   }//end:send()
@@ -46,7 +46,25 @@
 
 
 </script>
+ 
+</style>
+<!-- 챗봇 AI 연동 api js -->
 
+<script>
+  (function(){var w=window;if(w.ChannelIO){return w.console.error("ChannelIO script included twice.");}var ch=function(){ch.c(arguments);};ch.q=[];ch.c=function(args){ch.q.push(args);};w.ChannelIO=ch;function l(){if(w.ChannelIOInitialized){return;}w.ChannelIOInitialized=true;var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src="https://cdn.channel.io/plugin/ch-plugin-web.js";var x=document.getElementsByTagName("script")[0];if(x.parentNode){x.parentNode.insertBefore(s,x);}}if(document.readyState==="complete"){l();}else{w.addEventListener("DOMContentLoaded",l);w.addEventListener("load",l);}})();
+
+  ChannelIO('boot', {
+    "pluginKey": "6f7a9234-fd72-433f-b10a-7aeef84a830c",
+    "memberId": "${ user.rider_id }", // fill user's member id
+    "profile": { // fill user's profile
+      "name": "${user.rider_name}", // fill user's name
+      "mobileNumber": "${user.rider_phone}", // fill user's mobile number
+      "landlineNumber": "USER_LANDLINE_NUMBER", // fill user's landline number  
+      "CUSTOM_VALUE_1": "VALUE_1", // custom property
+      "CUSTOM_VALUE_2": "VALUE_2" // custom property
+    }
+  });
+</script>
 
 
 
@@ -57,7 +75,7 @@
     <h2>라이더 마이 페이지</h2>
     <!-- 파일전송 method 설정 -->
     <form>
-	<input type="hidden" value="${vo.rider_idx}" name="rider_idx">
+	<input type="hidden" value="${param.rider_idx}" name="rider_idx">
       <table class="table">
 
 	<!-- 이름 -->
@@ -104,6 +122,9 @@
 
 
 
+
+         <c:if test="${ sessionScope.user.mem_grade eq '' }">
+
 		<!-- 버튼 -->
 		<tr>
 			<td colspan="2" align="center">
@@ -113,6 +134,10 @@
 				<input id="delBtn" class="btn btn-danger" type="button" value="탈퇴하기" onclick="location.href='delete_owner.do?rider_idx=${user.rider_idx}';">
 			</td>
 		</tr>
+        </c:if>
+
+
+
       </div>
       </table>
 

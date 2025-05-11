@@ -47,7 +47,7 @@
         <div class="review-content">
           ${vo.review_content}
           <div>
-            <img src="../../../images/${vo.review_img}" style="max-width:300px; height:300px;">
+            <img src="../../../images/${vo.review_img}" onerror="this.onerror=null; this.style.display='none'" style="max-width:300px; height:300px;">
           </div>
         </div>
 

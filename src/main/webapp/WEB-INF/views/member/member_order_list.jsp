@@ -111,7 +111,7 @@
               </tr>
               <tr>
                 <th>메뉴</th>
-                <td>${ vo.menu_list }</td>
+                <td>${ vo.menu_name }</td>
               </tr>
               <tr>
                 <th>결제</th>
@@ -121,7 +121,7 @@
             </table>
             <div class="btn-div">  
               <c:if test="${vo.delivery_status eq '배달완료' && vo.review_available == 0 }">            
-              <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}" data-order-idx="${vo.order_idx}">리뷰쓰기</button>
+              <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}" data-order-idx="${vo.order_idx}" style="font-weight: bold; font-size: 18px;">리뷰쓰기</button>
               </c:if>
         
               

@@ -14,7 +14,7 @@ public interface PaymentMapper {
 
     PaymentVo selectList(int mem_idx);
 
-    int insert(Map<String,Object> map);
+    int insert(PaymentVo vo);
 
     int selectOrderNo();
 
