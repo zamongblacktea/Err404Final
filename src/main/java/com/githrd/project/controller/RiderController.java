@@ -135,11 +135,11 @@ public class RiderController {
         vo.setTotalDistance(totalDistance);
         vo.setDelivery_fee(deliveryFee);
 
-        //fk 대용 무결성 검사용 select
+        //fk 대용 참조 무결성 검사용 select
         int count = orderStatusMapper.selectCheckOrderIdx(order_idx);
 
         //참조 무결성 검사
-        if(count > 0){
+        if(count > 0){ // order_idx 조회해서 존재할 때
 
         //delivery insert용 vo생성->insert
         res = deliveryMapper.insert(vo);

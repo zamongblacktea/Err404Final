@@ -81,13 +81,7 @@ th {
 	margin-top: 20px;
 }
 
-.map {
-	margin-top: 30px;
-	margin-right: 20px;
-	margin: auto; width : 98%;
-	height: 250px;
-	width: 98%;
-}
+
 
 .acom-img {
 	width: 98%;
@@ -522,9 +516,18 @@ textarea{
 
 </div>
 <div style="clear: both;"></div>
+<hr>
 
-
-	<div class="footer"></div>
+	<div class="footer">
+	
+	<div class="footer-box" style="text-align: center; margin-top: 10px;"> 
+	<p>주식회사 Eatting ｜ 공동대표 !Err404 박태섭 안소현 남가은 ｜ 서울특별시 관악구 청룡동 862-1 | http://www.gith.co.kr/</p>
+	<p>고객센터: 02-6020-0052 (평일 오전 9시 ~ 오후 6시)</p>
+	<p>Eatting은 통신판매 중개자로서 통신판매의 당사자가 아니며 상품 거래정보 및 거래 등에 대해 책임을 지지 않습니다.</p>
+	<p>이용약관전자금거래 이용약관개인정보 처리방침</p>
+	
+	</div>
+  </div>
 
 
 

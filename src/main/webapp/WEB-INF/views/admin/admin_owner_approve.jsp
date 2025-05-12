@@ -211,7 +211,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="modal-title" id="riderImageModalLabel">라이더 이미지</h4>
+              <h4 class="modal-title" id="riderImageModalLabel">사업자 이미지</h4>
             </div>
 
             <div class="modal-body text-center">

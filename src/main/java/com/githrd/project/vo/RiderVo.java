@@ -26,6 +26,7 @@ public class RiderVo {
 	String rider_approve;
 	String rider_img;
 	String rider_phone;
+	String mem_grade;
 	
 
 

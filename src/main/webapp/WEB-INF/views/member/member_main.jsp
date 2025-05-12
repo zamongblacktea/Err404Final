@@ -114,40 +114,30 @@
   const mem_idx = "${user.mem_idx}"; // 세션에서 mem_idx 꺼냄
 
 
-  function loadCart(url){
+function loadContent(url, callback) {
+  $.ajax({
+    url: url,
+    data: { mem_idx: mem_idx },
 
-    $.ajax({
-      url: url,
-      data: { mem_idx: mem_idx,
-       },
-      success: function(res_data) {
+    success: function(res_data) {
 
-        $("#disp").html(res_data);
-      },
-      error: function(err) {
-        alert("에러 발생: " + err.responseText);
-      }
-    });
+      $("#disp").html(res_data);
 
-  }
+      if (typeof callback === "function") callback();
+      
+    },
+    error: function(err) {
+      alert("에러 발생: " + err.responseText);
+    }
+  });
+}
 
-
-
-  function loadContent(url) {
-    
-    $.ajax({
-      url: url,
-      data: { mem_idx: mem_idx,
-       },
-      success: function(res_data) {
-
-        $("#disp").html(res_data);
-      },
-      error: function(err) {
-        alert("에러 발생: " + err.responseText);
-      }
-    });
-  }
+// 첫 로딩 시 리뷰 페이지 + active 설정
+loadContent("my_review.do", function () {
+  const navButtons = $("#sidebar a");
+  navButtons.removeClass("active");
+  if (navButtons[3]) $(navButtons[3]).addClass("active");
+});
 
   // 페이지 로드 시 기본으로 메뉴 목록 표시
   $(document).ready(function() {
