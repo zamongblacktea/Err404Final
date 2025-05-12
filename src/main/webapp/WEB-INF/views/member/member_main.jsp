@@ -22,22 +22,13 @@
       }
 
       /* body {
+        다른 것들이 order_list_complete 빼고 적용이 안됨 
         background-color: #f6f8fc;
       } */
 
-      /* 상단 nav */
-      /* #nav {
-        background: #ff694a;
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-      } */
 
-      /* #nav img {
-        height: 45px;
-      } */
+
+   
 
       .container-flex {
         /* height: 95vh; */
@@ -47,13 +38,19 @@
 
       /* 사이드바 */
       #sidebar {
-        width: 220px;
+        width: 320px;
+        min-width: 280px;
         background-color: white;
         border-right: 1px solid #ddd;
         padding: 20px;
-        font-size: 18px;
-        min-height: 92.2vh;
+        font-size: 25px;
+        /* min-height: 92.2vh; */
+        min-height: calc(100vh - 60px);
         height: auto;
+
+        padding-left: 50px;
+        padding-right: 50px;
+        /* margin-top: 60px; */
       }
 
       #sidebar .menu-group {
@@ -72,6 +69,7 @@
         padding: 8px 12px;
         border-radius: 8px;
         transition: background-color 0.2s;
+        text-align: left;
       }
 
       #sidebar a:hover {
@@ -90,8 +88,8 @@
         /* border: 1px solid red; */
         width: 1320px;
         margin: 30px auto;
-        padding-left: 50px;
-
+        margin-top: 60px;
+        /* padding-left: 50px; */
       }
     </style>
 
@@ -124,7 +122,7 @@ function loadContent(url, callback) {
       $("#disp").html(res_data);
 
       if (typeof callback === "function") callback();
-      
+
     },
     error: function(err) {
       alert("에러 발생: " + err.responseText);
@@ -132,12 +130,6 @@ function loadContent(url, callback) {
   });
 }
 
-// 첫 로딩 시 리뷰 페이지 + active 설정
-loadContent("my_review.do", function () {
-  const navButtons = $("#sidebar a");
-  navButtons.removeClass("active");
-  if (navButtons[3]) $(navButtons[3]).addClass("active");
-});
 
   // 페이지 로드 시 기본으로 메뉴 목록 표시
   $(document).ready(function() {

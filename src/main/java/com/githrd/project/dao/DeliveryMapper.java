@@ -45,6 +45,8 @@ public interface DeliveryMapper {
 
         public List<DeliveryVo> selectListReview(int mem_idx);
 
+        public DeliveryVo selectOne(int order_idx);
+
         
 
 

@@ -93,15 +93,18 @@ public class ReviewController {
 
 	// 회원 리뷰 작성 폼 띄우기
 	@RequestMapping("/member/review_form.do")
-	public String reviewForm(@RequestParam int mem_idx, int order_idx, int shop_idx, Model model) {
+	public String reviewForm(@RequestParam int mem_idx, int order_idx, Model model) {
 
 		// 회원 idx로 정보 가져오기
 		MemReviewVo member = memReviewMapper.selectOneFromIdx(mem_idx);
 
+		DeliveryVo orderVo = deliveryMapper.selectOne(order_idx);
+
+
 		// 해당 가게 리뷰할 메뉴 정보 가져오기
 		MemReviewVo order = memReviewMapper.selectMenu(mem_idx, order_idx);
 		// 가게 이름 가져오기
-		ShopInfoVo shop = shopInfoMapper.selectShopOne(shop_idx);
+		ShopInfoVo shop = shopInfoMapper.selectShopOne(orderVo.getShop_idx());
 
 		model.addAttribute("member", member);
 		model.addAttribute("order", order);
@@ -120,9 +123,16 @@ public class ReviewController {
 			@RequestParam(name = "photo") MultipartFile[] photo_array)
 			throws IllegalStateException, IOException {
 		
+		int order_idx = vo.getOrder_idx();
+	    DeliveryVo orderVo = deliveryMapper.selectOne(order_idx);
+
 		// \n -> <br>
 		String review_content = vo.getReview_content().replaceAll("\n", "<br>");
 		vo.setReview_content(review_content);
+
+		vo.setMem_idx(orderVo.getMem_idx());
+		vo.setDelivery_idx(orderVo.getDelivery_idx());
+		vo.setShop_idx(orderVo.getShop_idx());
 
 
 		// 리뷰 사진 등록

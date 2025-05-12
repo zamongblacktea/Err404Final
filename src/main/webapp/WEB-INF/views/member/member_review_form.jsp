@@ -84,11 +84,8 @@
         <form id="reviewForm" enctype="multipart/form-data">
 
           <input type="hidden" name="mem_idx" value="${param.mem_idx}">
-          <input type="hidden" name="shop_idx" value="${param.shop_idx}">
-          <input type="hidden" name="menu_idx" value="${param.menu_idx}">
           <input type="hidden" name="order_idx" value="${order.order_idx}">
           <input type="hidden" name="menu_name" value="${order.menu_name}">
-          <input type="hidden" name="delivery_idx" value="${param.delivery_idx}">
           <input type="hidden" name="mem_nickname" value="${user.mem_nickname}">
           <input type="hidden" name="shop_name" value="${shop.shop_name}">
 
