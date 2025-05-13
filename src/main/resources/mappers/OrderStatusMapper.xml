@@ -50,11 +50,19 @@
     SELECT 
       os.*,
       si.shop_name,si.shop_addr1,si.shop_addr2,
-      mi.menu_name,mi.menu_price
+      mi.menu_name,os.amount
     FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
                           inner join menu_info mi on os.menu_idx=mi.menu_idx
     where  order_status != 'NONE'  and rider_status='NONE' 
   </select>
+
+    <!-- SELECT 
+      os.*,
+      si.shop_name,si.shop_addr1,si.shop_addr2,
+      mi.menu_name,mi.menu_price
+    FROM  order_status  os inner join shop_info si on os.shop_idx=si.shop_idx
+                          inner join menu_info mi on os.menu_idx=mi.menu_idx
+    where  order_status != 'NONE'  and rider_status='NONE'  -->
 
    <!--  아래 정보가 업데이트된 정보를 새로담는 리스트가 있어야 한다 여기서는 rider_list-->
     <!-- 배차대기 상태에서 배차완료를 누르면 rider_status가 y로 바뀌도록하기  -->
