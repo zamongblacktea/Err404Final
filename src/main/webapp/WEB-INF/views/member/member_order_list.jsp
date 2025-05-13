@@ -20,29 +20,24 @@
 
 <!-- modal -->
 <script>
-  $(document).ready(function () {
-    $(document).off('click', '.openReviewModalBtn').on('click', '.openReviewModalBtn', function () {
+    $(document).ready(function () {
+      $(document).off('click', '.openReviewModalBtn').on('click', '.openReviewModalBtn', function () {
   // AJAX 요청 처리
-});
+    });
 
-    // 주소록 열기
+   //리뷰 모달 열기
     $(document).on('click', '.openReviewModalBtn', function () {
       const mem_idx = $(this).data('mem-idx');
       const order_idx =  $(this).data("order-idx");
-      const shop_idx = $("#shop_idx").val();
-      const menu_idx = $("#menu_idx").val();
-      const delivery_idx = $("#delivery_idx").val();
+
 
       $.ajax({
         url: '../member/review_form.do',
         type: 'GET',
-        data: { mem_idx: mem_idx,
-                order_idx : order_idx, 
-                shop_idx : shop_idx,
-                menu_idx : menu_idx,
-                delivery_idx : delivery_idx ,
-
-        },
+        data: { 
+                mem_idx : mem_idx,
+                order_idx : order_idx 
+              },
         success: function (data) {
           $('#reviewModalBody').html(data);
           $('#myModal').modal('show'); // Bootstrap 3 방식
@@ -75,9 +70,6 @@
       </c:if>
 
         <c:forEach var="vo" items="${ list }">
-          <input type="hidden" value="${ vo.shop_idx }" id="shop_idx">
-          <input type="hidden" value="${ vo.menu_idx }" id="menu_idx">
-          <input type="hidden" value="${ vo.delivery_idx }" id="delivery_idx">
           <div id="box">
             <div class="order_idx">
               ${ vo.order_idx }
@@ -121,7 +113,7 @@
             </table>
             <div class="btn-div">  
               <c:if test="${vo.delivery_status eq '배달완료' && vo.review_available == 0 }">            
-              <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}" data-order-idx="${vo.order_idx}" style="font-weight: bold; font-size: 18px;">리뷰쓰기</button>
+              <button class="btn status-btn openReviewModalBtn" data-mem-idx="${vo.mem_idx}" data-order-idx="${vo.order_idx}" style="font-weight: bold; font-size: 18px;" >리뷰쓰기</button>
               </c:if>
         
               

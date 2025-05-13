@@ -48,7 +48,7 @@
     let content = f.review_content.value.trim();
     let photo = f.photo.value;
 
-    if (!content) {
+    if (content == "") {
       alert("리뷰 내용을 입력해주세요.");
       f.review_content.focus();
       return;
@@ -84,11 +84,8 @@
         <form id="reviewForm" enctype="multipart/form-data">
 
           <input type="hidden" name="mem_idx" value="${param.mem_idx}">
-          <input type="hidden" name="shop_idx" value="${param.shop_idx}">
-          <input type="hidden" name="menu_idx" value="${param.menu_idx}">
           <input type="hidden" name="order_idx" value="${order.order_idx}">
           <input type="hidden" name="menu_name" value="${order.menu_name}">
-          <input type="hidden" name="delivery_idx" value="${param.delivery_idx}">
           <input type="hidden" name="mem_nickname" value="${user.mem_nickname}">
           <input type="hidden" name="shop_name" value="${shop.shop_name}">
 
@@ -126,7 +123,7 @@
             <div class="menu-content">
               <label for="reviewContent" class="form-label">내용</label>
               <textarea id="reviewContent" class="form-control" rows="5" name="review_content"
-                placeholder="리뷰 내용을 입력해주세요"></textarea>
+                placeholder="리뷰 내용을 입력해주세요" required></textarea>
               <input type="file" id="reviewImage" class="form-control mt-2" accept="image/*" name="photo">
             </div>
 
@@ -145,6 +142,18 @@
     function submitForm() {
       const formData = new FormData($("#reviewForm")[0]);
       const mem_idx = "${param.mem_idx}";
+      let rating = document.getElementById("ratingValue").value;
+      let content =document.getElementById("reviewContent").value;
+
+      if (content == "") {
+      alert("리뷰 내용을 입력해주세요.");
+      return;
+    }
+      if (rating === "0" || rating === "") {
+      alert("별점을 선택해주세요.");
+      return;
+    }
+
 
       $.ajax({
         url: "insert_review.do",
@@ -164,7 +173,12 @@
         }, 300);
 
           //내 리뷰 페이지로 이동
-          loadContent("my_review.do");
+        loadContent("my_review.do", function () {
+
+        });
+
+        
+
         },
         error: function (xhr, status, error) {
           alert("등록 오류가 발생했습니다: " + error);

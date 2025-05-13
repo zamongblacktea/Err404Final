@@ -28,6 +28,7 @@ public class RiderVo {
 	String rider_phone;
 	String mem_grade;
 
+
 	
 
 
