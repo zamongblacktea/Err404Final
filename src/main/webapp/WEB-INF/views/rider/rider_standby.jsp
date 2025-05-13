@@ -143,7 +143,7 @@
         가게이름 : ${vo.shop_name}<br />
         가게위치 : ${vo.shop_addr1} ${vo.shop_addr2}<br />
         메뉴 : ${vo.menu_name} <br />
-        메뉴가격 : ${vo.menu_price}<br />
+        가격 : ${vo.amount}<br />
         배달장소 : ${vo.mem_addr1} ${vo.mem_addr2}<br />
         배달요청사항 : ${vo.rider_request}<br />
       </div><!--div table_text-->
